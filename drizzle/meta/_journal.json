@@ -15,6 +15,20 @@
       "when": 1791494678851,
       "tag": "0001_woozy_norman_osborn",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1791495793388,
+      "tag": "0002_lyrical_hardball",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1791496264167,
+      "tag": "0003_conscious_bulldozer",
+      "breakpoints": true
     }
   ]
 }

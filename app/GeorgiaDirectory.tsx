@@ -1,57 +1,25 @@
-"use client";
-import { FormEvent, useEffect, useState } from 'react';
+'use client';
+import {FormEvent,useEffect,useState} from 'react';
 import AttorneyProfile from './AttorneyProfile';
-import { FirmLink } from './FirmLink';
-import { requestAttorneyData } from './attorney-request';
-export type Attorney = {bar_number:string;name:string;company:string;city:string;county:string;status:string;admit_date:string;imported_at:string;law_school?:string;address?:string;zip?:string;phone?:string;email?:string;source_url?:string};
-type Results = {attorneys:Attorney[];total:number;page:number;totalImported:number;updated:string;statuses:string[]};
-export default function GeorgiaDirectory() {
- const [name,setName]=useState(''),[city,setCity]=useState(''),[status,setStatus]=useState('');
- const [query,setQuery]=useState({q:'',city:'',status:'',page:1,eventId:''});
- const [searched,setSearched]=useState(false),[home,setHome]=useState<{trending:(Attorney&{searches:number})[];statuses:string[]}|null>(null);
- const [result,setResult]=useState<Results|null>(null),[loading,setLoading]=useState(false),[error,setError]=useState('');
+import {FirmLink} from './FirmLink';
+import {ShortlistNotice} from './Shortlist';
+import {AttorneyCard,Charts,DiscoveryHome,ShortlistPage,type DiscoveryData,type View} from './Discovery';
+import {requestAttorneyData} from './attorney-request';
+export type Attorney={bar_number:string;name:string;company:string;city:string;county:string;status:string;admit_date:string;imported_at:string;law_school?:string;address?:string;zip?:string;phone?:string;email?:string;photo_key?:string;source_url?:string};
+type Results={attorneys?:Attorney[];firms?:{name:string;firm_key:string;attorneys:number}[];total:number;page:number;updated?:string};
+export default function GeorgiaDirectory({view='discover',onView}:{view?:View;onView:(v:View)=>void}){
+ const [name,setName]=useState(''),[city,setCity]=useState(''),[kind,setKind]=useState('attorneys');
+ const [query,setQuery]=useState({q:'',city:'',statusGroup:'active',kind:'attorneys',page:1,eventId:''}),[searched,setSearched]=useState(false);
+ const [home,setHome]=useState<DiscoveryData|null>(null),[homeLoading,setHomeLoading]=useState(true),[result,setResult]=useState<Results|null>(null),[loading,setLoading]=useState(false),[error,setError]=useState('');
  const [selected,setSelected]=useState<Attorney|null>(null),[detailLoading,setDetailLoading]=useState(false);
- const [homeLoading,setHomeLoading]=useState(true);
- async function loadHome(){setHomeLoading(true);setError('');try{setHome(await requestAttorneyData<{trending:(Attorney&{searches:number})[];statuses:string[]}>({home:'1'}));}catch(e){setError(e instanceof Error?e.message:'Unable to load trending attorneys.');}finally{setHomeLoading(false);}}
+ async function loadHome(){setHomeLoading(true);setError('');try{setHome(await requestAttorneyData<DiscoveryData>({home:'1'}));}catch(e){setError(e instanceof Error?e.message:'Unable to load discovery.');}finally{setHomeLoading(false);}}
  useEffect(()=>{loadHome();},[]);
- useEffect(()=>{
-  if(!searched)return;
-  const controller=new AbortController();
-  requestAttorneyData<Results>(query,controller.signal).then(x=>{setResult(x);}).catch(e=>{if(e.name!=='AbortError')setError(e.message || 'Unable to load attorneys.');}).finally(()=>{if(!controller.signal.aborted)setLoading(false);});
-  return ()=>controller.abort();
- },[query,searched]);
- function changeQuery(next: typeof query) {setLoading(true);setError('');setQuery(next);}
- function search(e:FormEvent){e.preventDefault();if(!name.trim()&&!city.trim()&&!status){setError('Enter a name, firm, bar number, city, or membership status to search.');return;}setSelected(null);setSearched(true);changeQuery({q:name.trim(),city:city.trim(),status,page:1,eventId:crypto.randomUUID()});}
- async function open(a:Attorney,fromSearch=false){setSelected(a);setDetailLoading(true);setError('');try{const x=await requestAttorneyData<{attorney:Attorney}>({id:a.bar_number,...(fromSearch?query:{})});setSelected(x.attorney);}catch(e){setError(e instanceof Error?e.message:'Unable to open this record.');}finally{setDetailLoading(false);}}
- const date=(s:string)=>s?new Date(s).toLocaleDateString('en-US',{timeZone:'UTC',year:'numeric',month:'short',day:'numeric'}):'Not listed';
- return <>
-  <section className="search-band directory-search" aria-label="Georgia attorney search"><div>
-   <p className="eyebrow light">Discover Georgia attorneys</p><h1>Know who<br/><span>represents you.</span></h1><p className="hero-intro">Search professional records. Explore the attorneys people are looking for.</p>
-   <form className="directory-filters" onSubmit={search}>
-    <label>Name, firm, or bar number<input value={name} onChange={e=>setName(e.target.value)} placeholder="Search Georgia attorneys" /></label>
-    <label>City<input value={city} onChange={e=>setCity(e.target.value)} placeholder="Any Georgia city" /></label>
-    <label>Membership status<select value={status} onChange={e=>setStatus(e.target.value)}><option value="">All statuses</option>{home?.statuses.map(s=><option key={s}>{s}</option>)}</select></label>
-    <button type="submit">Search</button>
-   </form>
-   <p className="search-note">Search by official name, verified nickname, firm, or Georgia Bar number.</p>
-  </div></section>
-  <div className="page-shell directory-page">
-   {error&&<div role="alert" className="directory-error">{error} <button onClick={()=>selected ? open(selected) : searched ? changeQuery({...query}) : loadHome()}>Try again</button> <a href="/" target="_top">Reopen CounselCheck</a></div>}
-   {selected?<>
-    <button className="outline-button" onClick={()=>setSelected(null)}>{searched?'Back to results':'Back to trending'}</button>
-    <AttorneyProfile attorney={selected} loading={detailLoading}/>
-   </>:!searched?<section className="trending-section" aria-label="Trending attorneys">
-    <div className="section-heading"><div><p className="section-kicker">Most searched this week</p><h2>Trending attorneys</h2></div><span className="period-label">Last 7 days</span></div>
-    <p className="trending-intro">The attorneys people are finding on CounselCheck. Search interest is not a rating or endorsement.</p>
-    {homeLoading?<p role="status">Loading trending attorneys…</p>:home?.trending.length?<div className="trending-grid">{home.trending.map((a,i)=><article className="trending-card" key={a.bar_number}><div className="trending-open"><button className="attorney-tile" onClick={()=>open(a)} aria-label={"View "+a.name+" profile"}><span className="rank">{i+1}</span><span className="initials">{a.name.split(' ').filter(Boolean).map(n=>n[0]).slice(0,2).join('')}</span><span className="tile-caption">GEORGIA ATTORNEY</span></button><div className="trending-info"><span className="search-count">{a.searches} {a.searches===1?'search':'searches'}</span><h3><button className="attorney-name-link" onClick={()=>open(a)}>{a.name}</button></h3><p><FirmLink name={a.company}/></p><p>{a.city||'City not listed'}, Georgia</p><button className="profile-link" onClick={()=>open(a)}>View profile</button></div></div></article>)}</div>:<div className="trending-empty"><span className="empty-symbol" aria-hidden="true">↗</span><h3>Discover who’s trending next.</h3><p>Trending attorneys will appear as people search and select profiles. Start with a name above.</p></div>}
-    <p className="trending-method">One count per search that finds a single attorney or leads to a selected profile. Broad result lists and visits from this section do not add counts.</p>
-   </section>:<>
-    <div className="section-heading directory-results-heading"><div><p className="section-kicker">Search results</p><h2>{loading?'Loading results…':`${(result?.total||0).toLocaleString()} ${result?.total===1?'attorney':'attorneys'}`}</h2></div>{result&&<p className="result-source">State Bar of Georgia records<br/><small>Updated {date(result.updated)}</small></p>}</div>
-    {loading?<p role="status">Loading Georgia attorneys…</p>:result?.attorneys.length?<>
-     <div className="directory-grid">{result.attorneys.map(a=><article className="profile-card directory-result" key={a.bar_number}><p className="section-kicker">GA #{a.bar_number}</p><h3><button onClick={()=>open(a,true)}>{a.name}</button></h3>{a.company&&<p><FirmLink name={a.company}/></p>}<p className="location">{a.city||'City not listed'}, Georgia</p><p className="directory-status">{a.status}</p><button className="outline-button" onClick={()=>open(a,true)}>View profile</button></article>)}</div>
-     <div className="directory-pagination"><button className="outline-button" disabled={query.page<=1} onClick={()=>changeQuery({...query,page:query.page-1})}>Previous</button><span>Page {query.page} of {Math.ceil(result.total/25).toLocaleString()}</span><button className="outline-button" disabled={query.page*25>=result.total} onClick={()=>changeQuery({...query,page:query.page+1})}>Next</button></div>
-    </>:<p>{result?.totalImported?'No attorneys match your search. Try another name, city, or status.':'Georgia records have not been imported yet.'}</p>}
-   </>}
-  </div>
- </>;
+ useEffect(()=>{setSelected(null);setSearched(false);setError('');},[view]);
+ useEffect(()=>{if(!searched)return;const controller=new AbortController();setLoading(true);setError('');requestAttorneyData<Results>(query,controller.signal).then(setResult).catch(e=>{if(e.name!=='AbortError')setError(e.message);}).finally(()=>{if(!controller.signal.aborted)setLoading(false);});return ()=>controller.abort();},[query,searched]);
+ function search(e:FormEvent){e.preventDefault();if(!name.trim()&&!city.trim()){setError('Enter a name, firm, bar number, or city to search.');return;}setSelected(null);setSearched(true);setQuery({q:name.trim(),city:city.trim(),statusGroup:'active',kind,page:1,eventId:crypto.randomUUID()});}
+ function browseCity(value:string){setCity(value);setName('');setKind('attorneys');setSelected(null);setSearched(true);setQuery({q:'',city:value,statusGroup:'active',kind:'attorneys',page:1,eventId:crypto.randomUUID()});document.getElementById('attorney-search')?.scrollIntoView({behavior:'smooth'});}
+ async function open(a:Attorney,fromSearch=false){setSelected(a);setDetailLoading(true);setError('');try{const x=await requestAttorneyData<{attorney:Attorney}>({id:a.bar_number,...(fromSearch?{...query,kind:'attorneys'}:{})});setSelected(x.attorney);}catch(e){setError(e instanceof Error?e.message:'Unable to open this record.');}finally{setDetailLoading(false);}}
+ return <><section className="discovery-search" id="attorney-search" aria-label="Attorney and firm search"><form onSubmit={search}><label className="search-kind"><span>Search for</span><select value={kind} onChange={e=>setKind(e.target.value)}><option value="attorneys">Attorneys</option><option value="firms">Firms</option></select></label><label className="primary-search"><span>{kind==='attorneys'?'Name, firm, or bar number':'Firm name'}</span><input value={name} onChange={e=>setName(e.target.value)} placeholder={kind==='attorneys'?'Search attorneys, firms, or a bar number':'Search law firms and legal organizations'}/></label><label className="search-city"><span>City</span><input value={city} onChange={e=>setCity(e.target.value)} placeholder="Any Georgia city"/></label><button className="gold-button search-submit" type="submit" aria-label="Search">Search</button></form></section><div className="page-shell discovery-shell"><ShortlistNotice/>{error&&<div className="directory-error" role="alert">{error} <button onClick={()=>selected?open(selected):searched?setQuery({...query}):loadHome()}>Try again</button> <a href="/" target="_top">Reopen CounselCheck</a></div>}
+ {selected?<><button className="outline-button" onClick={()=>setSelected(null)}>Back to {searched?'results':view==='shortlist'?'shortlist':view==='charts'?'charts':'discovery'}</button><AttorneyProfile attorney={selected} loading={detailLoading}/></>:searched?<section className="search-results"><div className="section-heading"><div><p className="section-kicker">{query.kind==='firms'?'FIRM':'ATTORNEY'} SEARCH</p><h1>{loading?'Searching…':`${(result?.total||0).toLocaleString()} results`}</h1></div><button className="text-action" onClick={()=>{setSearched(false);loadHome();}}>Back to discovery</button></div><p className="section-description">{query.q&&`“${query.q}”`}{query.city&&` · ${query.city}`}{query.kind==='attorneys'&&` · ${query.statusGroup==='active'?'Active':'Not active'}`}</p>{query.kind==='attorneys'&&<div className="results-status-toggle segmented" aria-label="Filter attorneys by activity"><button aria-pressed={query.statusGroup==='active'} onClick={()=>setQuery({...query,statusGroup:'active',page:1})}>Active</button><button aria-pressed={query.statusGroup==='not-active'} onClick={()=>setQuery({...query,statusGroup:'not-active',page:1})}>Not active</button></div>}{query.kind==='attorneys'&&query.statusGroup==='not-active'&&<p className="record-note">Includes inactive, suspended, deceased, resigned, and other statuses. Each record shows the exact State Bar status.</p>}{loading?<p role="status">Loading matching records…</p>:result?.total?<>{query.kind==='firms'?<div className="firm-ranking-grid">{result.firms?.map(f=><article className="firm-result-card" key={f.firm_key}><span className="section-kicker">FIRM / ORGANIZATION</span><h2><FirmLink name={f.name} eventId={query.eventId}/></h2><p>{f.attorneys.toLocaleString()} listed attorneys{query.city?' matching this city':''}</p></article>)}</div>:<div className="results-card-grid">{result.attorneys?.map(a=><AttorneyCard key={a.bar_number} attorney={a} onOpen={a=>open(a,true)}/>)}</div>}<div className="directory-pagination"><button className="outline-button" disabled={query.page<=1} onClick={()=>setQuery({...query,page:query.page-1})}>Previous</button><span>Page {query.page} of {Math.ceil(result.total/25).toLocaleString()}</span><button className="outline-button" disabled={query.page*25>=result.total} onClick={()=>setQuery({...query,page:query.page+1})}>Next</button></div></>:!error&&<div className="chart-empty"><div><h2>No matches yet.</h2><p>Try an official name, a verified nickname, a firm name, or a different city.</p></div></div>}</section>:view==='shortlist'?<ShortlistPage onOpen={open}/>:homeLoading?<div className="discovery-loading" role="status"><span/><p>Loading CounselCheck discovery…</p></div>:home?view==='charts'?<Charts data={home} onOpen={open}/>:<DiscoveryHome data={home} onOpen={open} onCity={browseCity} onView={onView}/>:null}
+ </div></>;
 }

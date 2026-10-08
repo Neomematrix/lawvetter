@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { Geist, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
+import {ShortlistProvider} from "./Shortlist";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,11 +23,11 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "CounselCheck | Know who represents you",
     description:
-      "Verified attorney profiles, authentic client reviews, and thoughtful legal referrals.",
+      "Explore Georgia attorneys and firms, follow search rankings, and save a shortlist to compare professional records.",
     openGraph: {
       title: "CounselCheck | Know who represents you",
       description:
-        "Verified attorney profiles, authentic client reviews, and thoughtful legal referrals.",
+        "Explore Georgia attorneys and firms, follow search rankings, and save a shortlist to compare professional records.",
       images: [{ url: imageUrl, width: 1200, height: 630, alt: "CounselCheck attorney reviews and referrals" }],
       type: "website",
     },
@@ -34,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: "CounselCheck | Know who represents you",
       description:
-        "Verified attorney profiles, authentic client reviews, and thoughtful legal referrals.",
+        "Explore Georgia attorneys and firms, follow search rankings, and save a shortlist to compare professional records.",
       images: [imageUrl],
     },
   };
@@ -48,7 +49,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${cormorant.variable}`}>
-        {children}
+        <ShortlistProvider>{children}</ShortlistProvider>
       </body>
     </html>
   );

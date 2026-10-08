@@ -1,3 +1,3 @@
-export function FirmLink({name}:{name:string}){
- return <a className="firm-link" href={'/firm?name='+encodeURIComponent(name)}>{name}</a>;
+export function FirmLink({name,eventId}:{name:string;eventId?:string}){
+ return <a className="firm-link" href={'/firm?name='+encodeURIComponent(name)+(eventId?'&search='+encodeURIComponent(eventId):'')}>{name}</a>;
 }

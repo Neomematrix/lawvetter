@@ -1,0 +1,46 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {DatabaseSync} from 'node:sqlite';
+import fs from 'node:fs';
+import path from 'node:path';
+import vm from 'node:vm';
+import ts from 'typescript';
+import {webcrypto} from 'node:crypto';
+const root=path.resolve('.');
+function database(){const sql=new DatabaseSync(':memory:');sql.exec('PRAGMA foreign_keys=ON');for(const file of fs.readdirSync('drizzle').filter(f=>f.endsWith('.sql')).sort())sql.exec(fs.readFileSync('drizzle/'+file,'utf8'));const db={prepare(text){let args=[];return {bind(...values){args=values;return this},async first(){return sql.prepare(text).get(...args)||null},async all(){return {results:sql.prepare(text).all(...args)}},async run(){const x=sql.prepare(text).run(...args);return {meta:{changes:Number(x.changes)}}}}},async batch(statements){sql.exec('BEGIN');try{const results=[];for(const s of statements)results.push(await s.run());sql.exec('COMMIT');return results;}catch(e){sql.exec('ROLLBACK');throw e;}}};return {sql,db};}
+async function runtime(){const {sql,db}=database(),files=new Map();const env={DB:db,CLAIM_ADMIN_EMAIL:'admin@example.test',PROFILE_PHOTOS:{async put(key,buffer,metadata){files.set(key,{body:buffer,...metadata});},async get(key){return files.get(key)},async delete(key){files.delete(key)}}};const context=vm.createContext({console,Request,Response,URL,File,FormData,Uint8Array,Date,Intl,crypto:webcrypto});const cache=new Map();async function module(file){if(cache.has(file))return cache.get(file);if(file==='cloudflare:workers'){const m=new vm.SyntheticModule(['env'],function(){this.setExport('env',env)},{context});cache.set(file,m);await m.link(()=>{});return m;}const text=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;const m=new vm.SourceTextModule(text,{context,identifier:file});cache.set(file,m);await m.link(async(spec,parent)=>module(spec==='cloudflare:workers'?spec:path.resolve(path.dirname(parent.identifier),spec)+'.ts'));return m;}async function load(file){const m=await module(path.join(root,file));await m.evaluate();return m.namespace;}function seed(bar,name,company='Example Legal LLC',status='Active Member in Good Standing'){sql.prepare('INSERT INTO attorneys(bar_number,source_id,name,company,city,status,source_url,imported_at) VALUES(?,?,?,?,?,?,?,?)').run(bar,bar,name,company,'Atlanta',status,'https://example.test/record','2026-10-08T00:00:00Z');}return {sql,db,load,seed,files};}
+function request(data,user='attorney-a',email='a@example.test'){const headers={'Content-Type':'application/json',Origin:'https://counsel.test'};if(user){headers['oai-authenticated-user-id']=user;headers['oai-authenticated-user-email']=email;}return new Request('https://counsel.test/api/profiles',{method:'POST',headers,body:JSON.stringify(data)});}
+test('Claim approval, ownership isolation, durable profile edits and private shortlists',async()=>{const x=await runtime();x.seed('100001','Fictional Attorney A');x.seed('100002','Fictional Attorney B');const profiles=await x.load('app/api/profiles/route.ts');
+ assert.equal((await profiles.POST(request({action:'claim'},''))).status,401);
+ assert.equal((await profiles.POST(request({action:'claim',bar:'100001',fullName:'Fictional Attorney A',verification:'Official firm profile is available for independent verification.',attestation:true}))).status,200);
+ let state=await (await profiles.POST(request({action:'view',bar:'100001'}))).json();assert.equal(state.profile,null);assert.equal(state.claim.status,'pending');
+ const id=JSON.stringify(['attorney-a','100001']);
+ assert.equal((await profiles.POST(request({action:'review',id,decision:'approve',verified:true},'attorney-b','b@example.test'))).status,403);
+ assert.equal((await profiles.POST(request({action:'review',id,decision:'approve'},'site-owner','admin@example.test'))).status,400);
+ assert.equal((await profiles.POST(request({action:'review',id,decision:'approve',verified:true},'site-owner','admin@example.test'))).status,200);
+ state=await (await profiles.POST(request({action:'view',bar:'100001'}))).json();assert.ok(state.profile);assert.equal(state.isOwner,true);
+ const edit={action:'save',bar:'100001',headline:'Fictional headline',bio:'Saved bio',practiceAreas:'Mediation',website:'https://example.test'};
+ assert.equal((await profiles.POST(request(edit,'attorney-b','b@example.test'))).status,403);assert.equal((await profiles.POST(request(edit))).status,200);
+ assert.equal((await (await profiles.POST(request({action:'view',bar:'100001'}))).json()).profile.bio,'Saved bio');
+ assert.equal((await profiles.POST(request({...edit,website:'javascript:alert(1)'}))).status,400);
+ const shortlist=await x.load('app/api/shortlist/route.ts');assert.equal((await shortlist.POST(request({action:'list'},''))).status,401);
+ await shortlist.POST(request({action:'save',bar:'100001'}));await shortlist.POST(request({action:'save',bar:'100001'}));
+ assert.equal((await (await shortlist.POST(request({action:'list'}))).json()).attorneys.length,1);
+ assert.equal((await (await shortlist.POST(request({action:'list'},'attorney-b','b@example.test'))).json()).attorneys.length,0);
+ await shortlist.POST(request({action:'remove',bar:'100001'},'attorney-b','b@example.test'));assert.equal((await (await shortlist.POST(request({action:'list'}))).json()).attorneys.length,1);
+ assert.equal(x.sql.prepare('SELECT count(*) AS n FROM attorneys').get().n,2);
+ const photos=await x.load('app/api/profile-photo/route.ts');const form=new FormData();form.set('bar','100001');form.set('photo',new File([fs.readFileSync('public/claimed-badge.png')],'test.png',{type:'image/png'}));
+ const photoReq=(user)=>new Request('https://counsel.test/api/profile-photo',{method:'POST',headers:{'oai-authenticated-user-id':user,Origin:'https://counsel.test'},body:form});
+ assert.equal((await photos.POST(photoReq('attorney-b'))).status,403);assert.equal((await photos.POST(photoReq('attorney-a'))).status,200);
+ const downloaded=await photos.GET(new Request('https://counsel.test/api/profile-photo?bar=100001'));assert.equal(downloaded.status,200);assert.equal(downloaded.headers.get('Content-Type'),'image/png');assert.ok((await downloaded.arrayBuffer()).byteLength>0);
+ const account=await(await profiles.POST(request({action:'account'},'attorney-b','b@example.test'))).json();assert.equal(account.profiles.length,0);assert.equal(account.claims.length,0);
+});
+test('Charts use real, deduplicated recent searches, preserve ties, and group firm variants',async()=>{const x=await runtime();x.seed('100001','Fictional Attorney A','Example Legal, LLC.');x.seed('100002','Fictional Attorney B','Example Legal LLC');x.seed('100003','Fictional Inactive','Other Legal LLC','Inactive Member in Good Standing');const charts=await x.load('app/api/attorneys/charts.ts');assert.equal(charts.monthStart(new Date('2026-10-08T20:00:00Z')),'2026-10-01T04:00:00.000Z');assert.equal(charts.monthStart(new Date('2027-01-08T20:00:00Z')),'2027-01-01T05:00:00.000Z');
+ for(const [id,bar,date] of [['one','100001','2026-10-08T12:00:00Z'],['two','100002','2026-10-08T12:00:00Z'],['old','100001','2026-09-01T12:00:00Z'],['inactive','100003','2026-10-08T12:00:00Z']])x.sql.prepare('INSERT INTO attorney_search_events VALUES(?,?,?)').run(id,bar,date);
+ x.sql.prepare('INSERT INTO firm_search_events VALUES(?,?,?,?)').run('one','examplelegalllc','Example Legal LLC','2026-10-08T12:00:00Z');
+ const bounds=['2026-10-01T12:00:00Z','2026-10-08T20:00:00Z'];const attorneys=x.sql.prepare(charts.attorneyChartSQL).all(...bounds);assert.equal(attorneys.length,2);assert.equal(attorneys[0].rank,1);assert.equal(attorneys[1].rank,1);assert.equal(attorneys[0].searches,1);
+ const firms=x.sql.prepare(charts.firmChartSQL).all(...bounds,...bounds);assert.equal(firms[0].firm_key,'examplelegalllc');assert.equal(firms[0].searches,2);
+ const api=await x.load('app/api/attorneys/route.ts');const firm=await(await api.POST(request({kind:'firms',q:'Example Legal'}))).json();assert.equal(firm.total,1);assert.equal(firm.firms[0].attorneys,2);
+ const profile=await(await api.POST(request({firm:'Example Legal, L.L.C.'}))).json();assert.equal(profile.firm.total,2);
+ const active=await(await api.POST(request({q:'Fictional',statusGroup:'active'}))).json();const inactive=await(await api.POST(request({q:'Fictional',statusGroup:'not-active'}))).json();assert.equal(active.total,2);assert.equal(inactive.total,1);assert.equal(inactive.attorneys[0].bar_number,'100003');
+});
