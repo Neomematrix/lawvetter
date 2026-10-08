@@ -1,5 +1,6 @@
 "use client";
 import { FormEvent, useEffect, useState } from 'react';
+import { requestAttorneyData } from './attorney-request';
 type Attorney = {bar_number:string;name:string;company:string;city:string;county:string;status:string;admit_date:string;imported_at:string;law_school?:string;address?:string;zip?:string;phone?:string;email?:string;source_url?:string};
 type Results = {attorneys:Attorney[];total:number;page:number;totalImported:number;updated:string;statuses:string[]};
 export default function GeorgiaDirectory() {
@@ -9,13 +10,12 @@ export default function GeorgiaDirectory() {
  const [selected,setSelected]=useState<Attorney|null>(null),[detailLoading,setDetailLoading]=useState(false);
  useEffect(()=>{
   const controller=new AbortController();
-  const params=new URLSearchParams({...query,page:String(query.page)});
-  fetch('/api/attorneys?'+params,{signal:controller.signal}).then(async r=>{const x=await r.json() as Results & {error?:string};if(!r.ok)throw new Error(x.error);setResult(x);}).catch(e=>{if(e.name!=='AbortError')setError(e.message || 'Unable to load attorneys.');}).finally(()=>{if(!controller.signal.aborted)setLoading(false);});
+  requestAttorneyData<Results>(query,controller.signal).then(x=>{setResult(x);}).catch(e=>{if(e.name!=='AbortError')setError(e.message || 'Unable to load attorneys.');}).finally(()=>{if(!controller.signal.aborted)setLoading(false);});
   return ()=>controller.abort();
  },[query]);
  function changeQuery(next: typeof query) {setLoading(true);setError('');setQuery(next);}
  function search(e:FormEvent){e.preventDefault();setSelected(null);changeQuery({q:name.trim(),city:city.trim(),status,page:1});}
- async function open(a:Attorney){setSelected(a);setDetailLoading(true);setError('');try{const r=await fetch('/api/attorneys?id='+encodeURIComponent(a.bar_number));const x=await r.json() as {attorney:Attorney;error?:string};if(!r.ok)throw new Error(x.error||'Unable to open this record.');setSelected(x.attorney);}catch(e){setError(e instanceof Error?e.message:'Unable to open this record.');}finally{setDetailLoading(false);}}
+ async function open(a:Attorney){setSelected(a);setDetailLoading(true);setError('');try{const x=await requestAttorneyData<{attorney:Attorney}>({id:a.bar_number});setSelected(x.attorney);}catch(e){setError(e instanceof Error?e.message:'Unable to open this record.');}finally{setDetailLoading(false);}}
  const date=(s:string)=>s?new Date(s).toLocaleDateString('en-US',{timeZone:'UTC',year:'numeric',month:'short',day:'numeric'}):'Not listed';
  return <>
   <section className="search-band directory-search" aria-label="Georgia attorney search"><div>
@@ -29,7 +29,7 @@ export default function GeorgiaDirectory() {
    <p className="search-note">State Bar of Georgia records. Membership status is shown separately from client reviews.</p>
   </div></section>
   <div className="page-shell directory-page">
-   {error&&<div role="alert" className="directory-error">{error} <button onClick={()=>changeQuery({...query})}>Try again</button></div>}
+   {error&&<div role="alert" className="directory-error">{error} <button onClick={()=>selected ? open(selected) : changeQuery({...query})}>Try again</button> <a href="/" target="_top">Reopen CounselCheck</a></div>}
    {selected?<>
     <button className="outline-button" onClick={()=>setSelected(null)}>Back to results</button>
     <article className="profile-card directory-detail" aria-busy={detailLoading}>

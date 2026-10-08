@@ -26,3 +26,29 @@ export async function GET(request: Request) {
   return Response.json({attorneys:rows.results,total:count?.total||0,page,totalImported:all?.total||0,updated:all?.updated,statuses:statuses.results.map((r: {status: string})=>r.status)});
  } catch(error) {console.error('Attorney search failed',error);return Response.json({error:'Attorney records are temporarily unavailable. Please try again.'},{status:503});}
 }
+
+// Keep browser searches on a stable URL; filters are read-only request data.
+export async function POST(request: Request) {
+ let parameters: Record<string, unknown>;
+ try {
+  parameters = await request.json() as Record<string, unknown>;
+ } catch {
+  return Response.json({error:'Invalid search request.'},{status:400});
+ }
+ if (!parameters || Array.isArray(parameters) || typeof parameters !== 'object') {
+  return Response.json({error:'Invalid search request.'},{status:400});
+ }
+ const url = new URL(request.url);
+ url.search = '';
+ for (const key of ['q','city','status','page','id']) {
+  const value = parameters[key];
+  if (value === undefined) continue;
+  if (typeof value !== 'string' && !(key === 'page' && typeof value === 'number' && Number.isFinite(value))) {
+   return Response.json({error:'Invalid search request.'},{status:400});
+  }
+  url.searchParams.set(key,String(value).slice(0,2000));
+ }
+ const response = await GET(new Request(url,{headers:request.headers}));
+ response.headers.set('Cache-Control','private, no-store');
+ return response;
+}
