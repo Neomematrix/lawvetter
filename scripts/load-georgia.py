@@ -14,8 +14,8 @@ def save(batch):
  if result.get('saved')!=len(batch):raise RuntimeError('Save count mismatch')
  return len(batch)
 count=0
-with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
- futures=[pool.submit(save,rows[start:start+100]) for start in range(0,len(rows),100)]
+with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+ futures=[pool.submit(save,rows[start:start+500]) for start in range(0,len(rows),500)]
  for future in concurrent.futures.as_completed(futures):
   count+=future.result()
   if count%1000==0 or count==len(rows):print(json.dumps({'saved':count,'expected':len(rows)}),flush=True)

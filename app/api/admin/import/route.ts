@@ -5,7 +5,7 @@ export async function POST(request: Request) {
  if (!key || request.headers.get('Authorization') !== 'Bearer '+key) return Response.json({error:'Unauthorized'},{status:401});
  try {
  const rows = await request.json();
- if(!Array.isArray(rows) || rows.length<1 || rows.length>100) return Response.json({error:'Expected 1–100 records'},{status:400});
+ if(!Array.isArray(rows) || rows.length<1 || rows.length>500) return Response.json({error:'Expected 1–500 records'},{status:400});
  const fields = ['barNumber','id','name','company','city','state','county','status','admitDate','lawSchool','address','zip','phone','email','sourceUrl','importedAt'];
  for(const row of rows) {
   if(!row || fields.some(k=>typeof row[k]!=='string' || row[k].length>2000) || !/^[A-Za-z0-9]{1,20}$/.test(row.barNumber) || !row.name.trim() || row.state!=='GA' || !/^https:\/\/www\.gabar\.org\/member-directory\/\?id=[A-F0-9]+$/.test(row.sourceUrl)) return Response.json({error:'Invalid attorney record'},{status:400});
