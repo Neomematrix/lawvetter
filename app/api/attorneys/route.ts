@@ -1,9 +1,23 @@
 import { rawDb } from '../../../db/raw';
+import { firmKey, firmColumn } from './firm';
 import { attorneyNameSearch } from './search';
 const fields = 'bar_number,name,company,city,county,status,admit_date,imported_at';
 async function handle(parameters: Record<string, string>, record = false) {
  try {
   const db = rawDb(), id = parameters.id;
+  if (parameters.firm !== undefined) {
+   const key=firmKey(parameters.firm.slice(0,500));
+   if(!key)return Response.json({error:'Enter a firm name.'},{status:400});
+   const page=Math.max(1,Math.min(10000,Number.parseInt(parameters.page||'1')||1));
+   const where=firmColumn()+' = ?';
+   const [rows,summary,locations]=await Promise.all([
+    db.prepare('SELECT '+fields+' FROM attorneys WHERE '+where+' ORDER BY name COLLATE NOCASE,bar_number LIMIT 25 OFFSET ?').bind(key,(page-1)*25).all(),
+    db.prepare("SELECT count(*) AS total,sum(CASE WHEN status='Active Member in Good Standing' THEN 1 ELSE 0 END) AS active,max(imported_at) AS updated,min(company) AS name FROM attorneys WHERE "+where).bind(key).first<{total:number;active:number;updated:string;name:string}>(),
+    db.prepare("SELECT DISTINCT city FROM attorneys WHERE "+where+" AND city <> '' ORDER BY city COLLATE NOCASE").bind(key).all<{city:string}>()
+   ]);
+   if(!summary?.total)return Response.json({error:'No firm records were found. Check the firm name and try again.'},{status:404});
+   return Response.json({firm:{name:summary.name,total:summary.total,active:summary.active,updated:summary.updated,cities:locations.results.map(r=>r.city)},attorneys:rows.results,page});
+  }
   if (parameters.home === '1') {
    const [trending,statuses] = await Promise.all([
     db.prepare(`SELECT ${fields.split(',').map(f=>'a.'+f).join(',')},count(*) AS searches FROM attorney_search_events e JOIN attorneys a ON a.bar_number=e.bar_number WHERE e.created_at >= ? GROUP BY a.bar_number ORDER BY searches DESC,max(e.created_at) DESC,a.name COLLATE NOCASE LIMIT 10`).bind(new Date(Date.now()-7*86400000).toISOString()).all(),
@@ -48,7 +62,7 @@ export async function POST(request:Request){
  try{input=await request.json();}catch{return Response.json({error:'Invalid search request.'},{status:400});}
  if(!input||Array.isArray(input)||typeof input!=='object')return Response.json({error:'Invalid search request.'},{status:400});
  const parameters:Record<string,string>={};
- for(const key of ['q','city','status','page','id','home','eventId']){
+ for(const key of ['q','city','status','page','id','home','eventId','firm']){
   const value=input[key];if(value===undefined)continue;
   if(typeof value!=='string'&&!(key==='page'&&typeof value==='number'&&Number.isFinite(value)))return Response.json({error:'Invalid search request.'},{status:400});
   parameters[key]=String(value).slice(0,2000);
