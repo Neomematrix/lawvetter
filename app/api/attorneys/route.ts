@@ -13,8 +13,8 @@ export async function GET(request: Request) {
   const page = Math.min(10000, Math.max(1, Number.parseInt(u.searchParams.get('page') || '1') || 1));
   const clauses: string[] = [], args: string[] = [];
   const escape = (s: string) => s.replace(/[\\%_]/g, '\\$&');
-  if(q) { clauses.push("(lower(name) LIKE ? ESCAPE '\\' OR lower(company) LIKE ? ESCAPE '\\' OR bar_number = ?)"); args.push('%'+escape(q)+'%','%'+escape(q)+'%',q); }
-  if(city) {clauses.push("lower(city) LIKE ? ESCAPE '\\'"); args.push('%'+escape(city)+'%');}
+  if(q) { clauses.push("(lower(name) LIKE ? ESCAPE '\\' OR lower(company) LIKE ? ESCAPE '\\' OR bar_number = ?)"); const pattern = '%'+q.split(/\s+/).map(escape).join('%')+'%'; args.push(pattern,pattern,q); }
+  if(city) {clauses.push("lower(city) LIKE ? ESCAPE '\\'"); args.push('%'+city.split(/\s+/).map(escape).join('%')+'%');}
   if(status) {clauses.push('status = ?'); args.push(status);}
   const where = clauses.length ? ' WHERE '+clauses.join(' AND ') : '';
   const [rows,count,all,statuses] = await Promise.all([
