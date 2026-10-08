@@ -1,3 +1,4 @@
+import {practiceAreas,practiceSources} from '../../practice-areas';
 import {discoveryData} from './charts';
 import { rawDb } from '../../../db/raw';
 import { firmKey, firmColumn } from './firm';
@@ -40,6 +41,13 @@ async function handle(parameters: Record<string, string>, record = false) {
    return Response.json({firms:rows.results,total:count?.total||0,page});
   }
   const clauses:string[]=[],args:string[]=[];
+  if(parameters.practice){
+   const area=practiceAreas.find(a=>a.id===parameters.practice);
+   if(!area)return Response.json({error:'Unknown practice area.'},{status:400});
+   const bars=Object.entries(practiceSources).filter(([,s])=>s.areas.includes(area.id)).map(([bar])=>bar);
+   clauses.push("(bar_number IN ("+(bars.length?bars.map(()=>'?').join(','):"NULL")+") OR bar_number IN (SELECT bar_number FROM attorney_profiles WHERE instr(',' || replace(lower(trim(practice_areas)), ', ', ',') || ',', ?) > 0))");
+   args.push(...bars,','+area.name.toLowerCase()+',');
+  }
   const escape=(s:string)=>s.replace(/[\\%_]/g,'\\$&');
   const search=q?attorneyNameSearch(q):null;
   if(search){clauses.push(search.where);args.push(...search.args);}
@@ -72,7 +80,7 @@ export async function POST(request:Request){
  try{input=await request.json();}catch{return Response.json({error:'Invalid search request.'},{status:400});}
  if(!input||Array.isArray(input)||typeof input!=='object')return Response.json({error:'Invalid search request.'},{status:400});
  const parameters:Record<string,string>={};
- for(const key of ['q','city','status','page','id','home','eventId','firm','kind','statusGroup']){
+ for(const key of ['q','city','status','page','id','home','eventId','firm','kind','statusGroup','practice']){
   const value=input[key];if(value===undefined)continue;
   if(typeof value!=='string'&&!(key==='page'&&typeof value==='number'&&Number.isFinite(value)))return Response.json({error:'Invalid search request.'},{status:400});
   parameters[key]=String(value).slice(0,2000);
