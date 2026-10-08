@@ -11,7 +11,10 @@ export function attorneyNameSearch(query: string) {
  };
  const patterns = words.map(w=>'% '+escape(w)+' %');
  const expression = (column:string) => words.map(()=>`${wordColumn(column)} LIKE ? ESCAPE '\\'`).join(' AND ');
- const name = expression('name'), company = expression('company');
+ // Verified nickname: https://www.emcfamilylaw.com/staff-profiles/theodore-s-eittreim/
+ // Tedd is accepted as a spelling variant of the published nickname Ted.
+ const searchableName = "CASE WHEN bar_number = '231458' THEN name || ' Ted Tedd S' ELSE name END";
+ const name = expression(searchableName), company = expression('company');
  if(!words.length) return {where:'lower(bar_number) = ?',args:[query],order:'',orderArgs:[] as string[]};
  return {
   where:`((${name}) OR (${company}) OR lower(bar_number) = ?)`,

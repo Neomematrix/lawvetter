@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-10-08T21:26:21Z",
+  "sourceTotal": 52304,
+  "sourceUnique": 52304,
+  "importedUnique": 52304,
+  "missing": [],
+  "extra": [],
+  "eittreim": [
+    {
+      "barNumber": "231458",
+      "name": "Theodore Scott Eittreim",
+      "status": "Active Member in Good Standing"
+    }
+  ]
+}

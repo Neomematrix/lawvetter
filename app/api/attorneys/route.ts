@@ -1,56 +1,57 @@
 import { rawDb } from '../../../db/raw';
 import { attorneyNameSearch } from './search';
-export async function GET(request: Request) {
+const fields = 'bar_number,name,company,city,county,status,admit_date,imported_at';
+async function handle(parameters: Record<string, string>, record = false) {
  try {
-  const u = new URL(request.url), db = rawDb();
-  const id = u.searchParams.get('id');
-  if (id) {
-   const attorney = await db.prepare('SELECT * FROM attorneys WHERE bar_number = ?').bind(id).first();
-   return Response.json({attorney}, {status: attorney ? 200 : 404});
+  const db = rawDb(), id = parameters.id;
+  if (parameters.home === '1') {
+   const [trending,statuses] = await Promise.all([
+    db.prepare(`SELECT ${fields.split(',').map(f=>'a.'+f).join(',')},count(*) AS searches FROM attorney_search_events e JOIN attorneys a ON a.bar_number=e.bar_number WHERE e.created_at >= ? GROUP BY a.bar_number ORDER BY searches DESC,max(e.created_at) DESC,a.name COLLATE NOCASE LIMIT 10`).bind(new Date(Date.now()-7*86400000).toISOString()).all(),
+    db.prepare('SELECT DISTINCT status FROM attorneys ORDER BY status').all<{status:string}>()
+   ]);
+   return Response.json({trending:trending.results,statuses:statuses.results.map(r=>r.status)});
   }
-  const q = (u.searchParams.get('q') || '').trim().slice(0,150).toLowerCase();
-  const city = (u.searchParams.get('city') || '').trim().slice(0,100).toLowerCase();
-  const status = (u.searchParams.get('status') || '').trim().slice(0,100);
-  const page = Math.min(10000, Math.max(1, Number.parseInt(u.searchParams.get('page') || '1') || 1));
-  const clauses: string[] = [], args: string[] = [];
-  const escape = (s: string) => s.replace(/[\\%_]/g, '\\$&');
-  const search = q ? attorneyNameSearch(q) : null;
-  if(search) {clauses.push(search.where); args.push(...search.args);}
-  if(city) {clauses.push("lower(city) LIKE ? ESCAPE '\\'"); args.push('%'+city.split(/\s+/).map(escape).join('%')+'%');}
-  if(status) {clauses.push('status = ?'); args.push(status);}
-  const where = clauses.length ? ' WHERE '+clauses.join(' AND ') : '';
-  const [rows,count,all,statuses] = await Promise.all([
-   db.prepare('SELECT bar_number,name,company,city,county,status,admit_date,imported_at FROM attorneys'+where+' ORDER BY '+(search?.order || '')+'name COLLATE NOCASE,bar_number LIMIT 25 OFFSET ?').bind(...args,...(search?.orderArgs || []),(page-1)*25).all(),
+  if(id && !record) {
+   const attorney=await db.prepare('SELECT * FROM attorneys WHERE bar_number = ?').bind(id).first();
+   return Response.json({attorney},{status:attorney?200:404});
+  }
+  const q=(parameters.q||'').trim().slice(0,150).toLowerCase(), city=(parameters.city||'').trim().slice(0,100).toLowerCase(), status=(parameters.status||'').trim().slice(0,100);
+  const page=Math.min(10000,Math.max(1,Number.parseInt(parameters.page||'1')||1));
+  const clauses:string[]=[],args:string[]=[];
+  const escape=(s:string)=>s.replace(/[\\%_]/g,'\\$&');
+  const search=q?attorneyNameSearch(q):null;
+  if(search){clauses.push(search.where);args.push(...search.args);}
+  if(city){clauses.push("lower(city) LIKE ? ESCAPE '\\'");args.push('%'+city.split(/\s+/).map(escape).join('%')+'%');}
+  if(status){clauses.push('status = ?');args.push(status);}
+  const where=clauses.length?' WHERE '+clauses.join(' AND '):'';
+  const [rows,count,all]=await Promise.all([
+   db.prepare('SELECT '+fields+' FROM attorneys'+where+' ORDER BY '+(search?.order||'')+'name COLLATE NOCASE,bar_number LIMIT 25 OFFSET ?').bind(...args,...(search?.orderArgs||[]),(page-1)*25).all<{bar_number:string}>(),
    db.prepare('SELECT count(*) AS total FROM attorneys'+where).bind(...args).first<{total:number}>(),
-   db.prepare('SELECT count(*) AS total,max(imported_at) AS updated FROM attorneys').first<{total:number,updated:string}>(),
-   db.prepare('SELECT DISTINCT status FROM attorneys ORDER BY status').all<{status:string}>()
+   db.prepare('SELECT count(*) AS total,max(imported_at) AS updated FROM attorneys').first<{total:number,updated:string}>()
   ]);
-  return Response.json({attorneys:rows.results,total:count?.total||0,page,totalImported:all?.total||0,updated:all?.updated,statuses:statuses.results.map((r: {status: string})=>r.status)});
- } catch(error) {console.error('Attorney search failed',error);return Response.json({error:'Attorney records are temporarily unavailable. Please try again.'},{status:503});}
-}
-
-// Keep browser searches on a stable URL; filters are read-only request data.
-export async function POST(request: Request) {
- let parameters: Record<string, unknown>;
- try {
-  parameters = await request.json() as Record<string, unknown>;
- } catch {
-  return Response.json({error:'Invalid search request.'},{status:400});
- }
- if (!parameters || Array.isArray(parameters) || typeof parameters !== 'object') {
-  return Response.json({error:'Invalid search request.'},{status:400});
- }
- const url = new URL(request.url);
- url.search = '';
- for (const key of ['q','city','status','page','id']) {
-  const value = parameters[key];
-  if (value === undefined) continue;
-  if (typeof value !== 'string' && !(key === 'page' && typeof value === 'number' && Number.isFinite(value))) {
-   return Response.json({error:'Invalid search request.'},{status:400});
+  const eventId=parameters.eventId;
+  if(record && q && eventId && /^[0-9a-f-]{36}$/i.test(eventId)) {
+   let bar=count?.total===1?rows.results[0]?.bar_number:undefined;
+   if(id) {
+    const match=await db.prepare('SELECT bar_number FROM attorneys'+where+' AND bar_number = ?').bind(...args,id).first<{bar_number:string}>();
+    bar=match?.bar_number;
+   }
+   if(bar) await db.prepare('INSERT OR IGNORE INTO attorney_search_events(event_id,bar_number,created_at) VALUES(?,?,?)').bind(eventId,bar,new Date().toISOString()).run();
   }
-  url.searchParams.set(key,String(value).slice(0,2000));
+  if(id){const attorney=await db.prepare('SELECT * FROM attorneys WHERE bar_number = ?').bind(id).first();return Response.json({attorney},{status:attorney?200:404});}
+  return Response.json({attorneys:rows.results,total:count?.total||0,page,totalImported:all?.total||0,updated:all?.updated});
+ } catch(error){console.error('Attorney search failed',error);return Response.json({error:'Attorney records are temporarily unavailable. Please try again.'},{status:503});}
+}
+export async function GET(request:Request){return handle(Object.fromEntries(new URL(request.url).searchParams));}
+export async function POST(request:Request){
+ let input:Record<string,unknown>;
+ try{input=await request.json();}catch{return Response.json({error:'Invalid search request.'},{status:400});}
+ if(!input||Array.isArray(input)||typeof input!=='object')return Response.json({error:'Invalid search request.'},{status:400});
+ const parameters:Record<string,string>={};
+ for(const key of ['q','city','status','page','id','home','eventId']){
+  const value=input[key];if(value===undefined)continue;
+  if(typeof value!=='string'&&!(key==='page'&&typeof value==='number'&&Number.isFinite(value)))return Response.json({error:'Invalid search request.'},{status:400});
+  parameters[key]=String(value).slice(0,2000);
  }
- const response = await GET(new Request(url,{headers:request.headers}));
- response.headers.set('Cache-Control','private, no-store');
- return response;
+ const response=await handle(parameters,true);response.headers.set('Cache-Control','private, no-store');return response;
 }

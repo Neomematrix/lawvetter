@@ -7,6 +7,8 @@ type Tab = "profile" | "referral";
 
 export default function Home() {
   const [tab, setTab] = useState<Tab>("profile");
+  const [homeKey,setHomeKey]=useState(0);
+  function goHome(){setTab('profile');setHomeKey(k=>k+1);}
   const [referralSent, setReferralSent] = useState(false);
 
   function submitReferral(event: FormEvent<HTMLFormElement>) {
@@ -18,13 +20,13 @@ export default function Home() {
     <main>
       <header className="site-header">
         <div className="nav-shell">
-          <button className="brand" onClick={() => setTab("profile")} aria-label="CounselCheck home">
+          <button className="brand" onClick={goHome} aria-label="CounselCheck home">
             <span className="brand-mark">C</span>
             <span>COUNSEL<span>CHECK</span></span>
           </button>
           <nav aria-label="Primary navigation">
-            <button className={tab === "profile" ? "active" : ""} onClick={() => setTab("profile")}>
-              Attorney profiles
+            <button className={tab === "profile" ? "active" : ""} onClick={goHome}>
+              Home
             </button>
             <button className={tab === "referral" ? "active" : ""} onClick={() => setTab("referral")}>
               Find an attorney
@@ -37,7 +39,7 @@ export default function Home() {
       </header>
 
       {tab === "profile" ? (
-        <GeorgiaDirectory />
+        <GeorgiaDirectory key={homeKey} />
       ) : (
         <section className="referral-page">
           <div className="referral-hero">
@@ -65,7 +67,7 @@ export default function Home() {
                   <p className="section-kicker">Request received</p>
                   <h2>Thank you for trusting us.</h2>
                   <p>A referral specialist will review your information and follow up within one business day.</p>
-                  <button onClick={() => setTab("profile")}>Return to attorney profiles</button>
+                  <button onClick={goHome}>Return to attorney profiles</button>
                 </div>
               ) : (
                 <form onSubmit={submitReferral}>
