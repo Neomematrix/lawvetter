@@ -12,7 +12,7 @@ export async function PUT(request:Request){
  try{
   const text=await request.text();if(text.length>5000000)return Response.json({error:'Edition too large'},{status:413});
   const body=JSON.parse(text);const expectedUpdatedAt=body?.expectedUpdatedAt;
-  if(!validateEdition(body)||!(expectedUpdatedAt===null||typeof expectedUpdatedAt==='string'))return Response.json({error:'Expected 12 unique featured articles, at least two marked familyLaw, complete articles and expectedUpdatedAt.'},{status:400});
+  if(!validateEdition(body)||!(expectedUpdatedAt===null||typeof expectedUpdatedAt==='string'))return Response.json({error:'Expected 12 unique featured articles, at least two marked familyLaw, all featured marked usaOnly, complete articles and expectedUpdatedAt.'},{status:400});
   const current=await readNews();
   if(expectedUpdatedAt!==current.updatedAt)return Response.json({error:'Edition changed. Read and merge again.'},{status:409});
   const incoming=new Set(body.articles.map(a=>a.slug));

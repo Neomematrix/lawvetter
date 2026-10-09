@@ -266,6 +266,6 @@ const additionalSettlements = [
 ];
 
 export const settlements = [
- ...originalSettlements.map(story=>({...story,sourceName:'U.S. Department of Justice',status:'Civil agreement · no determination of liability',amountLabel:'Reported settlement',publishedAt:'2026-10-08T19:40:00-04:00'})),
- ...additionalSettlements.map(story=>({...story,sourceName:story.sourceName||'U.S. Department of Justice',status:story.status||'Civil agreement · no determination of liability',amountLabel:story.amountLabel||'Reported settlement',publishedAt:'2026-10-08T22:14:00-04:00'}))
+ ...originalSettlements.map(story=>({...story,usaOnly:true,sourceName:'U.S. Department of Justice',status:'Civil agreement · no determination of liability',amountLabel:'Reported settlement',publishedAt:'2026-10-08T19:40:00-04:00'})),
+ ...additionalSettlements.map(story=>({...story,usaOnly:true,sourceName:story.sourceName||'U.S. Department of Justice',status:story.status||'Civil agreement · no determination of liability',amountLabel:story.amountLabel||'Reported settlement',publishedAt:'2026-10-08T22:14:00-04:00'}))
 ].sort((a,b)=>b.sourceDate.localeCompare(a.sourceDate));

@@ -1,4 +1,4 @@
-export type NewsStory={slug:string;amount:string;amountLabel:string;topic:string;date:string;sourceDate:string;title:string;summary:string;url:string;sourceName:string;status:string;publishedAt:string;familyLaw?:boolean;sections:{heading:string;text:string}[]};
+export type NewsStory={slug:string;amount:string;amountLabel:string;topic:string;date:string;sourceDate:string;title:string;summary:string;url:string;sourceName:string;status:string;publishedAt:string;familyLaw?:boolean;usaOnly?:boolean;sections:{heading:string;text:string}[]};
 export type NewsEdition={articles:NewsStory[];featured:string[];updatedAt:string|null};
 export function validateEdition(value:unknown):value is Omit<NewsEdition,'updatedAt'>{
  if(!value||typeof value!=='object')return false;
@@ -12,5 +12,5 @@ export function validateEdition(value:unknown):value is Omit<NewsEdition,'update
   if(!Array.isArray(a.sections)||a.sections.length<2||a.sections.length>12||a.sections.some(s=>!s||typeof s.heading!=='string'||!s.heading.trim()||s.heading.length>300||typeof s.text!=='string'||!s.text.trim()||s.text.length>15000))return false;
  }
  const bySlug=new Map(x.articles.map(a=>[a.slug,a]));
- return bySlug.size===x.articles.length&&x.featured.every(s=>bySlug.has(s))&&x.featured.filter(s=>bySlug.get(s)?.familyLaw===true).length>=2;
+ return bySlug.size===x.articles.length&&x.featured.every(s=>bySlug.get(s)?.usaOnly===true)&&x.featured.filter(s=>bySlug.get(s)?.familyLaw===true).length>=2;
 }
