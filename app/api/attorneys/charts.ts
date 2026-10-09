@@ -8,7 +8,7 @@ export function monthStart(now=new Date()){
  return new Date(Date.UTC(year,month,1)-offset*3600000).toISOString();
 }
 export const attorneyChartSQL=`WITH counts AS (
- SELECT a.*,(SELECT photo_key FROM attorney_profiles p WHERE p.bar_number=a.bar_number) AS photo_key,count(*) AS searches FROM attorney_search_events e JOIN attorneys a ON a.bar_number=e.bar_number
+ SELECT a.*,(SELECT photo_key FROM attorney_profiles p WHERE p.bar_number=a.bar_number) AS photo_key,(SELECT practice_areas FROM attorney_profiles p WHERE p.bar_number=a.bar_number) AS practice_areas,count(*) AS searches FROM attorney_search_events e JOIN attorneys a ON a.bar_number=e.bar_number
  WHERE e.created_at >= ? AND e.created_at <= ? AND a.status='Active Member in Good Standing'
  GROUP BY a.bar_number
 ) SELECT *,rank() OVER (ORDER BY searches DESC) AS rank FROM counts ORDER BY searches DESC,name COLLATE NOCASE,bar_number LIMIT 100`;
