@@ -45,8 +45,8 @@ async function handle(parameters: Record<string, string>, record = false) {
    const area=practiceAreas.find(a=>a.id===parameters.practice);
    if(!area)return Response.json({error:'Unknown practice area.'},{status:400});
    const bars=Object.entries(practiceSources).filter(([,s])=>s.areas.includes(area.id)).map(([bar])=>bar);
-   clauses.push("(bar_number IN ("+(bars.length?bars.map(()=>'?').join(','):"NULL")+") OR bar_number IN (SELECT bar_number FROM attorney_profiles WHERE instr(',' || replace(lower(trim(practice_areas)), ', ', ',') || ',', ?) > 0))");
-   args.push(...bars,','+area.name.toLowerCase()+',');
+   clauses.push("(bar_number IN (SELECT value FROM json_each(?)) OR bar_number IN (SELECT bar_number FROM attorney_profiles WHERE instr(',' || replace(lower(trim(practice_areas)), ', ', ',') || ',', ?) > 0))");
+   args.push(JSON.stringify(bars),','+area.name.toLowerCase()+',');
   }
   const escape=(s:string)=>s.replace(/[\\%_]/g,'\\$&');
   const search=q?attorneyNameSearch(q):null;

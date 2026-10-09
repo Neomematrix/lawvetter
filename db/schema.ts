@@ -62,3 +62,18 @@ export const attorneyProfiles = sqliteTable('attorney_profiles', {
  claimedAt: text('claimed_at').notNull(),
  updatedAt: text('updated_at').notNull(),
 },t=>[index('profiles_owner_idx').on(t.ownerId)]);
+
+export const clientLeads = sqliteTable('client_leads', {
+ id:text('id').primaryKey(),
+ name:text('name').notNull(),
+ email:text('email').notNull(),
+ phone:text('phone').notNull().default(''),
+ city:text('city').notNull(),
+ practice:text('practice').notNull(),
+ summary:text('summary').notNull(),
+ contactMethod:text('contact_method').notNull(),
+ consentVersion:text('consent_version').notNull(),
+ status:text('status').notNull().default('new'),
+ createdAt:text('created_at').notNull(),
+ updatedAt:text('updated_at').notNull(),
+},t=>[index('leads_created_idx').on(t.createdAt),index('leads_email_created_idx').on(t.email,t.createdAt)]);

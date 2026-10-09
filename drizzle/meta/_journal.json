@@ -29,6 +29,13 @@
       "when": 1791496264167,
       "tag": "0003_conscious_bulldozer",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1791504998202,
+      "tag": "0004_sour_hercules",
+      "breakpoints": true
     }
   ]
 }
