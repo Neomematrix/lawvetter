@@ -103,8 +103,8 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
 
 /* Original supplied artwork, finished in metallic gold with CSS alpha masks. */
 .nav-shell>.brand{gap:20px}
-.nav-shell>.brand .brand-emblem{display:block;flex:0 0 auto;width:82px;height:108px;filter:drop-shadow(0 2px 1px #00000030)}
-.brand-emblem::before{content:"";display:block;width:100%;height:100%;background:linear-gradient(125deg,#b58d3d 0%,#cfad62 28%,#ddc186 44%,#c5a154 65%,#b78f40 82%,#cfad62 100%);-webkit-mask:var(--emblem) center/contain no-repeat;mask:var(--emblem) center/contain no-repeat}
+.nav-shell>.brand .brand-emblem{display:block;flex:0 0 auto;width:82px;height:108px;filter:drop-shadow(0 1px 0 #fff3b080) drop-shadow(0 3px 2px #00000066) drop-shadow(0 0 6px #e6b84038)}
+.brand-emblem::before{content:"";display:block;width:100%;height:100%;background:linear-gradient(125deg,#a86812 0%,#e5b743 20%,#fff1a6 35%,#d49c22 48%,#ffe99a 61%,#bc801b 78%,#f1cc65 100%);-webkit-mask:var(--emblem) center/contain no-repeat;mask:var(--emblem) center/contain no-repeat}
 .brand-emblem-left{--emblem:url('/brand/counsel-lawyer.svg')}
 .brand-emblem-right{--emblem:url('/brand/counsel-lawyer-right.png')}
 @media(max-width:700px){.nav-shell>.brand{font-size:clamp(20px,5.5vw,35px);gap:9px;letter-spacing:-1.2px}.nav-shell>.brand .brand-emblem{width:40px;height:60px}}
