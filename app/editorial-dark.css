@@ -95,3 +95,8 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
 .lawyer-poster .attorney-placeholder{position:absolute;width:56%;height:56%;left:22%;top:15%;object-fit:contain;filter:none}
 .chart-avatar img{width:100%;height:100%;object-fit:contain}
 .portrait .profile-placeholder{object-fit:contain;padding:8px}
+
+/* Give attorney record details a slightly stronger reading weight. */
+.directory-detail .profile-body{font-weight:600}
+.directory-detail .profile-body h3{font-weight:600}
+.directory-detail .profile-body dt,.directory-detail .profile-body dd,.directory-detail .profile-body p,.directory-detail .profile-body address,.directory-detail .profile-body a{font-weight:600}
