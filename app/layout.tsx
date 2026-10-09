@@ -1,18 +1,20 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { Geist, Cormorant_Garamond } from "next/font/google";
+import { Lato, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import "./editorial-dark.css";
 import {ShortlistProvider} from "./Shortlist";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const lato = Lato({
+  variable: "--font-lato",
   subsets: ["latin"],
+  weight: ["400", "700", "900"],
+  style: ["normal", "italic"],
 });
-
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -49,7 +51,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${cormorant.variable}`}>
+      <body className={`${lato.variable} ${jakarta.variable}`}>
         <ShortlistProvider>{children}</ShortlistProvider>
       </body>
     </html>
