@@ -1,5 +1,5 @@
 import {practiceAreas,practiceSources} from '../../practice-areas';
-import {discoveryData} from './charts';
+import {discoveryData,monthStart} from './charts';
 import { rawDb } from '../../../db/raw';
 import { firmKey, firmColumn } from './firm';
 import { attorneyNameSearch } from './search';
@@ -13,7 +13,7 @@ async function handle(parameters: Record<string, string>, record = false) {
    const page=Math.max(1,Math.min(10000,Number.parseInt(parameters.page||'1')||1));
    const where=firmColumn()+' = ?';
    const [rows,summary,locations]=await Promise.all([
-    db.prepare('SELECT '+fields+' FROM attorneys WHERE '+where+' ORDER BY name COLLATE NOCASE,bar_number LIMIT 25 OFFSET ?').bind(key,(page-1)*25).all(),
+    db.prepare('SELECT '+fields+' FROM attorneys WHERE '+where+" ORDER BY (SELECT count(*) FROM attorney_search_events e WHERE e.bar_number=attorneys.bar_number AND e.created_at>=? AND e.created_at<=?) DESC,name COLLATE NOCASE,bar_number LIMIT 25 OFFSET ?").bind(key,monthStart(),new Date().toISOString(),(page-1)*25).all(),
     db.prepare("SELECT count(*) AS total,sum(CASE WHEN status='Active Member in Good Standing' THEN 1 ELSE 0 END) AS active,max(imported_at) AS updated,min(company) AS name FROM attorneys WHERE "+where).bind(key).first<{total:number;active:number;updated:string;name:string}>(),
     db.prepare("SELECT DISTINCT city FROM attorneys WHERE "+where+" AND city <> '' ORDER BY city COLLATE NOCASE").bind(key).all<{city:string}>()
    ]);
