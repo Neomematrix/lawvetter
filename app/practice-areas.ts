@@ -12,6 +12,7 @@ export const practiceAreas = [
 // Curated from the linked professional sources; checked October 8–9, 2026.
 // These supplement the Bar roster, which does not contain practice areas.
 const originalSources:Record<string,{areas:string[];url:string}> = {
+ '356082':{areas:['personal-injury','criminal-defense'],url:'https://hineslaw.org/'},
  '231458':{areas:['family-law'],url:'https://www.emcfamilylaw.com/staff-profiles/theodore-s-eittreim/'},
  '360208':{areas:['family-law','litigation','personal-injury','criminal-defense'],url:'https://www.banksstubbs.com/attorneys/eric-j-tatum/'},
  '646135':{areas:['employment-law','litigation'],url:'https://www.justiceatwork.com/our-team/amanda-a-farahany/'},
