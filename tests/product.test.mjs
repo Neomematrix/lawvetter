@@ -50,3 +50,51 @@ test('Expanded practice results paginate all matched records without a bind-per-
 test('Exact search totals stay out of visitor data and owner analytics reject other users',async()=>{const x=await runtime();x.seed('100001','Test Attorney');x.sql.prepare('INSERT INTO attorney_search_events VALUES(?,?,?)').run('event','100001',new Date().toISOString());const charts=await x.load('app/api/attorneys/charts.ts');const visible=await charts.discoveryData(x.db);assert.equal(visible.weekly.length,1);assert.equal('searches' in visible.weekly[0],false);const api=await x.load('app/api/admin/searches/route.ts');assert.equal((await api.GET(request({},'other','other@example.test'))).status,403);const owner=await(await api.GET(request({},'admin','admin@example.test'))).json();assert.equal(owner.weekly[0].searches,1);});
 test('Firm roster sorts by current monthly search rank before name',async()=>{const x=await runtime();x.seed('100001','Aaron First');x.seed('100002','Zoe Popular');const now=new Date().toISOString();x.sql.prepare('INSERT INTO attorney_search_events VALUES(?,?,?)').run('one','100002',now);const api=await x.load('app/api/attorneys/route.ts');const results=await(await api.POST(request({firm:'Example Legal LLC'}))).json();assert.deepEqual(results.attorneys.map(a=>a.bar_number),['100002','100001']);assert.equal('searches' in results.attorneys[0],false);});
 test('Attorney analytics require sign-in and approved ownership, and never expose another profile',async()=>{const x=await runtime();x.seed('100001','Attorney One');x.seed('100002','Attorney Two');for(const [bar,owner] of [['100001','one'],['100002','two']])x.sql.prepare('INSERT INTO attorney_profiles(bar_number,owner_id,claimed_at,updated_at) VALUES(?,?,?,?)').run(bar,owner,'2026-10-08','2026-10-08');const api=await x.load('app/api/account/analytics/route.ts');assert.equal((await api.GET(request({},''))).status,401);assert.equal((await api.GET(request({},'unapproved'))).status,403);const result=await(await api.GET(request({},'one'))).json();assert.equal(result.profiles.length,1);assert.equal(result.profiles[0].bar_number,'100001');});
+
+test('Client reviews require identity, private profile, independently approved relationship and publication consent',async()=>{
+ const x=await runtime();x.seed('100001','Fictional Attorney A');x.seed('100002','Fictional Attorney B');
+ const api=await x.load('app/api/client-reviews/route.ts');
+ const post=(d,u='client-a',email=u+'@example.test')=>api.POST(request(d,u,email));
+ const publicReviews=async()=>await(await api.GET(new Request('https://counsel.test/api/client-reviews?bar=100001'))).json();
+ const submitted={action:'request',bar:'100001',court:'Fictional Superior Court',county:'Fictional County',docket:'PRIVATE-CASE-42',attestation:true};
+ const id=JSON.stringify(['client-a','100001']);
+ const review={action:'publish',id,body:'My attorney explained the process clearly and responded to my questions.',mode:'anonymous',consent:true};
+ assert.equal((await post({action:'account'},'')).status,401);
+ assert.equal((await post(submitted)).status,403);
+ assert.equal((await post({action:'create-profile',legalName:'Private Client Name',consent:true})).status,200);
+ assert.equal((await post(submitted)).status,200);
+ assert.equal((await post(submitted)).status,409);
+ assert.equal((await post(review)).status,403);
+ assert.equal((await post({action:'admin-list'},'client-b')).status,403);
+ assert.equal((await post({action:'account'},'client-b')).status,200);
+ assert.equal((await(await post({action:'account'},'client-b')).json()).requests.length,0);
+ const approve={action:'decide',id,decision:'approve',note:'Identity and representation independently checked.',source:'https://researchga.tylerhost.net/CourtRecordsSearch/case/test-fixture',identityEvidence:'Test fixture: independent identity evidence checked in controlled test.',representationEvidence:'Test fixture: appearance document names this client and attorney.',identityChecked:true,recordChecked:true,relationshipChecked:true};
+ assert.equal((await post(approve,'client-b')).status,403);
+ assert.equal((await post({...approve,identityChecked:false},'owner','admin@example.test')).status,400);
+ assert.equal((await post({...approve,source:'https://researchga.tylerhost.net/auth/login?signin=x'},'owner','admin@example.test')).status,400);
+ assert.equal((await post({...approve,source:'https://example.test/case'},'owner','admin@example.test')).status,400);
+ assert.equal((await post(approve,'owner','admin@example.test')).status,200);
+ assert.equal((await post(review,'client-b')).status,403);
+ assert.equal((await post({...review,consent:false})).status,400);
+ assert.equal((await post(review)).status,200);
+ let published=await publicReviews();assert.equal(published.reviews.length,1);assert.equal(published.reviews[0].author,'Anonymous');
+ const encoded=JSON.stringify(published);for(const secret of ['Private Client Name','PRIVATE-CASE-42','client-a','identity_evidence','representation_evidence','Fictional County','@example.test'])assert.ok(!encoded.includes(secret));
+ assert.deepEqual(Object.keys(published.reviews[0]).sort(),['author','body','publishedAt']);
+ assert.equal((await post({...review,mode:'named'})).status,200);assert.equal((await publicReviews()).reviews[0].author,'Private Client Name');
+ // Attempts to rename an approved identity must not change public attribution.
+ await post({action:'create-profile',legalName:'Different Person',consent:true});
+ assert.equal((await(await post({action:'account'})).json()).profile.legal_name,'Private Client Name');
+ // Same relationship cannot be reused by another account.
+ await post({action:'create-profile',legalName:'Private Client Name',consent:true},'client-b');await post(submitted,'client-b');
+ assert.equal((await post({...approve,id:JSON.stringify(['client-b','100001'])},'owner','admin@example.test')).status,409);
+ assert.equal((await post({action:'withdraw',id})).status,200);assert.equal((await publicReviews()).reviews.length,0);
+ await post(review);
+ assert.equal((await post({action:'decide',id,decision:'revoke',note:'Identity evidence no longer supports approval.'},'owner','admin@example.test')).status,200);
+ assert.equal((await publicReviews()).reviews.length,0);assert.equal((await post(review)).status,403);
+ assert.equal(x.sql.prepare('select count(*) as n from client_verification_audit where verification_id=?').get(id).n,3);
+ // Owner cannot approve their own client request.
+ await post({action:'create-profile',legalName:'Owner Test Client',consent:true},'owner','admin@example.test');await post({...submitted,bar:'100002'},'owner','admin@example.test');
+ assert.equal((await post({...approve,id:JSON.stringify(['owner','100002'])},'owner','admin@example.test')).status,409);
+ const hostile=new Request('https://counsel.test/api/client-reviews',{method:'POST',headers:{Origin:'https://evil.test','oai-authenticated-user-id':'client-a','oai-authenticated-user-email':'client-a@example.test'},body:JSON.stringify(review)});
+ assert.equal((await api.POST(hostile)).status,403);
+});

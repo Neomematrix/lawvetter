@@ -131,3 +131,12 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
 .sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 @media(max-width:900px){.discovery-search form{grid-template-columns:140px minmax(0,1fr)}.discovery-search .search-city{grid-column:1}.discovery-search .search-submit{grid-column:2}}
 @media(max-width:480px){.discovery-search form{grid-template-columns:minmax(0,1fr);gap:10px}.discovery-search .search-city,.discovery-search .search-submit{grid-column:1}}
+
+.client-review-form{max-width:760px;display:grid;gap:18px;margin:24px 0;padding:24px;border:1px solid #D8D4C9;background:#fff;border-radius:8px}
+.client-review-form label{display:grid;gap:8px;font-size:16px;line-height:1.5}
+.client-review-form input:not([type=checkbox]),.client-review-form textarea,.client-review-form select{box-sizing:border-box;width:100%;min-width:0;font-size:16px}
+.client-review-form .claim-attestation{display:flex;align-items:flex-start;gap:12px}
+.client-review-form input[type=checkbox]{width:20px;height:20px;flex:0 0 20px;margin:3px 0}
+.client-review-form .form-actions{display:flex;flex-wrap:wrap;gap:12px}.client-review-account .review-card{margin:24px 0}
+.verified-client-review{border-top:1px solid #D8D4C9;padding:18px 0;overflow-wrap:anywhere}.verified-client-review time{font-size:13px;color:#5B6268}.verified-client-badge{display:inline-block;background:#e6f3eb;color:#21653f;font-size:13px;padding:5px 9px;border-radius:5px}.client-reviews .outline-button{display:inline-block;margin-top:16px}.client-reviews .record-note{font-size:14px;line-height:1.6}
+@media(max-width:600px){.client-review-form{padding:16px}.client-review-form .form-actions>*{width:100%}}

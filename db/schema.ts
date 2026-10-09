@@ -83,3 +83,40 @@ export const newsState = sqliteTable('news_state', {
  payload: text('payload').notNull(),
  updatedAt: text('updated_at').notNull(),
 });
+
+export const clientProfiles = sqliteTable('client_profiles', {
+ userId:text('user_id').primaryKey(),
+ legalName:text('legal_name').notNull(),
+ email:text('email').notNull(),
+ createdAt:text('created_at').notNull(),
+});
+export const clientVerifications = sqliteTable('client_verifications', {
+ id:text('id').primaryKey(),
+ userId:text('user_id').notNull().references(()=>clientProfiles.userId),
+ barNumber:text('bar_number').notNull().references(()=>attorneys.barNumber),
+ legalName:text('legal_name').notNull(),
+ court:text('court').notNull(),
+ county:text('county').notNull(),
+ docket:text('docket').notNull(),
+ relationshipKey:text('relationship_key').notNull(),
+ status:text('status').notNull().default('pending'),
+ submittedAt:text('submitted_at').notNull(),
+ reviewedAt:text('reviewed_at'),
+ reviewedBy:text('reviewed_by'),
+ sourceUrl:text('source_url').notNull().default(''),
+ identityEvidence:text('identity_evidence').notNull().default(''),
+ representationEvidence:text('representation_evidence').notNull().default(''),
+ decisionNote:text('decision_note').notNull().default(''),
+ reviewBody:text('review_body').notNull().default(''),
+ publicMode:text('public_mode').notNull().default('anonymous'),
+ publishedAt:text('published_at'),
+ updatedAt:text('updated_at').notNull(),
+},t=>[index('client_verification_user_idx').on(t.userId),index('client_verification_status_idx').on(t.status),index('client_verification_bar_idx').on(t.barNumber),index('client_verification_relationship_idx').on(t.relationshipKey)]);
+export const clientVerificationAudit = sqliteTable('client_verification_audit', {
+ id:text('id').primaryKey(),
+ verificationId:text('verification_id').notNull().references(()=>clientVerifications.id),
+ actorId:text('actor_id').notNull(),
+ action:text('action').notNull(),
+ note:text('note').notNull(),
+ createdAt:text('created_at').notNull(),
+});
