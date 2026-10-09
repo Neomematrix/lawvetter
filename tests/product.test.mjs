@@ -56,7 +56,7 @@ test('Client reviews require identity, private profile, independently approved r
  const api=await x.load('app/api/client-reviews/route.ts');
  const post=(d,u='client-a',email=u+'@example.test')=>api.POST(request(d,u,email));
  const publicReviews=async()=>await(await api.GET(new Request('https://counsel.test/api/client-reviews?bar=100001'))).json();
- const submitted={action:'request',bar:'100001',court:'Fictional Superior Court',county:'Fictional County',docket:'PRIVATE-CASE-42',attestation:true};
+ const submitted={action:'request',bar:'100001',docket:'PRIVATE-CASE-42',attestation:true};
  const id=JSON.stringify(['client-a','100001']);
  const review={action:'publish',id,body:'My attorney explained the process clearly and responded to my questions.',mode:'anonymous',consent:true};
  assert.equal((await post({action:'account'},'')).status,401);
@@ -70,7 +70,8 @@ test('Client reviews require identity, private profile, independently approved r
  assert.equal((await post({action:'admin-list'},'client-b')).status,403);
  assert.equal((await post({action:'account'},'client-b')).status,200);
  assert.equal((await(await post({action:'account'},'client-b')).json()).requests.length,0);
- const approve={action:'decide',id,decision:'approve',note:'Identity and representation independently checked.',source:'https://researchga.tylerhost.net/CourtRecordsSearch/case/test-fixture',identityEvidence:'Test fixture: independent identity evidence checked in controlled test.',representationEvidence:'Test fixture: appearance document names this client and attorney.',identityChecked:true,recordChecked:true,relationshipChecked:true};
+ const approve={action:'decide',id,decision:'approve',court:'Fictional Superior Court',county:'Fictional County',note:'Identity and representation independently checked.',source:'https://researchga.tylerhost.net/CourtRecordsSearch/case/test-fixture',identityEvidence:'Test fixture: independent identity evidence checked in controlled test.',representationEvidence:'Test fixture: appearance document names this client and attorney.',identityChecked:true,recordChecked:true,relationshipChecked:true};
+ assert.equal((await post({...approve,court:'',county:''},'owner','admin@example.test')).status,400);
  assert.equal((await post(approve,'client-b')).status,403);
  assert.equal((await post({...approve,identityChecked:false},'owner','admin@example.test')).status,400);
  assert.equal((await post({...approve,source:'https://researchga.tylerhost.net/auth/login?signin=x'},'owner','admin@example.test')).status,400);

@@ -42,7 +42,7 @@ export async function POST(request:Request){
   }
   if(action==='request'){
    const bar=str(d.bar),court=str(d.court),county=str(d.county),docket=str(d.docket);
-   if(!/^\d{1,20}$/.test(bar)||court.length<3||court.length>150||county.length<3||county.length>80||docket.length<3||docket.length>100||!normal(docket)||d.attestation!==true)return fail('Enter the attorney, Georgia court, county, and case docket number, and confirm you were this attorney’s client.');
+   if(!/^\d{1,20}$/.test(bar)||court.length>150||county.length>80||docket.length<3||docket.length>100||!normal(docket)||d.attestation!==true)return fail('Enter the attorney and case docket number, and confirm you were this attorney’s client.');
    const profile=await db.prepare('SELECT legal_name FROM client_profiles WHERE user_id=?').bind(user).first<{legal_name:string}>();
    if(!profile)return fail('Create your private client profile first.',403);
    if(!await db.prepare('SELECT bar_number FROM attorneys WHERE bar_number=?').bind(bar).first())return fail('Attorney not found.',404);
@@ -72,13 +72,18 @@ export async function POST(request:Request){
    if(!admin)return fail('Only the site owner can verify clients.',403);
    const id=str(d.id),decision=str(d.decision),note=str(d.note),source=str(d.source),identity=str(d.identityEvidence),representation=str(d.representationEvidence);
    if(!['approve','reject','revoke'].includes(decision)||note.length<5||note.length>1000)return fail('Select a decision and enter a short note for the client.');
+   const record=await db.prepare('SELECT court,county,docket,legal_name,bar_number,relationship_key FROM client_verifications WHERE id=?').bind(id).first<{court:string;county:string;docket:string;legal_name:string;bar_number:string;relationship_key:string}>();
+   if(!record)return fail('Verification request not found.',404);
+   const court=decision==='approve'?str(d.court):record.court,county=decision==='approve'?str(d.county):record.county;
+   const key=decision==='approve'?JSON.stringify([normal(county),normal(court),normal(record.docket),normal(record.legal_name),record.bar_number]):record.relationship_key;
    if(decision==='approve'){
+    if(court.length<3||court.length>150||county.length<3||county.length>80||!normal(court)||!normal(county))return fail('Resolve the correct Georgia county and court from the case record before approval.');
     let validSource=false;try{const u=new URL(source);validSource=u.protocol==='https:'&&u.hostname==='researchga.tylerhost.net'&&!u.username&&!u.password&&!u.pathname.startsWith('/auth/');}catch{}
     if(!validSource||identity.length<20||identity.length>2000||representation.length<20||representation.length>2000||d.identityChecked!==true||d.relationshipChecked!==true||d.recordChecked!==true)return fail('Independently verify identity, check the court record and attorney–client relationship, and record both evidence notes plus a re:SearchGA case-page URL (not a login URL).');
    }
    const status=decision==='approve'?'approved':decision==='reject'?'rejected':'revoked';
    const previous=decision==='revoke'?'approved':'pending';
-   const r=await db.prepare("UPDATE client_verifications SET status=?,decision_note=?,source_url=?,identity_evidence=?,representation_evidence=?,reviewed_at=?,reviewed_by=?,updated_at=? WHERE id=? AND status=? AND user_id<>? AND (?<>'approved' OR NOT EXISTS(SELECT 1 FROM client_verifications other WHERE other.relationship_key=client_verifications.relationship_key AND other.id<>client_verifications.id AND other.status='approved'))").bind(status,note,source,identity,representation,now,user,now,id,previous,user,status).run();
+   const r=await db.prepare("UPDATE client_verifications SET court=?,county=?,relationship_key=?,status=?,decision_note=?,source_url=?,identity_evidence=?,representation_evidence=?,reviewed_at=?,reviewed_by=?,updated_at=? WHERE id=? AND status=? AND user_id<>? AND (?<>'approved' OR NOT EXISTS(SELECT 1 FROM client_verifications other WHERE other.relationship_key=? AND other.id<>client_verifications.id AND other.status='approved'))").bind(court,county,key,status,note,source,identity,representation,now,user,now,id,previous,user,status,key).run();
    if(!r.meta.changes)return fail('Cannot approve your own request, reuse an approved relationship, or change a request that is no longer in the expected state.',409);
    await db.prepare('INSERT INTO client_verification_audit(id,verification_id,actor_id,action,note,created_at) VALUES(?,?,?,?,?,?)').bind(crypto.randomUUID(),id,user,status,JSON.stringify({note,source,identity,representation}),now).run();
    return json({saved:true});
