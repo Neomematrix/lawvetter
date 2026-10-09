@@ -1,3 +1,4 @@
+import {verifiedFirmRoster} from '../../verified-firm-rosters';
 import {practiceAreas,practiceSources} from '../../practice-areas';
 import {discoveryData,monthStart} from './charts';
 import { rawDb } from '../../../db/raw';
@@ -11,15 +12,17 @@ async function handle(parameters: Record<string, string>, record = false) {
    const key=firmKey(parameters.firm.slice(0,500));
    if(!key)return Response.json({error:'Enter a firm name.'},{status:400});
    const page=Math.max(1,Math.min(10000,Number.parseInt(parameters.page||'1')||1));
-   const where=firmColumn()+' = ?';
+   const roster=verifiedFirmRoster(key);
+   const where=roster?'bar_number IN (SELECT value FROM json_each(?))':firmColumn()+' = ?';
+   const rosterBinding=roster?JSON.stringify(roster.bars):key;
    const [rows,summary,locations]=await Promise.all([
-    db.prepare('SELECT '+fields+' FROM attorneys WHERE '+where+" ORDER BY (SELECT count(*) FROM attorney_search_events e WHERE e.bar_number=attorneys.bar_number AND e.created_at>=? AND e.created_at<=?) DESC,name COLLATE NOCASE,bar_number LIMIT 25 OFFSET ?").bind(key,monthStart(),new Date().toISOString(),(page-1)*25).all(),
-    db.prepare("SELECT count(*) AS total,sum(CASE WHEN status='Active Member in Good Standing' THEN 1 ELSE 0 END) AS active,max(imported_at) AS updated,min(company) AS name FROM attorneys WHERE "+where).bind(key).first<{total:number;active:number;updated:string;name:string}>(),
-    db.prepare("SELECT DISTINCT city FROM attorneys WHERE "+where+" AND city <> '' ORDER BY city COLLATE NOCASE").bind(key).all<{city:string}>()
+    db.prepare('SELECT '+fields+' FROM attorneys WHERE '+where+" ORDER BY (SELECT count(*) FROM attorney_search_events e WHERE e.bar_number=attorneys.bar_number AND e.created_at>=? AND e.created_at<=?) DESC,name COLLATE NOCASE,bar_number LIMIT 25 OFFSET ?").bind(rosterBinding,monthStart(),new Date().toISOString(),(page-1)*25).all(),
+    db.prepare("SELECT count(*) AS total,sum(CASE WHEN status='Active Member in Good Standing' THEN 1 ELSE 0 END) AS active,max(imported_at) AS updated,min(company) AS name FROM attorneys WHERE "+where).bind(rosterBinding).first<{total:number;active:number;updated:string;name:string}>(),
+    db.prepare("SELECT DISTINCT city FROM attorneys WHERE "+where+" AND city <> '' ORDER BY city COLLATE NOCASE").bind(rosterBinding).all<{city:string}>()
    ]);
    if(!summary?.total)return Response.json({error:'No firm records were found. Check the firm name and try again.'},{status:404});
    if(record && parameters.eventId && /^[0-9a-f-]{36}$/i.test(parameters.eventId))await db.prepare('INSERT OR IGNORE INTO firm_search_events(event_id,firm_key,firm_name,created_at) VALUES(?,?,?,?)').bind(parameters.eventId,key,summary.name,new Date().toISOString()).run();
-   return Response.json({firm:{name:summary.name,total:summary.total,active:summary.active,updated:summary.updated,cities:locations.results.map(r=>r.city)},attorneys:rows.results,page});
+   return Response.json({firm:{name:roster?.name||summary.name,verifiedRoster:roster,total:summary.total,active:summary.active,updated:summary.updated,cities:locations.results.map(r=>r.city)},attorneys:roster?rows.results.map(a=>({...a,company:roster.name})):rows.results,page});
   }
   if(parameters.home==='1')return Response.json(await discoveryData(db));
   if(id && !record) {
