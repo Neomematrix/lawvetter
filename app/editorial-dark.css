@@ -47,3 +47,4 @@ footer{border-top:4px double #8c773b}.footer-brand{font-family:Georgia,serif;fon
 .popular-carousel-grid .lawyer-card-body{display:grid;grid-template-rows:subgrid;grid-row:span 6;row-gap:0}
 .lawyer-card h3{min-height:2.5em}.lawyer-card .card-firm{min-height:3em}
 .popular-carousel-grid .lawyer-card-body>.save-attorney{align-self:start}
+.practice-tile .practice-tile-icon{display:block;width:38px;height:38px;object-fit:contain}
