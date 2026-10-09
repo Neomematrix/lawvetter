@@ -154,3 +154,6 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
 .nav-shell>.brand .brand-wordmark{font-family:var(--font-editorial),Georgia,serif;font-weight:700;letter-spacing:-.045em;font-size:1.13em;line-height:1.1;text-transform:none}.brand-wordmark>span{font-style:italic;font-weight:600}
 
 .rank,.poster-rank{background:linear-gradient(125deg,#a86812 0%,#e5b743 20%,#fff1a6 35%,#d49c22 48%,#ffe99a 61%,#bc801b 78%,#f1cc65 100%);color:#172A3A!important;text-shadow:none}
+
+.spotlight-score>strong{color:#bc801b;background:linear-gradient(125deg,#a86812 0%,#e5b743 20%,#fff1a6 35%,#d49c22 48%,#ffe99a 61%,#bc801b 78%,#f1cc65 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+@media(forced-colors:active){.spotlight-score>strong{background:none;color:CanvasText;-webkit-text-fill-color:CanvasText}}
