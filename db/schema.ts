@@ -1,4 +1,4 @@
-import { sqliteTable, text, index, uniqueIndex } from 'drizzle-orm/sqlite-core';
+import { integer, sqliteTable, text, index, uniqueIndex } from 'drizzle-orm/sqlite-core';
 export const attorneys = sqliteTable('attorneys', {
  barNumber: text('bar_number').primaryKey(),
  sourceId: text('source_id').notNull(),
@@ -129,3 +129,28 @@ export const clientAccountEmails = sqliteTable('client_account_emails', {
  email:text('email').primaryKey(),
  userId:text('user_id').notNull().references(()=>clientProfiles.userId),
 },t=>[uniqueIndex('client_account_emails_user_idx').on(t.userId)]);
+
+export const clientPasswords=sqliteTable('client_passwords',{
+ userId:text('user_id').primaryKey().references(()=>clientProfiles.userId),
+ passwordHash:text('password_hash').notNull(),
+ updatedAt:text('updated_at').notNull(),
+});
+export const clientSessions=sqliteTable('client_sessions',{
+ tokenHash:text('token_hash').primaryKey(),
+ userId:text('user_id').notNull().references(()=>clientProfiles.userId),
+ expiresAt:integer('expires_at').notNull(),
+},t=>[index('client_sessions_user_idx').on(t.userId)]);
+export const clientAuthLimits=sqliteTable('client_auth_limits',{
+ key:text('key').primaryKey(),
+ count:integer('count').notNull(),
+ expiresAt:integer('expires_at').notNull(),
+});
+export const clientApprovalEmails=sqliteTable('client_approval_emails',{
+ verificationId:text('verification_id').primaryKey().references(()=>clientVerifications.id),
+ id:text('id').notNull(),
+ recipient:text('recipient').notNull(),
+ status:text('status').notNull().default('pending'),
+ payload:text('payload').notNull().default(''),
+ firstAttempt:integer('first_attempt'),
+ providerId:text('provider_id').notNull().default(''),
+});

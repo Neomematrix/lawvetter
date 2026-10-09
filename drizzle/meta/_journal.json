@@ -57,6 +57,20 @@
       "when": 1791549881233,
       "tag": "0007_uneven_dorian_gray",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1791552351316,
+      "tag": "0008_eager_wilson_fisk",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1791552485981,
+      "tag": "0009_next_mikhail_rasputin",
+      "breakpoints": true
     }
   ]
 }

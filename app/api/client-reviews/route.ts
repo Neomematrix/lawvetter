@@ -1,3 +1,5 @@
+import {emailConfigured,sendApprovalEmail} from '../../../db/approval-email';
+import {clientIdentity} from '../../../db/client-auth';
 import {rawDb} from '../../../db/raw';
 import {profileIdentity,sameOrigin} from '../../../db/profile-access';
 const json=(body:unknown,status=200)=>Response.json(body,{status,headers:{'Cache-Control':'private, no-store'}});
@@ -14,13 +16,16 @@ export async function GET(request:Request){
 }
 export async function POST(request:Request){
  try{
-  const {user,email,admin}=profileIdentity(request);
-  if(!user||!email)return fail('Sign in to create a client profile or manage reviews.',401);
+  const platform=profileIdentity(request),client=await clientIdentity(request);
+  const admin=platform.admin;
+  let user=client?.user||'',email=client?.email||'';
   if(!sameOrigin(request))return fail('Invalid request origin.',403);
   const text=await request.text();if(text.length>20000)return fail('Request is too large.',413);
   let d:Record<string,unknown>;try{d=JSON.parse(text);}catch{return fail('Invalid request.');}
   if(!d||typeof d!=='object'||Array.isArray(d))return fail('Invalid request.');
   const db=rawDb(),action=str(d.action),now=new Date().toISOString();
+  if(action==='admin-list'||action==='decide'||action==='retry-email'){if(!admin)return fail('Only the site administrator can manage verification requests.',403);user=platform.user;email=platform.email;}
+  if(!user||!email)return fail('Log in to your client account to continue.',401);
   if(action==='account'){
    const profile=await db.prepare('SELECT legal_name,first_name,last_name,initial_docket,email,created_at FROM client_profiles WHERE user_id=?').bind(user).first();
    const rows=await db.prepare('SELECT v.id,v.bar_number,a.name AS attorney_name,v.legal_name,v.court,v.county,v.docket,v.status,v.decision_note,v.submitted_at,v.review_body,v.public_mode,v.published_at FROM client_verifications v JOIN attorneys a ON a.bar_number=v.bar_number WHERE v.user_id=? ORDER BY v.submitted_at DESC').bind(user).all();
@@ -63,10 +68,11 @@ export async function POST(request:Request){
    const r=await db.prepare('UPDATE client_verifications SET review_body=\'\',published_at=NULL,updated_at=? WHERE id=? AND user_id=?').bind(now,str(d.id),user).run();
    return r.meta.changes?json({saved:true}):fail('Review not found.',404);
   }
+  if(action==='retry-email')return json({emailStatus:await sendApprovalEmail(str(d.id))});
   if(action==='admin-list'){
    if(!admin)return fail('Only the site owner can access client verification records.',403);
-   const rows=await db.prepare("SELECT v.*,p.email,a.name AS attorney_name FROM client_verifications v JOIN client_profiles p ON p.user_id=v.user_id JOIN attorneys a ON a.bar_number=v.bar_number ORDER BY CASE WHEN v.status='pending' THEN 0 ELSE 1 END,v.submitted_at DESC LIMIT 200").all();
-   return json({requests:rows.results});
+   const rows=await db.prepare("SELECT v.*,p.email,a.name AS attorney_name,(SELECT status FROM client_approval_emails e WHERE e.verification_id=v.id) AS email_status FROM client_verifications v JOIN client_profiles p ON p.user_id=v.user_id JOIN attorneys a ON a.bar_number=v.bar_number ORDER BY CASE WHEN v.status='pending' THEN 0 ELSE 1 END,v.submitted_at DESC LIMIT 200").all();
+   return json({requests:rows.results,emailConfigured:emailConfigured()});
   }
   if(action==='decide'){
    if(!admin)return fail('Only the site owner can verify clients.',403);
@@ -83,10 +89,14 @@ export async function POST(request:Request){
    }
    const status=decision==='approve'?'approved':decision==='reject'?'rejected':'revoked';
    const previous=decision==='revoke'?'approved':'pending';
-   const r=await db.prepare("UPDATE client_verifications SET court=?,county=?,relationship_key=?,status=?,decision_note=?,source_url=?,identity_evidence=?,representation_evidence=?,reviewed_at=?,reviewed_by=?,updated_at=? WHERE id=? AND status=? AND user_id<>? AND (?<>'approved' OR NOT EXISTS(SELECT 1 FROM client_verifications other WHERE other.relationship_key=? AND other.id<>client_verifications.id AND other.status='approved'))").bind(court,county,key,status,note,source,identity,representation,now,user,now,id,previous,user,status,key).run();
-   if(!r.meta.changes)return fail('Cannot approve your own request, reuse an approved relationship, or change a request that is no longer in the expected state.',409);
-   await db.prepare('INSERT INTO client_verification_audit(id,verification_id,actor_id,action,note,created_at) VALUES(?,?,?,?,?,?)').bind(crypto.randomUUID(),id,user,status,JSON.stringify({note,source,identity,representation}),now).run();
-   return json({saved:true});
+   const results=await db.batch([
+    db.prepare("UPDATE client_verifications SET court=?,county=?,relationship_key=?,status=?,decision_note=?,source_url=?,identity_evidence=?,representation_evidence=?,reviewed_at=?,reviewed_by=?,updated_at=? WHERE id=? AND status=? AND user_id<>? AND NOT EXISTS(SELECT 1 FROM client_profiles self WHERE self.user_id=client_verifications.user_id AND lower(trim(self.email))=?) AND (?<>'approved' OR NOT EXISTS(SELECT 1 FROM client_verifications other WHERE other.relationship_key=? AND other.id<>client_verifications.id AND other.status='approved'))").bind(court,county,key,status,note,source,identity,representation,now,user,now,id,previous,user,email,status,key),
+    db.prepare('INSERT INTO client_verification_audit(id,verification_id,actor_id,action,note,created_at) SELECT ?,id,?,?,?,? FROM client_verifications WHERE id=? AND reviewed_at=? AND reviewed_by=? AND status=?').bind(crypto.randomUUID(),user,status,JSON.stringify({note,source,identity,representation}),now,id,now,user,status),
+    db.prepare("INSERT OR IGNORE INTO client_approval_emails(verification_id,id,recipient,status) SELECT v.id,?,p.email,'pending' FROM client_verifications v JOIN client_profiles p ON p.user_id=v.user_id WHERE v.id=? AND v.status='approved' AND v.reviewed_at=? AND v.reviewed_by=?").bind(crypto.randomUUID(),id,now,user)
+   ]);
+   if(!results[0].meta.changes)return fail('Cannot approve your own request, reuse an approved relationship, or change a request that is no longer in the expected state.',409);
+   const emailStatus=decision==='approve'?await sendApprovalEmail(id):null;
+   return json({saved:true,emailStatus});
   }
   return fail('Unknown action.');
  }catch{return fail('Client review services are temporarily unavailable. Please try again.',503);}

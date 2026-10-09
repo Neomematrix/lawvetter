@@ -1,0 +1,3 @@
+'use client';
+import {useEffect,useState} from 'react';
+export default function ClientAccountNav(){const [signedIn,setSignedIn]=useState(false);useEffect(()=>{const load=()=>{fetch('/api/client-auth',{credentials:'include',cache:'no-store'}).then(r=>r.ok?r.json() as Promise<{client?:unknown}>:null).then(d=>setSignedIn(!!d?.client)).catch(()=>{});};load();window.addEventListener('client-auth-changed',load);return ()=>window.removeEventListener('client-auth-changed',load);},[]);return <a className="attorney-account-link" href="/client-reviews">{signedIn?'My client account':'Client log in'}</a>;}

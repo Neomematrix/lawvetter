@@ -5,10 +5,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
 import ts from 'typescript';
-import {webcrypto} from 'node:crypto';
+import * as nodeCrypto from 'node:crypto';
+const {webcrypto}=nodeCrypto;
 const root=path.resolve('.');
 function database(){const sql=new DatabaseSync(':memory:');sql.exec('PRAGMA foreign_keys=ON');for(const file of fs.readdirSync('drizzle').filter(f=>f.endsWith('.sql')).sort())sql.exec(fs.readFileSync('drizzle/'+file,'utf8'));const db={prepare(text){let args=[];return {bind(...values){args=values;return this},async first(){return sql.prepare(text).get(...args)||null},async all(){return {results:sql.prepare(text).all(...args)}},async run(){const x=sql.prepare(text).run(...args);return {meta:{changes:Number(x.changes)}}}}},async batch(statements){sql.exec('BEGIN');try{const results=[];for(const s of statements)results.push(await s.run());sql.exec('COMMIT');return results;}catch(e){sql.exec('ROLLBACK');throw e;}}};return {sql,db};}
-async function runtime(){const {sql,db}=database(),files=new Map();const env={DB:db,CLAIM_ADMIN_EMAIL:'admin@example.test',PROFILE_PHOTOS:{async put(key,buffer,metadata){files.set(key,{body:buffer,...metadata});},async get(key){return files.get(key)},async delete(key){files.delete(key)}}};const context=vm.createContext({console,Request,Response,URL,File,FormData,Uint8Array,Date,Intl,crypto:webcrypto});const cache=new Map();async function module(file){if(cache.has(file))return cache.get(file);if(file==='cloudflare:workers'){const m=new vm.SyntheticModule(['env'],function(){this.setExport('env',env)},{context});cache.set(file,m);await m.link(()=>{});return m;}const text=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;const m=new vm.SourceTextModule(text,{context,identifier:file});cache.set(file,m);await m.link(async(spec,parent)=>module(spec==='cloudflare:workers'?spec:path.resolve(path.dirname(parent.identifier),spec)+'.ts'));return m;}async function load(file){const m=await module(path.join(root,file));await m.evaluate();return m.namespace;}function seed(bar,name,company='Example Legal LLC',status='Active Member in Good Standing'){sql.prepare('INSERT INTO attorneys(bar_number,source_id,name,company,city,status,source_url,imported_at) VALUES(?,?,?,?,?,?,?,?)').run(bar,bar,name,company,'Atlanta',status,'https://example.test/record','2026-10-08T00:00:00Z');}return {sql,db,load,seed,files};}
+async function runtime(options={}){const {sql,db}=database(),files=new Map();const env={DB:db,CLAIM_ADMIN_EMAIL:'admin@example.test',PROFILE_PHOTOS:{async put(key,buffer,metadata){files.set(key,{body:buffer,...metadata});},async get(key){return files.get(key)},async delete(key){files.delete(key)}}};const context=vm.createContext({console,Request,Response,URL,File,FormData,Uint8Array,Buffer,Date,Intl,crypto:webcrypto,AbortSignal,fetch:options.fetch});const cache=new Map();async function module(file){if(cache.has(file))return cache.get(file);if(file==='node:crypto'){const m=new vm.SyntheticModule(Object.keys(nodeCrypto),function(){for(const [k,v] of Object.entries(nodeCrypto))this.setExport(k,v)},{context});cache.set(file,m);await m.link(()=>{});return m;}if(file==='cloudflare:workers'){const m=new vm.SyntheticModule(['env'],function(){this.setExport('env',env)},{context});cache.set(file,m);await m.link(()=>{});return m;}const text=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;const m=new vm.SourceTextModule(text,{context,identifier:file});cache.set(file,m);await m.link(async(spec,parent)=>module((spec==='cloudflare:workers'||spec==='node:crypto')?spec:path.resolve(path.dirname(parent.identifier),spec)+'.ts'));return m;}async function load(file){const m=await module(path.join(root,file));await m.evaluate();return m.namespace;}function seed(bar,name,company='Example Legal LLC',status='Active Member in Good Standing'){sql.prepare('INSERT INTO attorneys(bar_number,source_id,name,company,city,status,source_url,imported_at) VALUES(?,?,?,?,?,?,?,?)').run(bar,bar,name,company,'Atlanta',status,'https://example.test/record','2026-10-08T00:00:00Z');}return {sql,db,load,seed,files,env};}
 function request(data,user='attorney-a',email='a@example.test'){const headers={'Content-Type':'application/json',Origin:'https://counsel.test'};if(user){headers['oai-authenticated-user-id']=user;headers['oai-authenticated-user-email']=email;}return new Request('https://counsel.test/api/profiles',{method:'POST',headers,body:JSON.stringify(data)});}
 test('Claim approval, ownership isolation, durable profile edits and private shortlists',async()=>{const x=await runtime();x.seed('100001','Fictional Attorney A');x.seed('100002','Fictional Attorney B');const profiles=await x.load('app/api/profiles/route.ts');
  assert.equal((await profiles.POST(request({action:'claim'},''))).status,401);
@@ -51,53 +52,72 @@ test('Exact search totals stay out of visitor data and owner analytics reject ot
 test('Firm roster sorts by current monthly search rank before name',async()=>{const x=await runtime();x.seed('100001','Aaron First');x.seed('100002','Zoe Popular');const now=new Date().toISOString();x.sql.prepare('INSERT INTO attorney_search_events VALUES(?,?,?)').run('one','100002',now);const api=await x.load('app/api/attorneys/route.ts');const results=await(await api.POST(request({firm:'Example Legal LLC'}))).json();assert.deepEqual(results.attorneys.map(a=>a.bar_number),['100002','100001']);assert.equal('searches' in results.attorneys[0],false);});
 test('Attorney analytics require sign-in and approved ownership, and never expose another profile',async()=>{const x=await runtime();x.seed('100001','Attorney One');x.seed('100002','Attorney Two');for(const [bar,owner] of [['100001','one'],['100002','two']])x.sql.prepare('INSERT INTO attorney_profiles(bar_number,owner_id,claimed_at,updated_at) VALUES(?,?,?,?)').run(bar,owner,'2026-10-08','2026-10-08');const api=await x.load('app/api/account/analytics/route.ts');assert.equal((await api.GET(request({},''))).status,401);assert.equal((await api.GET(request({},'unapproved'))).status,403);const result=await(await api.GET(request({},'one'))).json();assert.equal(result.profiles.length,1);assert.equal(result.profiles[0].bar_number,'100001');});
 
-test('Client reviews require identity, private profile, independently approved relationship and publication consent',async()=>{
- const x=await runtime();x.seed('100001','Fictional Attorney A');x.seed('100002','Fictional Attorney B');
- const api=await x.load('app/api/client-reviews/route.ts');
- const post=(d,u='client-a',email=u+'@example.test')=>api.POST(request(d,u,email));
- const publicReviews=async()=>await(await api.GET(new Request('https://counsel.test/api/client-reviews?bar=100001'))).json();
+test('Client passwords, persistent sessions, ownership, review approval and logout',async()=>{
+ const x=await runtime();x.seed('100001','Fictional Attorney');
+ const auth=await x.load('app/api/client-auth/route.ts'),reviews=await x.load('app/api/client-reviews/route.ts');
+ const password='fictional test password only';
+ const account={action:'register',firstName:'Test',lastName:'Client',email:'test@example.test',docket:'PRIVATE-CASE-42',password,consent:true};
+ const req=(data,cookie='',user='',email='')=>new Request('https://counsel.test/api/client-auth',{method:'POST',headers:{Origin:'https://counsel.test','Content-Type':'application/json',Cookie:cookie,'oai-authenticated-user-id':user,'oai-authenticated-user-email':email},body:JSON.stringify(data)});
+ const cookie=r=>r.headers.get('set-cookie').split(';')[0];
+ assert.equal((await auth.POST(req({...account,password:'short'}))).status,400);
+ const registered=await auth.POST(req(account));assert.equal(registered.status,201);let session=cookie(registered);assert.match(registered.headers.get('set-cookie'),/HttpOnly; Secure; SameSite=Lax/);
+ const user=x.sql.prepare('SELECT user_id FROM client_profiles WHERE email=?').get(account.email).user_id;
+ const stored=x.sql.prepare('SELECT password_hash FROM client_passwords').get().password_hash;assert.ok(!stored.includes(password));assert.match(stored,/^scrypt\$/);
+ assert.equal((await auth.POST(req(account))).status,409);
+ const status=await(await auth.GET(req({},session))).json();assert.equal(status.client.email,account.email);
+ assert.equal((await auth.POST(req({action:'login',email:account.email,password:'incorrect password'}))).status,401);
+ const login=await auth.POST(req({action:'login',email:' TEST@EXAMPLE.TEST ',password}));assert.equal(login.status,200);const otherSession=cookie(login);
  const submitted={action:'request',bar:'100001',docket:'PRIVATE-CASE-42',attestation:true};
- const id=JSON.stringify(['client-a','100001']);
- const review={action:'publish',id,body:'My attorney explained the process clearly and responded to my questions.',mode:'anonymous',consent:true};
- assert.equal((await post({action:'account'},'')).status,401);
- assert.equal((await post(submitted)).status,403);
- assert.equal((await post({action:'create-profile',firstName:'Private',lastName:'Client Name',email:'client-a@example.test',docket:'PRIVATE-CASE-42',consent:true})).status,200);
- assert.equal((await post({action:'create-profile',firstName:'Other',lastName:'Person',email:'client-a@example.test',docket:'CASE-1',consent:true},'different-account','client-a@example.test')).status,409);
- assert.equal((await post({action:'create-profile',firstName:'Other',lastName:'Person',email:'someone@example.test',docket:'CASE-1',consent:true},'different-account')).status,403);
- assert.equal((await post(submitted)).status,200);
- assert.equal((await post(submitted)).status,409);
- assert.equal((await post(review)).status,403);
- assert.equal((await post({action:'admin-list'},'client-b')).status,403);
- assert.equal((await post({action:'account'},'client-b')).status,200);
- assert.equal((await(await post({action:'account'},'client-b')).json()).requests.length,0);
- const approve={action:'decide',id,decision:'approve',court:'Fictional Superior Court',county:'Fictional County',note:'Identity and representation independently checked.',source:'https://researchga.tylerhost.net/CourtRecordsSearch/case/test-fixture',identityEvidence:'Test fixture: independent identity evidence checked in controlled test.',representationEvidence:'Test fixture: appearance document names this client and attorney.',identityChecked:true,recordChecked:true,relationshipChecked:true};
- assert.equal((await post({...approve,court:'',county:''},'owner','admin@example.test')).status,400);
- assert.equal((await post(approve,'client-b')).status,403);
- assert.equal((await post({...approve,identityChecked:false},'owner','admin@example.test')).status,400);
- assert.equal((await post({...approve,source:'https://researchga.tylerhost.net/auth/login?signin=x'},'owner','admin@example.test')).status,400);
- assert.equal((await post({...approve,source:'https://example.test/case'},'owner','admin@example.test')).status,400);
- assert.equal((await post(approve,'owner','admin@example.test')).status,200);
- assert.equal((await post(review,'client-b')).status,403);
- assert.equal((await post({...review,consent:false})).status,400);
- assert.equal((await post(review)).status,200);
- let published=await publicReviews();assert.equal(published.reviews.length,1);assert.equal(published.reviews[0].author,'Anonymous');
- const encoded=JSON.stringify(published);for(const secret of ['Private Client Name','PRIVATE-CASE-42','client-a','identity_evidence','representation_evidence','Fictional County','@example.test'])assert.ok(!encoded.includes(secret));
- assert.deepEqual(Object.keys(published.reviews[0]).sort(),['author','body','publishedAt']);
- assert.equal((await post({...review,mode:'named'})).status,200);assert.equal((await publicReviews()).reviews[0].author,'Private Client Name');
- // Attempts to rename an approved identity must not change public attribution.
- await post({action:'create-profile',firstName:'Different',lastName:'Person',email:'client-a@example.test',docket:'PRIVATE-CASE-42',consent:true});
- assert.equal((await(await post({action:'account'})).json()).profile.legal_name,'Private Client Name');
- // Same relationship cannot be reused by another account.
- await post({action:'create-profile',firstName:'Private',lastName:'Client Name',email:'client-b@example.test',docket:'PRIVATE-CASE-42',consent:true},'client-b');await post(submitted,'client-b');
- assert.equal((await post({...approve,id:JSON.stringify(['client-b','100001'])},'owner','admin@example.test')).status,409);
- assert.equal((await post({action:'withdraw',id})).status,200);assert.equal((await publicReviews()).reviews.length,0);
- await post(review);
- assert.equal((await post({action:'decide',id,decision:'revoke',note:'Identity evidence no longer supports approval.'},'owner','admin@example.test')).status,200);
- assert.equal((await publicReviews()).reviews.length,0);assert.equal((await post(review)).status,403);
- assert.equal(x.sql.prepare('select count(*) as n from client_verification_audit where verification_id=?').get(id).n,3);
- // Owner cannot approve their own client request.
- await post({action:'create-profile',firstName:'Owner',lastName:'Test Client',email:'admin@example.test',docket:'PRIVATE-CASE-42',consent:true},'owner','admin@example.test');await post({...submitted,bar:'100002'},'owner','admin@example.test');
- assert.equal((await post({...approve,id:JSON.stringify(['owner','100002'])},'owner','admin@example.test')).status,409);
- const hostile=new Request('https://counsel.test/api/client-reviews',{method:'POST',headers:{Origin:'https://evil.test','oai-authenticated-user-id':'client-a','oai-authenticated-user-email':'client-a@example.test'},body:JSON.stringify(review)});
- assert.equal((await api.POST(hostile)).status,403);
+ assert.equal((await reviews.POST(req(submitted))).status,401);
+ assert.equal((await reviews.POST(req(submitted,session))).status,200);
+ const id=JSON.stringify([user,'100001']);const review={action:'publish',id,body:'My attorney explained the process clearly and answered my questions.',mode:'anonymous',consent:true};
+ assert.equal((await reviews.POST(req(review,session))).status,403);
+ assert.equal((await reviews.POST(req({action:'admin-list'},session))).status,403);
+ const approve={action:'decide',id,decision:'approve',court:'Fictional Superior Court',county:'Fictional County',note:'Verified through independent evidence.',source:'https://researchga.tylerhost.net/CourtRecordsSearch/case/test-fixture',identityEvidence:'Independent identity evidence recorded for this test client.',representationEvidence:'Court appearance record identifies this client and this attorney.',identityChecked:true,recordChecked:true,relationshipChecked:true};
+ assert.equal((await reviews.POST(req(approve,session))).status,403);
+ assert.equal((await reviews.POST(req({...approve,identityChecked:false},'','owner','admin@example.test'))).status,400);
+ assert.equal((await reviews.POST(req({...approve,court:''},'','owner','admin@example.test'))).status,400);
+ assert.equal((await reviews.POST(req(approve,'','owner','admin@example.test'))).status,200);
+ assert.equal((await reviews.POST(req({...review,consent:false},session))).status,400);
+ assert.equal((await reviews.POST(req(review,session))).status,200);
+ const publicReviews=()=>reviews.GET(new Request('https://counsel.test/api/client-reviews?bar=100001')).then(r=>r.json());
+ let publicData=await publicReviews();assert.equal(publicData.reviews[0].author,'Anonymous');for(const secret of [account.email,'PRIVATE-CASE-42','identity_evidence',user])assert.ok(!JSON.stringify(publicData).includes(secret));
+ assert.equal((await reviews.POST(req({...review,mode:'named'},session))).status,200);assert.equal((await publicReviews()).reviews[0].author,'Test Client');
+ const b=await auth.POST(req({...account,email:'second@example.test',firstName:'Second'}));assert.equal(b.status,201);const bCookie=cookie(b);
+ assert.equal((await reviews.POST(req(review,bCookie))).status,403);assert.equal((await(await reviews.POST(req({action:'account'},bCookie))).json()).requests.length,0);
+ const own=await(await reviews.POST(req({action:'account'},session))).json();assert.equal(own.requests[0].id,id);assert.ok(!JSON.stringify(own).includes('identity_evidence'));
+ const change=await auth.POST(req({action:'change-password',email:account.email,password:'a completely different passphrase',currentPassword:password},session));assert.equal(change.status,200);const updatedSession=cookie(change);
+ assert.equal((await auth.GET(req({},session)).then(r=>r.json())).client,null);assert.equal((await auth.GET(req({},otherSession)).then(r=>r.json())).client,null);
+ assert.equal((await auth.POST(req({action:'logout'},updatedSession))).status,200);assert.equal((await reviews.POST(req({action:'account'},updatedSession))).status,401);
+ // Even platform identity does not silently re-open a password session after logout.
+ assert.equal((await reviews.POST(req({action:'account'},'',user,account.email))).status,401);
+ assert.equal((await auth.POST(new Request('https://counsel.test/api/client-auth',{method:'POST',headers:{Origin:'https://evil.test'},body:JSON.stringify(account)}))).status,403);
+ assert.equal((await reviews.POST(req({action:'decide',id,decision:'revoke',note:'Evidence no longer supports verification.'},'','owner','admin@example.test'))).status,200);assert.equal((await publicReviews()).reviews.length,0);
+});
+test('Existing profiles set passwords only through their original platform identity; login throttles and expiry apply',async()=>{
+ const x=await runtime(),auth=await x.load('app/api/client-auth/route.ts');
+ x.sql.prepare('INSERT INTO client_profiles(user_id,legal_name,email,created_at) VALUES(?,?,?,?)').run('legacy','Legacy Client','legacy@example.test','2026-10-09');
+ const req=(data,user='',email='',cookie='')=>new Request('https://counsel.test/api/client-auth',{method:'POST',headers:{Origin:'https://counsel.test','oai-authenticated-user-id':user,'oai-authenticated-user-email':email,Cookie:cookie},body:JSON.stringify(data)});
+ const data={action:'set-password',password:'legacy client passphrase'};
+ assert.equal((await auth.POST(req(data))).status,401);assert.equal((await auth.POST(req(data,'wrong','legacy@example.test'))).status,403);
+ const good=await auth.POST(req(data,'legacy','legacy@example.test'));assert.equal(good.status,200);const cookie=good.headers.get('set-cookie').split(';')[0];
+ assert.equal((await auth.POST(req(data,'legacy','legacy@example.test'))).status,409);
+ assert.equal((await auth.GET(req({},'','','forged=123')).then(r=>r.json())).client,null);
+ x.sql.prepare('UPDATE client_sessions SET expires_at=0').run();assert.equal((await auth.GET(req({},'','',cookie)).then(r=>r.json())).client,null);
+ let last;for(let i=0;i<11;i++)last=await auth.POST(req({action:'login',email:'legacy@example.test',password:'incorrect password'}));assert.equal(last.status,429);
+ assert.equal(x.sql.prepare('SELECT count(*) AS n FROM client_profiles').get().n,1);
+});
+
+test('Approval email is private, queued without configuration, idempotent and blocked after revocation',async()=>{
+ const calls=[];const x=await runtime({fetch:async(url,init)=>{calls.push({url,init});return Response.json({id:'provider-test-id'});}});x.seed('100001','Test Attorney');
+ x.sql.prepare('INSERT INTO client_profiles(user_id,legal_name,email,created_at) VALUES(?,?,?,?)').run('client-test','Private Client','client@example.test','2026-10-09');
+ x.sql.prepare("INSERT INTO client_verifications(id,user_id,bar_number,legal_name,court,county,docket,relationship_key,status,submitted_at,updated_at) VALUES('request','client-test','100001','Private Client','Court','County','SECRET-DOCKET','key','approved','now','now')").run();
+ x.sql.prepare("INSERT INTO client_approval_emails(verification_id,id,recipient,status) VALUES('request','stable-key','client@example.test','pending')").run();
+ const email=await x.load('db/approval-email.ts');assert.equal(await email.sendApprovalEmail('request'),'not-configured');assert.equal(calls.length,0);
+ x.env.RESEND_API_KEY='fictional-test-key';x.env.APPROVAL_EMAIL_FROM='CounselCheck <test@example.test>';
+ assert.equal(await email.sendApprovalEmail('request'),'accepted');assert.equal(calls.length,1);assert.equal(calls[0].init.headers['Idempotency-Key'],'stable-key');
+ const payload=JSON.parse(calls[0].init.body);assert.equal(payload.to[0],'client@example.test');assert.ok(!calls[0].init.body.includes('SECRET-DOCKET'));assert.ok(payload.text.includes('/client-reviews'));
+ assert.equal(await email.sendApprovalEmail('request'),'accepted');assert.equal(calls.length,1);
+ x.sql.prepare("UPDATE client_approval_emails SET status='pending',first_attempt=?").run(Date.now()-24*3600000);assert.equal(await email.sendApprovalEmail('request'),'check-provider');assert.equal(calls.length,1);
+ x.sql.prepare("UPDATE client_verifications SET status='revoked'").run();assert.equal(await email.sendApprovalEmail('request'),'not-queued');assert.equal(calls.length,1);
 });
