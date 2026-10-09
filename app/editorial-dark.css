@@ -90,3 +90,8 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
 
 /* Larger firm and location text in the featured attorney spotlight. */
 .monthly-spotlight .spotlight-firm,.monthly-spotlight .spotlight-location{font-size:18px;line-height:1.5}
+
+/* Supplied default avatar for attorneys without a photograph. */
+.lawyer-poster .attorney-placeholder{position:absolute;width:56%;height:56%;left:22%;top:15%;object-fit:contain;filter:none}
+.chart-avatar img{width:100%;height:100%;object-fit:contain}
+.portrait .profile-placeholder{object-fit:contain;padding:8px}
