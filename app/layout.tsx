@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { Geist, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
+import "./editorial-dark.css";
 import {ShortlistProvider} from "./Shortlist";
 
 const geistSans = Geist({
