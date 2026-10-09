@@ -143,3 +143,8 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
 
 .client-name-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.client-name-fields>label{min-width:0}
 @media(max-width:420px){.client-name-fields{gap:10px}}
+
+.client-verification-requests{display:grid;gap:20px;margin-top:32px;min-width:0}
+.client-verification-requests>h2,.client-verification-requests>p,.client-verification-requests>.review-card{margin:0}
+.client-verification-actions{display:flex;align-items:flex-start;min-width:0}
+.client-verification-actions .outline-button{display:inline-flex;align-items:center;justify-content:center;max-width:100%;min-height:46px;padding:12px 20px;margin:0;line-height:1.5;white-space:normal;overflow-wrap:anywhere;text-align:center;text-decoration:none;box-sizing:border-box}
