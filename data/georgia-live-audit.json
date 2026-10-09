@@ -1,0 +1,17 @@
+{
+  "checked": "2026-10-09T14:19:01.193497+00:00",
+  "liveBefore": 52304,
+  "liveAfter": 52323,
+  "added": 19,
+  "updatedOrAdded": 47,
+  "verifiedFieldRecords": 47,
+  "expectedLocalRecords": 52323,
+  "missingAfter": [],
+  "preservedExtraLiveRecords": 0,
+  "searchChecks": {
+    "Randall M. Kessler": true,
+    "Randall Kessler": true,
+    "Randy Kessler": true
+  },
+  "kesslerFamilyLaw": true
+}

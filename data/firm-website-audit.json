@@ -35,7 +35,9 @@
       "candidateDomains": [
         "mcciplaw.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.mcciplaw.com/",
+      "linkedin": ""
     },
     {
       "key": "mckinseyandcompany",
@@ -63,7 +65,7 @@
       "key": "fultoncountydistrictattorneysoffice",
       "names": [
         "Fulton County District Attorney's Office",
-        "Fulton County District Attorney\u2019s Office"
+        "Fulton County District Attorney’s Office"
       ],
       "attorneys": 64,
       "candidateDomains": [],
@@ -160,7 +162,9 @@
       "candidateDomains": [
         "atlantalegalaid.org"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://atlantalegalaid.org/home/",
+      "linkedin": ""
     },
     {
       "key": "muhammadabdullahattorneyatlaw",
@@ -192,8 +196,9 @@
       "candidateDomains": [
         "agg.com"
       ],
-      "status": "verified",
-      "website": "https://www.agg.com/"
+      "status": "linked",
+      "website": "https://www.agg.com/",
+      "linkedin": "https://www.linkedin.com/company/arnall-golden-gregory-llp/"
     },
     {
       "key": "thelawofficeofmahdiabdurrahmanllc",
@@ -357,8 +362,9 @@
       "candidateDomains": [
         "millermartin.com"
       ],
-      "status": "verified",
-      "website": "https://millermartin.com/"
+      "status": "linked",
+      "website": "https://millermartin.com/",
+      "linkedin": "https://www.linkedin.com/company/22902/"
     },
     {
       "key": "ajaxcapitaladvisors",
@@ -382,8 +388,9 @@
       "candidateDomains": [
         "alston.com"
       ],
-      "status": "verified",
-      "website": "https://www.alston.com/"
+      "status": "linked",
+      "website": "https://www.alston.com/",
+      "linkedin": ""
     },
     {
       "key": "ericsabneyandassociatespc",
@@ -438,8 +445,9 @@
         "waldonadelman.com",
         "wachp.com"
       ],
-      "status": "verified",
-      "website": "https://www.waldonadelman.com/"
+      "status": "linked",
+      "website": "https://www.waldonadelman.com/",
+      "linkedin": ""
     },
     {
       "key": "abrahamslawofficellc",
@@ -579,7 +587,9 @@
       "candidateDomains": [
         "justiceatwork.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.justiceatwork.com/",
+      "linkedin": ""
     },
     {
       "key": "theabtlawfirmllc",
@@ -619,8 +629,9 @@
       "candidateDomains": [
         "bclplaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.bclplaw.com/en-US/"
+      "status": "linked",
+      "website": "https://www.bclplaw.com/en-US/",
+      "linkedin": "https://www.linkedin.com/company/bryan-cave-leighton-paisner-llp/"
     },
     {
       "key": "mcgrewmillerbomarandbagleyllc",
@@ -633,8 +644,9 @@
       "candidateDomains": [
         "mmbblaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.mmbblaw.com/"
+      "status": "linked",
+      "website": "https://www.mmbblaw.com/",
+      "linkedin": "https://www.linkedin.com/company/mcgrew-miller-bomar-bagley-llc/"
     },
     {
       "key": "southerncompanyservicesinc",
@@ -690,8 +702,9 @@
       "candidateDomains": [
         "fmglaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.fmglaw.com/"
+      "status": "linked",
+      "website": "https://www.fmglaw.com/",
+      "linkedin": ""
     },
     {
       "key": "internationalrescuecommittee",
@@ -944,8 +957,9 @@
         "attorneykennugent.com",
         "callken.com"
       ],
-      "status": "verified",
-      "website": "https://www.attorneykennugent.com/"
+      "status": "linked",
+      "website": "https://www.attorneykennugent.com/",
+      "linkedin": ""
     },
     {
       "key": "krevolinandhorstllc",
@@ -957,8 +971,9 @@
         "khlawfirm.com",
         "balaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.khlawfirm.com/"
+      "status": "linked",
+      "website": "https://www.khlawfirm.com/",
+      "linkedin": ""
     },
     {
       "key": "conroysimbergpa",
@@ -1001,8 +1016,9 @@
       "candidateDomains": [
         "siemonlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.siemonlawfirm.com/"
+      "status": "linked",
+      "website": "https://www.siemonlawfirm.com/",
+      "linkedin": "https://www.linkedin.com/company/2641723/"
     },
     {
       "key": "lawofficesofmichaellawsonneff",
@@ -1108,7 +1124,7 @@
       "key": "gwinnettcountydistrictattorneysoffice",
       "names": [
         "Gwinnett County District Attorney's Office",
-        "Gwinnett County District Attorney\u2019s Office",
+        "Gwinnett County District Attorney’s Office",
         "Gwinnett County District Attorneys Office"
       ],
       "attorneys": 35,
@@ -1263,8 +1279,9 @@
         "kilpatricktownsend.com",
         "ktslaw.com"
       ],
-      "status": "verified",
-      "website": "https://ktslaw.com/"
+      "status": "linked",
+      "website": "https://ktslaw.com/",
+      "linkedin": ""
     },
     {
       "key": "huffpowellandbaileyllc",
@@ -1279,7 +1296,9 @@
       "candidateDomains": [
         "huffpowellbailey.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.huffpowellbailey.com/",
+      "linkedin": ""
     },
     {
       "key": "adamsprivacylaw",
@@ -1333,8 +1352,9 @@
       "candidateDomains": [
         "kutakrock.com"
       ],
-      "status": "verified",
-      "website": "https://www.kutakrock.com/"
+      "status": "linked",
+      "website": "https://www.kutakrock.com/",
+      "linkedin": "https://www.linkedin.com/company/kutak-rock/"
     },
     {
       "key": "claytoncountysolicitorgeneralsoffice",
@@ -1375,8 +1395,9 @@
       "candidateDomains": [
         "fulcherlaw.com"
       ],
-      "status": "verified",
-      "website": "https://fulcherlaw.com/"
+      "status": "linked",
+      "website": "https://fulcherlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "saraeadamspc",
@@ -1425,7 +1446,9 @@
       "candidateDomains": [
         "jonescork.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.jonescork.com/",
+      "linkedin": ""
     },
     {
       "key": "hudsonlambertparrottwalkerllc",
@@ -1447,8 +1470,9 @@
       "candidateDomains": [
         "glsp.org"
       ],
-      "status": "verified",
-      "website": "https://www.glsp.org/"
+      "status": "linked",
+      "website": "https://www.glsp.org/",
+      "linkedin": "https://www.linkedin.com/company/georgia-legal-services/"
     },
     {
       "key": "adamsandadams",
@@ -1630,8 +1654,9 @@
         "hallboothsmith.com",
         "hallboothsmith.com.com"
       ],
-      "status": "verified",
-      "website": "https://hallboothsmith.com/"
+      "status": "linked",
+      "website": "https://hallboothsmith.com/",
+      "linkedin": "https://www.linkedin.com/company/hall-booth-smith-p-c-/"
     },
     {
       "key": "addletonltdco",
@@ -1653,8 +1678,9 @@
         "kslaw.com",
         "taylaralan.com"
       ],
-      "status": "verified",
-      "website": "https://www.kslaw.com/"
+      "status": "linked",
+      "website": "https://www.kslaw.com/",
+      "linkedin": "https://www.linkedin.com/company/king-and-spalding/"
     },
     {
       "key": "addyhartllc",
@@ -1777,8 +1803,9 @@
       "candidateDomains": [
         "harrisonllp.com"
       ],
-      "status": "verified",
-      "website": "https://harrisonllp.com/"
+      "status": "linked",
+      "website": "https://harrisonllp.com/",
+      "linkedin": "https://www.linkedin.com/company/harrisonllp/"
     },
     {
       "key": "kelleyandlovettpc",
@@ -1810,7 +1837,9 @@
         "bakerlaw.com",
         "garsongoodman.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.bakerlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "burtonsurya",
@@ -1964,8 +1993,9 @@
       "candidateDomains": [
         "deflaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.deflaw.com/"
+      "status": "linked",
+      "website": "https://www.deflaw.com/",
+      "linkedin": ""
     },
     {
       "key": "brookslawpartners",
@@ -2033,8 +2063,9 @@
       "candidateDomains": [
         "schr.org"
       ],
-      "status": "verified",
-      "website": "https://www.schr.org/"
+      "status": "linked",
+      "website": "https://www.schr.org/",
+      "linkedin": "https://www.linkedin.com/company/thesoutherncenter/"
     },
     {
       "key": "deltaairlinesinc",
@@ -2111,7 +2142,9 @@
         "us.dlapiper.com",
         "dlapiper.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.dlapiper.com/en-us",
+      "linkedin": ""
     },
     {
       "key": "agapovalawllc",
@@ -2172,7 +2205,9 @@
       "candidateDomains": [
         "swiftcurrie.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.swiftcurrie.com/",
+      "linkedin": "https://www.linkedin.com/company/swift-currie-mcghee-%26-hiers/"
     },
     {
       "key": "georgiapublicdefenderpiedmontcircuit",
@@ -2442,8 +2477,9 @@
       "candidateDomains": [
         "weissman.law"
       ],
-      "status": "verified",
-      "website": "https://www.weissman.law/"
+      "status": "linked",
+      "website": "https://www.weissman.law/",
+      "linkedin": "https://www.linkedin.com/company/weissman/"
     },
     {
       "key": "montlickandassociates",
@@ -2454,8 +2490,9 @@
       "candidateDomains": [
         "montlick.com"
       ],
-      "status": "verified",
-      "website": "https://www.montlick.com/"
+      "status": "linked",
+      "website": "https://www.montlick.com/",
+      "linkedin": ""
     },
     {
       "key": "lawofficeoflynnmakeleyalderman",
@@ -2882,7 +2919,9 @@
       "candidateDomains": [
         "smithcurrie.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.smithcurrie.com/",
+      "linkedin": ""
     },
     {
       "key": "georgiafiduciarygroup",
@@ -2914,8 +2953,9 @@
       "candidateDomains": [
         "huntermaclean.com"
       ],
-      "status": "verified",
-      "website": "https://www.huntermaclean.com/"
+      "status": "linked",
+      "website": "https://www.huntermaclean.com/",
+      "linkedin": "https://www.linkedin.com/company/huntermaclean/"
     },
     {
       "key": "dentonsusllp",
@@ -2926,7 +2966,9 @@
       "candidateDomains": [
         "dentons.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.dentons.com/en/global-presence/united-states/atlanta",
+      "linkedin": ""
     },
     {
       "key": "aldridgepitehaanllp",
@@ -2939,8 +2981,9 @@
         "aph-law.com",
         "aldridgepite.com"
       ],
-      "status": "verified",
-      "website": "https://www.aph-law.com/"
+      "status": "linked",
+      "website": "https://www.aph-law.com/",
+      "linkedin": ""
     },
     {
       "key": "kingyaklinandwilkinsllp",
@@ -2951,8 +2994,9 @@
       "candidateDomains": [
         "kingyaklin.com"
       ],
-      "status": "verified",
-      "website": "https://www.kingyaklin.com/"
+      "status": "linked",
+      "website": "https://www.kingyaklin.com/",
+      "linkedin": "https://www.linkedin.com/company/kingyaklin/"
     },
     {
       "key": "lpalaw",
@@ -3038,7 +3082,9 @@
       "candidateDomains": [
         "mijs.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.mijs.com/",
+      "linkedin": ""
     },
     {
       "key": "alewinelawllc",
@@ -3062,8 +3108,9 @@
       "candidateDomains": [
         "mfcounsel.com"
       ],
-      "status": "verified",
-      "website": "https://www.mfcounsel.com/"
+      "status": "linked",
+      "website": "https://www.mfcounsel.com/",
+      "linkedin": "https://www.linkedin.com/company/mendenfreiman-llp/"
     },
     {
       "key": "thompsonhinellp",
@@ -3075,7 +3122,9 @@
         "thompsonhine.com",
         "jonesday.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.thompsonhine.com/",
+      "linkedin": ""
     },
     {
       "key": "alexanderlegalllc",
@@ -3174,7 +3223,7 @@
       "key": "pauldingcountydistrictattorneysoffice",
       "names": [
         "Paulding County District Attorney's Office",
-        "Paulding County District Attorney\u2019s Office"
+        "Paulding County District Attorney’s Office"
       ],
       "attorneys": 8,
       "candidateDomains": [],
@@ -3218,8 +3267,9 @@
       "candidateDomains": [
         "foxrothschild.com"
       ],
-      "status": "verified",
-      "website": "https://www.foxrothschild.com/"
+      "status": "linked",
+      "website": "https://www.foxrothschild.com/",
+      "linkedin": ""
     },
     {
       "key": "alexanderlawfirmpc",
@@ -3243,8 +3293,9 @@
         "reedsmith.com",
         "mmmlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.reedsmith.com/"
+      "status": "linked",
+      "website": "https://www.reedsmith.com/",
+      "linkedin": "https://www.linkedin.com/company/reed-smith-llp/"
     },
     {
       "key": "herrinandalexanderllc",
@@ -3281,7 +3332,9 @@
         "eversheds-sutherland.com",
         "eversheds-sutherland.us"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.eversheds-sutherland.com/en/global/locations/offices/atlanta",
+      "linkedin": ""
     },
     {
       "key": "georgiaofficeoflegislativecounsel",
@@ -3420,7 +3473,7 @@
       "key": "dekalbcountydistrictattorneysoffice",
       "names": [
         "DeKalb County District Attorney's Office",
-        "DeKalb County District Attorney\u2019s Office",
+        "DeKalb County District Attorney’s Office",
         "Dekalb County District Attorney's Office",
         "DeKalb County District Attorneys Office"
       ],
@@ -3606,7 +3659,9 @@
         "jonesday.com",
         "parkerpoe.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.jonesday.com/en",
+      "linkedin": ""
     },
     {
       "key": "shookhardyandbaconllp",
@@ -3708,7 +3763,9 @@
         "troutman.com",
         "lockelord.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.troutman.com/",
+      "linkedin": ""
     },
     {
       "key": "allenlawgrouppc",
@@ -3740,8 +3797,9 @@
       "candidateDomains": [
         "wswgs.com"
       ],
-      "status": "verified",
-      "website": "https://wswgs.com/"
+      "status": "linked",
+      "website": "https://wswgs.com/",
+      "linkedin": ""
     },
     {
       "key": "chathamcountystatecourt",
@@ -3764,8 +3822,9 @@
       "candidateDomains": [
         "bsllaw.net"
       ],
-      "status": "verified",
-      "website": "https://www.bsllaw.net/"
+      "status": "linked",
+      "website": "https://www.bsllaw.net/",
+      "linkedin": ""
     },
     {
       "key": "eppshollowaydeloachandhoipkemierllc",
@@ -3788,7 +3847,9 @@
       "candidateDomains": [
         "hklaw.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.hklaw.com/en",
+      "linkedin": ""
     },
     {
       "key": "cohencooperestepandallenllc",
@@ -3812,8 +3873,9 @@
       "candidateDomains": [
         "kmcllaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.kmcllaw.com/"
+      "status": "linked",
+      "website": "https://www.kmcllaw.com/",
+      "linkedin": "https://www.linkedin.com/company/kmcl-llp/"
     },
     {
       "key": "resurgenslegalcounselllc",
@@ -3858,8 +3920,9 @@
       "candidateDomains": [
         "mcguirewoods.com"
       ],
-      "status": "verified",
-      "website": "https://www.mcguirewoods.com/"
+      "status": "linked",
+      "website": "https://www.mcguirewoods.com/",
+      "linkedin": "https://www.linkedin.com/company/mcguirewoods/"
     },
     {
       "key": "roomstogo",
@@ -3883,7 +3946,9 @@
         "ogletreedeakins.com",
         "ogletree.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://ogletree.com/",
+      "linkedin": ""
     },
     {
       "key": "retired",
@@ -3938,8 +4003,9 @@
       "candidateDomains": [
         "martinsnow.com"
       ],
-      "status": "verified",
-      "website": "https://www.martinsnow.com/"
+      "status": "linked",
+      "website": "https://www.martinsnow.com/",
+      "linkedin": "https://www.linkedin.com/company/8771149/"
     },
     {
       "key": "usbankruptcycourtnortherndistrictofgeorgia",
@@ -3961,7 +4027,9 @@
       "candidateDomains": [
         "hpylaw.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.hpylaw.com/",
+      "linkedin": ""
     },
     {
       "key": "bradleyarantboultcummingsllp",
@@ -3974,7 +4042,9 @@
         "bradley.com",
         "mmmlaw.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.bradley.com/",
+      "linkedin": ""
     },
     {
       "key": "blackrock",
@@ -4059,8 +4129,9 @@
       "candidateDomains": [
         "gtlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.gtlaw.com/"
+      "status": "linked",
+      "website": "https://www.gtlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "morainandbuckelewllc",
@@ -4083,7 +4154,9 @@
       "candidateDomains": [
         "robbinsfirm.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.robbinsfirm.com/",
+      "linkedin": ""
     },
     {
       "key": "mcraesmithpeekharmanandmonroellp",
@@ -4094,8 +4167,9 @@
       "candidateDomains": [
         "msp-lawfirm.com"
       ],
-      "status": "verified",
-      "website": "https://msp-lawfirm.com/"
+      "status": "linked",
+      "website": "https://msp-lawfirm.com/",
+      "linkedin": ""
     },
     {
       "key": "waycasterandallred",
@@ -4166,8 +4240,9 @@
       "candidateDomains": [
         "deminglaw.com"
       ],
-      "status": "verified",
-      "website": "https://deminglaw.com/"
+      "status": "linked",
+      "website": "https://deminglaw.com/",
+      "linkedin": "https://www.linkedin.com/company/deming-parker-hoffman-campbell-daly-l-l-c/"
     },
     {
       "key": "awlawllc",
@@ -4201,7 +4276,9 @@
       "candidateDomains": [
         "fr.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.fr.com/",
+      "linkedin": ""
     },
     {
       "key": "alper",
@@ -4235,7 +4312,9 @@
         "taftlaw.com",
         "mmmlaw.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.taftlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "unum",
@@ -4258,8 +4337,9 @@
       "candidateDomains": [
         "savellwilliams.com"
       ],
-      "status": "verified",
-      "website": "https://www.savellwilliams.com/"
+      "status": "linked",
+      "website": "https://www.savellwilliams.com/",
+      "linkedin": ""
     },
     {
       "key": "luederlarkinandhunterllc",
@@ -4274,8 +4354,9 @@
       "candidateDomains": [
         "luederlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.luederlaw.com/"
+      "status": "linked",
+      "website": "https://www.luederlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "jamessaltenbachllc",
@@ -4401,8 +4482,9 @@
       "candidateDomains": [
         "dozierlaw.com"
       ],
-      "status": "verified",
-      "website": "https://dozierlaw.com/"
+      "status": "linked",
+      "website": "https://dozierlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "burrislawfirm",
@@ -4435,7 +4517,9 @@
       "candidateDomains": [
         "parkerpoe.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.parkerpoe.com/",
+      "linkedin": ""
     },
     {
       "key": "theoteylawfirm",
@@ -4519,7 +4603,9 @@
       "candidateDomains": [
         "wbd-us.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.womblebonddickinson.com/us",
+      "linkedin": ""
     },
     {
       "key": "silvisambroselindquistandcochpc",
@@ -4585,8 +4671,9 @@
       "candidateDomains": [
         "balch.com"
       ],
-      "status": "verified",
-      "website": "https://www.balch.com/"
+      "status": "linked",
+      "website": "https://www.balch.com/",
+      "linkedin": ""
     },
     {
       "key": "mozleyfinlaysonandlogginsllp",
@@ -4598,8 +4685,9 @@
       "candidateDomains": [
         "mfllaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.mfllaw.com/"
+      "status": "linked",
+      "website": "https://www.mfllaw.com/",
+      "linkedin": "https://www.linkedin.com/company/132158/"
     },
     {
       "key": "georgiaasylumandimmigrationnetwork",
@@ -4632,7 +4720,9 @@
         "polsinelli.com",
         "troutman.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.polsinelli.com/",
+      "linkedin": ""
     },
     {
       "key": "weinstockimmigrationlawyerspc",
@@ -4679,7 +4769,9 @@
       "candidateDomains": [
         "burr.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.burr.com/",
+      "linkedin": ""
     },
     {
       "key": "georgiajusticeproject",
@@ -4784,8 +4876,9 @@
       "candidateDomains": [
         "pkhip.com"
       ],
-      "status": "verified",
-      "website": "https://www.pkhip.com/"
+      "status": "linked",
+      "website": "https://www.pkhip.com/",
+      "linkedin": "https://www.linkedin.com/company/perilla-knox-hildebrandt-llp/"
     },
     {
       "key": "openrecordunitlegaldepartmentgeorgiadepartmentofpublicsafety",
@@ -4912,7 +5005,9 @@
       "candidateDomains": [
         "atclawfirm.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.atclawfirm.com/",
+      "linkedin": ""
     },
     {
       "key": "betterlawllc",
@@ -5065,8 +5160,9 @@
         "burnssmithlaw.com",
         "mtlawoffice.com"
       ],
-      "status": "verified",
-      "website": "https://baslg.com/"
+      "status": "linked",
+      "website": "https://baslg.com/",
+      "linkedin": ""
     },
     {
       "key": "huntonandrewskurthllp",
@@ -5134,8 +5230,9 @@
       "candidateDomains": [
         "mfllaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.mfllaw.com/"
+      "status": "linked",
+      "website": "https://www.mfllaw.com/",
+      "linkedin": "https://www.linkedin.com/company/132158/"
     },
     {
       "key": "duanemorrisllp",
@@ -5146,7 +5243,9 @@
       "candidateDomains": [
         "duanemorris.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.duanemorris.com/",
+      "linkedin": ""
     },
     {
       "key": "ballardspahrllp",
@@ -5157,7 +5256,9 @@
       "candidateDomains": [
         "ballardspahr.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.ballardspahr.com/",
+      "linkedin": ""
     },
     {
       "key": "usdistrictcourtmiddledistrictofgeorgia",
@@ -5200,8 +5301,9 @@
       "candidateDomains": [
         "balch.com"
       ],
-      "status": "verified",
-      "website": "https://www.balch.com/"
+      "status": "linked",
+      "website": "https://www.balch.com/",
+      "linkedin": ""
     },
     {
       "key": "lawoffices",
@@ -5216,7 +5318,7 @@
       "key": "atlantacircuitpublicdefendersoffice",
       "names": [
         "Atlanta Circuit Public Defender's Office",
-        "Atlanta Circuit Public Defender\u2019s Office"
+        "Atlanta Circuit Public Defender’s Office"
       ],
       "attorneys": 30,
       "candidateDomains": [],
@@ -5248,8 +5350,9 @@
       "candidateDomains": [
         "fcwlawfirm.com"
       ],
-      "status": "verified",
-      "website": "https://fcwlawfirm.com/"
+      "status": "linked",
+      "website": "https://fcwlawfirm.com/",
+      "linkedin": "https://www.linkedin.com/company/fcwlawfirm/"
     },
     {
       "key": "statebarofgeorgia",
@@ -5282,8 +5385,9 @@
         "rfllplaw.com",
         "cltitlecompany.com"
       ],
-      "status": "verified",
-      "website": "https://rfllplaw.com/"
+      "status": "linked",
+      "website": "https://rfllplaw.com/",
+      "linkedin": "https://www.linkedin.com/company/robinson-franzman-llp/"
     },
     {
       "key": "thequikretecompanies",
@@ -5394,8 +5498,9 @@
         "selcga.org",
         "selc.org"
       ],
-      "status": "verified",
-      "website": "https://www.selc.org/"
+      "status": "linked",
+      "website": "https://www.selc.org/",
+      "linkedin": "https://www.linkedin.com/company/southern-environmental-law-center/"
     },
     {
       "key": "theandersonfirmllc",
@@ -5519,8 +5624,9 @@
       "candidateDomains": [
         "downeycleveland.com"
       ],
-      "status": "verified",
-      "website": "https://downeycleveland.com/"
+      "status": "linked",
+      "website": "https://downeycleveland.com/",
+      "linkedin": ""
     },
     {
       "key": "mcmicklekureyandbranchllp",
@@ -5640,8 +5746,9 @@
       "candidateDomains": [
         "ewhlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.ewhlaw.com/"
+      "status": "linked",
+      "website": "https://www.ewhlaw.com/",
+      "linkedin": "https://www.linkedin.com/company/evert-weathersby-houff/"
     },
     {
       "key": "fidelitynationallawgroup",
@@ -5763,8 +5870,9 @@
       "candidateDomains": [
         "pcwlawfirm.com"
       ],
-      "status": "verified",
-      "website": "https://www.pcwlawfirm.com/"
+      "status": "linked",
+      "website": "https://www.pcwlawfirm.com/",
+      "linkedin": "https://www.linkedin.com/company/1916738/"
     },
     {
       "key": "georgecwoodruffcompany",
@@ -5784,8 +5892,9 @@
       "candidateDomains": [
         "gtlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.gtlaw.com/"
+      "status": "linked",
+      "website": "https://www.gtlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "charterschoolsolutionsinc",
@@ -5826,8 +5935,9 @@
         "brawwlaw.com",
         "rigrishlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.brawwlaw.com/"
+      "status": "linked",
+      "website": "https://www.brawwlaw.com/",
+      "linkedin": "https://www.linkedin.com/company/brawwlaw/"
     },
     {
       "key": "poolehuffmanllc",
@@ -5840,8 +5950,9 @@
         "poolehuffman.com",
         "engsys.com"
       ],
-      "status": "verified",
-      "website": "https://www.poolehuffman.com/"
+      "status": "linked",
+      "website": "https://www.poolehuffman.com/",
+      "linkedin": "https://www.linkedin.com/company/poole-huffman-llc/"
     },
     {
       "key": "cobbolsonandandrlellc",
@@ -5989,7 +6100,9 @@
       "candidateDomains": [
         "wilsonelser.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.wilsonelser.com/",
+      "linkedin": ""
     },
     {
       "key": "lalawfirm",
@@ -6073,8 +6186,9 @@
       "candidateDomains": [
         "aph-law.com"
       ],
-      "status": "verified",
-      "website": "https://www.aph-law.com/"
+      "status": "linked",
+      "website": "https://www.aph-law.com/",
+      "linkedin": ""
     },
     {
       "key": "conasaugacircuitdistrictattorneysoffice",
@@ -6107,7 +6221,9 @@
       "candidateDomains": [
         "warnerbates.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.warnerbates.com/",
+      "linkedin": ""
     },
     {
       "key": "arteraservicesllc",
@@ -6193,7 +6309,9 @@
         "bakerdonelson.com",
         "honeywell.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.bakerdonelson.com/",
+      "linkedin": ""
     },
     {
       "key": "antonlawllc",
@@ -6215,7 +6333,9 @@
       "candidateDomains": [
         "antoniniandcohen.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.antoniniandcohen.com/",
+      "linkedin": ""
     },
     {
       "key": "theantoninofirmllc",
@@ -6388,7 +6508,9 @@
       "candidateDomains": [
         "hineslaw.org"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://hineslaw.org/",
+      "linkedin": "https://www.linkedin.com/company/hineslawfirm/"
     },
     {
       "key": "griffincircuitdistrictattorneysoffice",
@@ -6600,7 +6722,7 @@
       "key": "okelleyandsorohanllc",
       "names": [
         "O'Kelley & Sorohan LLC",
-        "O\u2019Kelley & Sorohan LLC",
+        "O’Kelley & Sorohan LLC",
         "O'Kelley and Sorohan LLC"
       ],
       "attorneys": 33,
@@ -6724,8 +6846,9 @@
       "candidateDomains": [
         "thechampionfirm.com"
       ],
-      "status": "verified",
-      "website": "https://www.thechampionfirm.com/"
+      "status": "linked",
+      "website": "https://www.thechampionfirm.com/",
+      "linkedin": "https://www.linkedin.com/company/champion-firm-p-c-/"
     },
     {
       "key": "nallandmillerllp",
@@ -6737,8 +6860,9 @@
       "candidateDomains": [
         "nallmiller.com"
       ],
-      "status": "verified",
-      "website": "https://www.nallmiller.com/"
+      "status": "linked",
+      "website": "https://www.nallmiller.com/",
+      "linkedin": ""
     },
     {
       "key": "georgiaworkerscompensationlawgroup",
@@ -6809,7 +6933,9 @@
         "wwhgd.com",
         "parkerpoe.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.wwhgd.com/",
+      "linkedin": ""
     },
     {
       "key": "arnoldandarnoldllc",
@@ -7123,8 +7249,9 @@
         "mmmlaw.com",
         "millsgamsey.com"
       ],
-      "status": "verified",
-      "website": "https://www.mmmlaw.com/"
+      "status": "linked",
+      "website": "https://www.mmmlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "arringtonowoopc",
@@ -7168,8 +7295,9 @@
       "candidateDomains": [
         "gaappeals.us"
       ],
-      "status": "verified",
-      "website": "https://links.gaappeals.us/"
+      "status": "linked",
+      "website": "https://links.gaappeals.us/",
+      "linkedin": ""
     },
     {
       "key": "thearterlawgroupllc",
@@ -7353,7 +7481,7 @@
       "key": "cherokeecountydistrictattorneysoffice",
       "names": [
         "Cherokee County District Attorney's Office",
-        "Cherokee County District Attorney\u2019s Office"
+        "Cherokee County District Attorney’s Office"
       ],
       "attorneys": 13,
       "candidateDomains": [
@@ -7380,7 +7508,9 @@
       "candidateDomains": [
         "bmelaw.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://bmelaw.com/",
+      "linkedin": ""
     },
     {
       "key": "ashendenandassociatespc",
@@ -7771,8 +7901,9 @@
       "candidateDomains": [
         "bbga.com"
       ],
-      "status": "verified",
-      "website": "https://www.bbga.com/"
+      "status": "linked",
+      "website": "https://www.bbga.com/",
+      "linkedin": "https://www.linkedin.com/company/bbgalaw/"
     },
     {
       "key": "cookandtolleyllp",
@@ -7799,7 +7930,9 @@
         "sgrlaw.com",
         "troutman.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.sgrlaw.com/",
+      "linkedin": "https://www.linkedin.com/company/smith-gambrell-russell-llp/"
     },
     {
       "key": "hallcountypublicdefendersoffice",
@@ -7896,7 +8029,9 @@
       "candidateDomains": [
         "mccalla.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://mccalla.com/",
+      "linkedin": ""
     },
     {
       "key": "womblebonddickinson",
@@ -7963,7 +8098,9 @@
       "candidateDomains": [
         "chamberlainlaw.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.chamberlainlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "augustineandassociatesllc",
@@ -8289,8 +8426,9 @@
       "candidateDomains": [
         "grsm.com"
       ],
-      "status": "verified",
-      "website": "https://www.grsm.com/"
+      "status": "linked",
+      "website": "https://www.grsm.com/",
+      "linkedin": "https://www.linkedin.com/company/gordon-and-rees-llp/"
     },
     {
       "key": "comcastcable",
@@ -8663,8 +8801,9 @@
       "candidateDomains": [
         "gshattorneys.com"
       ],
-      "status": "verified",
-      "website": "https://gshattorneys.com/"
+      "status": "linked",
+      "website": "https://gshattorneys.com/",
+      "linkedin": "https://www.linkedin.com/company/goggans-stutzman-hudson-wilson-and-mize/"
     },
     {
       "key": "campbellandbrannonllc",
@@ -9024,7 +9163,9 @@
         "fisherphillips.com",
         "laborlawyers.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.fisherphillips.com/en",
+      "linkedin": ""
     },
     {
       "key": "bafaslawpc",
@@ -9095,8 +9236,9 @@
         "mmatllaw.com",
         "jamesbatesllp.com"
       ],
-      "status": "verified",
-      "website": "https://mmatllaw.com/"
+      "status": "linked",
+      "website": "https://mmatllaw.com/",
+      "linkedin": ""
     },
     {
       "key": "georgiavocationalrehabilitationagency",
@@ -9125,8 +9267,9 @@
       "candidateDomains": [
         "gplg.com"
       ],
-      "status": "verified",
-      "website": "https://guardianprobatelaw.com/georgia/"
+      "status": "linked",
+      "website": "https://guardianprobatelaw.com/georgia/",
+      "linkedin": ""
     },
     {
       "key": "emilycbagwellattorneyatlawllc",
@@ -9230,7 +9373,9 @@
         "bouhan.com",
         "hlmlawfirm.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.bouhan.com/",
+      "linkedin": ""
     },
     {
       "key": "thebaigfirm",
@@ -9601,15 +9746,16 @@
         "Quintairos, Prieto, Wood & Boyer, P.A.",
         "Quintairos, Prieto, Wood & Boyer P.A.",
         "Quintairos Prieto Wood & Boyer, P.A.",
-        "Quintairos\u00a0Prieto\u00a0Wood\u00a0&\u00a0Boyer\u00a0PA",
+        "Quintairos Prieto Wood & Boyer PA",
         "Quintairos Prieto Wood & Boyer P.A."
       ],
       "attorneys": 34,
       "candidateDomains": [
         "qpwblaw.com"
       ],
-      "status": "verified",
-      "website": "https://qpwblaw.com/"
+      "status": "linked",
+      "website": "https://qpwblaw.com/",
+      "linkedin": ""
     },
     {
       "key": "aldridgepitehaan",
@@ -9620,8 +9766,9 @@
       "candidateDomains": [
         "aph-law.com"
       ],
-      "status": "verified",
-      "website": "https://www.aph-law.com/"
+      "status": "linked",
+      "website": "https://www.aph-law.com/",
+      "linkedin": ""
     },
     {
       "key": "chicagotitleinsurancecompany",
@@ -9661,8 +9808,9 @@
       "candidateDomains": [
         "dpsslegal.com"
       ],
-      "status": "verified",
-      "website": "https://www.dpsslegal.com/"
+      "status": "linked",
+      "website": "https://www.dpsslegal.com/",
+      "linkedin": ""
     },
     {
       "key": "interactivecommunicationsinternationalinc",
@@ -9790,7 +9938,9 @@
       "candidateDomains": [
         "btlaw.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://btlaw.com/en/",
+      "linkedin": "https://www.linkedin.com/company/barnes-%26-thornburg-llp/"
     },
     {
       "key": "cherokeecountysuperiorcourt",
@@ -9977,8 +10127,9 @@
       "candidateDomains": [
         "youngthagard.com"
       ],
-      "status": "verified",
-      "website": "https://www.youngthagard.com/"
+      "status": "linked",
+      "website": "https://www.youngthagard.com/",
+      "linkedin": ""
     },
     {
       "key": "balboandgreggattorneysatlawpc",
@@ -10310,8 +10461,9 @@
       "candidateDomains": [
         "clydeco.us"
       ],
-      "status": "verified",
-      "website": "https://www.clydeco.com/en"
+      "status": "linked",
+      "website": "https://www.clydeco.com/en",
+      "linkedin": ""
     },
     {
       "key": "fultoncountyjuvenilecourt",
@@ -10344,8 +10496,9 @@
       "candidateDomains": [
         "nelsonmullins.com"
       ],
-      "status": "verified",
-      "website": "https://www.nelsonmullins.com/"
+      "status": "linked",
+      "website": "https://www.nelsonmullins.com/",
+      "linkedin": "https://www.linkedin.com/company/165138/"
     },
     {
       "key": "prattindustriesinc",
@@ -10370,8 +10523,9 @@
       "candidateDomains": [
         "ksfamilylaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.ksfamilylaw.com/"
+      "status": "linked",
+      "website": "https://www.ksfamilylaw.com/",
+      "linkedin": "https://www.linkedin.com/company/kessler-%26-solomiany-llc/"
     },
     {
       "key": "lawofficeofjaedbanllc",
@@ -10391,8 +10545,9 @@
       "candidateDomains": [
         "alston.com"
       ],
-      "status": "verified",
-      "website": "https://www.alston.com/"
+      "status": "linked",
+      "website": "https://www.alston.com/",
+      "linkedin": ""
     },
     {
       "key": "loriumpllc",
@@ -10448,8 +10603,9 @@
       "candidateDomains": [
         "millermartin.com"
       ],
-      "status": "verified",
-      "website": "https://millermartin.com/"
+      "status": "linked",
+      "website": "https://millermartin.com/",
+      "linkedin": "https://www.linkedin.com/company/22902/"
     },
     {
       "key": "boardofcommissionerdistrict4",
@@ -10566,9 +10722,9 @@
       "status": "not-corroborated"
     },
     {
-      "key": "nslconsultingllcdbathelegalsuite\u2122",
+      "key": "nslconsultingllcdbathelegalsuite™",
       "names": [
-        "NSL Consulting, LLC dba The LegalSuite\u2122"
+        "NSL Consulting, LLC dba The LegalSuite™"
       ],
       "attorneys": 1,
       "candidateDomains": [],
@@ -10584,7 +10740,9 @@
         "banksstubbs.com",
         "bsmfirm.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.banksstubbs.com/",
+      "linkedin": ""
     },
     {
       "key": "ttvcapital",
@@ -10663,7 +10821,9 @@
       "candidateDomains": [
         "jamesbatesllp.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.jamesbatesllp.com/",
+      "linkedin": ""
     },
     {
       "key": "edgeandkimbelllawllc",
@@ -10817,8 +10977,9 @@
         "seyfarth.com",
         "millerlavoie.com"
       ],
-      "status": "verified",
-      "website": "https://www.seyfarth.com/"
+      "status": "linked",
+      "website": "https://www.seyfarth.com/",
+      "linkedin": "https://www.linkedin.com/company/seyfarth-shaw/"
     },
     {
       "key": "lisenbyandassociatesllc",
@@ -11167,7 +11328,7 @@
       "key": "ocmulgeecircuitdistrictattorneysoffice",
       "names": [
         "Ocmulgee Circuit District Attorney's Office",
-        "Ocmulgee Circuit District Attorney\u2019s Office"
+        "Ocmulgee Circuit District Attorney’s Office"
       ],
       "attorneys": 6,
       "candidateDomains": [
@@ -11274,7 +11435,9 @@
       "candidateDomains": [
         "jacksonlewis.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.jacksonlewis.com/",
+      "linkedin": ""
     },
     {
       "key": "thebarneslawofficellc",
@@ -11409,8 +11572,9 @@
       "candidateDomains": [
         "beasleyallen.com"
       ],
-      "status": "verified",
-      "website": "https://www.beasleyallen.com/"
+      "status": "linked",
+      "website": "https://www.beasleyallen.com/",
+      "linkedin": "https://www.linkedin.com/company/beasley-allen-law-firm/"
     },
     {
       "key": "magistratecourtofcobbcounty",
@@ -11751,8 +11915,9 @@
       "candidateDomains": [
         "boviskyle.com"
       ],
-      "status": "verified",
-      "website": "https://www.boviskyle.com/"
+      "status": "linked",
+      "website": "https://www.boviskyle.com/",
+      "linkedin": ""
     },
     {
       "key": "goldfeinandassociatespc",
@@ -11831,9 +11996,9 @@
       "status": "not-corroborated"
     },
     {
-      "key": "barriosvirg\u00fcezattorneys",
+      "key": "barriosvirgüezattorneys",
       "names": [
-        "Barrios Virg\u00fcez Attorneys"
+        "Barrios Virgüez Attorneys"
       ],
       "attorneys": 3,
       "candidateDomains": [
@@ -12014,8 +12179,9 @@
       "candidateDomains": [
         "kslaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.kslaw.com/"
+      "status": "linked",
+      "website": "https://www.kslaw.com/",
+      "linkedin": "https://www.linkedin.com/company/king-and-spalding/"
     },
     {
       "key": "alexbartkolawllc",
@@ -12080,8 +12246,9 @@
       "candidateDomains": [
         "foxrothschild.com"
       ],
-      "status": "verified",
-      "website": "https://www.foxrothschild.com/"
+      "status": "linked",
+      "website": "https://www.foxrothschild.com/",
+      "linkedin": ""
     },
     {
       "key": "cooperbartonandcooperllp",
@@ -12155,8 +12322,9 @@
       "candidateDomains": [
         "phrd.com"
       ],
-      "status": "verified",
-      "website": "https://www.phrd.com/"
+      "status": "linked",
+      "website": "https://www.phrd.com/",
+      "linkedin": ""
     },
     {
       "key": "troutmanpepperhamiltonsandersllp",
@@ -12225,15 +12393,16 @@
       "names": [
         "Prosecuting Attorneys' Council of Georgia",
         "Prosecuting Attorney's Council of Georgia",
-        "Prosecuting Attorneys\u2019 Council of Georgia",
+        "Prosecuting Attorneys’ Council of Georgia",
         "Prosecuting Attorneys' Council Of Georgia"
       ],
       "attorneys": 18,
       "candidateDomains": [
         "pacga.org"
       ],
-      "status": "verified",
-      "website": "https://pacga.org/"
+      "status": "linked",
+      "website": "https://pacga.org/",
+      "linkedin": ""
     },
     {
       "key": "baskinlawfirmllc",
@@ -12468,8 +12637,9 @@
       "candidateDomains": [
         "grsm.com"
       ],
-      "status": "verified",
-      "website": "https://www.grsm.com/"
+      "status": "linked",
+      "website": "https://www.grsm.com/",
+      "linkedin": "https://www.linkedin.com/company/gordon-and-rees-llp/"
     },
     {
       "key": "gmke",
@@ -12714,8 +12884,9 @@
       "candidateDomains": [
         "johnfoy.com"
       ],
-      "status": "verified",
-      "website": "https://www.johnfoy.com/"
+      "status": "linked",
+      "website": "https://www.johnfoy.com/",
+      "linkedin": "https://www.linkedin.com/company/john-foy-and-associates/"
     },
     {
       "key": "rogerjbauerpc",
@@ -12885,8 +13056,9 @@
       "candidateDomains": [
         "immigration.net"
       ],
-      "status": "verified",
-      "website": "https://immigration.net/"
+      "status": "linked",
+      "website": "https://immigration.net/",
+      "linkedin": "https://www.linkedin.com/company/kuck-baxter-llc/"
     },
     {
       "key": "na",
@@ -13029,8 +13201,9 @@
         "witheritelaw.com",
         "witheritelawgroup.com"
       ],
-      "status": "verified",
-      "website": "https://www.witheritelaw.com/"
+      "status": "linked",
+      "website": "https://www.witheritelaw.com/",
+      "linkedin": "https://www.linkedin.com/company/witheritelawgroup/"
     },
     {
       "key": "bealsutherlandberlinandbrownllc",
@@ -13353,14 +13526,15 @@
       "key": "cozenoconnor",
       "names": [
         "Cozen O'Connor",
-        "Cozen O\u2019Connor"
+        "Cozen O’Connor"
       ],
       "attorneys": 17,
       "candidateDomains": [
         "cozen.com"
       ],
-      "status": "verified",
-      "website": "https://www.cozen.com/"
+      "status": "linked",
+      "website": "https://www.cozen.com/",
+      "linkedin": "https://www.linkedin.com/company/cozen-o%27connor/"
     },
     {
       "key": "beauchenelawoffices",
@@ -13472,8 +13646,9 @@
         "wachp.com",
         "waldonadelman.com"
       ],
-      "status": "verified",
-      "website": "https://www.waldonadelman.com/"
+      "status": "linked",
+      "website": "https://www.waldonadelman.com/",
+      "linkedin": ""
     },
     {
       "key": "thebecklawfirmllc",
@@ -13499,8 +13674,9 @@
       "candidateDomains": [
         "lawsonandbeck.com"
       ],
-      "status": "verified",
-      "website": "https://www.lawsonandbeck.com/"
+      "status": "linked",
+      "website": "https://www.lawsonandbeck.com/",
+      "linkedin": ""
     },
     {
       "key": "taftandbeckllc",
@@ -13634,8 +13810,9 @@
       "candidateDomains": [
         "bsllaw.net"
       ],
-      "status": "verified",
-      "website": "https://www.bsllaw.net/"
+      "status": "linked",
+      "website": "https://www.bsllaw.net/",
+      "linkedin": ""
     },
     {
       "key": "akermanllp",
@@ -13647,8 +13824,9 @@
       "candidateDomains": [
         "akerman.com"
       ],
-      "status": "verified",
-      "website": "https://www.akerman.com/en/"
+      "status": "linked",
+      "website": "https://www.akerman.com/en/",
+      "linkedin": "https://www.linkedin.com/company/akerman/"
     },
     {
       "key": "beckmannandfureyllp",
@@ -14037,8 +14215,9 @@
       "candidateDomains": [
         "wczlaw.com"
       ],
-      "status": "verified",
-      "website": "https://wczlaw.com/"
+      "status": "linked",
+      "website": "https://wczlaw.com/",
+      "linkedin": "https://www.linkedin.com/company/winter-capriola-zenner-llc/"
     },
     {
       "key": "jlbelllawoffice",
@@ -14281,8 +14460,9 @@
       "candidateDomains": [
         "mptlawfirm.com"
       ],
-      "status": "verified",
-      "website": "https://www.mptlawfirm.com/"
+      "status": "linked",
+      "website": "https://www.mptlawfirm.com/",
+      "linkedin": ""
     },
     {
       "key": "kevinebelleislellc",
@@ -14557,8 +14737,9 @@
       "candidateDomains": [
         "clydeco.us"
       ],
-      "status": "verified",
-      "website": "https://www.clydeco.com/en"
+      "status": "linked",
+      "website": "https://www.clydeco.com/en",
+      "linkedin": ""
     },
     {
       "key": "mcangusgoudelockandcourie",
@@ -14798,7 +14979,9 @@
         "lewisbrisbois.com",
         "lbbslaw.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://lewisbrisbois.com/",
+      "linkedin": "https://www.linkedin.com/company/lewis-brisbois/"
     },
     {
       "key": "townofbraselton",
@@ -15035,8 +15218,9 @@
       "candidateDomains": [
         "kaufmanhilbert.com"
       ],
-      "status": "verified",
-      "website": "https://kaufmanhilbert.com/"
+      "status": "linked",
+      "website": "https://kaufmanhilbert.com/",
+      "linkedin": "https://www.linkedin.com/company/kaufmanhilbert/"
     },
     {
       "key": "victoriavbennettpc",
@@ -15087,8 +15271,9 @@
       "candidateDomains": [
         "rossandpines.com"
       ],
-      "status": "verified",
-      "website": "https://www.rossandpines.com/"
+      "status": "linked",
+      "website": "https://www.rossandpines.com/",
+      "linkedin": ""
     },
     {
       "key": "empowerbrands",
@@ -15166,8 +15351,9 @@
         "bbandblaw.com",
         "thebentleyfirm.com"
       ],
-      "status": "verified",
-      "website": "https://www.thebentleyfirm.com/"
+      "status": "linked",
+      "website": "https://www.thebentleyfirm.com/",
+      "linkedin": ""
     },
     {
       "key": "eastcentralregionalhospital",
@@ -15267,8 +15453,9 @@
       "candidateDomains": [
         "bloom-law.com"
       ],
-      "status": "verified",
-      "website": "https://www.bloom-law.com/"
+      "status": "linked",
+      "website": "https://www.bloom-law.com/",
+      "linkedin": "https://www.linkedin.com/company/bloom-parham-llp/"
     },
     {
       "key": "katieberglawllc",
@@ -15333,8 +15520,9 @@
       "candidateDomains": [
         "pierferd.com"
       ],
-      "status": "verified",
-      "website": "https://pierferd.com/"
+      "status": "linked",
+      "website": "https://pierferd.com/",
+      "linkedin": ""
     },
     {
       "key": "markebergesonesq",
@@ -15515,8 +15703,9 @@
         "continuumlg.com",
         "pm.me"
       ],
-      "status": "verified",
-      "website": "https://continuumlg.com/"
+      "status": "linked",
+      "website": "https://continuumlg.com/",
+      "linkedin": "https://www.linkedin.com/company/continuum-legal-group-llp/"
     },
     {
       "key": "bermanlawllc",
@@ -15615,7 +15804,9 @@
         "constangy.com",
         "hartcom.net"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.constangy.com/",
+      "linkedin": ""
     },
     {
       "key": "lawofficeofstevenberne",
@@ -15836,8 +16027,9 @@
       "candidateDomains": [
         "fbglaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.fbglaw.com/"
+      "status": "linked",
+      "website": "https://www.fbglaw.com/",
+      "linkedin": ""
     },
     {
       "key": "royalcapitalcompanies",
@@ -15941,8 +16133,9 @@
       "candidateDomains": [
         "paulhastings.com"
       ],
-      "status": "verified",
-      "website": "https://www.paulhastings.com:443/"
+      "status": "linked",
+      "website": "https://www.paulhastings.com:443/",
+      "linkedin": "https://www.linkedin.com/company/paul-hastings/"
     },
     {
       "key": "affinityconsultinggroup",
@@ -16085,8 +16278,9 @@
       "candidateDomains": [
         "alexandervann.com"
       ],
-      "status": "verified",
-      "website": "https://www.alexandervann.com/"
+      "status": "linked",
+      "website": "https://www.alexandervann.com/",
+      "linkedin": ""
     },
     {
       "key": "beazley",
@@ -16167,8 +16361,9 @@
       "candidateDomains": [
         "joneswalden.com"
       ],
-      "status": "verified",
-      "website": "https://www.joneswalden.com/"
+      "status": "linked",
+      "website": "https://www.joneswalden.com/",
+      "linkedin": "https://www.linkedin.com/company/jones-walden-llc/"
     },
     {
       "key": "sperlinglawgrouppc",
@@ -16302,8 +16497,9 @@
       "candidateDomains": [
         "lawaugusta.com"
       ],
-      "status": "verified",
-      "website": "https://www.lawaugusta.com/"
+      "status": "linked",
+      "website": "https://www.lawaugusta.com/",
+      "linkedin": ""
     },
     {
       "key": "drewecklandfarnham",
@@ -16318,8 +16514,9 @@
         "deflaw.com",
         "cshlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.deflaw.com/"
+      "status": "linked",
+      "website": "https://www.deflaw.com/",
+      "linkedin": ""
     },
     {
       "key": "bignaultandcarterllc",
@@ -16363,7 +16560,9 @@
       "candidateDomains": [
         "justiceatwork.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.justiceatwork.com/",
+      "linkedin": ""
     },
     {
       "key": "deanlawllc",
@@ -16469,8 +16668,9 @@
         "blmhlaw.com",
         "birdlawfirm.com"
       ],
-      "status": "verified",
-      "website": "https://blmhlaw.com/"
+      "status": "linked",
+      "website": "https://blmhlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "purchasingpowerllc",
@@ -16805,8 +17005,9 @@
       "candidateDomains": [
         "littler.com"
       ],
-      "status": "verified",
-      "website": "https://www.littler.com/"
+      "status": "linked",
+      "website": "https://www.littler.com/",
+      "linkedin": "https://www.linkedin.com/company/littler-mendelson/"
     },
     {
       "key": "blacklawofficesllc",
@@ -16939,8 +17140,9 @@
       "candidateDomains": [
         "tisingervance.com"
       ],
-      "status": "verified",
-      "website": "https://tisingervance.com/"
+      "status": "linked",
+      "website": "https://tisingervance.com/",
+      "linkedin": ""
     },
     {
       "key": "willishblacknalliiipc",
@@ -17198,8 +17400,9 @@
       "candidateDomains": [
         "smf-law.com"
       ],
-      "status": "verified",
-      "website": "https://smf-law.com/"
+      "status": "linked",
+      "website": "https://smf-law.com/",
+      "linkedin": ""
     },
     {
       "key": "alliancelegalllc",
@@ -17768,8 +17971,9 @@
       "candidateDomains": [
         "weissman.law"
       ],
-      "status": "verified",
-      "website": "https://www.weissman.law/"
+      "status": "linked",
+      "website": "https://www.weissman.law/",
+      "linkedin": "https://www.linkedin.com/company/weissman/"
     },
     {
       "key": "upscorporaterealestatedepartment",
@@ -18263,7 +18467,7 @@
       "key": "usattorneysofficemiddledistrictofgeorgia",
       "names": [
         "US Attorneys Office Middle District of Georgia",
-        "U.S. Attorney\u2019s Office - Middle District of Georgia",
+        "U.S. Attorney’s Office - Middle District of Georgia",
         "U.S. Attorney's Office - Middle District of Georgia",
         "US Attorney's Office  Middle District of Georgia",
         "US Attorney's Office, Middle District of Georgia",
@@ -18476,8 +18680,9 @@
       "candidateDomains": [
         "caplancobb.com"
       ],
-      "status": "verified",
-      "website": "https://www.caplancobb.com/"
+      "status": "linked",
+      "website": "https://www.caplancobb.com/",
+      "linkedin": ""
     },
     {
       "key": "fisherbroylesllp",
@@ -18491,8 +18696,9 @@
       "candidateDomains": [
         "fisherbroyles.com"
       ],
-      "status": "verified",
-      "website": "https://fisherbroyles.com/"
+      "status": "linked",
+      "website": "https://fisherbroyles.com/",
+      "linkedin": "https://www.linkedin.com/company/fisherbroyles-llp/"
     },
     {
       "key": "consumerattorneyspllc",
@@ -18733,8 +18939,9 @@
       "candidateDomains": [
         "sheleyhall.com"
       ],
-      "status": "verified",
-      "website": "https://sheleyhall.com/"
+      "status": "linked",
+      "website": "https://sheleyhall.com/",
+      "linkedin": ""
     },
     {
       "key": "boudreauxlawfirm",
@@ -18787,8 +18994,9 @@
       "candidateDomains": [
         "gshattorneys.com"
       ],
-      "status": "verified",
-      "website": "https://gshattorneys.com/"
+      "status": "linked",
+      "website": "https://gshattorneys.com/",
+      "linkedin": "https://www.linkedin.com/company/goggans-stutzman-hudson-wilson-and-mize/"
     },
     {
       "key": "bournelawfirm",
@@ -18844,7 +19052,9 @@
       "candidateDomains": [
         "bfvlaw.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.bfvlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "smithhannanparkerandbowdenpc",
@@ -19069,8 +19279,9 @@
       "candidateDomains": [
         "leehayes.com"
       ],
-      "status": "verified",
-      "website": "https://www.leehayes.com/"
+      "status": "linked",
+      "website": "https://www.leehayes.com/",
+      "linkedin": ""
     },
     {
       "key": "clipperpetroleuminc",
@@ -19346,8 +19557,9 @@
         "duncanspratt.com",
         "djuricspratt.com"
       ],
-      "status": "verified",
-      "website": "https://duncanspratt.com/"
+      "status": "linked",
+      "website": "https://duncanspratt.com/",
+      "linkedin": ""
     },
     {
       "key": "faboydpc",
@@ -19442,8 +19654,9 @@
         "epra-law.com",
         "ellispainter.com"
       ],
-      "status": "verified",
-      "website": "https://ellispainter.com/"
+      "status": "linked",
+      "website": "https://ellispainter.com/",
+      "linkedin": ""
     },
     {
       "key": "boydcollarnolentuggleandroddenberyllc",
@@ -19454,8 +19667,9 @@
       "candidateDomains": [
         "bcntrlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.bcntrlaw.com/"
+      "status": "linked",
+      "website": "https://www.bcntrlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "boydlawfirmllc",
@@ -19976,8 +20190,9 @@
         "rlselaw.com",
         "rubinlublin.com"
       ],
-      "status": "verified",
-      "website": "https://rlselaw.com/"
+      "status": "linked",
+      "website": "https://rlselaw.com/",
+      "linkedin": "https://www.linkedin.com/company/rubin-lublin-llc/"
     },
     {
       "key": "dekalbprobono",
@@ -20134,8 +20349,9 @@
       "candidateDomains": [
         "briskinlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.briskinlaw.com/"
+      "status": "linked",
+      "website": "https://www.briskinlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "georgiadepartmentofhumanservices",
@@ -20337,8 +20553,9 @@
       "candidateDomains": [
         "dovermiller.com"
       ],
-      "status": "verified",
-      "website": "https://www.dovermiller.com/"
+      "status": "linked",
+      "website": "https://www.dovermiller.com/",
+      "linkedin": ""
     },
     {
       "key": "brantonlawfirm",
@@ -20589,8 +20806,9 @@
       "candidateDomains": [
         "dorough.com"
       ],
-      "status": "verified",
-      "website": "https://dorough.com/"
+      "status": "linked",
+      "website": "https://dorough.com/",
+      "linkedin": ""
     },
     {
       "key": "leebreedlovepc",
@@ -21692,8 +21910,9 @@
       "candidateDomains": [
         "weathington.com"
       ],
-      "status": "verified",
-      "website": "https://weathington.com/"
+      "status": "linked",
+      "website": "https://weathington.com/",
+      "linkedin": "https://www.linkedin.com/company/weathington-mcgrew-attorneys-at-law/"
     },
     {
       "key": "bennettinternationalgroupllc",
@@ -21809,7 +22028,7 @@
       "key": "newtoncountydistrictattorneysoffice",
       "names": [
         "Newton County District Attorney's Office",
-        "Newton County District Attorney\u2019s Office"
+        "Newton County District Attorney’s Office"
       ],
       "attorneys": 6,
       "candidateDomains": [
@@ -23140,8 +23359,9 @@
       "candidateDomains": [
         "littler.com"
       ],
-      "status": "verified",
-      "website": "https://www.littler.com/"
+      "status": "linked",
+      "website": "https://www.littler.com/",
+      "linkedin": "https://www.linkedin.com/company/littler-mendelson/"
     },
     {
       "key": "lawofficeofannsbrumbaughllc",
@@ -23816,7 +24036,9 @@
       "candidateDomains": [
         "emcfamilylaw.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.emcfamilylaw.com/",
+      "linkedin": ""
     },
     {
       "key": "kenbuffingtonattorneyatlaw",
@@ -23863,8 +24085,9 @@
       "candidateDomains": [
         "grsm.com"
       ],
-      "status": "verified",
-      "website": "https://www.grsm.com/"
+      "status": "linked",
+      "website": "https://www.grsm.com/",
+      "linkedin": "https://www.linkedin.com/company/gordon-and-rees-llp/"
     },
     {
       "key": "kevinbbuicellc",
@@ -24172,7 +24395,7 @@
       "key": "cobbcountydistrictattorneysoffice",
       "names": [
         "Cobb County District Attorney's Office",
-        "Cobb County District Attorney\u2019s Office"
+        "Cobb County District Attorney’s Office"
       ],
       "attorneys": 26,
       "candidateDomains": [
@@ -24333,8 +24556,9 @@
       "candidateDomains": [
         "hullbarrett.com"
       ],
-      "status": "verified",
-      "website": "https://hullbarrett.com/"
+      "status": "linked",
+      "website": "https://hullbarrett.com/",
+      "linkedin": ""
     },
     {
       "key": "leemeierburkellc",
@@ -24917,8 +25141,9 @@
         "thip.law",
         "thomashorstemeyer.com"
       ],
-      "status": "verified",
-      "website": "https://thip.law/"
+      "status": "linked",
+      "website": "https://thip.law/",
+      "linkedin": "https://www.linkedin.com/company/thomashorstemeyer.com/"
     },
     {
       "key": "walterhburtiii",
@@ -24988,8 +25213,9 @@
       "candidateDomains": [
         "nelsonmullins.com"
       ],
-      "status": "verified",
-      "website": "https://www.nelsonmullins.com/"
+      "status": "linked",
+      "website": "https://www.nelsonmullins.com/",
+      "linkedin": "https://www.linkedin.com/company/165138/"
     },
     {
       "key": "thelawofficeofrandallburtonllc",
@@ -25460,8 +25686,9 @@
       "candidateDomains": [
         "martensonlaw.com"
       ],
-      "status": "verified",
-      "website": "https://martensonlaw.com/"
+      "status": "linked",
+      "website": "https://martensonlaw.com/",
+      "linkedin": "https://www.linkedin.com/company/martensonlaw/"
     },
     {
       "key": "dustinmbuttigiegpc",
@@ -25697,8 +25924,9 @@
       "candidateDomains": [
         "fellab.com"
       ],
-      "status": "verified",
-      "website": "https://www.fellab.com/"
+      "status": "linked",
+      "website": "https://www.fellab.com/",
+      "linkedin": ""
     },
     {
       "key": "peachtreehotelgroup",
@@ -25721,8 +25949,9 @@
         "shewmakerandlewis.com",
         "shewmakerlaw.com"
       ],
-      "status": "verified",
-      "website": "https://shewmakerandlewis.com/"
+      "status": "linked",
+      "website": "https://shewmakerandlewis.com/",
+      "linkedin": ""
     },
     {
       "key": "jerryncadlepc",
@@ -25767,8 +25996,9 @@
         "winstead.com",
         "mmmlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.winstead.com/"
+      "status": "linked",
+      "website": "https://www.winstead.com/",
+      "linkedin": "https://www.linkedin.com/company/winstead-pc/"
     },
     {
       "key": "christophercahillattorneyatlawpc",
@@ -25860,8 +26090,9 @@
       "candidateDomains": [
         "jwitcher.com"
       ],
-      "status": "verified",
-      "website": "https://www.jwitcher.com/"
+      "status": "linked",
+      "website": "https://www.jwitcher.com/",
+      "linkedin": ""
     },
     {
       "key": "jerrywcainjrpc",
@@ -26005,8 +26236,9 @@
       "candidateDomains": [
         "ccedlaw.com"
       ],
-      "status": "verified",
-      "website": "https://ccedlaw.com/"
+      "status": "linked",
+      "website": "https://ccedlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "lawofficeofjerrywcaldwell",
@@ -26122,8 +26354,9 @@
         "hpsslaw.com",
         "hpsf-law.com"
       ],
-      "status": "verified",
-      "website": "https://hpsslaw.com/"
+      "status": "linked",
+      "website": "https://hpsslaw.com/",
+      "linkedin": ""
     },
     {
       "key": "statecourtofbibbcounty",
@@ -26187,8 +26420,9 @@
       "candidateDomains": [
         "homlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.homlaw.com/"
+      "status": "linked",
+      "website": "https://www.homlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "scheermontgomeryandcallpc",
@@ -26316,8 +26550,9 @@
       "candidateDomains": [
         "titlelaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.titlelaw.com/"
+      "status": "linked",
+      "website": "https://www.titlelaw.com/",
+      "linkedin": ""
     },
     {
       "key": "callowayandassociateslawfirm",
@@ -27666,8 +27901,9 @@
       "candidateDomains": [
         "farahandfarah.com"
       ],
-      "status": "verified",
-      "website": "https://farahandfarah.com/"
+      "status": "linked",
+      "website": "https://farahandfarah.com/",
+      "linkedin": ""
     },
     {
       "key": "lawofficesofbrucehcarrawayiii",
@@ -27870,8 +28106,9 @@
         "ghsmlaw.com",
         "gilbertharrelllaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.gilbertharrelllaw.com/"
+      "status": "linked",
+      "website": "https://www.gilbertharrelllaw.com/",
+      "linkedin": ""
     },
     {
       "key": "fiduciarytrustinternational",
@@ -28134,7 +28371,7 @@
       "key": "dekalbcountysolicitorgeneralsoffice",
       "names": [
         "DeKalb County Solicitor General's Office",
-        "DeKalb County Solicitor General\u2019s Office",
+        "DeKalb County Solicitor General’s Office",
         "Dekalb County Solicitor General's Office"
       ],
       "attorneys": 9,
@@ -28594,7 +28831,7 @@
     {
       "key": "tiftoncircuitpublicdefendersoffice",
       "names": [
-        "Tifton Circuit Public Defender\u2019s Office",
+        "Tifton Circuit Public Defender’s Office",
         "Tifton Circuit Public Defender's Office"
       ],
       "attorneys": 4,
@@ -28634,8 +28871,9 @@
       "candidateDomains": [
         "montlick.com"
       ],
-      "status": "verified",
-      "website": "https://www.montlick.com/"
+      "status": "linked",
+      "website": "https://www.montlick.com/",
+      "linkedin": ""
     },
     {
       "key": "lipshutzgreenblattllc",
@@ -29453,8 +29691,9 @@
       "candidateDomains": [
         "thechampionfirm.com"
       ],
-      "status": "verified",
-      "website": "https://www.thechampionfirm.com/"
+      "status": "linked",
+      "website": "https://www.thechampionfirm.com/",
+      "linkedin": "https://www.linkedin.com/company/champion-firm-p-c-/"
     },
     {
       "key": "heatherlchampionpc",
@@ -29940,8 +30179,9 @@
       "candidateDomains": [
         "luederlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.luederlaw.com/"
+      "status": "linked",
+      "website": "https://www.luederlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "charltonandgloverpc",
@@ -30068,8 +30308,9 @@
       "candidateDomains": [
         "leehayes.com"
       ],
-      "status": "verified",
-      "website": "https://www.leehayes.com/"
+      "status": "linked",
+      "website": "https://www.leehayes.com/",
+      "linkedin": ""
     },
     {
       "key": "bhavyachaudharyandassociatesllc",
@@ -30468,8 +30709,9 @@
       "candidateDomains": [
         "bakerdonelson.com"
       ],
-      "status": "verified",
-      "website": "https://www.bakerdonelson.com/"
+      "status": "linked",
+      "website": "https://www.bakerdonelson.com/",
+      "linkedin": "https://www.linkedin.com/company/baker-donelson/"
     },
     {
       "key": "rumphchilderspa",
@@ -30491,8 +30733,9 @@
       "candidateDomains": [
         "lewisbrisbois.com"
       ],
-      "status": "verified",
-      "website": "https://lewisbrisbois.com/"
+      "status": "linked",
+      "website": "https://lewisbrisbois.com/",
+      "linkedin": "https://www.linkedin.com/company/lewis-brisbois/"
     },
     {
       "key": "childresfiduciaryandprobatecounsel",
@@ -31354,8 +31597,9 @@
       "candidateDomains": [
         "hlmlawfirm.com"
       ],
-      "status": "verified",
-      "website": "https://www.hlmlawfirm.com/"
+      "status": "linked",
+      "website": "https://www.hlmlawfirm.com/",
+      "linkedin": ""
     },
     {
       "key": "thelawofficesofcarolvclarkllc",
@@ -31835,8 +32079,9 @@
       "candidateDomains": [
         "chrkglaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.chrkglaw.com/"
+      "status": "linked",
+      "website": "https://www.chrkglaw.com/",
+      "linkedin": ""
     },
     {
       "key": "jackclaylawfirmllc",
@@ -31926,8 +32171,9 @@
         "mcdermottlaw.com",
         "mwe.com"
       ],
-      "status": "verified",
-      "website": "https://www.mcdermottlaw.com/"
+      "status": "linked",
+      "website": "https://www.mcdermottlaw.com/",
+      "linkedin": "https://www.linkedin.com/company/mcdermott-will-and-schulte/"
     },
     {
       "key": "credigy",
@@ -32398,8 +32644,9 @@
       "candidateDomains": [
         "olivermaner.com"
       ],
-      "status": "verified",
-      "website": "https://olivermaner.com/"
+      "status": "linked",
+      "website": "https://olivermaner.com/",
+      "linkedin": "https://www.linkedin.com/company/olivermanerllp/"
     },
     {
       "key": "averymediation",
@@ -32473,7 +32720,9 @@
         "lscklaw.com",
         "lsswlaw.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.lscklaw.com/",
+      "linkedin": ""
     },
     {
       "key": "georgiacenterforopportunity",
@@ -32835,8 +33084,9 @@
       "candidateDomains": [
         "calvinsmithlaw.com"
       ],
-      "status": "verified",
-      "website": "https://calvinsmithlaw.com/"
+      "status": "linked",
+      "website": "https://calvinsmithlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "wetheringtonlawfirmpc",
@@ -32945,8 +33195,9 @@
       "candidateDomains": [
         "boviskyle.com"
       ],
-      "status": "verified",
-      "website": "https://www.boviskyle.com/"
+      "status": "linked",
+      "website": "https://www.boviskyle.com/",
+      "linkedin": ""
     },
     {
       "key": "thomascohenlawllc",
@@ -32957,7 +33208,9 @@
       "candidateDomains": [
         "cogolaw.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://cogolaw.com/",
+      "linkedin": ""
     },
     {
       "key": "oakbridgepartnersltd",
@@ -34152,8 +34405,9 @@
       "candidateDomains": [
         "rhs-law.com"
       ],
-      "status": "verified",
-      "website": "https://rhs-law.com/"
+      "status": "linked",
+      "website": "https://rhs-law.com/",
+      "linkedin": "https://www.linkedin.com/company/richterhead/"
     },
     {
       "key": "cooklawfirmatlantapc",
@@ -34366,8 +34620,9 @@
       "candidateDomains": [
         "agg.com"
       ],
-      "status": "verified",
-      "website": "https://www.agg.com/"
+      "status": "linked",
+      "website": "https://www.agg.com/",
+      "linkedin": "https://www.linkedin.com/company/arnall-golden-gregory-llp/"
     },
     {
       "key": "thecooleylawfirm",
@@ -35381,8 +35636,9 @@
       "candidateDomains": [
         "homlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.homlaw.com/"
+      "status": "linked",
+      "website": "https://www.homlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "lipscombjohnsonllp",
@@ -36670,8 +36926,9 @@
       "candidateDomains": [
         "clarkhill.com"
       ],
-      "status": "verified",
-      "website": "https://www.clarkhill.com/"
+      "status": "linked",
+      "website": "https://www.clarkhill.com/",
+      "linkedin": "https://www.linkedin.com/company/clark-hill-law/"
     },
     {
       "key": "mitchellandcrunk",
@@ -37440,8 +37697,9 @@
       "candidateDomains": [
         "phrd.com"
       ],
-      "status": "verified",
-      "website": "https://www.phrd.com/"
+      "status": "linked",
+      "website": "https://www.phrd.com/",
+      "linkedin": ""
     },
     {
       "key": "daileyadvisorygroupllc",
@@ -37740,7 +37998,7 @@
     {
       "key": "claytoncircuitpublicdefendersoffice",
       "names": [
-        "Clayton Circuit Public Defender\u2019s Office",
+        "Clayton Circuit Public Defender’s Office",
         "Clayton Circuit Public Defender's Office"
       ],
       "attorneys": 4,
@@ -38028,7 +38286,7 @@
       "key": "cowetajudicialcircuitdistrictattorneysoffice",
       "names": [
         "Coweta Judicial Circuit District Attorney's Office",
-        "Coweta Judicial Circuit District Attorney\u2019s Office"
+        "Coweta Judicial Circuit District Attorney’s Office"
       ],
       "attorneys": 3,
       "candidateDomains": [
@@ -38177,8 +38435,9 @@
       "candidateDomains": [
         "qpwblaw.com"
       ],
-      "status": "verified",
-      "website": "https://qpwblaw.com/"
+      "status": "linked",
+      "website": "https://qpwblaw.com/",
+      "linkedin": ""
     },
     {
       "key": "savannahchamberofcommerce",
@@ -38412,8 +38671,9 @@
       "candidateDomains": [
         "jarrard-davis.com"
       ],
-      "status": "verified",
-      "website": "https://jarrard-davis.com/"
+      "status": "linked",
+      "website": "https://jarrard-davis.com/",
+      "linkedin": ""
     },
     {
       "key": "maynardnexsenpc",
@@ -38425,8 +38685,9 @@
       "candidateDomains": [
         "maynardnexsen.com"
       ],
-      "status": "verified",
-      "website": "https://www.maynardnexsen.com/"
+      "status": "linked",
+      "website": "https://www.maynardnexsen.com/",
+      "linkedin": "https://www.linkedin.com/company/maynardnexsen/"
     },
     {
       "key": "johnbmillerandassociatespc",
@@ -38437,8 +38698,9 @@
       "candidateDomains": [
         "johnbmillerlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.johnbmillerlaw.com/"
+      "status": "linked",
+      "website": "https://www.johnbmillerlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "thejameslawfirm",
@@ -38542,8 +38804,9 @@
       "candidateDomains": [
         "siemonlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.siemonlawfirm.com/"
+      "status": "linked",
+      "website": "https://www.siemonlawfirm.com/",
+      "linkedin": "https://www.linkedin.com/company/2641723/"
     },
     {
       "key": "lawofficeofdawnrdavis",
@@ -38639,8 +38902,9 @@
       "candidateDomains": [
         "ljlaw.com"
       ],
-      "status": "verified",
-      "website": "https://ljlaw.com/"
+      "status": "linked",
+      "website": "https://ljlaw.com/",
+      "linkedin": "https://www.linkedin.com/company/1428826/"
     },
     {
       "key": "hawkinsparnellandyoung",
@@ -38999,8 +39263,9 @@
       "candidateDomains": [
         "maconbibb.us"
       ],
-      "status": "verified",
-      "website": "https://www.maconbibb.us/"
+      "status": "linked",
+      "website": "https://www.maconbibb.us/",
+      "linkedin": "https://www.linkedin.com/company/maconbibbcounty/"
     },
     {
       "key": "saundramdavispc",
@@ -39046,8 +39311,9 @@
         "gorhodeslaw.com",
         "rhodeslawfirmpc.com"
       ],
-      "status": "verified",
-      "website": "https://gorhodeslaw.com/"
+      "status": "linked",
+      "website": "https://gorhodeslaw.com/",
+      "linkedin": "https://www.linkedin.com/company/rhodes-law-firm-p.c./"
     },
     {
       "key": "divinefinneydavispc",
@@ -39285,8 +39551,9 @@
         "nelsonmullins.com",
         "nelsonmullins.com.com"
       ],
-      "status": "verified",
-      "website": "https://www.nelsonmullins.com/"
+      "status": "linked",
+      "website": "https://www.nelsonmullins.com/",
+      "linkedin": "https://www.linkedin.com/company/165138/"
     },
     {
       "key": "rudahirschfeldpaperaandhoffmanllp",
@@ -39638,8 +39905,9 @@
         "tdklegal.com",
         "tdhtlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.tdklegal.com/"
+      "status": "linked",
+      "website": "https://www.tdklegal.com/",
+      "linkedin": ""
     },
     {
       "key": "deeringanddeeringpcofcounselthekimfirm",
@@ -40862,8 +41130,9 @@
       "candidateDomains": [
         "montlick.com"
       ],
-      "status": "verified",
-      "website": "https://www.montlick.com/"
+      "status": "linked",
+      "website": "https://www.montlick.com/",
+      "linkedin": ""
     },
     {
       "key": "brandonkdialllc",
@@ -41170,14 +41439,15 @@
       "names": [
         "Thompson, O'Brien, Kappler & Nasuti, PC",
         "Thompson O'Brien Kappler & Nasuti PC",
-        "Thompson, O\u2019Brien, Kappler & Nasuti, P.C."
+        "Thompson, O’Brien, Kappler & Nasuti, P.C."
       ],
       "attorneys": 10,
       "candidateDomains": [
         "tokn.com"
       ],
-      "status": "verified",
-      "website": "https://www.tokn.com/"
+      "status": "linked",
+      "website": "https://www.tokn.com/",
+      "linkedin": "https://www.linkedin.com/company/toknlaw/"
     },
     {
       "key": "ontexglobal",
@@ -41284,8 +41554,9 @@
         "grsm.com",
         "cochranedwardslaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.grsm.com/"
+      "status": "linked",
+      "website": "https://www.grsm.com/",
+      "linkedin": "https://www.linkedin.com/company/gordon-and-rees-llp/"
     },
     {
       "key": "zurichinsurancenorthamerica",
@@ -41481,7 +41752,7 @@
     {
       "key": "cherokeecountysolicitorgeneralsoffice",
       "names": [
-        "Cherokee County Solicitor General\u2019s Office",
+        "Cherokee County Solicitor General’s Office",
         "Cherokee County Solicitor General's Office",
         "Cherokee County Solicitor-General's Office"
       ],
@@ -41710,8 +41981,9 @@
       "candidateDomains": [
         "friedgoldberg.com"
       ],
-      "status": "verified",
-      "website": "https://www.friedgoldberg.com/"
+      "status": "linked",
+      "website": "https://www.friedgoldberg.com/",
+      "linkedin": "https://www.linkedin.com/company/fried-rogers-goldberg-llc/"
     },
     {
       "key": "dolawoffice",
@@ -42704,8 +42976,9 @@
       "candidateDomains": [
         "trotterjones.com"
       ],
-      "status": "verified",
-      "website": "https://www.trotterjones.com/"
+      "status": "linked",
+      "website": "https://www.trotterjones.com/",
+      "linkedin": "https://www.linkedin.com/company/trotter-jones-llp/"
     },
     {
       "key": "wilsonmortonanddownsllc",
@@ -42717,8 +42990,9 @@
       "candidateDomains": [
         "wmdlegal.com"
       ],
-      "status": "verified",
-      "website": "https://www.wmdlegal.com/"
+      "status": "linked",
+      "website": "https://www.wmdlegal.com/",
+      "linkedin": ""
     },
     {
       "key": "atlantacircuitsuperiorcourt",
@@ -43175,7 +43449,7 @@
       "names": [
         "Houston County District Attorney's Office",
         "Houston County District Attorneys Office",
-        "Houston County District Attorney\u2019s Office"
+        "Houston County District Attorney’s Office"
       ],
       "attorneys": 8,
       "candidateDomains": [
@@ -43460,8 +43734,9 @@
       "candidateDomains": [
         "brinson-askew.com"
       ],
-      "status": "verified",
-      "website": "https://brinson-askew.com/"
+      "status": "linked",
+      "website": "https://brinson-askew.com/",
+      "linkedin": ""
     },
     {
       "key": "thedukelawfirmllc",
@@ -43919,8 +44194,9 @@
         "nrs.law",
         "neelandrobinson.com"
       ],
-      "status": "verified",
-      "website": "https://nrs.law/"
+      "status": "linked",
+      "website": "https://nrs.law/",
+      "linkedin": ""
     },
     {
       "key": "blakedurhamlawllc",
@@ -44083,7 +44359,7 @@
       "key": "towaligajudicialcircuitdistrictattorneysoffice",
       "names": [
         "Towaliga Judicial Circuit District Attorney's Office",
-        "Towaliga Judicial Circuit District Attorney\u2019s Office"
+        "Towaliga Judicial Circuit District Attorney’s Office"
       ],
       "attorneys": 3,
       "candidateDomains": [],
@@ -44372,8 +44648,9 @@
       "candidateDomains": [
         "gatrialattorney.com"
       ],
-      "status": "verified",
-      "website": "https://gatrialattorney.com/"
+      "status": "linked",
+      "website": "https://gatrialattorney.com/",
+      "linkedin": "https://www.linkedin.com/company/williamsellebyhowardeaster/"
     },
     {
       "key": "theeastmanlawfirmpc",
@@ -44449,8 +44726,9 @@
       "candidateDomains": [
         "kameb.com"
       ],
-      "status": "verified",
-      "website": "https://www.kameb.com/"
+      "status": "linked",
+      "website": "https://www.kameb.com/",
+      "linkedin": ""
     },
     {
       "key": "cherrystreetenergy",
@@ -45010,8 +45288,9 @@
       "candidateDomains": [
         "brannenlaw.com"
       ],
-      "status": "verified",
-      "website": "https://brannenlaw.com/"
+      "status": "linked",
+      "website": "https://brannenlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "atlantaimmigrationandlegalservicespc",
@@ -45277,7 +45556,7 @@
     {
       "key": "douglascountydistrictattorneysoffice",
       "names": [
-        "Douglas County District Attorney\u2019s Office",
+        "Douglas County District Attorney’s Office",
         "Douglas County District Attorney's Office"
       ],
       "attorneys": 8,
@@ -45313,8 +45592,9 @@
       "candidateDomains": [
         "joneswalden.com"
       ],
-      "status": "verified",
-      "website": "https://www.joneswalden.com/"
+      "status": "linked",
+      "website": "https://www.joneswalden.com/",
+      "linkedin": "https://www.linkedin.com/company/jones-walden-llc/"
     },
     {
       "key": "ecsandsllc",
@@ -45532,7 +45812,7 @@
     {
       "key": "pikecountydistrictattorneysoffice",
       "names": [
-        "Pike County District Attorney\u2019s Office"
+        "Pike County District Attorney’s Office"
       ],
       "attorneys": 1,
       "candidateDomains": [
@@ -45565,7 +45845,7 @@
     {
       "key": "hallcountysolicitorgeneralsoffice",
       "names": [
-        "Hall County Solicitor General\u2019s Office",
+        "Hall County Solicitor General’s Office",
         "Hall County Solicitor General's Office"
       ],
       "attorneys": 4,
@@ -45641,8 +45921,9 @@
       "candidateDomains": [
         "deflaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.deflaw.com/"
+      "status": "linked",
+      "website": "https://www.deflaw.com/",
+      "linkedin": ""
     },
     {
       "key": "lawofficeofperrydeanellispc",
@@ -45862,8 +46143,9 @@
       "candidateDomains": [
         "wtlaw.com"
       ],
-      "status": "verified",
-      "website": "https://wtlaw.com/"
+      "status": "linked",
+      "website": "https://wtlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "merrittwatsongreenllp",
@@ -46138,8 +46420,9 @@
       "candidateDomains": [
         "swtwlaw.com"
       ],
-      "status": "verified",
-      "website": "https://swtwlaw.com/"
+      "status": "linked",
+      "website": "https://swtwlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "ericssonlaw",
@@ -46490,8 +46773,9 @@
       "candidateDomains": [
         "wzlegal.com"
       ],
-      "status": "verified",
-      "website": "https://wzlegal.com/"
+      "status": "linked",
+      "website": "https://wzlegal.com/",
+      "linkedin": ""
     },
     {
       "key": "evangelistaworleyllc",
@@ -46699,8 +46983,9 @@
       "candidateDomains": [
         "immigration.net"
       ],
-      "status": "verified",
-      "website": "https://immigration.net/"
+      "status": "linked",
+      "website": "https://immigration.net/",
+      "linkedin": "https://www.linkedin.com/company/kuck-baxter-llc/"
     },
     {
       "key": "alliedworldinsurancecompany",
@@ -46973,8 +47258,9 @@
       "candidateDomains": [
         "bbga.com"
       ],
-      "status": "verified",
-      "website": "https://www.bbga.com/"
+      "status": "linked",
+      "website": "https://www.bbga.com/",
+      "linkedin": "https://www.linkedin.com/company/bbgalaw/"
     },
     {
       "key": "cordelejudicialcircuitdistrictattorneysoffice",
@@ -47060,8 +47346,9 @@
       "candidateDomains": [
         "cpmtlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.cpmtlaw.com/"
+      "status": "linked",
+      "website": "https://www.cpmtlaw.com/",
+      "linkedin": "https://www.linkedin.com/company/cohen-pollock-merlin-turner/"
     },
     {
       "key": "datapointsllc",
@@ -47195,8 +47482,9 @@
       "candidateDomains": [
         "ktslaw.com"
       ],
-      "status": "verified",
-      "website": "https://ktslaw.com/"
+      "status": "linked",
+      "website": "https://ktslaw.com/",
+      "linkedin": ""
     },
     {
       "key": "pereirakirbykinsingerandngyuenllp",
@@ -47515,8 +47803,9 @@
       "candidateDomains": [
         "skaarandfeagle.com"
       ],
-      "status": "verified",
-      "website": "https://www.skaarandfeagle.com/"
+      "status": "linked",
+      "website": "https://www.skaarandfeagle.com/",
+      "linkedin": ""
     },
     {
       "key": "georgiadepartmentofbankingandfinance",
@@ -47940,8 +48229,9 @@
       "candidateDomains": [
         "mmmlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.mmmlaw.com/"
+      "status": "linked",
+      "website": "https://www.mmmlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "randstadgeneralstaffing",
@@ -47963,8 +48253,9 @@
       "candidateDomains": [
         "bloom-law.com"
       ],
-      "status": "verified",
-      "website": "https://www.bloom-law.com/"
+      "status": "linked",
+      "website": "https://www.bloom-law.com/",
+      "linkedin": "https://www.linkedin.com/company/bloom-parham-llp/"
     },
     {
       "key": "mickiafergusonattorney",
@@ -48044,8 +48335,9 @@
       "candidateDomains": [
         "gaheirsproperty.org"
       ],
-      "status": "verified",
-      "website": "https://www.gaheirsproperty.org/"
+      "status": "linked",
+      "website": "https://www.gaheirsproperty.org/",
+      "linkedin": "https://www.linkedin.com/company/gaheirsproperty/"
     },
     {
       "key": "adamferrellpc",
@@ -48546,8 +48838,9 @@
       "candidateDomains": [
         "thip.law"
       ],
-      "status": "verified",
-      "website": "https://thip.law/"
+      "status": "linked",
+      "website": "https://thip.law/",
+      "linkedin": "https://www.linkedin.com/company/thomashorstemeyer.com/"
     },
     {
       "key": "fisherlaw",
@@ -49854,8 +50147,9 @@
       "candidateDomains": [
         "ghsmlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.gilbertharrelllaw.com/"
+      "status": "linked",
+      "website": "https://www.gilbertharrelllaw.com/",
+      "linkedin": ""
     },
     {
       "key": "dekalbcountygovernment",
@@ -50467,7 +50761,7 @@
       "key": "ohaganmeyer",
       "names": [
         "O'Hagan Meyer",
-        "O\u2019Hagan Meyer"
+        "O’Hagan Meyer"
       ],
       "attorneys": 5,
       "candidateDomains": [
@@ -50515,8 +50809,9 @@
       "candidateDomains": [
         "duncanspratt.com"
       ],
-      "status": "verified",
-      "website": "https://duncanspratt.com/"
+      "status": "linked",
+      "website": "https://duncanspratt.com/",
+      "linkedin": ""
     },
     {
       "key": "thefreemanfirmpc",
@@ -50783,8 +51078,9 @@
       "candidateDomains": [
         "friedgoldberg.com"
       ],
-      "status": "verified",
-      "website": "https://www.friedgoldberg.com/"
+      "status": "linked",
+      "website": "https://www.friedgoldberg.com/",
+      "linkedin": "https://www.linkedin.com/company/fried-rogers-goldberg-llc/"
     },
     {
       "key": "stephenmfriedbergattyatlawllc",
@@ -51212,8 +51508,9 @@
       "candidateDomains": [
         "petersmonyak.com"
       ],
-      "status": "verified",
-      "website": "https://www.petersmonyak.com/"
+      "status": "linked",
+      "website": "https://www.petersmonyak.com/",
+      "linkedin": ""
     },
     {
       "key": "themurrylawgrouppc",
@@ -51551,8 +51848,9 @@
         "maynardnexsen.com",
         "maynardnexsen.comrlavoie.com"
       ],
-      "status": "verified",
-      "website": "https://www.maynardnexsen.com/"
+      "status": "linked",
+      "website": "https://www.maynardnexsen.com/",
+      "linkedin": "https://www.linkedin.com/company/maynardnexsen/"
     },
     {
       "key": "lawofficeofkarengaineypc",
@@ -51774,8 +52072,9 @@
       "candidateDomains": [
         "millsgamsey.com"
       ],
-      "status": "verified",
-      "website": "https://www.millsgamsey.com/"
+      "status": "linked",
+      "website": "https://www.millsgamsey.com/",
+      "linkedin": ""
     },
     {
       "key": "grayrustmoffettbrieskellp",
@@ -53058,8 +53357,9 @@
       "candidateDomains": [
         "townsendlockett.com"
       ],
-      "status": "verified",
-      "website": "https://townsendlockett.com/"
+      "status": "linked",
+      "website": "https://townsendlockett.com/",
+      "linkedin": "https://www.linkedin.com/company/townsend-lockett-law/"
     },
     {
       "key": "alstonandbirdllc",
@@ -53070,8 +53370,9 @@
       "candidateDomains": [
         "alston.com"
       ],
-      "status": "verified",
-      "website": "https://www.alston.com/"
+      "status": "linked",
+      "website": "https://www.alston.com/",
+      "linkedin": ""
     },
     {
       "key": "ghaffarilawfirm",
@@ -53398,8 +53699,9 @@
       "candidateDomains": [
         "gmpclaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.gmpclaw.com/"
+      "status": "linked",
+      "website": "https://www.gmpclaw.com/",
+      "linkedin": ""
     },
     {
       "key": "nortonrosefulbright",
@@ -53844,8 +54146,9 @@
       "candidateDomains": [
         "kslaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.kslaw.com/"
+      "status": "linked",
+      "website": "https://www.kslaw.com/",
+      "linkedin": "https://www.linkedin.com/company/king-and-spalding/"
     },
     {
       "key": "githieyalaw",
@@ -54712,9 +55015,9 @@
       "status": "needs-research"
     },
     {
-      "key": "g\u00f3mezlawgroupllc",
+      "key": "gómezlawgroupllc",
       "names": [
-        "G\u00f3mez Law Group  LLC"
+        "Gómez Law Group  LLC"
       ],
       "attorneys": 1,
       "candidateDomains": [
@@ -55491,8 +55794,9 @@
       "candidateDomains": [
         "deminglaw.com"
       ],
-      "status": "verified",
-      "website": "https://deminglaw.com/"
+      "status": "linked",
+      "website": "https://deminglaw.com/",
+      "linkedin": "https://www.linkedin.com/company/deming-parker-hoffman-campbell-daly-l-l-c/"
     },
     {
       "key": "dearthlaw",
@@ -56934,8 +57238,9 @@
       "candidateDomains": [
         "weathington.com"
       ],
-      "status": "verified",
-      "website": "https://weathington.com/"
+      "status": "linked",
+      "website": "https://weathington.com/",
+      "linkedin": "https://www.linkedin.com/company/weathington-mcgrew-attorneys-at-law/"
     },
     {
       "key": "griffinpuckettllcattorneysatlaw",
@@ -59714,7 +60019,7 @@
     {
       "key": "recorderscourtofchathamcounty",
       "names": [
-        "Recorder\u2019s Court of Chatham County"
+        "Recorder’s Court of Chatham County"
       ],
       "attorneys": 1,
       "candidateDomains": [],
@@ -60425,8 +60730,9 @@
       "candidateDomains": [
         "wshpc.net"
       ],
-      "status": "verified",
-      "website": "https://www.wshpc.net/"
+      "status": "linked",
+      "website": "https://www.wshpc.net/",
+      "linkedin": ""
     },
     {
       "key": "danamharrisabrahampc",
@@ -60578,8 +60884,9 @@
       "candidateDomains": [
         "glsp.org"
       ],
-      "status": "verified",
-      "website": "https://www.glsp.org/"
+      "status": "linked",
+      "website": "https://www.glsp.org/",
+      "linkedin": "https://www.linkedin.com/company/georgia-legal-services/"
     },
     {
       "key": "bettieannechildershartattorneyatlawllc",
@@ -60909,8 +61216,9 @@
       "candidateDomains": [
         "hassonlawgroup.com"
       ],
-      "status": "verified",
-      "website": "https://hassonlawgroup.com/"
+      "status": "linked",
+      "website": "https://hassonlawgroup.com/",
+      "linkedin": ""
     },
     {
       "key": "lauraghastayattorneyatlawpc",
@@ -60951,8 +61259,9 @@
       "candidateDomains": [
         "hastypope.com"
       ],
-      "status": "verified",
-      "website": "https://www.hastypope.com/"
+      "status": "linked",
+      "website": "https://www.hastypope.com/",
+      "linkedin": ""
     },
     {
       "key": "georgiagovernorsoffice",
@@ -62873,8 +63182,9 @@
       "candidateDomains": [
         "bcntrlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.bcntrlaw.com/"
+      "status": "linked",
+      "website": "https://www.bcntrlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "thelawofficeofenochphicksllc",
@@ -63571,7 +63881,9 @@
       "candidateDomains": [
         "hineslaw.org"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://hineslaw.org/",
+      "linkedin": "https://www.linkedin.com/company/hineslawfirm/"
     },
     {
       "key": "crawfordandhinesley",
@@ -66252,8 +66564,9 @@
       "candidateDomains": [
         "rhp-law.com"
       ],
-      "status": "verified",
-      "website": "https://www.rhp-law.com/"
+      "status": "linked",
+      "website": "https://www.rhp-law.com/",
+      "linkedin": ""
     },
     {
       "key": "richardnhubertllc",
@@ -66791,7 +67104,7 @@
     {
       "key": "monroecountydistrictattorneysoffice",
       "names": [
-        "Monroe County District Attorney\u2019s Office"
+        "Monroe County District Attorney’s Office"
       ],
       "attorneys": 1,
       "candidateDomains": [],
@@ -67729,8 +68042,9 @@
       "candidateDomains": [
         "melvillejohnson.com"
       ],
-      "status": "verified",
-      "website": "https://www.melvillejohnson.com/"
+      "status": "linked",
+      "website": "https://www.melvillejohnson.com/",
+      "linkedin": "https://www.linkedin.com/company/10942578/"
     },
     {
       "key": "lawofficeofjacquelineisabellllc",
@@ -68947,8 +69261,9 @@
       "candidateDomains": [
         "siemonlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.siemonlawfirm.com/"
+      "status": "linked",
+      "website": "https://www.siemonlawfirm.com/",
+      "linkedin": "https://www.linkedin.com/company/2641723/"
     },
     {
       "key": "usdistrictcourtnortherndistrictofgeorgiachambersofhonsalinas",
@@ -69450,8 +69765,9 @@
       "candidateDomains": [
         "ccedlaw.com"
       ],
-      "status": "verified",
-      "website": "https://ccedlaw.com/"
+      "status": "linked",
+      "website": "https://ccedlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "johnsonlawfirm",
@@ -70411,8 +70727,9 @@
       "candidateDomains": [
         "mmbblaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.mmbblaw.com/"
+      "status": "linked",
+      "website": "https://www.mmbblaw.com/",
+      "linkedin": "https://www.linkedin.com/company/mcgrew-miller-bomar-bagley-llc/"
     },
     {
       "key": "thejohnstonfirm",
@@ -70640,8 +70957,9 @@
       "candidateDomains": [
         "awjlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.awjlaw.com/"
+      "status": "linked",
+      "website": "https://www.awjlaw.com/",
+      "linkedin": "https://www.linkedin.com/company/the-law-offices-of-andrew-w-jones/"
     },
     {
       "key": "dekalbcountyofficeofthesolicitorgeneral",
@@ -71051,7 +71369,7 @@
     {
       "key": "haralsoncountydistrictattorneysoffice",
       "names": [
-        "Haralson County District Attorney\u2019s Office",
+        "Haralson County District Attorney’s Office",
         "Haralson County District Attorney's Office"
       ],
       "attorneys": 2,
@@ -72502,8 +72820,9 @@
       "candidateDomains": [
         "mwe.com"
       ],
-      "status": "verified",
-      "website": "https://www.mcdermottlaw.com/"
+      "status": "linked",
+      "website": "https://www.mcdermottlaw.com/",
+      "linkedin": "https://www.linkedin.com/company/mcdermott-will-and-schulte/"
     },
     {
       "key": "usdepartmentofagriculture",
@@ -73234,8 +73553,9 @@
       "candidateDomains": [
         "thip.law"
       ],
-      "status": "verified",
-      "website": "https://thip.law/"
+      "status": "linked",
+      "website": "https://thip.law/",
+      "linkedin": "https://www.linkedin.com/company/thomashorstemeyer.com/"
     },
     {
       "key": "thekendalllawfirm",
@@ -74932,7 +75252,9 @@
       "candidateDomains": [
         "nlsklaw.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.atlanta-criminal-law.com/",
+      "linkedin": ""
     },
     {
       "key": "kiserlawpc",
@@ -75376,8 +75698,9 @@
       "candidateDomains": [
         "kingyaklin.com"
       ],
-      "status": "verified",
-      "website": "https://www.kingyaklin.com/"
+      "status": "linked",
+      "website": "https://www.kingyaklin.com/",
+      "linkedin": "https://www.linkedin.com/company/kingyaklin/"
     },
     {
       "key": "thekochlawfirmllc",
@@ -76028,8 +76351,9 @@
       "candidateDomains": [
         "immigration.net"
       ],
-      "status": "verified",
-      "website": "https://immigration.net/"
+      "status": "linked",
+      "website": "https://immigration.net/",
+      "linkedin": "https://www.linkedin.com/company/kuck-baxter-llc/"
     },
     {
       "key": "thekudrattlawfirmllc",
@@ -76763,8 +77087,9 @@
       "candidateDomains": [
         "cpmtlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.cpmtlaw.com/"
+      "status": "linked",
+      "website": "https://www.cpmtlaw.com/",
+      "linkedin": "https://www.linkedin.com/company/cohen-pollock-merlin-turner/"
     },
     {
       "key": "thelambrosfirmllc",
@@ -77700,8 +78025,9 @@
       "candidateDomains": [
         "lawsonandbeck.com"
       ],
-      "status": "verified",
-      "website": "https://www.lawsonandbeck.com/"
+      "status": "linked",
+      "website": "https://www.lawsonandbeck.com/",
+      "linkedin": ""
     },
     {
       "key": "johnwlawsonattorneyatlaw",
@@ -77926,8 +78252,9 @@
       "candidateDomains": [
         "eraclides.com"
       ],
-      "status": "verified",
-      "website": "https://eraclides.com/"
+      "status": "linked",
+      "website": "https://eraclides.com/",
+      "linkedin": "https://www.linkedin.com/company/eraclidesgelman/"
     },
     {
       "key": "chastainjenkinsandleathersllc",
@@ -78184,8 +78511,9 @@
       "candidateDomains": [
         "poolehuffman.com"
       ],
-      "status": "verified",
-      "website": "https://www.poolehuffman.com/"
+      "status": "linked",
+      "website": "https://www.poolehuffman.com/",
+      "linkedin": "https://www.linkedin.com/company/poole-huffman-llc/"
     },
     {
       "key": "harryowenleepc",
@@ -79792,8 +80120,9 @@
       "candidateDomains": [
         "pcwlawfirm.com"
       ],
-      "status": "verified",
-      "website": "https://www.pcwlawfirm.com/"
+      "status": "linked",
+      "website": "https://www.pcwlawfirm.com/",
+      "linkedin": "https://www.linkedin.com/company/1916738/"
     },
     {
       "key": "thelindseyfirmpc",
@@ -80275,8 +80604,9 @@
       "candidateDomains": [
         "hallboothsmith.com"
       ],
-      "status": "verified",
-      "website": "https://hallboothsmith.com/"
+      "status": "linked",
+      "website": "https://hallboothsmith.com/",
+      "linkedin": "https://www.linkedin.com/company/hall-booth-smith-p-c-/"
     },
     {
       "key": "toombscircuitpublicdefendersoffice",
@@ -80608,7 +80938,7 @@
     {
       "key": "columbiacountysheriffsoffice",
       "names": [
-        "Columbia County Sheriff\u2019s Office"
+        "Columbia County Sheriff’s Office"
       ],
       "attorneys": 1,
       "candidateDomains": [],
@@ -80841,8 +81171,9 @@
       "candidateDomains": [
         "mmmlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.mmmlaw.com/"
+      "status": "linked",
+      "website": "https://www.mmmlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "thelovelawfirmllc",
@@ -84678,8 +85009,9 @@
       "candidateDomains": [
         "cpmtlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.cpmtlaw.com/"
+      "status": "linked",
+      "website": "https://www.cpmtlaw.com/",
+      "linkedin": "https://www.linkedin.com/company/cohen-pollock-merlin-turner/"
     },
     {
       "key": "thelawofficesofalliemccarthy",
@@ -84963,8 +85295,9 @@
       "candidateDomains": [
         "mcguirewoods.com"
       ],
-      "status": "verified",
-      "website": "https://www.mcguirewoods.com/"
+      "status": "linked",
+      "website": "https://www.mcguirewoods.com/",
+      "linkedin": "https://www.linkedin.com/company/mcguirewoods/"
     },
     {
       "key": "mccoyandchurch",
@@ -84998,8 +85331,9 @@
       "candidateDomains": [
         "farahandfarah.com"
       ],
-      "status": "verified",
-      "website": "https://farahandfarah.com/"
+      "status": "linked",
+      "website": "https://farahandfarah.com/",
+      "linkedin": ""
     },
     {
       "key": "lawsonanddavis",
@@ -85584,8 +85918,9 @@
       "candidateDomains": [
         "wswgs.com"
       ],
-      "status": "verified",
-      "website": "https://wswgs.com/"
+      "status": "linked",
+      "website": "https://wswgs.com/",
+      "linkedin": ""
     },
     {
       "key": "wendysarbysgroupinc",
@@ -86902,8 +87237,9 @@
       "candidateDomains": [
         "ktslaw.com"
       ],
-      "status": "verified",
-      "website": "https://ktslaw.com/"
+      "status": "linked",
+      "website": "https://ktslaw.com/",
+      "linkedin": ""
     },
     {
       "key": "troupcountyboardofcommissioners",
@@ -88406,8 +88742,9 @@
       "candidateDomains": [
         "fmglaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.fmglaw.com/"
+      "status": "linked",
+      "website": "https://www.fmglaw.com/",
+      "linkedin": ""
     },
     {
       "key": "themillerfirmllc",
@@ -89433,8 +89770,9 @@
       "candidateDomains": [
         "bloom-law.com"
       ],
-      "status": "verified",
-      "website": "https://www.bloom-law.com/"
+      "status": "linked",
+      "website": "https://www.bloom-law.com/",
+      "linkedin": "https://www.linkedin.com/company/bloom-parham-llp/"
     },
     {
       "key": "saulmollengardenllc",
@@ -90068,8 +90406,9 @@
       "candidateDomains": [
         "calvinsmithlaw.com"
       ],
-      "status": "verified",
-      "website": "https://calvinsmithlaw.com/"
+      "status": "linked",
+      "website": "https://calvinsmithlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "thelawofficesoflarrykmoorellc",
@@ -93269,7 +93608,9 @@
       "candidateDomains": [
         "nicholsonrevell.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://nicholsonrevell.com/",
+      "linkedin": ""
     },
     {
       "key": "wesodaalkalillc",
@@ -93839,8 +94180,9 @@
       "candidateDomains": [
         "thip.law"
       ],
-      "status": "verified",
-      "website": "https://thip.law/"
+      "status": "linked",
+      "website": "https://thip.law/",
+      "linkedin": "https://www.linkedin.com/company/thomashorstemeyer.com/"
     },
     {
       "key": "nunnelleylawllc",
@@ -94657,7 +94999,7 @@
       "key": "ohaganmeyerpllc",
       "names": [
         "O'Hagan Meyer, PLLC",
-        "O\u2019Hagan Meyer PLLC",
+        "O’Hagan Meyer PLLC",
         "O'Hagan Meyer PLLC"
       ],
       "attorneys": 3,
@@ -95428,8 +95770,9 @@
       "candidateDomains": [
         "fmglaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.fmglaw.com/"
+      "status": "linked",
+      "website": "https://www.fmglaw.com/",
+      "linkedin": ""
     },
     {
       "key": "padronlawllc",
@@ -95976,9 +96319,9 @@
       "status": "not-corroborated"
     },
     {
-      "key": "thelawofficeofchant\u00e1parker",
+      "key": "thelawofficeofchantáparker",
       "names": [
-        "The Law Office of Chant\u00e1 Parker"
+        "The Law Office of Chantá Parker"
       ],
       "attorneys": 1,
       "candidateDomains": [
@@ -96670,8 +97013,9 @@
       "candidateDomains": [
         "kaufmanhilbert.com"
       ],
-      "status": "verified",
-      "website": "https://kaufmanhilbert.com/"
+      "status": "linked",
+      "website": "https://kaufmanhilbert.com/",
+      "linkedin": "https://www.linkedin.com/company/kaufmanhilbert/"
     },
     {
       "key": "lawofficeofadrianlpatrick",
@@ -96703,8 +97047,9 @@
       "candidateDomains": [
         "johnbmillerlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.johnbmillerlaw.com/"
+      "status": "linked",
+      "website": "https://www.johnbmillerlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "jerrylpatrickjrpc",
@@ -97475,8 +97820,9 @@
       "candidateDomains": [
         "martensonlaw.com"
       ],
-      "status": "verified",
-      "website": "https://martensonlaw.com/"
+      "status": "linked",
+      "website": "https://martensonlaw.com/",
+      "linkedin": "https://www.linkedin.com/company/martensonlaw/"
     },
     {
       "key": "thehowardlawgroup",
@@ -98031,8 +98377,9 @@
       "candidateDomains": [
         "mmatllaw.com"
       ],
-      "status": "verified",
-      "website": "https://mmatllaw.com/"
+      "status": "linked",
+      "website": "https://mmatllaw.com/",
+      "linkedin": ""
     },
     {
       "key": "lexisnexisrisksolutionsinc",
@@ -98273,8 +98620,9 @@
       "candidateDomains": [
         "leehayes.com"
       ],
-      "status": "verified",
-      "website": "https://www.leehayes.com/"
+      "status": "linked",
+      "website": "https://www.leehayes.com/",
+      "linkedin": ""
     },
     {
       "key": "benbphilipspc",
@@ -99161,9 +99509,9 @@
       "status": "needs-research"
     },
     {
-      "key": "aret\u00e9lawllc",
+      "key": "aretélawllc",
       "names": [
-        "Aret\u00e9 Law LLC"
+        "Areté Law LLC"
       ],
       "attorneys": 2,
       "candidateDomains": [
@@ -99948,8 +100296,9 @@
       "candidateDomains": [
         "chathamcounty.org"
       ],
-      "status": "verified",
-      "website": "https://www.chathamcountyga.gov/"
+      "status": "linked",
+      "website": "https://www.chathamcountyga.gov/",
+      "linkedin": "https://www.linkedin.com/company/chatham-county/"
     },
     {
       "key": "underwoodbeardllc",
@@ -100319,8 +100668,9 @@
       "candidateDomains": [
         "wilsonpruittlaw.com"
       ],
-      "status": "verified",
-      "website": "https://wilsonpruittlaw.com/"
+      "status": "linked",
+      "website": "https://wilsonpruittlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "michaelppryorpc",
@@ -101285,7 +101635,9 @@
       ],
       "attorneys": 1,
       "candidateDomains": [],
-      "status": "needs-research"
+      "status": "linked",
+      "website": "https://www.warnerbates.com/",
+      "linkedin": ""
     },
     {
       "key": "silveradearyrayllp",
@@ -105156,8 +105508,9 @@
       "candidateDomains": [
         "rossandpines.com"
       ],
-      "status": "verified",
-      "website": "https://www.rossandpines.com/"
+      "status": "linked",
+      "website": "https://www.rossandpines.com/",
+      "linkedin": ""
     },
     {
       "key": "douglassrubinpc",
@@ -105226,7 +105579,9 @@
       "candidateDomains": [
         "antoniniandcohen.com"
       ],
-      "status": "not-corroborated"
+      "status": "linked",
+      "website": "https://www.antoniniandcohen.com/",
+      "linkedin": ""
     },
     {
       "key": "rueckelandcollegenllc",
@@ -105349,8 +105704,9 @@
       "candidateDomains": [
         "continuumlg.com"
       ],
-      "status": "verified",
-      "website": "https://continuumlg.com/"
+      "status": "linked",
+      "website": "https://continuumlg.com/",
+      "linkedin": "https://www.linkedin.com/company/continuum-legal-group-llp/"
     },
     {
       "key": "ruskinesqllc",
@@ -106155,8 +106511,9 @@
       "candidateDomains": [
         "waldonadelman.com"
       ],
-      "status": "verified",
-      "website": "https://www.waldonadelman.com/"
+      "status": "linked",
+      "website": "https://www.waldonadelman.com/",
+      "linkedin": ""
     },
     {
       "key": "southeastdistrictunitedmethodistchurch",
@@ -107677,8 +108034,9 @@
       "candidateDomains": [
         "fisherbroyles.com"
       ],
-      "status": "verified",
-      "website": "https://fisherbroyles.com/"
+      "status": "linked",
+      "website": "https://fisherbroyles.com/",
+      "linkedin": "https://www.linkedin.com/company/fisherbroyles-llp/"
     },
     {
       "key": "theveslawgroupllc",
@@ -108594,8 +108952,9 @@
       "candidateDomains": [
         "weissman.law"
       ],
-      "status": "verified",
-      "website": "https://www.weissman.law/"
+      "status": "linked",
+      "website": "https://www.weissman.law/",
+      "linkedin": "https://www.linkedin.com/company/weissman/"
     },
     {
       "key": "kingyaklinandwilkins",
@@ -108606,8 +108965,9 @@
       "candidateDomains": [
         "kingyaklin.com"
       ],
-      "status": "verified",
-      "website": "https://www.kingyaklin.com/"
+      "status": "linked",
+      "website": "https://www.kingyaklin.com/",
+      "linkedin": "https://www.linkedin.com/company/kingyaklin/"
     },
     {
       "key": "lawofficeofgeorgeshaw",
@@ -110423,7 +110783,7 @@
     {
       "key": "georgiapublicdefenderscouncil",
       "names": [
-        "Georgia Public Defender\u2019s Council"
+        "Georgia Public Defender’s Council"
       ],
       "attorneys": 1,
       "candidateDomains": [
@@ -112299,8 +112659,9 @@
       "candidateDomains": [
         "wczlaw.com"
       ],
-      "status": "verified",
-      "website": "https://wczlaw.com/"
+      "status": "linked",
+      "website": "https://wczlaw.com/",
+      "linkedin": "https://www.linkedin.com/company/winter-capriola-zenner-llc/"
     },
     {
       "key": "statefarmlynnleonardandassociates",
@@ -113214,8 +113575,9 @@
       "candidateDomains": [
         "ksfamilylaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.ksfamilylaw.com/"
+      "status": "linked",
+      "website": "https://www.ksfamilylaw.com/",
+      "linkedin": ""
     },
     {
       "key": "steckellawllc",
@@ -115600,8 +115962,9 @@
       "candidateDomains": [
         "swillingfamilylaw.com"
       ],
-      "status": "verified",
-      "website": "https://swillingfamilylaw.com/"
+      "status": "linked",
+      "website": "https://swillingfamilylaw.com/",
+      "linkedin": ""
     },
     {
       "key": "mercycarefoundation",
@@ -115998,8 +116361,9 @@
       "candidateDomains": [
         "mptlawfirm.com"
       ],
-      "status": "verified",
-      "website": "https://www.mptlawfirm.com/"
+      "status": "linked",
+      "website": "https://www.mptlawfirm.com/",
+      "linkedin": ""
     },
     {
       "key": "privacyrightslawllc",
@@ -116619,8 +116983,9 @@
       "candidateDomains": [
         "blmhlaw.com"
       ],
-      "status": "verified",
-      "website": "https://blmhlaw.com/"
+      "status": "linked",
+      "website": "https://blmhlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "adamsellardandfrankumpc",
@@ -119328,8 +119693,9 @@
       "candidateDomains": [
         "tdinjuryfirm.com"
       ],
-      "status": "verified",
-      "website": "https://www.tdinjuryfirm.com/"
+      "status": "linked",
+      "website": "https://www.tdinjuryfirm.com/",
+      "linkedin": ""
     },
     {
       "key": "ugwonalilawgroupllc",
@@ -120291,8 +120657,9 @@
       "candidateDomains": [
         "carlsonquinn.com"
       ],
-      "status": "verified",
-      "website": "https://www.carlsonquinn.com/"
+      "status": "linked",
+      "website": "https://www.carlsonquinn.com/",
+      "linkedin": "https://www.linkedin.com/company/carlson-quinn-cq/"
     },
     {
       "key": "councilofstateandterritorialepidemiologist",
@@ -120314,8 +120681,9 @@
       "candidateDomains": [
         "nicolsonlawgroup.com"
       ],
-      "status": "verified",
-      "website": "https://www.nicolsonlawgroup.com/"
+      "status": "linked",
+      "website": "https://www.nicolsonlawgroup.com/",
+      "linkedin": ""
     },
     {
       "key": "josephdvogelpc",
@@ -120939,8 +121307,9 @@
       "candidateDomains": [
         "bodmanlaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.bodmanlaw.com/"
+      "status": "linked",
+      "website": "https://www.bodmanlaw.com/",
+      "linkedin": "https://www.linkedin.com/company/bodman-plc/"
     },
     {
       "key": "thewalkerlawpracticellc",
@@ -122011,8 +122380,9 @@
       "candidateDomains": [
         "chrkglaw.com"
       ],
-      "status": "verified",
-      "website": "https://www.chrkglaw.com/"
+      "status": "linked",
+      "website": "https://www.chrkglaw.com/",
+      "linkedin": ""
     },
     {
       "key": "mitchellcountystatecourt",
@@ -122898,8 +123268,9 @@
       "candidateDomains": [
         "wzlegal.com"
       ],
-      "status": "verified",
-      "website": "https://wzlegal.com/"
+      "status": "linked",
+      "website": "https://wzlegal.com/",
+      "linkedin": ""
     },
     {
       "key": "ducharmemcmillenandassociatesinc",
@@ -123124,8 +123495,9 @@
       "candidateDomains": [
         "fulcherlaw.com"
       ],
-      "status": "verified",
-      "website": "https://fulcherlaw.com/"
+      "status": "linked",
+      "website": "https://fulcherlaw.com/",
+      "linkedin": ""
     },
     {
       "key": "ellenewelshpc",
@@ -124040,8 +124412,9 @@
       "candidateDomains": [
         "smf-law.com"
       ],
-      "status": "verified",
-      "website": "https://smf-law.com/"
+      "status": "linked",
+      "website": "https://smf-law.com/",
+      "linkedin": ""
     },
     {
       "key": "mayfieldlaw",
@@ -124622,9 +124995,9 @@
       "status": "not-corroborated"
     },
     {
-      "key": "m\u00e9langeawilliamsfirm",
+      "key": "mélangeawilliamsfirm",
       "names": [
-        "M\u00e9lange A Williams Firm"
+        "Mélange A Williams Firm"
       ],
       "attorneys": 1,
       "candidateDomains": [
@@ -125238,9 +125611,9 @@
       "status": "needs-research"
     },
     {
-      "key": "atkinsr\u00e8alis",
+      "key": "atkinsrèalis",
       "names": [
-        "AtkinsR\u00e8alis"
+        "AtkinsRèalis"
       ],
       "attorneys": 1,
       "candidateDomains": [
@@ -126883,8 +127256,9 @@
       "candidateDomains": [
         "johnfoy.com"
       ],
-      "status": "verified",
-      "website": "https://www.johnfoy.com/"
+      "status": "linked",
+      "website": "https://www.johnfoy.com/",
+      "linkedin": "https://www.linkedin.com/company/john-foy-and-associates/"
     },
     {
       "key": "crowdstrikeinc",
@@ -128201,5 +128575,19 @@
       ],
       "status": "not-corroborated"
     }
-  ]
+  ],
+  "coverage": {
+    "checked": "2026-10-09T14:21:35.093Z",
+    "recordsReviewed": 52323,
+    "firmNameMappings": 317,
+    "distinctFirmWebsites": 218,
+    "attorneysWithWebsite": 6342,
+    "firmLinkedInMappings": 131,
+    "distinctFirmLinkedIn": 82,
+    "attorneyLinkedInProfiles": 14,
+    "withoutPublishedAffiliation": 25026,
+    "completeWebsiteVerification": false,
+    "completeLinkedInVerification": false,
+    "attorneysWithoutVerifiedWebsite": 45981
+  }
 }

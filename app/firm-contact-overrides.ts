@@ -1,5 +1,18 @@
 // Manually corroborated on official firm biographies and linked social profiles, 2026-10-09.
 export const firmContactOverrides:Record<string,{website:string;linkedin:string}>={
+ "atlantalegalaidsociety":{website:"https://atlantalegalaid.org/home/",linkedin:''},
+ "wilsonelsermoskowitzedelmananddickerllp":{website:"https://www.wilsonelser.com/",linkedin:''},
+ "jacksonlewispc":{website:"https://www.jacksonlewis.com/",linkedin:''},
+ "fishandrichardsonpc":{website:"https://www.fr.com/",linkedin:''},
+ "chamberlainhrdlickawhitewilliamsandaughtry":{website:"https://www.chamberlainlaw.com/",linkedin:''},
+ "jonescorkllp":{website:"https://www.jonescork.com/",linkedin:''},
+ "duanemorrisllp":{website:"https://www.duanemorris.com/",linkedin:''},
+ "mccallaraymerleibertpiercellp":{website:"https://mccalla.com/",linkedin:''},
+ "robbinsalloybelinfantelittlefieldllc":{website:"https://www.robbinsfirm.com/",linkedin:''},
+ "bermanfinkvanhornpc":{website:"https://www.bfvlaw.com/",linkedin:''},
+ "meuniercarlinandcurfmanllc":{website:"https://www.mcciplaw.com/",linkedin:''},
+ "smithcurrieolesllp":{website:"https://www.smithcurrie.com/",linkedin:''},
+
  "troutmanpepperlockellp":{website:"https://www.troutman.com/",linkedin:''},
  "evershedssutherlandusllp":{website:"https://www.eversheds-sutherland.com/en/global/locations/offices/atlanta",linkedin:''},
  "jonesday":{website:"https://www.jonesday.com/en",linkedin:''},
@@ -40,6 +53,9 @@ export const firmContactOverrides:Record<string,{website:string;linkedin:string}
 // https://www.ksfamilylaw.com/attorneys/randall-m-kessler/
 export const attorneyLinkedInOverrides:Record<string,string>={
  '004170':'https://www.linkedin.com/in/randallkessler/',
+ '133392':'https://www.linkedin.com/in/adwightwilliams/',
+ '379617':'https://www.linkedin.com/in/burton-miller-86b06212b/',
+ '681971':'https://www.linkedin.com/in/annarosebarrack/',
  '665798':'https://www.linkedin.com/in/marvin-solomiany-55b2037/',
  '424064':'https://www.linkedin.com/in/steven-kirson-71b6032b/',
  '526375':'https://www.linkedin.com/in/morrisonwayne/',

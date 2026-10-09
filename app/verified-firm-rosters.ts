@@ -17,3 +17,4 @@ export const kesslerRoster:typeof hinesRoster={
  name:'Kessler & Solomiany LLC',source:'https://www.ksfamilylaw.com/attorneys/',checked:'2026-10-09',
  bars:['004170','665798','142015','424064','526375','349724','826770','503793','108562','390087','133392','355086','864339','636618','875149','025208','379617','553775','681971'],additional:[],
 };
+export function verifiedFirmForAttorney(bar:string){return [hinesRoster,kesslerRoster].find(roster=>roster.bars.includes(bar));}

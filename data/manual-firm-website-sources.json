@@ -208,5 +208,89 @@
     "source": "https://www.ballardspahr.com/",
     "checked": "2026-10-09",
     "method": "manual-official-site-review"
+  },
+  "atlantalegalaidsociety": {
+    "name": "Atlanta Legal Aid Society",
+    "website": "https://atlantalegalaid.org/home/",
+    "source": "https://atlantalegalaid.org/home/",
+    "checked": "2026-10-09",
+    "method": "manual-official-site-review"
+  },
+  "wilsonelsermoskowitzedelmananddickerllp": {
+    "name": "Wilson Elser Moskowitz Edelman & Dicker LLP",
+    "website": "https://www.wilsonelser.com/",
+    "source": "https://www.wilsonelser.com/",
+    "checked": "2026-10-09",
+    "method": "manual-official-site-review"
+  },
+  "jacksonlewispc": {
+    "name": "Jackson Lewis PC",
+    "website": "https://www.jacksonlewis.com/",
+    "source": "https://www.jacksonlewis.com/",
+    "checked": "2026-10-09",
+    "method": "manual-official-site-review"
+  },
+  "fishandrichardsonpc": {
+    "name": "Fish & Richardson PC",
+    "website": "https://www.fr.com/",
+    "source": "https://www.fr.com/",
+    "checked": "2026-10-09",
+    "method": "manual-official-site-review"
+  },
+  "chamberlainhrdlickawhitewilliamsandaughtry": {
+    "name": "Chamberlain Hrdlicka White Williams & Aughtry",
+    "website": "https://www.chamberlainlaw.com/",
+    "source": "https://www.chamberlainlaw.com/",
+    "checked": "2026-10-09",
+    "method": "manual-official-site-review"
+  },
+  "jonescorkllp": {
+    "name": "Jones Cork LLP",
+    "website": "https://www.jonescork.com/",
+    "source": "https://www.jonescork.com/",
+    "checked": "2026-10-09",
+    "method": "manual-official-site-review"
+  },
+  "duanemorrisllp": {
+    "name": "Duane Morris LLP",
+    "website": "https://www.duanemorris.com/",
+    "source": "https://www.duanemorris.com/",
+    "checked": "2026-10-09",
+    "method": "manual-official-site-review"
+  },
+  "mccallaraymerleibertpiercellp": {
+    "name": "McCalla Raymer Leibert Pierce LLP",
+    "website": "https://mccalla.com/",
+    "source": "https://mccalla.com/",
+    "checked": "2026-10-09",
+    "method": "manual-official-site-review"
+  },
+  "robbinsalloybelinfantelittlefieldllc": {
+    "name": "Robbins Alloy Belinfante Littlefield LLC",
+    "website": "https://www.robbinsfirm.com/",
+    "source": "https://www.robbinsfirm.com/",
+    "checked": "2026-10-09",
+    "method": "manual-official-site-review"
+  },
+  "bermanfinkvanhornpc": {
+    "name": "Berman Fink Van Horn PC",
+    "website": "https://www.bfvlaw.com/",
+    "source": "https://www.bfvlaw.com/",
+    "checked": "2026-10-09",
+    "method": "manual-official-site-review"
+  },
+  "meuniercarlinandcurfmanllc": {
+    "name": "Meunier Carlin & Curfman LLC",
+    "website": "https://www.mcciplaw.com/",
+    "source": "https://www.mcciplaw.com/",
+    "checked": "2026-10-09",
+    "method": "manual-official-site-review"
+  },
+  "smithcurrieolesllp": {
+    "name": "Smith Currie Oles LLP",
+    "website": "https://www.smithcurrie.com/",
+    "source": "https://www.smithcurrie.com/",
+    "checked": "2026-10-09",
+    "method": "manual-official-site-review"
   }
 }

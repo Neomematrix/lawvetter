@@ -1,14 +1,14 @@
 {
   "source": "https://www.gabar.org/member-directory/?state=GA",
-  "directoryRows": 52304,
-  "attorneys": 52304,
+  "directoryRows": 52321,
+  "attorneys": 52323,
   "statuses": {
-    "Active Member in Good Standing": 35064,
+    "Active Member in Good Standing": 35084,
     "Resigned Membership": 554,
     "Deceased": 8261,
-    "Inactive Member in Good Standing": 2659,
+    "Inactive Member in Good Standing": 2660,
     "Emeritus": 3463,
-    "Unpaid License Fees - Ineligible to Practice": 312,
+    "Unpaid License Fees - Ineligible to Practice": 310,
     "Provisional Membership Expired": 111,
     "Terminated - Nonpayment of License Fees": 778,
     "Resigned License Fees Deficient": 92,
@@ -31,5 +31,9 @@
     "OGC Suspension and Unpaid License Fees": 1,
     "Suspension-Nonpayment of Child Support": 1
   },
-  "completedAt": "2026-10-08T20:18:53.569024+00:00"
+  "completedAt": "2026-10-09T14:05:10.914622+00:00",
+  "retainedHistoricalRecords": [
+    "16453P",
+    "71884P"
+  ]
 }
