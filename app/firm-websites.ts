@@ -49,3 +49,22 @@ export const firmWebsites:Record<string,string> = {
   "214647": "https://hineslaw.org/",
   "360208": "https://www.banksstubbs.com/"
 };
+
+export const websitesByFirm:Record<string,string> = {
+  "barrettandfarahany": "https://www.justiceatwork.com/",
+  "warnerbatesmcginnisandanthonypc": "https://www.warnerbates.com/",
+  "antoniniandcohenimmigrationlawgroup": "https://www.antoniniandcohen.com/",
+  "lawofficesofmatthewchines": "https://hineslaw.org/",
+  "kuckbaxterimmigrationllc": "https://immigration.net/",
+  "barrettandfarahanyllp": "https://www.justiceatwork.com/",
+  "eittreimmartincutlerllc": "https://www.emcfamilylaw.com/",
+  "levinesmithcoburnandkoslinllc": "https://www.lscklaw.com/",
+  "thomascohenlawllc": "https://cogolaw.com/",
+  "lawofficesofmatthewchinesllc": "https://hineslaw.org/",
+  "lotitoandkirschenbaum": "https://www.atlanta-criminal-law.com/",
+  "kuckbaxterllc": "https://immigration.net/",
+  "nicholsonrevellllp": "https://nicholsonrevell.com/",
+  "warnerbatesmcginnisandanthony": "https://www.warnerbates.com/",
+  "antoniniandcohen": "https://www.antoniniandcohen.com/",
+  "banksstubbsandmcfarlandllp": "https://www.banksstubbs.com/"
+};

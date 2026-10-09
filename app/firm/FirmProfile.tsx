@@ -1,4 +1,6 @@
 'use client';
+import {websitesByFirm} from '../firm-websites';
+import {firmKey} from '../api/attorneys/firm';
 import { useEffect,useState } from 'react';
 import type { Attorney } from '../GeorgiaDirectory';
 import AttorneyProfile from '../AttorneyProfile';
@@ -16,7 +18,8 @@ export default function FirmProfile({name}:{name:string}){
  },[name,page,retry]);
  async function open(a:Attorney){setSelected(a);setDetailLoading(true);setDetailError('');try{const x=await requestAttorneyData<{attorney:Attorney}>({id:a.bar_number});setSelected(x.attorney);}catch(e){setDetailError(e instanceof Error?e.message:'Unable to open this record.');}finally{setDetailLoading(false);}}
  const firm=result?.firm;
- return <><section className="firm-hero"><div><a className="firm-back" href="/">Back to attorney search</a><p className="section-kicker">Firm profile</p><h1>{firm?.name||name||'Find a firm'}</h1>{firm&&<><p className="hero-intro">{firm.cities.join(' · ')||'Location not listed'}</p><div className="firm-stats"><div><strong>{firm.total.toLocaleString()}</strong><span>Listed attorneys</span></div><div><strong>{firm.active.toLocaleString()}</strong><span>Active members in good standing</span></div></div></>}</div></section><div className="page-shell"><ShortlistNotice/>
+ const website=websitesByFirm[firmKey(firm?.name||name)];
+ return <><section className="firm-hero"><div><a className="firm-back" href="/">Back to attorney search</a><p className="section-kicker">Firm profile</p><h1>{firm?.name||name||'Find a firm'}</h1>{firm&&<><p className="hero-intro">{firm.cities.join(' · ')||'Location not listed'}</p><div className="profile-firm-website"><h3>Official website</h3>{website?<a className="outline-button" href={website} target="_blank" rel="noopener noreferrer">Visit law firm website ↗</a>:<p className="record-note">Not yet listed.</p>}</div></>}</div></section><div className="page-shell"><ShortlistNotice/>
   {error&&<div className="directory-error" role="alert">{error} {name&&<button onClick={()=>setRetry(v=>v+1)}>Try again</button>}</div>}
   {selected?<><button className="outline-button" onClick={()=>setSelected(null)}>Back to firm attorneys</button>{detailError&&<p className="directory-error" role="alert">{detailError} <button onClick={()=>open(selected)}>Try again</button></p>}<AttorneyProfile attorney={selected} loading={detailLoading}/></>:<>
    <div className="section-heading"><h2>Attorneys at this firm</h2>{firm&&<span className="period-label">{firm.total.toLocaleString()} records</span>}</div>
