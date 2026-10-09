@@ -140,3 +140,6 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
 .client-review-form .form-actions{display:flex;flex-wrap:wrap;gap:12px}.client-review-account .review-card{margin:24px 0}
 .verified-client-review{border-top:1px solid #D8D4C9;padding:18px 0;overflow-wrap:anywhere}.verified-client-review time{font-size:13px;color:#5B6268}.verified-client-badge{display:inline-block;background:#e6f3eb;color:#21653f;font-size:13px;padding:5px 9px;border-radius:5px}.client-reviews .outline-button{display:inline-block;margin-top:16px}.client-reviews .record-note{font-size:14px;line-height:1.6}
 @media(max-width:600px){.client-review-form{padding:16px}.client-review-form .form-actions>*{width:100%}}
+
+.client-name-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.client-name-fields>label{min-width:0}
+@media(max-width:420px){.client-name-fields{gap:10px}}
