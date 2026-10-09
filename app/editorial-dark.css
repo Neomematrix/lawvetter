@@ -117,3 +117,17 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
 
 /* SeaGreen for monetary amounts across legal news. */
 .settlement-visual strong.monetary-amount,.news-amount.monetary-amount,.news-fact strong.monetary-amount{color:#2E8B57}
+
+/* Keep each search control inside its own grid cell at every width. */
+.discovery-search form{grid-template-columns:140px minmax(0,1fr) minmax(170px,220px) 110px;gap:12px;align-items:stretch}
+.discovery-search form>*{min-width:0;grid-column:auto;grid-row:auto}
+.discovery-search input,.discovery-search select,.discovery-search .search-city input,.discovery-search .search-submit{width:100%;min-width:0;box-sizing:border-box;height:48px;border-radius:4px;font-size:15px}
+.attorney-autocomplete{position:relative;min-width:0}
+.attorney-autocomplete ul{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:50;margin:0;padding:6px;list-style:none;background:#fff;border:1px solid #D8D4C9;border-radius:6px;box-shadow:0 12px 28px #172A3A26;max-height:360px;overflow:auto}
+.attorney-autocomplete li{padding:12px;cursor:pointer;white-space:normal;overflow-wrap:anywhere;color:#172A3A}
+.attorney-autocomplete li[aria-selected=true],.attorney-autocomplete li:hover{background:#ECE9E1}
+.attorney-autocomplete strong,.attorney-autocomplete small{display:block}
+.attorney-autocomplete strong{font-size:15px}.attorney-autocomplete small{font-size:13px;line-height:1.5;margin-top:4px;color:#5B6268}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media(max-width:900px){.discovery-search form{grid-template-columns:140px minmax(0,1fr)}.discovery-search .search-city{grid-column:1}.discovery-search .search-submit{grid-column:2}}
+@media(max-width:480px){.discovery-search form{grid-template-columns:minmax(0,1fr);gap:10px}.discovery-search .search-city,.discovery-search .search-submit{grid-column:1}}
