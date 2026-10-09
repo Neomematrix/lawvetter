@@ -36,3 +36,14 @@ footer{border-top:4px double #8c773b}.footer-brand{font-family:Georgia,serif;fon
 @media(max-width:700px){.attorney-chart-table .chart-table-heading{grid-template-columns:1fr auto}.attorney-chart-table .chart-practice-heading,.attorney-chart-table .chart-table-heading>span:last-child{display:none}.attorney-chart-table .chart-row{grid-template-columns:25px 40px minmax(0,1fr) 40px;gap:12px}.attorney-chart-table .chart-person{grid-column:3}.attorney-chart-table .chart-count{grid-column:4;grid-row:1}.attorney-chart-table .chart-practice{grid-column:3/-1;grid-row:2}.mobile-practice-label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#999}.attorney-chart-table .chart-row>.save-attorney{grid-column:3/-1;grid-row:3;margin-left:0;justify-self:start}}
 .spotlight-layout{grid-template-columns:minmax(0,1fr)}
 .profile-firm-website{margin-top:24px}.profile-firm-website h3{margin-bottom:8px}.profile-firm-website a{overflow-wrap:anywhere}
+.attorney-chart-table .chart-table-heading{grid-template-columns:minmax(0,1fr) minmax(150px,25%) 130px}
+.attorney-chart-table .chart-row{grid-template-columns:30px 52px minmax(0,1fr) minmax(150px,25%) 130px}
+.owner-analytics p{display:flex;justify-content:space-between;gap:25px;padding:18px 0;border-bottom:1px solid #444}.owner-analytics strong{color:var(--yellow);white-space:nowrap}
+@media(max-width:900px){.attorney-chart-table .chart-table-heading{grid-template-columns:minmax(0,1fr) 150px 100px}.attorney-chart-table .chart-row{grid-template-columns:25px 40px minmax(0,1fr) 150px 100px}}
+@media(max-width:700px){.attorney-chart-table .chart-table-heading{grid-template-columns:1fr}.attorney-chart-table .chart-row{grid-template-columns:25px 40px minmax(0,1fr)}.owner-analytics p{flex-wrap:wrap}}
+/* Shared content rows keep every carousel card aligned, including missing firms. */
+.popular-carousel-grid{grid-template-rows:repeat(7,auto);row-gap:0}
+.popular-carousel-grid .lawyer-card{display:grid;grid-template-rows:subgrid;grid-row:span 7}
+.popular-carousel-grid .lawyer-card-body{display:grid;grid-template-rows:subgrid;grid-row:span 6;row-gap:0}
+.lawyer-card h3{min-height:2.5em}.lawyer-card .card-firm{min-height:3em}
+.popular-carousel-grid .lawyer-card-body>.save-attorney{align-self:start}

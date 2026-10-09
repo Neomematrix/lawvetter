@@ -18,7 +18,7 @@ export const firmChartSQL=`WITH activity AS (
 ), counts AS (
  SELECT firm_key,min(name) AS name,count(DISTINCT event_id) AS searches FROM activity WHERE firm_key<>'' GROUP BY firm_key
 ) SELECT *,rank() OVER (ORDER BY searches DESC) AS rank FROM counts ORDER BY searches DESC,name COLLATE NOCASE LIMIT 100`;
-export async function discoveryData(db:D1Database){
+export async function discoveryData(db:D1Database,includeCounts=false){
  const now=new Date(),end=now.toISOString(),week=new Date(now.getTime()-7*86400000).toISOString(),month=monthStart(now);
  const [weekly,monthly,weeklyFirms,monthlyFirms,statuses,cities]=await Promise.all([
   db.prepare(attorneyChartSQL).bind(week,end).all(),db.prepare(attorneyChartSQL).bind(month,end).all(),
@@ -26,5 +26,6 @@ export async function discoveryData(db:D1Database){
   db.prepare('SELECT DISTINCT status FROM attorneys ORDER BY status').all<{status:string}>(),
   db.prepare("SELECT city,count(*) AS attorneys FROM attorneys WHERE status='Active Member in Good Standing' AND trim(city)<>'' GROUP BY city COLLATE NOCASE ORDER BY attorneys DESC,city LIMIT 8").all()
  ]);
- return {weekly:weekly.results,monthly:monthly.results,weeklyFirms:weeklyFirms.results,monthlyFirms:monthlyFirms.results,statuses:statuses.results.map(x=>x.status),cities:cities.results,monthLabel:new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',month:'long',year:'numeric'}).format(now),updated:end};
+ const visible=(rows:Record<string,unknown>[])=>includeCounts?rows:rows.map(({searches,...row})=>row);
+ return {weekly:visible(weekly.results),monthly:visible(monthly.results),weeklyFirms:visible(weeklyFirms.results),monthlyFirms:visible(monthlyFirms.results),statuses:statuses.results.map(x=>x.status),cities:cities.results,monthLabel:new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',month:'long',year:'numeric'}).format(now),updated:end};
 }
