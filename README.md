@@ -96,3 +96,15 @@ actions tied to the current ChatGPT user. Leave public content anonymous.
 
 - [vinext Documentation](https://github.com/cloudflare/vinext)
 - [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+
+## Weekly legal news
+
+The owner requested 12 featured stories refreshed weekly, including at least two family-law stories. The live edition is persisted in D1 `news_state`; all previously published articles remain readable at their existing `/news/<slug>` URLs. The homepage and news index show the edition's 12 featured slugs. The sitemap includes the archive. No rebuild is needed for news refreshes.
+
+The linked task must reopen this exact Site with Sites `get_site` and confirm it remains owner-private. Obtain its current service-access token in memory and use it only on this Site in `OAI-Sites-Authorization: Bearer <token>`. Dispatch consumes this service credential; it does not impersonate a user. The shared news endpoint relies on this owner-private platform boundary. If the Site's audience changes, disable unattended news writes until dedicated writer authorization is implemented. Never put tokens in source, command arguments, files, or task prompts.
+
+Read GET `/api/news` for `{articles,featured,updatedAt}`. Public news research needs no private connector: browse official courts, legislatures and government agencies (DOJ, FTC, EEOC, ACF; prioritize Georgia family-law developments). Verify article publication dates and current case status. Write original, attributed summaries; do not copy third-party articles or invent photos. Distinguish allegations, rulings, settlements and future-effective policy changes. Keep existing accurate stories if too few verified new stories are available; never invent a quota filler.
+
+PUT `/api/news` with `{articles,featured,expectedUpdatedAt}`. Include every existing article, append new articles or factual corrections, exactly 12 distinct featured slugs, and at least two featured articles with `familyLaw:true`. `expectedUpdatedAt` is the last GET's timestamp or null on first initialization. Each article includes string fields `slug,amount,amountLabel,topic,date,sourceDate,title,summary,url,sourceName,status,publishedAt`, optional boolean `familyLaw`, and `sections:[{heading,text}]` (2–12). Use HTTPS sources, YYYY-MM-DD source dates, original publication timestamps, and stable lowercase hyphenated slugs. For nonmonetary stories use a brief fact such as `New ruling` with an accurate `amountLabel`, never a fabricated dollar amount.
+
+Read GET after PUT and verify the returned timestamp, 12 featured stories, two-family-law minimum, and preservation of prior slugs. On 409, read fresh and merge before retrying. On a transient failure, read back before retrying to avoid duplicate changes. Do not report success without readback. The initial seeded edition has 14 readable articles and 12 featured articles including two sourced child-support policy stories.

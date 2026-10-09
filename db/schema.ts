@@ -77,3 +77,9 @@ export const clientLeads = sqliteTable('client_leads', {
  createdAt:text('created_at').notNull(),
  updatedAt:text('updated_at').notNull(),
 },t=>[index('leads_created_idx').on(t.createdAt),index('leads_email_created_idx').on(t.email,t.createdAt)]);
+
+export const newsState = sqliteTable('news_state', {
+ id: text('id').primaryKey(),
+ payload: text('payload').notNull(),
+ updatedAt: text('updated_at').notNull(),
+});
