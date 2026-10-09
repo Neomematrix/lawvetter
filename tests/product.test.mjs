@@ -61,7 +61,9 @@ test('Client reviews require identity, private profile, independently approved r
  const review={action:'publish',id,body:'My attorney explained the process clearly and responded to my questions.',mode:'anonymous',consent:true};
  assert.equal((await post({action:'account'},'')).status,401);
  assert.equal((await post(submitted)).status,403);
- assert.equal((await post({action:'create-profile',legalName:'Private Client Name',consent:true})).status,200);
+ assert.equal((await post({action:'create-profile',firstName:'Private',lastName:'Client Name',email:'client-a@example.test',docket:'PRIVATE-CASE-42',consent:true})).status,200);
+ assert.equal((await post({action:'create-profile',firstName:'Other',lastName:'Person',email:'client-a@example.test',docket:'CASE-1',consent:true},'different-account','client-a@example.test')).status,409);
+ assert.equal((await post({action:'create-profile',firstName:'Other',lastName:'Person',email:'someone@example.test',docket:'CASE-1',consent:true},'different-account')).status,403);
  assert.equal((await post(submitted)).status,200);
  assert.equal((await post(submitted)).status,409);
  assert.equal((await post(review)).status,403);
@@ -82,10 +84,10 @@ test('Client reviews require identity, private profile, independently approved r
  assert.deepEqual(Object.keys(published.reviews[0]).sort(),['author','body','publishedAt']);
  assert.equal((await post({...review,mode:'named'})).status,200);assert.equal((await publicReviews()).reviews[0].author,'Private Client Name');
  // Attempts to rename an approved identity must not change public attribution.
- await post({action:'create-profile',legalName:'Different Person',consent:true});
+ await post({action:'create-profile',firstName:'Different',lastName:'Person',email:'client-a@example.test',docket:'PRIVATE-CASE-42',consent:true});
  assert.equal((await(await post({action:'account'})).json()).profile.legal_name,'Private Client Name');
  // Same relationship cannot be reused by another account.
- await post({action:'create-profile',legalName:'Private Client Name',consent:true},'client-b');await post(submitted,'client-b');
+ await post({action:'create-profile',firstName:'Private',lastName:'Client Name',email:'client-b@example.test',docket:'PRIVATE-CASE-42',consent:true},'client-b');await post(submitted,'client-b');
  assert.equal((await post({...approve,id:JSON.stringify(['client-b','100001'])},'owner','admin@example.test')).status,409);
  assert.equal((await post({action:'withdraw',id})).status,200);assert.equal((await publicReviews()).reviews.length,0);
  await post(review);
@@ -93,7 +95,7 @@ test('Client reviews require identity, private profile, independently approved r
  assert.equal((await publicReviews()).reviews.length,0);assert.equal((await post(review)).status,403);
  assert.equal(x.sql.prepare('select count(*) as n from client_verification_audit where verification_id=?').get(id).n,3);
  // Owner cannot approve their own client request.
- await post({action:'create-profile',legalName:'Owner Test Client',consent:true},'owner','admin@example.test');await post({...submitted,bar:'100002'},'owner','admin@example.test');
+ await post({action:'create-profile',firstName:'Owner',lastName:'Test Client',email:'admin@example.test',docket:'PRIVATE-CASE-42',consent:true},'owner','admin@example.test');await post({...submitted,bar:'100002'},'owner','admin@example.test');
  assert.equal((await post({...approve,id:JSON.stringify(['owner','100002'])},'owner','admin@example.test')).status,409);
  const hostile=new Request('https://counsel.test/api/client-reviews',{method:'POST',headers:{Origin:'https://evil.test','oai-authenticated-user-id':'client-a','oai-authenticated-user-email':'client-a@example.test'},body:JSON.stringify(review)});
  assert.equal((await api.POST(hostile)).status,403);

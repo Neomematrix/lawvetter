@@ -122,3 +122,9 @@ D1 stores client profiles, relationship requests, review text and verification d
 Clients may edit or withdraw their own review. Revocation hides published reviews immediately and blocks further publication. Approval applies only to the attorney-client relationship, not the truth or quality of the review. Attorney profile owners cannot access client verification records or approve reviews. No real client records or sample reviews are seeded.
 
 Verification: `node --experimental-vm-modules --test --test-name-pattern='Client reviews require' tests/product.test.mjs` exercises anonymous and unauthorized writes, profile requirement, pending publication block, admin gating, evidence checks, account isolation, named/anonymous projection, duplicate relationship approval, immutable identity, withdrawal, revocation, self-approval and cross-origin rejection against SQLite with real migrations.
+
+### Client account fields and email identity
+
+Client registration now collects first name, last name, the signed-in account's email (read-only), and an initial case number. The initial case number prefills the subsequent attorney/court verification request; it is not itself an approval or a public field. Existing profiles and verification snapshots remain intact.
+
+`client_account_emails.email` is the normalized unique external account key, linked one-to-one to the stable authenticated user ID. New registrations cannot supply an email different from the platform-authenticated email; legacy profiles are also checked for duplicate emails. Stable user IDs remain the ownership keys for existing reviews. This is **not** a standalone email/password or magic-link sign-in system: authentication still uses dispatch-owned ChatGPT sign-in. A supported external email authentication service must be configured separately before offering direct email login.

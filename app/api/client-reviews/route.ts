@@ -22,14 +22,22 @@ export async function POST(request:Request){
   if(!d||typeof d!=='object'||Array.isArray(d))return fail('Invalid request.');
   const db=rawDb(),action=str(d.action),now=new Date().toISOString();
   if(action==='account'){
-   const profile=await db.prepare('SELECT legal_name,email,created_at FROM client_profiles WHERE user_id=?').bind(user).first();
+   const profile=await db.prepare('SELECT legal_name,first_name,last_name,initial_docket,email,created_at FROM client_profiles WHERE user_id=?').bind(user).first();
    const rows=await db.prepare('SELECT v.id,v.bar_number,a.name AS attorney_name,v.legal_name,v.court,v.county,v.docket,v.status,v.decision_note,v.submitted_at,v.review_body,v.public_mode,v.published_at FROM client_verifications v JOIN attorneys a ON a.bar_number=v.bar_number WHERE v.user_id=? ORDER BY v.submitted_at DESC').bind(user).all();
-   return json({profile,requests:rows.results,isAdmin:admin});
+   return json({profile,requests:rows.results,isAdmin:admin,signedInEmail:email});
   }
   if(action==='create-profile'){
-   const name=str(d.legalName);
-   if(name.length<3||name.length>150||d.consent!==true)return fail('Enter your full legal name and agree to private verification.');
-   await db.prepare('INSERT OR IGNORE INTO client_profiles(user_id,legal_name,email,created_at) VALUES(?,?,?,?)').bind(user,name,email,now).run();
+   const firstName=str(d.firstName),lastName=str(d.lastName),docket=str(d.docket),submittedEmail=str(d.email).toLowerCase();
+   if(!firstName||firstName.length>75||!lastName||lastName.length>75||docket.length<3||docket.length>100||!normal(docket)||d.consent!==true)return fail('Enter your first name, last name, case number, and agree to private verification.');
+   if(submittedEmail!==email)return fail('Use the email address of your signed-in account. Sign in with that account to use a different email.',403);
+   const existing=await db.prepare('SELECT user_id FROM client_profiles WHERE lower(trim(email))=? AND user_id<>?').bind(email,user).first();
+   const registered=await db.prepare('SELECT user_id FROM client_account_emails WHERE email=?').bind(email).first<{user_id:string}>();
+   if(existing||(registered&&registered.user_id!==user))return fail('A client profile already uses this email. Sign in with the original account.',409);
+   const name=firstName+' '+lastName;
+   await db.batch([
+    db.prepare('INSERT OR IGNORE INTO client_profiles(user_id,legal_name,email,created_at,first_name,last_name,initial_docket) VALUES(?,?,?,?,?,?,?)').bind(user,name,email,now,firstName,lastName,docket),
+    db.prepare('INSERT INTO client_account_emails(email,user_id) SELECT ?,? WHERE NOT EXISTS(SELECT 1 FROM client_account_emails WHERE email=? AND user_id=?)').bind(email,user,email,user)
+   ]);
    return json({saved:true});
   }
   if(action==='request'){

@@ -1,4 +1,4 @@
-import { sqliteTable, text, index } from 'drizzle-orm/sqlite-core';
+import { sqliteTable, text, index, uniqueIndex } from 'drizzle-orm/sqlite-core';
 export const attorneys = sqliteTable('attorneys', {
  barNumber: text('bar_number').primaryKey(),
  sourceId: text('source_id').notNull(),
@@ -86,6 +86,9 @@ export const newsState = sqliteTable('news_state', {
 
 export const clientProfiles = sqliteTable('client_profiles', {
  userId:text('user_id').primaryKey(),
+ firstName:text('first_name').notNull().default(''),
+ lastName:text('last_name').notNull().default(''),
+ initialDocket:text('initial_docket').notNull().default(''),
  legalName:text('legal_name').notNull(),
  email:text('email').notNull(),
  createdAt:text('created_at').notNull(),
@@ -120,3 +123,9 @@ export const clientVerificationAudit = sqliteTable('client_verification_audit', 
  note:text('note').notNull(),
  createdAt:text('created_at').notNull(),
 });
+
+// Email is the unique external account identifier; stable user IDs retain review ownership.
+export const clientAccountEmails = sqliteTable('client_account_emails', {
+ email:text('email').primaryKey(),
+ userId:text('user_id').notNull().references(()=>clientProfiles.userId),
+},t=>[uniqueIndex('client_account_emails_user_idx').on(t.userId)]);
