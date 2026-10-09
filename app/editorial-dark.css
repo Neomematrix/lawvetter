@@ -83,12 +83,3 @@ body{background:var(--pale-blue);color:#172A3A}
 .gold-button,.nav-cta,.submit-button,.success-state button,.directory-filters button{box-shadow:0 2px 0 #0C1D29,0 5px 12px #172A3A14}
 .discovery-footer{background:#172A3A;color:#F6F4EF;border-top-color:#AA8B52}
 .discovery-footer p,.discovery-footer small{color:#C1C9CF}.discovery-footer a,.discovery-footer button{color:#DCC69E}
-
-/* Requested blue for the content workspaces. */
-:root{--workspace-blue:#5AA9E6}
-.monthly-spotlight,.practice-tile,.profile-card,.firm-result-card,.intake-card,.intake-panel,.claim-panel,.attorney-supplied,.profile-editor,.review-card,.chart-table,.comparison-scroll,.shortlist-banner,.settlement-slide,.settlement-visual,.news-fact,.news-source-box{background:var(--workspace-blue);background-image:none;color:#172A3A;border-color:#407CA9}
-.practice-tile:hover{background:#70B5E9;border-color:#243E52}
-.lawyer-poster,.attorney-tile,.photo-placeholder{background:var(--workspace-blue);background-image:none;border-color:#407CA9}
-:is(.monthly-spotlight,.practice-tile,.profile-card,.firm-result-card,.intake-card,.intake-panel,.claim-panel,.attorney-supplied,.profile-editor,.review-card,.chart-table,.comparison-scroll,.shortlist-banner,.settlement-slide,.news-fact,.news-source-box) :is(p,small,label,h1,h2,h3,dt,dd){color:#172A3A}
-.practice-tile>span,.monthly-spotlight .section-kicker,.settlement-copy .section-kicker,.chart-practice,.chart-table-heading,.poster-label,.tile-caption{color:#172A3A}
-.intake-form input,.intake-form select,.intake-form textarea,.profile-editor input,.profile-editor textarea,.claim-form input,.claim-form textarea{background:#FFFFFF;color:#172A3A}
