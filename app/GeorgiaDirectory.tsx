@@ -8,13 +8,13 @@ import {AttorneyCard,Charts,DiscoveryHome,ShortlistPage,type DiscoveryData,type 
 import {requestAttorneyData} from './attorney-request';
 export type Attorney={bar_number:string;name:string;company:string;city:string;county:string;status:string;admit_date:string;imported_at:string;law_school?:string;address?:string;zip?:string;phone?:string;email?:string;photo_key?:string;source_url?:string};
 type Results={attorneys?:Attorney[];firms?:{name:string;firm_key:string;attorneys:number}[];total:number;page:number;updated?:string};
-export default function GeorgiaDirectory({view='discover',onView}:{view?:View;onView:(v:View)=>void}){
+export default function GeorgiaDirectory({view='discover',onView,initialHome=null}:{view?:View;onView:(v:View)=>void;initialHome?:DiscoveryData|null}){
  const [name,setName]=useState(''),[city,setCity]=useState(''),[kind,setKind]=useState('attorneys');
  const [query,setQuery]=useState({q:'',city:'',practice:'',statusGroup:'active',kind:'attorneys',page:1,eventId:''}),[searched,setSearched]=useState(false);
- const [home,setHome]=useState<DiscoveryData|null>(null),[homeLoading,setHomeLoading]=useState(true),[result,setResult]=useState<Results|null>(null),[loading,setLoading]=useState(false),[error,setError]=useState('');
+ const [home,setHome]=useState<DiscoveryData|null>(initialHome),[homeLoading,setHomeLoading]=useState(!initialHome),[result,setResult]=useState<Results|null>(null),[loading,setLoading]=useState(false),[error,setError]=useState('');
  const [selected,setSelected]=useState<Attorney|null>(null),[detailLoading,setDetailLoading]=useState(false);
  async function loadHome(){setHomeLoading(true);setError('');try{setHome(await requestAttorneyData<DiscoveryData>({home:'1'}));}catch(e){setError(e instanceof Error?e.message:'Unable to load discovery.');}finally{setHomeLoading(false);}}
- useEffect(()=>{loadHome();},[]);
+ useEffect(()=>{if(!initialHome)loadHome();},[]);
  useEffect(()=>{setSelected(null);setSearched(false);setError('');},[view]);
  useEffect(()=>{if(!searched)return;const controller=new AbortController();setLoading(true);setError('');requestAttorneyData<Results>(query,controller.signal).then(setResult).catch(e=>{if(e.name!=='AbortError')setError(e.message);}).finally(()=>{if(!controller.signal.aborted)setLoading(false);});return ()=>controller.abort();},[query,searched]);
  function search(e:FormEvent){e.preventDefault();if(!name.trim()&&!city.trim()){setError('Enter a name, firm, bar number, or city to search.');return;}setSelected(null);setSearched(true);setQuery({q:name.trim(),city:city.trim(),practice:'',statusGroup:'active',kind,page:1,eventId:crypto.randomUUID()});}
