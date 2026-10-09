@@ -22,3 +22,4 @@ export function SaveAttorneyButton({attorney}:{attorney:Attorney}){
  return <button className={'save-attorney '+(saved?'saved':'')} disabled={s.loading||s.pending.length>0} aria-pressed={saved} onClick={()=>s.toggle(attorney)}>{s.pending.includes(attorney.bar_number)?'Saving…':saved?'✓ Saved':'+ Shortlist'}</button>;
 }
 export function ShortlistNotice(){const s=useShortlist();return s.error?<div className="directory-error" role="alert">{s.error} {s.requiresSignIn?<a href="/signin-with-chatgpt?return_to=%2F%3Fview%3Dshortlist" target="_top">Sign in</a>:<button onClick={s.reload}>Try again</button>}</div>:null;}
+export function ShortlistNavLink(){const s=useShortlist();return <a className="shortlist-nav" href="/?view=shortlist">Your shortlist <span>{s.attorneys.length}</span></a>;}
