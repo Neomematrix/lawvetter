@@ -1,5 +1,13 @@
 import { env } from 'cloudflare:workers';
 import { rawDb } from '../../../../db/raw';
+export async function GET(request:Request){
+ const key=(env as unknown as Record<string,string>).ATTORNEY_IMPORT_KEY;
+ if(!key||request.headers.get('Authorization')!=='Bearer '+key)return Response.json({error:'Unauthorized'},{status:401});
+ try{
+  const rows=await rawDb().prepare('SELECT bar_number FROM attorneys ORDER BY bar_number').all<{bar_number:string}>();
+  return Response.json({bars:rows.results.map(r=>r.bar_number)},{headers:{'Cache-Control':'no-store'}});
+ }catch{return Response.json({error:'Audit unavailable'},{status:503});}
+}
 export async function POST(request: Request) {
  const key = (env as unknown as Record<string,string>).ATTORNEY_IMPORT_KEY;
  if (!key || request.headers.get('Authorization') !== 'Bearer '+key) return Response.json({error:'Unauthorized'},{status:401});

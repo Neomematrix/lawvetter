@@ -1,3 +1,5 @@
+import {auditedFirmContacts,auditedAttorneyLinkedIn} from './audited-contacts';
+import {firmContactOverrides,attorneyLinkedInOverrides} from './firm-contact-overrides';
 // Official firm websites matched to attorney records from published professional sources.
 export const firmWebsites:Record<string,string> = {
   "448630": "https://www.lscklaw.com/",
@@ -51,6 +53,8 @@ export const firmWebsites:Record<string,string> = {
 };
 
 export const websitesByFirm:Record<string,string> = {
+  ...Object.fromEntries(Object.entries(auditedFirmContacts).map(([key,value])=>[key,value.website])),
+  ...Object.fromEntries(Object.entries(firmContactOverrides).map(([key,value])=>[key,value.website])),
   "barrettandfarahany": "https://www.justiceatwork.com/",
   "warnerbatesmcginnisandanthonypc": "https://www.warnerbates.com/",
   "antoniniandcohenimmigrationlawgroup": "https://www.antoniniandcohen.com/",
@@ -68,3 +72,8 @@ export const websitesByFirm:Record<string,string> = {
   "antoniniandcohen": "https://www.antoniniandcohen.com/",
   "banksstubbsandmcfarlandllp": "https://www.banksstubbs.com/"
 };
+export const linkedInByFirm:Record<string,string>={
+ ...Object.fromEntries(Object.entries(auditedFirmContacts).filter(([,value])=>value.linkedin).map(([key,value])=>[key,value.linkedin])),
+ ...Object.fromEntries(Object.entries(firmContactOverrides).filter(([,value])=>value.linkedin).map(([key,value])=>[key,value.linkedin])),
+};
+export const attorneyLinkedIn:Record<string,string>={...auditedAttorneyLinkedIn,...attorneyLinkedInOverrides};
