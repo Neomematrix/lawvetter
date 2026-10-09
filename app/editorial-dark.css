@@ -87,3 +87,6 @@ body{background:var(--pale-blue);color:#172A3A}
 /* Font families from the supplied page; preserve existing sizes and spacing. */
 h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta,.submit-button,.save-attorney{font-family:var(--font-jakarta),Arial,sans-serif}
 .discovery-shell,.discovery-header,.discovery-search,.discovery-search input,.discovery-search select{font-family:var(--font-jakarta),Arial,sans-serif}
+
+/* Larger firm and location text in the featured attorney spotlight. */
+.monthly-spotlight .spotlight-firm,.monthly-spotlight .spotlight-location{font-size:18px;line-height:1.5}
