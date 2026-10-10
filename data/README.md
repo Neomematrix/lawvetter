@@ -47,3 +47,20 @@ respected, and hidden affiliations are not reconstructed from email addresses.
 LinkedIn verification are explicitly incomplete. A missing LinkedIn link means
 unverified, not that the attorney or firm has no account. Firm and individual
 LinkedIn links are labeled separately.
+
+## Full missing-website search, October 10, 2026
+
+Every one of the 11,917 previously unlinked published firm/organization names
+was searched. Failed requests were retried; names without useful results also
+received a second search. `firm-web-search-audit.json` retains the per-profile
+query, official candidate source URLs, checked date, and resolution status.
+
+`searched-firm-websites.ts` supplies the new website links to the existing firm
+and attorney profile views. Existing website overrides, LinkedIn entries,
+application data, attorney claims, and directory records
+are preserved. New links require publisher-controlled branding and a matching
+published directory email domain, phone, city/postcode, or attorney identity.
+When host retrieval is blocked, indexed official pages provide that evidence.
+Generic names, domain parking, unrelated directories, conflicting destinations,
+and insufficiently corroborated sites remain unresolved. Unresolved means
+verification is incomplete; it does not mean that the firm has no website.

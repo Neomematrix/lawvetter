@@ -1,5 +1,6 @@
 import {auditedFirmContacts,auditedAttorneyLinkedIn} from './audited-contacts';
 import {firmContactOverrides,attorneyLinkedInOverrides} from './firm-contact-overrides';
+import {searchedFirmWebsites} from './searched-firm-websites';
 // Official firm websites matched to attorney records from published professional sources.
 export const firmWebsites:Record<string,string> = {
   "448630": "https://www.lscklaw.com/",
@@ -54,6 +55,7 @@ export const firmWebsites:Record<string,string> = {
 
 export const websitesByFirm:Record<string,string> = {
   ...Object.fromEntries(Object.entries(auditedFirmContacts).map(([key,value])=>[key,value.website])),
+  ...searchedFirmWebsites,
   ...Object.fromEntries(Object.entries(firmContactOverrides).map(([key,value])=>[key,value.website])),
   "barrettandfarahany": "https://www.justiceatwork.com/",
   "warnerbatesmcginnisandanthonypc": "https://www.warnerbates.com/",
