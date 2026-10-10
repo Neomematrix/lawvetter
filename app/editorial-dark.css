@@ -70,6 +70,8 @@ body{background:var(--pale-blue);color:#172A3A}
 .discovery-header nav button,.discovery-header nav>a,.discovery-header .shortlist-nav,.discovery-header .attorney-account-link{color:#E5E7E9}
 .discovery-header nav button.active,.discovery-header nav button:hover,.discovery-header nav>a:hover{color:#E4C997;border-bottom-color:#AA8B52}
 .discovery-header .shortlist-nav span{background:#2B4051;color:#E4C997}
+.discovery-header .client-login-link{display:inline-flex;align-items:center;justify-content:center;padding:9px 15px;background:#F6F4EF;color:#172A3A!important;border:1px solid #C8AF7C;border-radius:2px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;text-decoration:none;line-height:1.2;transition:background-color .18s ease,border-color .18s ease}
+.discovery-header .client-login-link:hover{background:#D9C79F;color:#172A3A!important;border-color:#E4C997}
 .hire-lawyer-link{background:#C8AF7C;color:#172A3A!important;border-color:#AA8B52;box-shadow:0 2px 0 #907443}
 .hire-lawyer-link:hover{background:#D9C79F;color:#172A3A!important}
 .section-kicker,.practice-number{color:#80642E}
@@ -108,6 +110,7 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
 .brand-emblem-left{--emblem:url('/brand/counsel-lawyer.svg')}
 .brand-emblem-right{--emblem:url('/brand/counsel-lawyer-right.png')}
 @media(max-width:700px){.nav-shell>.brand{font-size:clamp(20px,5.5vw,35px);gap:9px;letter-spacing:-1.2px}.nav-shell>.brand .brand-emblem{width:36px;height:54px}}
+@media(max-width:700px){.discovery-header .client-login-link{padding:8px 11px}}
 
 /* Keep the firm website heading and link in separate, aligned boxes. */
 .firm-hero .profile-firm-website{display:flex;flex-direction:column;align-items:flex-start;gap:14px;margin-top:28px}
