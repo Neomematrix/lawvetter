@@ -4,6 +4,7 @@ import { Lato, Plus_Jakarta_Sans, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import "./editorial-dark.css";
 import {ShortlistProvider} from "./Shortlist";
+import LegalFooter from "./LegalFooter";
 
 const editorial = Cormorant_Garamond({variable:"--font-editorial",subsets:["latin"],weight:["600","700"],style:["normal","italic"],display:"swap"});
 
@@ -60,6 +61,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${lato.variable} ${jakarta.variable} ${editorial.variable}`}>
         <ShortlistProvider>{children}</ShortlistProvider>
+        <LegalFooter/>
       </body>
     </html>
   );
