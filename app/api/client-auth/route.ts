@@ -1,16 +1,45 @@
 import {rawDb} from '../../../db/raw';
 import {profileIdentity} from '../../../db/profile-access';
 import {clientIdentity,hashPassword,checkPassword,newSession,sessionCookie,sessionToken,digest,allowAuth} from '../../../db/client-auth';
+import {passwordResetEmailConfigured,sendPasswordResetEmail} from '../../../db/password-reset-email';
+import {randomBytes} from 'node:crypto';
 const json=(body:unknown,status=200,cookie?:string)=>Response.json(body,{status,headers:{'Cache-Control':'private, no-store',...(cookie?{'Set-Cookie':cookie}:{})}});
 const str=(v:unknown)=>typeof v==='string'?v.trim():'';
-export async function GET(request:Request){try{const client=await clientIdentity(request);if(client)return json({client});const platform=profileIdentity(request);const legacy=platform.user?await rawDb().prepare('SELECT first_name,last_name,email FROM client_profiles p WHERE user_id=? AND lower(trim(email))=? AND NOT EXISTS(SELECT 1 FROM client_passwords c WHERE c.user_id=p.user_id)').bind(platform.user,platform.email).first():null;return json({client:null,legacy});}catch{return json({error:'Account service is temporarily unavailable.'},503);}}
+const resetMessage='If a LawVetter account uses that email address, a password-reset link has been sent.';
+export async function GET(request:Request){try{const passwordResetAvailable=passwordResetEmailConfigured(),client=await clientIdentity(request);if(client)return json({client,passwordResetAvailable});const platform=profileIdentity(request);const legacy=platform.user?await rawDb().prepare('SELECT first_name,last_name,email FROM client_profiles p WHERE user_id=? AND lower(trim(email))=? AND NOT EXISTS(SELECT 1 FROM client_passwords c WHERE c.user_id=p.user_id)').bind(platform.user,platform.email).first():null;return json({client:null,legacy,passwordResetAvailable});}catch{return json({error:'Account service is temporarily unavailable.'},503);}}
 export async function POST(request:Request){try{
  if(request.headers.get('origin')!==new URL(request.url).origin)return json({error:'Invalid request origin.'},403);
  const text=await request.text();if(text.length>10000)return json({error:'Request too large.'},413);
  let d:Record<string,unknown>;try{d=JSON.parse(text);}catch{return json({error:'Invalid request.'},400);}if(!d||typeof d!=='object'||Array.isArray(d))return json({error:'Invalid request.'},400);
  const db=rawDb(),action=str(d.action),email=str(d.email).toLowerCase(),password=typeof d.password==='string'?d.password:'',now=new Date().toISOString();
  if(action==='logout'){await db.prepare('DELETE FROM client_sessions WHERE token_hash=?').bind(digest(sessionToken(request))).run();return json({saved:true},200,sessionCookie(''));}
- if(!['register','login','set-password','change-password'].includes(action))return json({error:'Unknown action.'},400);
+ if(!['register','login','set-password','change-password','request-password-reset','reset-password'].includes(action))return json({error:'Unknown action.'},400);
+ if(action==='request-password-reset'){
+  if(!passwordResetEmailConfigured())return json({error:'Password-reset email is temporarily unavailable.'},503);
+  if(!await allowAuth(request,email))return json({error:'Too many attempts. Please wait 15 minutes and try again.'},429);
+  if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)&&email.length<=254){
+   const account=await db.prepare('SELECT user_id FROM client_account_emails WHERE email=?').bind(email).first<{user_id:string}>();
+   if(account){
+    const token=randomBytes(32).toString('hex'),tokenHash=digest(token),expiresAt=Date.now()+30*60*1000;
+    await db.batch([db.prepare('DELETE FROM client_password_reset_tokens WHERE user_id=? OR expires_at<=?').bind(account.user_id,Date.now()),db.prepare('INSERT INTO client_password_reset_tokens(token_hash,user_id,expires_at,requested_at) VALUES(?,?,?,?)').bind(tokenHash,account.user_id,expiresAt,now)]);
+    if(!await sendPasswordResetEmail(email,token,new URL(request.url).origin))await db.prepare('DELETE FROM client_password_reset_tokens WHERE token_hash=?').bind(tokenHash).run();
+   }
+  }
+  return json({saved:true,message:resetMessage});
+ }
+ if(action==='reset-password'){
+  const token=str(d.token);
+  if(!await allowAuth(request,'reset:'+digest(token)))return json({error:'Too many attempts. Please wait 15 minutes and try again.'},429);
+  if(!/^[a-f0-9]{64}$/.test(token))return json({error:'This password-reset link is invalid or has expired. Request a new one.'},400);
+  if(!password)return json({error:'Enter your new password.'},400);
+  if(password.length<9)return json({error:'Password must be at least 9 characters.'},400);
+  if(password.length>128)return json({error:'Password is too long.'},400);
+  const tokenHash=digest(token),reset=await db.prepare('SELECT user_id FROM client_password_reset_tokens WHERE token_hash=? AND expires_at>?').bind(tokenHash,Date.now()).first<{user_id:string}>();
+  if(!reset)return json({error:'This password-reset link is invalid or has expired. Request a new one.'},400);
+  const results=await db.batch([db.prepare('UPDATE client_passwords SET password_hash=?,updated_at=? WHERE user_id=? AND EXISTS(SELECT 1 FROM client_password_reset_tokens WHERE token_hash=? AND user_id=? AND expires_at>?)').bind(hashPassword(password),now,reset.user_id,tokenHash,reset.user_id,Date.now()),db.prepare('DELETE FROM client_sessions WHERE user_id=?').bind(reset.user_id),db.prepare('DELETE FROM client_password_reset_tokens WHERE user_id=?').bind(reset.user_id)]);
+  if(!results[0].meta.changes)return json({error:'This password-reset link is invalid or has expired. Request a new one.'},400);
+  return json({saved:true});
+ }
  if(!await allowAuth(request,email))return json({error:'Too many attempts. Please wait 15 minutes and try again.'},429);
  if(!password)return json({error:'Enter your password.'},400);
  if(password.length>128)return json({error:'Password is too long.'},400);

@@ -134,6 +134,27 @@ test('Existing profiles set passwords only through their original platform ident
  assert.equal(x.sql.prepare('SELECT count(*) AS n FROM client_profiles').get().n,1);
 });
 
+test('Password reset emails use one-time expiring tokens and revoke existing sessions',async()=>{
+ const calls=[];const x=await runtime({fetch:async(url,init)=>{calls.push({url,init});return Response.json({id:'password-reset-provider-id'});}});
+ x.env.RESEND_API_KEY='fictional-test-key';x.env.APPROVAL_EMAIL_FROM='LawVetter <test@example.test>';
+ const auth=await x.load('app/api/client-auth/route.ts'),email='reset-client@example.test',oldPassword='fictional old password',newPassword='fictional new password';
+ const req=data=>new Request('https://lawvetter.test/api/client-auth',{method:'POST',headers:{Origin:'https://lawvetter.test','Content-Type':'application/json'},body:JSON.stringify(data)});
+ const registered=await auth.POST(req({action:'register',firstName:'Reset',lastName:'Client',email,password:oldPassword,consent:true}));assert.equal(registered.status,201);const oldSession=registered.headers.get('set-cookie').split(';')[0];
+ const requested=await auth.POST(req({action:'request-password-reset',email}));assert.equal(requested.status,200);const requestedBody=await requested.json();
+ const unknown=await auth.POST(req({action:'request-password-reset',email:'unknown@example.test'}));assert.equal(unknown.status,200);assert.equal((await unknown.json()).message,requestedBody.message);assert.equal(calls.length,1);
+ const payload=JSON.parse(calls[0].init.body);assert.equal(payload.to[0],email);assert.equal(payload.subject,'Reset your LawVetter password');
+ const link=payload.text.match(/https:\/\/lawvetter\.test\/client-reviews\?reset=([a-f0-9]{64})/);assert.ok(link);const token=link[1];
+ const stored=x.sql.prepare('SELECT token_hash,expires_at FROM client_password_reset_tokens').get();assert.notEqual(stored.token_hash,token);assert.ok(stored.expires_at>Date.now());assert.ok(!JSON.stringify(stored).includes(token));
+ assert.equal((await auth.POST(req({action:'reset-password',token:'0'.repeat(64),password:newPassword}))).status,400);
+ assert.equal((await auth.POST(req({action:'reset-password',token,password:'short'}))).status,400);
+ assert.equal((await auth.POST(req({action:'reset-password',token,password:newPassword}))).status,200);
+ assert.equal(x.sql.prepare('SELECT count(*) n FROM client_password_reset_tokens').get().n,0);
+ assert.equal((await auth.GET(new Request('https://lawvetter.test/api/client-auth',{headers:{Cookie:oldSession}})).then(r=>r.json())).client,null);
+ assert.equal((await auth.POST(req({action:'reset-password',token,password:'another new password'}))).status,400);
+ assert.equal((await auth.POST(req({action:'login',email,password:oldPassword}))).status,401);
+ assert.equal((await auth.POST(req({action:'login',email,password:newPassword}))).status,200);
+});
+
 test('Approval email is private, queued without configuration, idempotent and blocked after revocation',async()=>{
  const calls=[];const x=await runtime({fetch:async(url,init)=>{calls.push({url,init});return Response.json({id:'provider-test-id'});}});x.seed('100001','Test Attorney');
  x.sql.prepare('INSERT INTO client_profiles(user_id,legal_name,email,created_at) VALUES(?,?,?,?)').run('client-test','Private Client','client@example.test','2026-10-09');

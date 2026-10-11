@@ -85,6 +85,13 @@
       "when": 1791692087420,
       "tag": "0011_deep_cloak",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "6",
+      "when": 1791759456563,
+      "tag": "0012_parched_mysterio",
+      "breakpoints": true
     }
   ]
 }

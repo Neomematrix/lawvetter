@@ -172,6 +172,8 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
 .create-account-button{color:#172A3A;background:linear-gradient(120deg,#B99552 0%,#E4C997 52%,#C8AF7C 100%);border:1px solid #AA8B52;border-radius:2px;box-shadow:0 2px 0 #80642E,0 5px 12px #172A3A14;transition:background .18s ease,border-color .18s ease,transform .18s ease}
 .create-account-button:hover{background:linear-gradient(120deg,#C8AF7C 0%,#F0DCB4 52%,#D9C79F 100%);border-color:#80642E;transform:translateY(-1px)}
 .create-account-button:focus-visible{outline:3px solid #E4C997;outline-offset:3px}
+.forgot-password-link{justify-self:start;background:transparent;color:#1769A8;padding:0;border:0;font:inherit;font-size:14px;font-weight:700;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.forgot-password-link:hover{color:#FF6B00}.forgot-password-link:focus-visible{outline:3px solid #E4C997;outline-offset:4px}
 @media(max-width:520px){.client-auth-main-actions{grid-template-columns:minmax(0,1fr)}}
 
 .nav-shell>.brand .brand-wordmark{font-family:var(--font-editorial),Georgia,serif;font-weight:700;letter-spacing:-.045em;font-size:1.13em;line-height:1.1;text-transform:none}.brand-wordmark>span{font-style:italic;font-weight:600}
@@ -495,3 +497,33 @@ a,button{font-weight:700}
 /* Keep the attorney search fully visible below the sticky desktop navigation. */
 #attorney-search{scroll-margin-top:104px}
 @media(max-width:900px){#attorney-search{scroll-margin-top:16px}}
+
+/* Keep the landing page inside narrow iPhone viewports, including during font swap. */
+.lawvetter-landing-hero,.landing-hero-copy,.landing-hero-visual,.landing-proof-card,.landing-proof-body,.landing-hero-actions{min-width:0;max-width:100%;box-sizing:border-box}
+.landing-hero-copy h1,.landing-hero-deck,.landing-proof-card h2,.landing-proof-card li div{min-width:0;max-width:100%;overflow-wrap:break-word}
+@media(max-width:560px){
+ .site-header.discovery-header,.discovery-header .nav-shell,.lawvetter-landing-hero{width:100%;max-width:100%;overflow-x:clip}
+ .discovery-header .nav-shell{grid-template-columns:minmax(0,1fr) 44px;gap:0 10px;padding-left:max(14px,env(safe-area-inset-left))!important;padding-right:max(14px,env(safe-area-inset-right))!important}
+ .nav-shell>.brand{max-width:100%;overflow:hidden}
+ .lawvetter-brand-logo{width:min(100%,205px);max-width:calc(100vw - 84px)}
+ .mobile-menu-toggle{width:44px;max-width:44px}
+ .landing-hero-copy{width:100%;padding:46px max(20px,env(safe-area-inset-right)) 50px max(20px,env(safe-area-inset-left))}
+ .landing-hero-copy h1{font-size:clamp(40px,11.8vw,52px);letter-spacing:-.047em;text-wrap:wrap}
+ .landing-hero-deck{font-size:16px;line-height:1.55}
+ .landing-hero-actions{width:100%}
+ .landing-hero-actions a{width:100%;max-width:100%;padding-left:14px;padding-right:14px;text-align:center;white-space:normal}
+ .landing-hero-visual{width:100%;padding:34px max(16px,env(safe-area-inset-right)) 40px max(16px,env(safe-area-inset-left))}
+ .landing-proof-card{width:100%}
+ .landing-proof-body{width:100%;padding:25px 20px 21px}
+ .landing-proof-card h2{font-size:clamp(27px,8.3vw,32px)}
+}
+@media(max-width:360px){
+ .discovery-header .nav-shell{padding-left:max(12px,env(safe-area-inset-left))!important;padding-right:max(12px,env(safe-area-inset-right))!important}
+ .lawvetter-brand-logo{width:min(100%,188px);max-width:calc(100vw - 78px)}
+ .landing-hero-copy{padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right))}
+ .landing-hero-kicker{font-size:8px;letter-spacing:1.15px}
+ .landing-hero-copy h1{font-size:clamp(37px,11.8vw,43px)}
+ .landing-hero-deck{font-size:15px}
+ .landing-proof-body{padding-left:18px;padding-right:18px}
+ .landing-proof-card li{grid-template-columns:30px minmax(0,1fr);gap:7px}
+}
