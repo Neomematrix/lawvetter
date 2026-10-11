@@ -154,6 +154,14 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
 
 .client-session-bar{min-height:0;padding-bottom:0;display:flex;flex-wrap:wrap;gap:16px;align-items:center}.client-session-bar>p{margin:0;overflow-wrap:anywhere}.client-session-bar .form-actions,.client-auth-options{display:flex;gap:12px;flex-wrap:wrap}.client-session-bar .outline-button,.client-auth-options .outline-button{display:inline-flex;padding:12px 18px;line-height:1.5;max-width:100%;white-space:normal}.client-session-bar .client-review-form{flex-basis:100%}
 
+/* Keep the two main account choices together and give sign-up equal visual weight. */
+.client-auth-main-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.client-auth-main-actions .gold-button,.client-auth-main-actions .create-account-button{display:inline-flex;align-items:center;justify-content:center;width:100%;min-height:56px;margin:0;padding:13px 18px;box-sizing:border-box;font-family:var(--font-jakarta),Arial,sans-serif;font-size:15px;font-weight:800;line-height:1.25;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+.create-account-button{color:#172A3A;background:linear-gradient(120deg,#B99552 0%,#E4C997 52%,#C8AF7C 100%);border:1px solid #AA8B52;border-radius:2px;box-shadow:0 2px 0 #80642E,0 5px 12px #172A3A14;transition:background .18s ease,border-color .18s ease,transform .18s ease}
+.create-account-button:hover{background:linear-gradient(120deg,#C8AF7C 0%,#F0DCB4 52%,#D9C79F 100%);border-color:#80642E;transform:translateY(-1px)}
+.create-account-button:focus-visible{outline:3px solid #E4C997;outline-offset:3px}
+@media(max-width:520px){.client-auth-main-actions{grid-template-columns:minmax(0,1fr)}}
+
 .nav-shell>.brand .brand-wordmark{font-family:var(--font-editorial),Georgia,serif;font-weight:700;letter-spacing:-.045em;font-size:1.13em;line-height:1.1;text-transform:none}.brand-wordmark>span{font-style:italic;font-weight:600}
 
 .rank,.poster-rank{background:linear-gradient(120deg,#D9AA36 0%,#EAC65F 48%,#D9AA36 100%);color:#FFFFFF!important;-webkit-text-stroke:1px #70521F;paint-order:stroke fill;text-shadow:none;padding:5px 10px 11px;line-height:1.2}
