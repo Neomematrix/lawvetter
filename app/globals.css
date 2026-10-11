@@ -84,3 +84,8 @@ body{background:radial-gradient(ellipse at 85% 0%,#ECE9E1,transparent 42rem),#F6
 .legal-disclaimer strong{color:#F6F4EF}
 .legal-footer small{display:block;color:#C1C9CF}
 @media(max-width:650px){.legal-footer>.legal-footer-inner{padding:30px 18px 34px}.legal-footer .legal-footer-links{gap:10px 18px}.legal-disclaimer p{font-size:11px}}
+
+/* Keep the spotlight initials comfortably inside the card without moving real portraits. */
+.monthly-spotlight:not(.has-portrait) .spotlight-art{right:-20px}
+@media(max-width:1000px){.monthly-spotlight:not(.has-portrait) .spotlight-art{right:-110px}}
+@media(max-width:700px){.monthly-spotlight:not(.has-portrait) .spotlight-art{right:-60px}}
