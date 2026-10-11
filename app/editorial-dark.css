@@ -409,7 +409,7 @@ a,button{font-weight:700}
 .discovery-header .hire-lawyer-link:hover{background:#E85F00;color:#FFFFFF!important}
 
 .lawvetter-landing-hero{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(410px,.92fr);gap:24px;min-height:650px;padding:24px;background:#FFF4EA;color:#FFFFFF;overflow:hidden}
-.landing-hero-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:72px clamp(40px,7.5vw,122px);background:linear-gradient(145deg,#337FB7 0%,#4A94C3 100%);border-radius:28px;box-shadow:0 18px 42px #224D6D1C}
+.landing-hero-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:72px clamp(40px,7.5vw,122px);background:#1E6FAF;border-radius:28px;box-shadow:0 18px 42px #224D6D1C}
 .landing-hero-kicker{margin:0 0 22px;color:#FFD5B6;font-size:11px;font-weight:800;letter-spacing:2px;line-height:1.5}
 .landing-hero-copy h1{max-width:800px;margin:0 0 27px;color:#FFFFFF;font-family:var(--font-jakarta),Arial,sans-serif;font-size:clamp(50px,5.4vw,82px);font-weight:650;letter-spacing:-.055em;line-height:1.02;text-wrap:balance}
 .landing-hero-deck{max-width:690px;margin:0 0 34px;color:#EAF4FB;font-size:clamp(17px,1.45vw,22px);font-weight:500;line-height:1.6}
@@ -419,10 +419,18 @@ a,button{font-weight:700}
 .landing-primary-cta:hover{background:#E85F00;color:#FFFFFF}
 .landing-secondary-cta{background:transparent;color:#FFFFFF;border:1px solid #FFFFFFAA}
 .landing-secondary-cta:hover{background:#FFFFFF;color:#155B96}
-.landing-hero-visual{position:relative;display:flex;align-items:stretch;justify-content:center;min-width:0;padding:26px;background:linear-gradient(145deg,#F7D5BC 0%,#EEAF7F 100%);border-radius:28px;box-shadow:0 18px 42px #9B5D3217;overflow:hidden}
-.landing-hero-photo{position:relative;width:100%;min-height:100%;margin:0;border:1px solid #FFFFFFA6;border-radius:21px;box-shadow:0 18px 40px #67391B24;overflow:hidden}
-.landing-hero-photo img{display:block;width:100%;height:100%;min-height:598px;object-fit:cover;object-position:left center;transform:scale(1.12);transform-origin:left center}
+.landing-hero-visual{position:relative;display:block;min-width:0;padding:22px;background:linear-gradient(145deg,#F7D5BC 0%,#EEAF7F 100%);border-radius:28px;box-shadow:0 18px 42px #9B5D3217;overflow:hidden}
+.landing-hero-photo{position:absolute;inset:22px;width:auto;min-height:0;margin:0;border:1px solid #FFFFFFA6;border-radius:21px;box-shadow:0 18px 40px #67391B24;overflow:hidden}
+.landing-hero-photo img{display:block;width:100%;height:100%;min-height:0;object-fit:cover;object-position:left center;transform:translateX(-155px) scale(1.12);transform-origin:left center}
 .landing-hero-photo::after{position:absolute;inset:0;content:"";pointer-events:none;background:linear-gradient(90deg,transparent 74%,#EFB18324 86%,#EFB1838F 100%)}
+.landing-hero-proof{position:absolute;z-index:1;top:22px;right:22px;bottom:22px;display:flex;width:min(56%,310px);padding:27px 23px;background:#FFFCF8;color:#17344B;border:1px solid #FFFFFF;border-radius:21px;box-shadow:-12px 0 32px #6A3D2126;flex-direction:column;justify-content:center}
+.landing-hero-proof h2{margin:0 0 13px;color:#17344B;font-family:var(--font-jakarta),Arial,sans-serif;font-size:clamp(21px,1.65vw,26px);font-weight:700;letter-spacing:-.035em;line-height:1.13}
+.landing-hero-proof ol{display:grid;margin:0;padding:0;list-style:none}
+.landing-hero-proof li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;padding:10px 0;border-top:1px solid #DDE7EE}
+.landing-hero-proof li>span{padding-top:2px;color:#E96308;font-size:11px;font-weight:850;letter-spacing:.7px}
+.landing-hero-proof li div{display:grid;gap:2px}
+.landing-hero-proof li strong{font-size:14px;line-height:1.3}
+.landing-hero-proof li small{color:#5C6C77;font-size:11px;font-weight:550;line-height:1.42}
 .lawvetter-landing-hero+.discovery-search{background:#FFF9EF;border-bottom:1px solid #E7D9C7;box-shadow:0 8px 22px #17344B0D}
 .lawvetter-landing-hero+.discovery-search form{max-width:1360px;padding:24px 32px;filter:none}
 .lawvetter-landing-hero+.discovery-search .search-submit{background:#155B96;border-color:#0E4778;box-shadow:0 2px 0 #0E365B}
@@ -465,8 +473,10 @@ a,button{font-weight:700}
  .landing-hero-copy h1{font-size:clamp(47px,8vw,67px)}
  .lawvetter-landing-hero{gap:18px;padding:18px}
  .landing-hero-copy,.landing-hero-visual{border-radius:24px}
- .landing-hero-visual{min-height:560px;padding:22px}
- .landing-hero-photo img{min-height:514px;object-position:left 32%}
+ .landing-hero-visual{display:grid;grid-template-rows:minmax(360px,.9fr) auto;gap:16px;min-height:0;padding:20px}
+ .landing-hero-photo{position:relative;inset:auto;width:100%}
+ .landing-hero-photo img{min-height:360px;object-position:left 27%;transform:scale(1.1)}
+ .landing-hero-proof{position:relative;inset:auto;width:100%;padding:25px 24px 21px;box-shadow:0 12px 30px #6A3D2120}
 }
 
 @media(max-width:560px){
@@ -480,9 +490,14 @@ a,button{font-weight:700}
  .landing-hero-actions a{width:100%;min-height:52px}
  .lawvetter-landing-hero{gap:12px;padding:12px}
  .landing-hero-copy,.landing-hero-visual{border-radius:20px}
- .landing-hero-visual{min-height:450px;padding:14px}
+ .landing-hero-visual{min-height:0;padding:14px}
  .landing-hero-photo{border-radius:15px}
- .landing-hero-photo img{min-height:420px;object-position:left 30%}
+ .landing-hero-photo img{min-height:340px;object-position:left 27%}
+ .landing-hero-proof{padding:21px 19px 17px;border-radius:15px}
+ .landing-hero-proof h2{font-size:26px}
+ .landing-hero-proof li{grid-template-columns:30px minmax(0,1fr);gap:8px;padding:11px 0}
+ .landing-hero-proof li strong{font-size:14px}
+ .landing-hero-proof li small{font-size:12px}
  .lawvetter-landing-hero+.discovery-search form{grid-template-columns:minmax(0,1fr);gap:10px;padding:18px 16px}
  .lawvetter-landing-hero+.discovery-search .search-kind,.lawvetter-landing-hero+.discovery-search .primary-search,.lawvetter-landing-hero+.discovery-search .search-city,.lawvetter-landing-hero+.discovery-search .search-submit{grid-column:1}
 }
@@ -492,7 +507,7 @@ a,button{font-weight:700}
 @media(max-width:900px){#attorney-search{scroll-margin-top:16px}}
 
 /* Keep the landing page inside narrow iPhone viewports, including during font swap. */
-.lawvetter-landing-hero,.landing-hero-copy,.landing-hero-visual,.landing-hero-photo,.landing-hero-actions{min-width:0;max-width:100%;box-sizing:border-box}
+.lawvetter-landing-hero,.landing-hero-copy,.landing-hero-visual,.landing-hero-photo,.landing-hero-proof,.landing-hero-actions{min-width:0;max-width:100%;box-sizing:border-box}
 .landing-hero-copy h1,.landing-hero-deck{min-width:0;max-width:100%;overflow-wrap:break-word}
 @media(max-width:560px){
  .site-header.discovery-header,.discovery-header .nav-shell,.lawvetter-landing-hero{width:100%;max-width:100%;overflow-x:clip}
@@ -515,5 +530,5 @@ a,button{font-weight:700}
  .landing-hero-kicker{font-size:8px;letter-spacing:1.15px}
  .landing-hero-copy h1{font-size:clamp(37px,11.8vw,43px)}
  .landing-hero-deck{font-size:15px}
- .landing-hero-photo img{object-position:left 30%}
+ .landing-hero-photo img{object-position:left 27%}
 }
