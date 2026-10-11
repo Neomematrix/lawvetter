@@ -85,7 +85,7 @@ test('Client passwords, persistent sessions, ownership, review approval and logo
  const account={action:'register',firstName:'Test',lastName:'Client',email:'test@example.test',password,consent:true};
  const req=(data,cookie='',user='',email='')=>new Request('https://counsel.test/api/client-auth',{method:'POST',headers:{Origin:'https://counsel.test','Content-Type':'application/json',Cookie:cookie,'oai-authenticated-user-id':user,'oai-authenticated-user-email':email},body:JSON.stringify(data)});
  const cookie=r=>r.headers.get('set-cookie').split(';')[0];
- assert.equal((await auth.POST(req({...account,password:'short'}))).status,400);
+ const tooShort=await auth.POST(req({...account,password:'12345678'}));assert.equal(tooShort.status,400);assert.equal((await tooShort.json()).error,'Password must be at least 9 characters.');
  const registered=await auth.POST(req(account));assert.equal(registered.status,201);let session=cookie(registered);assert.match(registered.headers.get('set-cookie'),/HttpOnly; Secure; SameSite=Lax/);
  const user=x.sql.prepare('SELECT user_id FROM client_profiles WHERE email=?').get(account.email).user_id;
  const stored=x.sql.prepare('SELECT password_hash FROM client_passwords').get().password_hash;assert.ok(!stored.includes(password));assert.match(stored,/^scrypt\$/);
@@ -109,7 +109,7 @@ test('Client passwords, persistent sessions, ownership, review approval and logo
  const publicReviews=()=>reviews.GET(new Request('https://counsel.test/api/client-reviews?bar=100001')).then(r=>r.json());
  let publicData=await publicReviews();assert.equal(publicData.reviews[0].author,'Anonymous');for(const secret of [account.email,'PRIVATE-CASE-42','identity_evidence',user])assert.ok(!JSON.stringify(publicData).includes(secret));
  assert.equal((await reviews.POST(req({...review,mode:'named'},session))).status,200);assert.equal((await publicReviews()).reviews[0].author,'Test Client');
- const b=await auth.POST(req({...account,email:'second@example.test',firstName:'Second'}));assert.equal(b.status,201);const bCookie=cookie(b);
+ const b=await auth.POST(req({...account,email:'second@example.test',firstName:'Second',password:'123456789'}));assert.equal(b.status,201);const bCookie=cookie(b);
  assert.equal((await reviews.POST(req(review,bCookie))).status,403);assert.equal((await(await reviews.POST(req({action:'account'},bCookie))).json()).requests.length,0);
  const own=await(await reviews.POST(req({action:'account'},session))).json();assert.equal(own.requests[0].id,id);assert.ok(!JSON.stringify(own).includes('identity_evidence'));
  const change=await auth.POST(req({action:'change-password',email:account.email,password:'a completely different passphrase',currentPassword:password},session));assert.equal(change.status,200);const updatedSession=cookie(change);

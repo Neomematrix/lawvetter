@@ -12,13 +12,14 @@ export async function POST(request:Request){try{
  if(action==='logout'){await db.prepare('DELETE FROM client_sessions WHERE token_hash=?').bind(digest(sessionToken(request))).run();return json({saved:true},200,sessionCookie(''));}
  if(!['register','login','set-password','change-password'].includes(action))return json({error:'Unknown action.'},400);
  if(!await allowAuth(request,email))return json({error:'Too many attempts. Please wait 15 minutes and try again.'},429);
- if(password.length>128||!password)return json({error:'Enter a password of 15–128 characters.'},400);
+ if(!password)return json({error:'Enter your password.'},400);
+ if(password.length>128)return json({error:'Password is too long.'},400);
  if(action==='login'){
   const row=await db.prepare('SELECT p.user_id,c.password_hash FROM client_account_emails e JOIN client_profiles p ON p.user_id=e.user_id JOIN client_passwords c ON c.user_id=p.user_id WHERE e.email=?').bind(email).first<{user_id:string;password_hash:string}>();
   if(!checkPassword(password,row?.password_hash||''))return json({error:'Email or password is incorrect.'},401);
   return json({saved:true},200,sessionCookie(await newSession(row!.user_id)));
  }
- if(password.length<15)return json({error:'Use at least 15 characters for your password.'},400);
+ if(password.length<9)return json({error:'Password must be at least 9 characters.'},400);
  if(action==='change-password'){
   const client=await clientIdentity(request);if(!client)return json({error:'Log in first.'},401);
   const old=typeof d.currentPassword==='string'?d.currentPassword:'';if(old.length>128)return json({error:'Current password is incorrect.'},401);
