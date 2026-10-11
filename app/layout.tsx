@@ -60,8 +60,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${lato.variable} ${jakarta.variable} ${editorial.variable}`}>
-        <ShortlistProvider>{children}</ShortlistProvider>
-        <LegalFooter/>
+        <ShortlistProvider>{children}<LegalFooter/></ShortlistProvider>
       </body>
     </html>
   );

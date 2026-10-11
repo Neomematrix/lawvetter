@@ -1,4 +1,7 @@
+'use client';
+import {useShortlist} from './Shortlist';
 export default function LegalFooter(){
+ const shortlist=useShortlist();
  return <footer className="discovery-footer legal-footer">
   <div className="legal-footer-inner">
    <div className="footer-brand"><strong>COUNSELCHECK</strong></div>
@@ -6,7 +9,7 @@ export default function LegalFooter(){
    <nav className="legal-footer-links" aria-label="Footer navigation">
     <a href="/">Discover</a>
     <a href="/?view=charts">Rankings &amp; methodology</a>
-    <a href="/?view=shortlist">Your shortlist</a>
+    {shortlist.signedIn&&<a href="/?view=shortlist">Your shortlist</a>}
     <a href="/account">Claim your profile</a>
     <a href="https://www.gabar.org/member-directory/?state=GA" target="_blank" rel="noopener noreferrer">State Bar directory</a>
    </nav>

@@ -278,3 +278,17 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
  .discovery-header .responsive-menu nav{grid-column:auto;grid-row:auto;width:100%;justify-content:flex-start;flex-direction:column;gap:0}
  .discovery-header .responsive-menu .shortlist-nav,.discovery-header .responsive-menu .client-login-link,.discovery-header .responsive-menu .attorney-account-link:not(.client-login-link),.discovery-header .responsive-menu .hire-lawyer-link{grid-column:auto;grid-row:auto;justify-self:stretch}
 }
+
+/* Account-gated shortlist prompts and a consistently aligned mobile menu. */
+.responsive-menu:not(.has-shortlist)>.client-login-link{margin-left:auto}
+.chart-account-cta{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:24px 0 30px;padding:20px 22px;background:#FFFFFF;border:1px solid #C8AF7C;border-left:4px solid #AA8B52;border-radius:4px;box-shadow:0 7px 18px #172A3A0F}
+.chart-account-cta div{display:grid;gap:5px;min-width:0}.chart-account-cta strong{font-size:17px;color:#172A3A}.chart-account-cta span{color:#5B6268;font-size:13px;line-height:1.55}.chart-account-cta .gold-button{flex:0 0 auto;text-align:center}.shortlist-gate-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}.shortlist-gate-actions .outline-button{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+@media(max-width:700px){
+ .responsive-menu{gap:0!important;padding:10px 0 6px!important}
+ .discovery-header .responsive-menu nav button,.discovery-header .responsive-menu nav>a,.discovery-header .responsive-menu .shortlist-nav,.discovery-header .responsive-menu>a.attorney-account-link{display:flex!important;align-items:center!important;justify-content:flex-start!important;width:100%!important;min-height:50px;margin:0!important;padding:13px 18px!important;box-sizing:border-box;border:0;border-bottom:1px solid #ffffff22;border-radius:0;background:transparent;color:#E5E7E9!important;text-align:left!important;font-size:12px;line-height:1.35;font-weight:700;letter-spacing:.75px;text-transform:uppercase;box-shadow:none}
+ .discovery-header .responsive-menu .shortlist-nav{justify-content:space-between!important}
+ .discovery-header .responsive-menu .shortlist-nav span{margin-left:auto}
+ .discovery-header .responsive-menu>.client-login-link{margin-left:0}
+ .discovery-header .responsive-menu .hire-lawyer-link{width:calc(100% - 24px)!important;min-height:48px;margin:14px 12px 5px!important;padding:13px 18px!important;justify-content:center!important;border:1px solid #AA8B52;border-bottom:3px solid #907443;border-radius:2px;background:#C8AF7C;color:#172A3A!important;text-align:center!important;box-shadow:none}
+ .chart-account-cta{align-items:stretch;flex-direction:column;gap:16px;margin:20px 0 24px;padding:18px}.chart-account-cta .gold-button{width:100%}
+}

@@ -1,6 +1,7 @@
 import {rawDb} from '../../../db/raw';
+import {clientIdentity} from '../../../db/client-auth';
 export async function POST(request:Request){
- const user=request.headers.get('oai-authenticated-user-id');
+ const user=(await clientIdentity(request))?.user;
  if(!user)return Response.json({error:'Sign in to save and compare attorneys.'},{status:401});
  const origin=request.headers.get('origin');
  if(origin&&origin!==new URL(request.url).origin)return Response.json({error:'Invalid request origin.'},{status:403});
