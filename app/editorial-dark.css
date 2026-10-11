@@ -24,6 +24,25 @@ footer{border-top:4px double #AA8B52}.footer-brand{font-family:var(--font-jakart
 .hire-lawyer-link{display:inline-flex;padding:10px 16px;background:var(--yellow);color:#5B6268!important;border-bottom:2px solid #AA8B52;font-size:12px;font-weight:700;letter-spacing:.7px;text-transform:uppercase}
 .intake-page{display:grid;grid-template-columns:1fr 1.2fr;gap:70px;padding-top:65px;padding-bottom:80px;max-width:1180px}.intake-intro h1{font-family:var(--font-jakarta),Arial,sans-serif;font-size:clamp(42px,5vw,67px);line-height:1.06;font-weight:400;margin:25px 0}.intake-deck{font-size:20px;line-height:1.6;color:#5B6268}.intake-aside{margin-top:45px;border-top:1px solid #AA8B52;padding-top:26px}.intake-aside span{font-size:11px;letter-spacing:1.7px;color:var(--yellow)}.intake-aside p{color:#5B6268;line-height:1.65;margin:10px 0 28px}.intake-panel{background:linear-gradient(140deg,#FFFFFF,#F6F4EF);border:1px solid #AA8B52;padding:35px;box-shadow:9px 10px 0 #172A3A14}.intake-panel h2{font-family:var(--font-jakarta),Arial,sans-serif;font-size:36px;font-weight:400;margin:12px 0}.intake-panel>p{color:#5B6268;font-size:13px}.intake-form{display:grid;gap:20px;margin-top:28px}.intake-form label,.lead-card label{display:grid;gap:9px;font-size:13px;color:#172A3A}.intake-form input,.intake-form select,.intake-form textarea,.lead-card select{width:100%;background:#F6F4EF;border:1px solid #D8D4C9;border-radius:2px;color:#172A3A;padding:13px;font:inherit;box-sizing:border-box}.intake-form input:focus,.intake-form select:focus,.intake-form textarea:focus{outline:2px solid var(--yellow);outline-offset:2px}.intake-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}.intake-form .lead-consent{display:flex;align-items:flex-start;font-size:12px;line-height:1.7}.lead-consent input{width:18px;height:18px;flex-shrink:0;margin-top:3px;accent-color:var(--yellow)}.intake-form .lead-trap{display:none}.intake-form .record-note{font-size:12px;line-height:1.7;margin:0}.intake-form button{padding:17px}.lead-success{padding:30px 0}.lead-success p{line-height:1.8}.lead-success a{display:inline-block;margin-top:20px}.lead-card{border-top:1px solid #AA8B52;padding:26px 0}.lead-card-heading{display:flex;justify-content:space-between;gap:25px}.lead-card h2{font-family:var(--font-jakarta),Arial,sans-serif;font-size:29px;margin:12px 0}.lead-card a{color:var(--yellow)}.lead-summary{white-space:pre-wrap;line-height:1.7;overflow-wrap:anywhere}.lead-card small{color:#5B6268}.lead-card select{min-width:130px}
 @media(max-width:760px){.intake-page{grid-template-columns:1fr;gap:25px;padding-top:35px}.intake-aside{display:none}.intake-panel{padding:23px}.intake-row{grid-template-columns:1fr}.lead-card-heading{flex-direction:column}.hire-lawyer-link{font-size:10px;padding:9px 12px}}
+
+/* Final phone-header layout: brand and hamburger share one row; disclosed links fill the next. */
+@media(max-width:700px){
+ .discovery-header .nav-shell{display:grid;grid-template-columns:minmax(0,1fr) 46px;justify-content:stretch;align-items:center;gap:0 12px;padding:11px 16px 10px!important}
+ .nav-shell>.brand{grid-column:1;grid-row:1;width:auto;min-width:0;justify-content:flex-start;gap:5px;font-size:clamp(22px,6.5vw,26px);letter-spacing:-1px}
+ .nav-shell>.brand .brand-emblem{width:24px;height:35px}
+ .mobile-menu-toggle{grid-column:2;grid-row:1;justify-self:end;margin-left:0}
+ .responsive-menu{grid-column:1/-1;grid-row:2}
+ .discovery-header .responsive-menu nav{grid-column:auto;grid-row:auto;width:100%;justify-content:flex-start;flex-direction:column;gap:0}
+ .discovery-header .responsive-menu .shortlist-nav,.discovery-header .responsive-menu .client-login-link,.discovery-header .responsive-menu .attorney-account-link:not(.client-login-link),.discovery-header .responsive-menu .hire-lawyer-link{grid-column:auto;grid-row:auto;justify-self:stretch}
+ .mobile-menu-toggle{position:relative}
+ .mobile-menu-toggle span{position:absolute;left:10px;top:20px}
+ .mobile-menu-toggle span:nth-child(1){transform:translateY(-8px)}
+ .mobile-menu-toggle span:nth-child(2){transform:none}
+ .mobile-menu-toggle span:nth-child(3){transform:translateY(8px)}
+ .mobile-menu-toggle[aria-expanded=true] span:nth-child(1){transform:rotate(45deg)}
+ .mobile-menu-toggle[aria-expanded=true] span:nth-child(2){opacity:0}
+ .mobile-menu-toggle[aria-expanded=true] span:nth-child(3){transform:rotate(-45deg)}
+}
 .monthly-spotlight.has-portrait .spotlight-art{right:55px;border-radius:18px;top:80px;bottom:35px;width:32%;height:auto;opacity:1;z-index:1;border:1px solid #AA8B52;box-shadow:7px 8px 0 #172A3A14;overflow:hidden}
 .monthly-spotlight.has-portrait .spotlight-photo{display:block;width:100%;height:100%;object-fit:cover;object-position:center 20%;mask-image:none}
 .monthly-spotlight.has-portrait .spotlight-ring,.monthly-spotlight.has-portrait .column-lines{display:none}
@@ -247,4 +266,15 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
   .attorney-chart-table .chart-person{grid-column:3;grid-row:1}
   .attorney-chart-table .chart-practice{grid-column:3;grid-row:2}
   .attorney-chart-table .chart-row>.save-attorney{grid-column:3;grid-row:3;width:auto;justify-self:start}
+}
+
+/* Keep this last so legacy tablet rules cannot restack the phone masthead. */
+@media(max-width:700px){
+ .discovery-header .nav-shell{display:grid;grid-template-columns:minmax(0,1fr) 46px;justify-content:stretch;align-items:center;gap:0 12px;padding:11px 16px 10px!important}
+ .nav-shell>.brand{grid-column:1;grid-row:1;width:auto;min-width:0;justify-content:flex-start;gap:5px;font-size:clamp(22px,6.5vw,26px);letter-spacing:-1px}
+ .nav-shell>.brand .brand-emblem{width:24px;height:35px}
+ .mobile-menu-toggle{grid-column:2;grid-row:1;justify-self:end;margin-left:0}
+ .responsive-menu{grid-column:1/-1;grid-row:2}
+ .discovery-header .responsive-menu nav{grid-column:auto;grid-row:auto;width:100%;justify-content:flex-start;flex-direction:column;gap:0}
+ .discovery-header .responsive-menu .shortlist-nav,.discovery-header .responsive-menu .client-login-link,.discovery-header .responsive-menu .attorney-account-link:not(.client-login-link),.discovery-header .responsive-menu .hire-lawyer-link{grid-column:auto;grid-row:auto;justify-self:stretch}
 }

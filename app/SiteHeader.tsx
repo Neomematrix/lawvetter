@@ -1,3 +1,2 @@
-import ClientAccountNav from './ClientAccountNav';
-import {ShortlistNavLink} from './Shortlist';
-export default function SiteHeader(){return <header className="site-header discovery-header"><div className="nav-shell"><a className="brand" href="/" aria-label="CounselCheck home"><span className="brand-emblem brand-emblem-left" aria-hidden="true"/><span className="brand-wordmark">Counsel<span>Check</span></span><span className="brand-emblem brand-emblem-right" aria-hidden="true"/></a><nav aria-label="Primary navigation"><a href="/">Discover</a><a href="/?view=charts">Charts</a><a href="/news">Legal news</a></nav><ShortlistNavLink/><ClientAccountNav/><a className="attorney-account-link" href="/account">For attorneys</a><a className="hire-lawyer-link" href="/hire-lawyer">Find an Attorney</a></div></header>;}
+import ResponsiveHeader from './ResponsiveHeader';
+export default function SiteHeader(){return <ResponsiveHeader/>;}
