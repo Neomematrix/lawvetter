@@ -74,21 +74,21 @@ body{background:var(--pale-blue);color:#172A3A}
 .site-header,.discovery-header{background:#F6F4EF;border-bottom-color:#AA8B52}
 .nav-shell>.brand{color:#172A3A}.brand>span>span{color:#AA8B52}
 .section-heading{border-top-color:#AA8B52}
-.hire-lawyer-link,.gold-button,.nav-cta,.submit-button,.success-state button,.directory-filters button,.rank,.poster-rank,.brand-mark,.segmented button[aria-pressed=true],.search-submit{color:#FFFFFF!important;background:#243E52;border-color:#172A3A}
-.gold-button:hover,.hire-lawyer-link:hover,.search-submit:hover{background:#172A3A}
+.hire-lawyer-link,.gold-button,.nav-cta,.submit-button,.success-state button,.directory-filters button,.rank,.poster-rank,.brand-mark,.segmented button[aria-pressed=true],.search-submit{color:#FFFFFF!important;background:#1E6298;border-color:#17486F}
+.gold-button:hover,.hire-lawyer-link:hover,.search-submit:hover{background:#174E78}
 .practice-tile{background:linear-gradient(145deg,#FFFFFF,#F6F4EF)}.practice-tile:hover{background:#ECE9E1;border-color:#AA8B52}
 .monthly-spotlight,.lawyer-poster,.attorney-tile{background:linear-gradient(135deg,#ECE9E1,#F6F4EF);border-color:#AA8B52}
 .settlement-visual,.news-fact{background:linear-gradient(135deg,#ECE9E1,#F6F4EF)}
 .hire-lawyer-link{box-shadow:0 3px 0 #172A3A}
 ::selection{background:#AA8B52;color:#FFFFFF}
 
-/* Navy masthead, ivory paper, and restrained brass detailing. */
-:root{--navy:#172A3A;--ivory:#F6F4EF;--brass:#AA8B52}
-.site-header,.discovery-header{background:#172A3A;border-bottom:4px double #AA8B52;box-shadow:0 6px 20px #172A3A14}
+/* Clearer brand-blue masthead, ivory paper, and restrained brass detailing. */
+:root{--navy:#175B91;--ivory:#F6F4EF;--brass:#AA8B52}
+.site-header,.discovery-header{background:#175B91;border-bottom:4px double #AA8B52;box-shadow:0 6px 20px #172A3A14}
 .nav-shell>.brand{color:#F6F4EF}.brand>span>span{color:#C8AF7C}
 .discovery-header nav button,.discovery-header nav>a,.discovery-header .shortlist-nav,.discovery-header .attorney-account-link{color:#E5E7E9}
 .discovery-header nav button.active,.discovery-header nav button:hover,.discovery-header nav>a:hover{color:#E4C997;border-bottom-color:#AA8B52}
-.discovery-header .shortlist-nav span{background:#2B4051;color:#E4C997}
+.discovery-header .shortlist-nav span{background:#236DA4;color:#F0D7A5}
 .discovery-header .client-login-link{display:inline-flex;align-items:center;justify-content:center;padding:9px 15px;background:#F6F4EF;color:#172A3A!important;border:1px solid #C8AF7C;border-radius:2px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;text-decoration:none;line-height:1.2;transition:background-color .18s ease,border-color .18s ease}
 .discovery-header .client-login-link:hover{background:#D9C79F;color:#172A3A!important;border-color:#E4C997}
 .hire-lawyer-link{background:#C8AF7C;color:#172A3A!important;border-color:#AA8B52;box-shadow:0 2px 0 #907443}
@@ -102,7 +102,7 @@ body{background:var(--pale-blue);color:#172A3A}
 .poster-initials,.initials{color:#243E52;text-shadow:none}
 .settlement-visual,.news-fact{background:#EAE6DC}
 .gold-button,.nav-cta,.submit-button,.success-state button,.directory-filters button{box-shadow:0 2px 0 #0C1D29,0 5px 12px #172A3A14}
-.discovery-footer{background:#172A3A;color:#F6F4EF;border-top-color:#AA8B52}
+.discovery-footer{background:#175B91;color:#F6F4EF;border-top-color:#AA8B52}
 .discovery-footer p,.discovery-footer small{color:#C1C9CF}.discovery-footer a,.discovery-footer button{color:#DCC69E}
 
 /* Font families from the supplied page; preserve existing sizes and spacing. */
@@ -365,9 +365,9 @@ a,button{font-weight:700}
 }
 /* LawVetter identity: the supplied vector badge replaces the former paired portraits. */
 .nav-shell>.brand{gap:0}
-.lawvetter-brand-logo{display:block;width:clamp(280px,28vw,380px);height:auto}
+.lawvetter-brand-logo{display:block;width:clamp(340px,34vw,480px);height:auto}
 .legal-footer .lawvetter-footer-logo{display:block;width:min(260px,100%);height:auto}
 @media(max-width:700px){
- .lawvetter-brand-logo{width:min(72vw,250px)}
+ .lawvetter-brand-logo{width:min(75vw,290px)}
  .legal-footer .lawvetter-footer-logo{width:min(230px,82vw)}
 }
