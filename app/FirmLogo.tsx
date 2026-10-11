@@ -15,6 +15,5 @@ export default function FirmLogo({name,website}:{name:string;website?:string}){
   <div className="firm-logo-surface">
    {showImage?<img src={'/api/firm-logo?key='+encodeURIComponent(firmKey(name))} alt={name+' logo'} onError={()=>setFailed(true)}/>:<span className="firm-logo-monogram" role="img" aria-label={name+' logo'}>{initials(name)}</span>}
   </div>
-  <span className="firm-logo-caption">{showImage?'Official firm logo':'Firm monogram'}</span>
  </div>;
 }

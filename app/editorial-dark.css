@@ -221,8 +221,7 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
 .firm-logo-surface{display:flex;align-items:center;justify-content:center;width:clamp(230px,38vw,430px);height:104px;max-width:100%;box-sizing:border-box;padding:16px 24px;background:#FFFFFF;border:1px solid #D8D4C9;border-left:4px solid #AA8B52;box-shadow:0 7px 18px #172A3A12;overflow:hidden}
 .firm-logo-surface img{display:block;width:100%;height:100%;object-fit:contain;object-position:left center}
 .firm-logo-monogram{display:grid;place-items:center;width:72px;height:72px;margin-right:auto;border-radius:50%;background:linear-gradient(135deg,#172A3A,#2B4B63);color:#E4C997;font-family:var(--font-jakarta),Arial,sans-serif;font-size:25px;font-weight:800;letter-spacing:1px}
-.firm-logo-caption{max-width:92px;color:#5B6268;font-size:10px;font-weight:700;line-height:1.45;letter-spacing:1.1px;text-transform:uppercase}
-@media(max-width:560px){.firm-logo-block{display:block;width:100%;margin-top:16px}.firm-logo-surface{width:100%;height:92px;padding:14px 18px}.firm-logo-caption{display:block;max-width:none;margin-top:8px}}
+@media(max-width:560px){.firm-logo-block{display:block;width:100%;margin-top:16px}.firm-logo-surface{width:100%;height:92px;padding:14px 18px}}
 
 /* Protect the portrait track at every width so chart photos never cover names. */
 .attorney-chart-table .chart-table-heading{display:grid;grid-template-columns:minmax(0,1fr) minmax(170px,24%) 150px;gap:24px;align-items:center}
