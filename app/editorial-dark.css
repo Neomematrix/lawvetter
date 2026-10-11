@@ -374,8 +374,10 @@ a,button{font-weight:700}
  .popular-attorneys-section .lawyer-card-body{padding:18px 16px 17px}
 }
 @media(max-width:560px){
- .popular-attorneys-section .popular-carousel-grid{grid-template-columns:1fr}
- .popular-attorneys-section .lawyer-card-body{padding:22px 20px 20px}
+ .popular-attorneys-section .popular-carousel-grid{grid-template-columns:1fr;grid-template-rows:none}
+ .popular-attorneys-section .popular-carousel-grid .lawyer-card{display:block;grid-row:auto}
+ .popular-attorneys-section .popular-carousel-grid .lawyer-card-body{display:flex;grid-row:auto;padding:22px 20px 20px}
+ .popular-attorneys-section .lawyer-card h3,.popular-attorneys-section .lawyer-card .card-firm{min-height:0}
 }
 /* LawVetter identity: the supplied vector badge replaces the former paired portraits. */
 .nav-shell>.brand{gap:0}
