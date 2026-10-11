@@ -9,22 +9,10 @@ export default function LandingHero(){
     <a className="landing-secondary-cta" href="#attorney-search">Find an attorney</a>
    </div>
   </div>
-  <div className="landing-hero-visual" aria-label="How LawVetter client reviews work">
-   <article className="landing-proof-card">
-    <div className="landing-proof-body">
-     <p className="landing-proof-eyebrow">Review check</p>
-     <h2>We check the client relationship behind every review.</h2>
-     <ol>
-      <li><span>01</span><div><strong>Case number checked</strong><small>When provided, we compare it with available court-docket records.</small></div></li>
-      <li><span>02</span><div><strong>Client connection reviewed</strong><small>We confirm the reviewer is connected to the legal matter.</small></div></li>
-      <li><span>03</span><div><strong>Review connected</strong><small>The review appears on the attorney&rsquo;s profile.</small></div></li>
-     </ol>
-     <p className="landing-proof-note">
-      Court-record availability varies by court and case. Verification confirms the relationship—not every claim.
-      <a href="https://georgiacourts.gov/eaccess-court-records/" target="_blank" rel="noreferrer">Georgia court-record access ↗</a>
-     </p>
-    </div>
-   </article>
+  <div className="landing-hero-visual">
+   <figure className="landing-hero-photo">
+    <img src="/images/lawvetter-attorney-welcome.jpg" alt="Smiling attorney in a professional office" />
+   </figure>
   </div>
  </section>;
 }
