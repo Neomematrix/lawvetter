@@ -434,6 +434,8 @@ a,button{font-weight:700}
 .landing-proof-card li strong{color:#FFFFFF;font-size:15px;line-height:1.35}
 .landing-proof-card li small{color:#C9D8E2;font-size:12px;font-weight:550;line-height:1.5}
 .landing-proof-note{margin:17px 0 0;padding-top:16px;border-top:1px solid #FFFFFF30;color:#ADC3D1;font-size:10px;font-weight:600;line-height:1.55}
+.landing-proof-note a{display:block;width:max-content;max-width:100%;margin-top:7px;color:#FFFFFF;font-weight:750;text-decoration:underline;text-decoration-color:#FF9B55;text-underline-offset:3px}
+.landing-proof-note a:hover{color:#FFB37D}
 .lawvetter-landing-hero+.discovery-search{background:#FFF9EF;border-bottom:1px solid #E7D9C7;box-shadow:0 8px 22px #17344B0D}
 .lawvetter-landing-hero+.discovery-search form{max-width:1360px;padding:24px 32px;filter:none}
 .lawvetter-landing-hero+.discovery-search .search-submit{background:#155B96;border-color:#0E4778;box-shadow:0 2px 0 #0E365B}
