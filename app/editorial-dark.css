@@ -215,3 +215,37 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
   .discovery-search form{grid-template-columns:minmax(0,1fr);gap:10px}
   .discovery-search .search-kind,.discovery-search .primary-search,.discovery-search .search-city,.discovery-search .search-submit{grid-column:1}
 }
+
+/* Firm identity sits directly beneath the name and stays distinct from contact actions. */
+.firm-logo-block{display:flex;align-items:center;gap:14px;width:fit-content;max-width:100%;margin:20px 0 24px}
+.firm-logo-surface{display:flex;align-items:center;justify-content:center;width:clamp(230px,38vw,430px);height:104px;max-width:100%;box-sizing:border-box;padding:16px 24px;background:#FFFFFF;border:1px solid #D8D4C9;border-left:4px solid #AA8B52;box-shadow:0 7px 18px #172A3A12;overflow:hidden}
+.firm-logo-surface img{display:block;width:100%;height:100%;object-fit:contain;object-position:left center}
+.firm-logo-monogram{display:grid;place-items:center;width:72px;height:72px;margin-right:auto;border-radius:50%;background:linear-gradient(135deg,#172A3A,#2B4B63);color:#E4C997;font-family:var(--font-jakarta),Arial,sans-serif;font-size:25px;font-weight:800;letter-spacing:1px}
+.firm-logo-caption{max-width:92px;color:#5B6268;font-size:10px;font-weight:700;line-height:1.45;letter-spacing:1.1px;text-transform:uppercase}
+@media(max-width:560px){.firm-logo-block{display:block;width:100%;margin-top:16px}.firm-logo-surface{width:100%;height:92px;padding:14px 18px}.firm-logo-caption{display:block;max-width:none;margin-top:8px}}
+
+/* Protect the portrait track at every width so chart photos never cover names. */
+.attorney-chart-table .chart-table-heading{display:grid;grid-template-columns:minmax(0,1fr) minmax(170px,24%) 150px;gap:24px;align-items:center}
+.attorney-chart-table .chart-row{display:grid;grid-template-columns:40px 72px minmax(0,1fr) minmax(170px,24%) 150px;gap:24px;align-items:center}
+.attorney-chart-table .chart-rank{min-width:0}
+.attorney-chart-table .chart-avatar{width:72px;height:86px;min-width:0;box-sizing:border-box;overflow:hidden}
+.attorney-chart-table .chart-avatar img{display:block;width:100%;height:100%;max-width:100%;object-fit:contain}
+.attorney-chart-table .chart-person{min-width:0;overflow-wrap:anywhere}
+.attorney-chart-table .chart-row>.save-attorney{width:100%;margin-left:0;box-sizing:border-box}
+@media(max-width:1050px){
+  .attorney-chart-table .chart-table-heading{grid-template-columns:1fr}
+  .attorney-chart-table .chart-practice-heading,.attorney-chart-table .chart-table-heading>span:last-child{display:none}
+  .attorney-chart-table .chart-row{grid-template-columns:34px 66px minmax(0,1fr) 135px;gap:16px 20px}
+  .attorney-chart-table .chart-avatar{width:66px;height:78px}
+  .attorney-chart-table .chart-person{grid-column:3;grid-row:1}
+  .attorney-chart-table .chart-practice{grid-column:3/-1;grid-row:2}
+  .attorney-chart-table .chart-row>.save-attorney{grid-column:4;grid-row:1;justify-self:stretch}
+  .mobile-practice-label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#5B6268}
+}
+@media(max-width:700px){
+  .attorney-chart-table .chart-row{grid-template-columns:28px 58px minmax(0,1fr);gap:14px;padding:18px 14px}
+  .attorney-chart-table .chart-avatar{grid-column:2;grid-row:1;width:58px;height:70px}
+  .attorney-chart-table .chart-person{grid-column:3;grid-row:1}
+  .attorney-chart-table .chart-practice{grid-column:3;grid-row:2}
+  .attorney-chart-table .chart-row>.save-attorney{grid-column:3;grid-row:3;width:auto;justify-self:start}
+}
