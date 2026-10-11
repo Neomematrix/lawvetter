@@ -1,4 +1,9 @@
 import {SITE_ORIGIN} from '../news/stories';
 import {readNews} from '../news/store';
-export const dynamic='force-dynamic';
-export async function GET(){const {articles}=await readNews();const paths=['/','/hire-lawyer','/news',...articles.map(s=>'/news/'+s.slug)];return new Response('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+paths.map(path=>'<url><loc>'+SITE_ORIGIN+path+'</loc></url>').join('')+'</urlset>',{headers:{'Content-Type':'application/xml; charset=utf-8'}});}
+
+export async function GET(){
+ const {articles}=await readNews();
+ const paths=['/','/hire-lawyer','/add-listing','/news',...articles.map(story=>'/news/'+story.slug)];
+ const xml='<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+paths.map(path=>'<url><loc>'+SITE_ORIGIN+path+'</loc></url>').join('')+'</urlset>';
+ return new Response(xml,{headers:{'Content-Type':'application/xml; charset=utf-8'}});
+}

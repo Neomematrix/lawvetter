@@ -164,3 +164,29 @@ export const clientVerificationRequestEmails=sqliteTable('client_verification_re
  providerId:text('provider_id').notNull().default(''),
  createdAt:text('created_at').notNull(),
 },t=>[index('client_verification_request_emails_verification_idx').on(t.verificationId)]);
+
+export const directorySubmissions=sqliteTable('directory_submissions',{
+ id:text('id').primaryKey(),
+ kind:text('kind').notNull(),
+ name:text('name').notNull(),
+ firmName:text('firm_name').notNull().default(''),
+ state:text('state').notNull(),
+ barNumber:text('bar_number').notNull().default(''),
+ city:text('city').notNull().default(''),
+ website:text('website').notNull().default(''),
+ officialSourceUrl:text('official_source_url').notNull(),
+ submitterName:text('submitter_name').notNull(),
+ submitterEmail:text('submitter_email').notNull(),
+ notes:text('notes').notNull().default(''),
+ verificationStatus:text('verification_status').notNull().default('manual_official_check_required'),
+ verificationNote:text('verification_note').notNull().default(''),
+ status:text('status').notNull().default('pending'),
+ reviewNote:text('review_note').notNull().default(''),
+ submittedAt:text('submitted_at').notNull(),
+ reviewedAt:text('reviewed_at'),
+ reviewedBy:text('reviewed_by'),
+},t=>[
+ index('directory_submissions_status_idx').on(t.status,t.submittedAt),
+ index('directory_submissions_submitter_idx').on(t.submitterEmail,t.submittedAt),
+ index('directory_submissions_identity_idx').on(t.kind,t.state,t.barNumber,t.name),
+]);

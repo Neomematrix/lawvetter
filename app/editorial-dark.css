@@ -294,7 +294,7 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
 }
 
 /* Account tools use a true grid so controls never collide as the viewport narrows. */
-.account-admin-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:20px 0 28px}
+.account-admin-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin:20px 0 28px}
 .account-admin-actions .outline-button{display:flex;align-items:center;justify-content:center;min-width:0;min-height:50px;padding:11px 13px;text-align:center;text-decoration:none;line-height:1.3}
 .account-page>.chart-empty{margin-top:24px}
 .account-page>.chart-empty h2{font-size:clamp(27px,4vw,38px);line-height:1.15;margin-bottom:12px}
@@ -317,4 +317,47 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
  .legal-disclaimer{padding-top:18px;margin-bottom:16px}
  .legal-disclaimer p{font-size:11px;line-height:1.65;margin-bottom:9px}
  .legal-footer small{font-size:10px}
+}
+
+/* Stronger typography keeps directory records readable at every screen size. */
+body{font-size:17px;font-weight:500}
+p,li,dd,address,label,input,select,textarea{font-weight:500}
+a,button{font-weight:700}
+.section-description,.record-note,.card-firm,.card-city,.lawyer-card .search-count,.card-details,.directory-status,.firm-result-card p,.chart-person p,.chart-person p>span,.practice-source{font-size:14px;font-weight:600;line-height:1.55}
+.lawyer-card h3,.firm-rank-card h3,.chart-person,.chart-person>button{font-weight:750}
+.legal-disclaimer p{font-weight:500}
+
+/* Missing-record actions stay visible beside search results. */
+.directory-grow-actions{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:10px}
+.directory-grow-actions .outline-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;text-decoration:none;white-space:nowrap}
+.directory-grow-actions .text-action{padding:10px 4px;margin-left:4px}
+
+/* Nationwide lawyer and firm suggestions are held for verified owner review. */
+.add-listing-page{max-width:980px}
+.add-listing-page h1{max-width:780px}
+.add-listing-intro{max-width:780px;color:#4A545D;font-size:18px;line-height:1.75}
+.listing-intake{margin-top:30px}
+.listing-kind-tabs{display:grid;grid-template-columns:1fr 1fr;max-width:560px;border:1px solid #C9C2B4;background:#FFFFFF}
+.listing-kind-tabs button{min-height:54px;padding:12px 18px;background:transparent;color:#172A3A}
+.listing-kind-tabs button[aria-selected=true]{background:#243E52;color:#FFFFFF}
+.verification-explainer{margin:22px 0;padding:22px 24px;border-left:4px solid #AA8B52;background:#FFFFFF;box-shadow:0 8px 20px #172A3A0D}
+.verification-explainer strong{font-size:18px}.verification-explainer p{line-height:1.65;margin:8px 0}.verification-explainer span{color:#5B6268;font-size:13px;font-weight:700}
+.listing-form{display:grid;gap:20px;padding:30px;background:#FFFFFF;border:1px solid #D8D4C9;box-shadow:var(--depth-shadow)}
+.listing-form label{font-size:14px;color:#172A3A}.listing-form label>span{color:#5B6268;font-weight:500}
+.listing-form input,.listing-form select,.listing-form textarea{font-size:16px;padding:13px 14px}
+.listing-form small{display:block;margin-top:7px;color:#5B6268;font-size:12px;line-height:1.5}
+.listing-form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.listing-form .gold-button{justify-self:start;min-width:260px}
+.submission-honeypot{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+.directory-submission-card .source-check{padding:14px 16px;background:#ECE9E1;border-left:3px solid #AA8B52;line-height:1.55}
+.directory-submission-card .source-check.registry_match{border-left-color:#2E7D4F;background:#E7F2EB}
+.directory-submission-card>.outline-button{display:inline-flex;margin:14px 0;text-decoration:none}
+@media(max-width:700px){
+ .directory-grow-actions{width:100%;justify-content:flex-start}
+ .directory-grow-actions .outline-button{flex:1 1 145px}
+ .directory-grow-actions .text-action{flex-basis:100%;margin:0;text-align:left}
+ .listing-form{padding:22px 18px}.listing-form-row{grid-template-columns:1fr}.listing-form .gold-button{width:100%;min-width:0}
+}
+@media(max-width:460px){
+ body{font-size:16px}.listing-kind-tabs{grid-template-columns:1fr}.add-listing-intro{font-size:16px}
 }
