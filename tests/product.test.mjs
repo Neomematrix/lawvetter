@@ -82,7 +82,7 @@ test('Client passwords, persistent sessions, ownership, review approval and logo
  const x=await runtime();x.seed('100001','Fictional Attorney');
  const auth=await x.load('app/api/client-auth/route.ts'),reviews=await x.load('app/api/client-reviews/route.ts');
  const password='fictional test password only';
- const account={action:'register',firstName:'Test',lastName:'Client',email:'test@example.test',docket:'PRIVATE-CASE-42',password,consent:true};
+ const account={action:'register',firstName:'Test',lastName:'Client',email:'test@example.test',password,consent:true};
  const req=(data,cookie='',user='',email='')=>new Request('https://counsel.test/api/client-auth',{method:'POST',headers:{Origin:'https://counsel.test','Content-Type':'application/json',Cookie:cookie,'oai-authenticated-user-id':user,'oai-authenticated-user-email':email},body:JSON.stringify(data)});
  const cookie=r=>r.headers.get('set-cookie').split(';')[0];
  assert.equal((await auth.POST(req({...account,password:'short'}))).status,400);
@@ -146,4 +146,18 @@ test('Approval email is private, queued without configuration, idempotent and bl
  assert.equal(await email.sendApprovalEmail('request'),'accepted');assert.equal(calls.length,1);
  x.sql.prepare("UPDATE client_approval_emails SET status='pending',first_attempt=?").run(Date.now()-24*3600000);assert.equal(await email.sendApprovalEmail('request'),'check-provider');assert.equal(calls.length,1);
  x.sql.prepare("UPDATE client_verifications SET status='revoked'").run();assert.equal(await email.sendApprovalEmail('request'),'not-queued');assert.equal(calls.length,1);
+});
+test('New verification requests notify the owner without exposing private client data',async()=>{
+ const calls=[];const x=await runtime({fetch:async(url,init)=>{calls.push({url,init});return Response.json({id:'owner-alert-provider-id'});}});x.seed('100001','Test Attorney');
+ x.env.RESEND_API_KEY='fictional-test-key';x.env.APPROVAL_EMAIL_FROM='CounselCheck <test@example.test>';
+ const auth=await x.load('app/api/client-auth/route.ts'),reviews=await x.load('app/api/client-reviews/route.ts');
+ const account={action:'register',firstName:'Alert',lastName:'Client',email:'alert-client@example.test',password:'fictional alert password',consent:true},docket='PRIVATE-ALERT-DOCKET';
+ const req=(data,cookie='',user='',email='')=>new Request('https://counsel.test/api/client-reviews',{method:'POST',headers:{Origin:'https://counsel.test','Content-Type':'application/json',Cookie:cookie,'oai-authenticated-user-id':user,'oai-authenticated-user-email':email},body:JSON.stringify(data)});
+ const registered=await auth.POST(req(account));const session=registered.headers.get('set-cookie').split(';')[0];
+ const response=await reviews.POST(req({action:'request',bar:'100001',docket,attestation:true},session));assert.equal(response.status,200);assert.equal((await response.json()).notificationEmailStatus,'accepted');
+ assert.equal(calls.length,1);const payload=JSON.parse(calls[0].init.body);assert.equal(payload.to[0],'admin@example.test');assert.ok(payload.text.includes('/admin/client-reviews'));
+ for(const privateValue of [account.firstName,account.lastName,account.email,docket])assert.ok(!calls[0].init.body.includes(privateValue));
+ const queued=x.sql.prepare('SELECT id,status,recipient FROM client_verification_request_emails').get();assert.equal(queued.status,'accepted');assert.equal(queued.recipient,'admin@example.test');assert.equal(calls[0].init.headers['Idempotency-Key'],queued.id);
+ assert.equal((await reviews.POST(req({action:'request',bar:'100001',docket,attestation:true},session))).status,409);assert.equal(calls.length,1);
+ const owner=await(await reviews.POST(req({action:'admin-list'},'','owner','admin@example.test'))).json();assert.equal(owner.requests[0].notification_email_status,'accepted');assert.equal(owner.ownerNotificationConfigured,true);
 });

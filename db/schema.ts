@@ -154,3 +154,13 @@ export const clientApprovalEmails=sqliteTable('client_approval_emails',{
  firstAttempt:integer('first_attempt'),
  providerId:text('provider_id').notNull().default(''),
 });
+export const clientVerificationRequestEmails=sqliteTable('client_verification_request_emails',{
+ id:text('id').primaryKey(),
+ verificationId:text('verification_id').notNull().references(()=>clientVerifications.id),
+ recipient:text('recipient').notNull(),
+ status:text('status').notNull().default('pending'),
+ payload:text('payload').notNull().default(''),
+ firstAttempt:integer('first_attempt'),
+ providerId:text('provider_id').notNull().default(''),
+ createdAt:text('created_at').notNull(),
+},t=>[index('client_verification_request_emails_verification_idx').on(t.verificationId)]);

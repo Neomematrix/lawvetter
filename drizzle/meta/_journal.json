@@ -71,6 +71,13 @@
       "when": 1791552485981,
       "tag": "0009_next_mikhail_rasputin",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "6",
+      "when": 1791685439026,
+      "tag": "0010_careful_owner_alert",
+      "breakpoints": true
     }
   ]
 }

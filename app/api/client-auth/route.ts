@@ -35,11 +35,11 @@ export async function POST(request:Request){try{
   await db.prepare('INSERT OR IGNORE INTO client_account_emails(email,user_id) VALUES(?,?)').bind(platform.email,platform.user).run();
   return json({saved:true},200,sessionCookie(await newSession(platform.user)));
  }
- const first=str(d.firstName),last=str(d.lastName),docket=str(d.docket);
- if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||email.length>254||!first||first.length>75||!last||last.length>75||docket.length<3||docket.length>100||d.consent!==true)return json({error:'Enter your first name, last name, email and case number, and agree to private verification.'},400);
+ const first=str(d.firstName),last=str(d.lastName);
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||email.length>254||!first||first.length>75||!last||last.length>75||d.consent!==true)return json({error:'Enter your first name, last name and email, and agree to private account storage.'},400);
  const existing=await db.prepare('SELECT user_id FROM client_profiles WHERE lower(trim(email))=?').bind(email).first();if(existing)return json({error:'Unable to register this email. Log in, or use your original ChatGPT account to set a password for an existing profile.'},409);
  // Never attach a new password account to an existing identity based only on typed email.
  const user='client:'+crypto.randomUUID();
- try{await db.batch([db.prepare('INSERT INTO client_profiles(user_id,legal_name,email,created_at,first_name,last_name,initial_docket) VALUES(?,?,?,?,?,?,?)').bind(user,first+' '+last,email,now,first,last,docket),db.prepare('INSERT INTO client_account_emails(email,user_id) VALUES(?,?)').bind(email,user),db.prepare('INSERT INTO client_passwords(user_id,password_hash,updated_at) VALUES(?,?,?)').bind(user,hashPassword(password),now)]);}catch{return json({error:'Unable to register this email. Try logging in.'},409);}
+ try{await db.batch([db.prepare('INSERT INTO client_profiles(user_id,legal_name,email,created_at,first_name,last_name,initial_docket) VALUES(?,?,?,?,?,?,?)').bind(user,first+' '+last,email,now,first,last,''),db.prepare('INSERT INTO client_account_emails(email,user_id) VALUES(?,?)').bind(email,user),db.prepare('INSERT INTO client_passwords(user_id,password_hash,updated_at) VALUES(?,?,?)').bind(user,hashPassword(password),now)]);}catch{return json({error:'Unable to register this email. Try logging in.'},409);}
  return json({saved:true},201,sessionCookie(await newSession(user)));
  }catch{return json({error:'Account service is temporarily unavailable. Please try again.'},503);}}
