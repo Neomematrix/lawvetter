@@ -1,0 +1,14 @@
+{
+  "checked": "2026-10-10T22:12:07.297Z",
+  "recordsReviewed": 52323,
+  "firmNameMappings": 4145,
+  "distinctFirmWebsites": 3570,
+  "attorneysWithWebsite": 14422,
+  "firmLinkedInMappings": 919,
+  "distinctFirmLinkedIn": 736,
+  "attorneyLinkedInProfiles": 14,
+  "withoutPublishedAffiliation": 25026,
+  "completeWebsiteVerification": false,
+  "completeLinkedInVerification": false,
+  "attorneysWithoutVerifiedWebsite": 37901
+}

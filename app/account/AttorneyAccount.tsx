@@ -1,0 +1,61 @@
+'use client';
+import SiteHeader from '../SiteHeader';
+import {practiceAreas} from '../practice-areas';
+import {FormEvent,useEffect,useState} from 'react';
+import {profileRequest} from '../profile-request';
+import type {PublicProfile} from '../ClaimProfile';
+
+type Owned=PublicProfile&{name:string;company:string};
+type Account={profiles:Owned[];claims:{bar_number:string;status:string;review_note:string;name:string}[];isAdmin:boolean};
+
+export default function AttorneyAccount(){
+ const [data,setData]=useState<Account|null>(null),[error,setError]=useState(''),[selected,setSelected]=useState<Owned|null>(null),[busy,setBusy]=useState(false),[message,setMessage]=useState('');
+ async function load(){
+  try{
+   const x=await profileRequest<Account>({action:'account'});
+   setData(x);setError('');
+   const bar=new URLSearchParams(window.location.search).get('bar');
+   setSelected(x.profiles.find(p=>p.bar_number===bar)||x.profiles[0]||null);
+  }catch(e){setError(e instanceof Error?e.message:'Unable to load your account.');}
+ }
+ useEffect(()=>{load();},[]);
+ async function save(e:FormEvent){
+  e.preventDefault();if(!selected)return;setBusy(true);setMessage('');setError('');
+  try{await profileRequest({action:'save',bar:selected.bar_number,headline:selected.headline,bio:selected.bio,practiceAreas:selected.practice_areas,website:selected.website});setMessage('Profile details saved.');}
+  catch(e){setError(e instanceof Error?e.message:'Unable to save.');}finally{setBusy(false);}
+ }
+ async function photo(file:File|undefined){
+  if(!file||!selected)return;setBusy(true);setError('');setMessage('');
+  try{
+   if(!['image/jpeg','image/png'].includes(file.type)||file.size>3*1024*1024)throw new Error('Choose a JPEG or PNG photo smaller than 3 MB.');
+   const form=new FormData();form.set('bar',selected.bar_number);form.set('photo',file);
+   const r=await fetch('/api/profile-photo',{method:'POST',credentials:'include',body:form});
+   const x=await r.json() as {error?:string;photoUrl:string};if(!r.ok)throw new Error(x.error||'Unable to upload your photo.');
+   setSelected(current=>current&&current.bar_number===selected.bar_number?{...current,photo_key:new URL(x.photoUrl,window.location.origin).searchParams.get('v')||''}:current);
+   setMessage('Profile photo uploaded.');
+  }catch(e){setError(e instanceof Error?e.message:'Unable to upload.');}finally{setBusy(false);}
+ }
+ return <main><SiteHeader/><div className="page-shell account-page">
+  <p className="section-kicker">FOR ATTORNEYS · FREE PROFILE MANAGEMENT</p><h1>Your attorney account</h1>
+  {error&&<div className="directory-error" role="alert">{error} {!data&&<a href="/signin-with-chatgpt?return_to=%2Faccount" target="_top">Sign in</a>} <button onClick={load}>Try again</button></div>}
+  {message&&<p className="success-message" role="status">{message}</p>}{!data&&!error&&<p role="status">Loading your account…</p>}
+  {data&&<>{data.isAdmin&&<nav className="account-admin-actions" aria-label="Account administration">
+   <a className="outline-button" href="/admin/client-reviews">Verify client reviews</a><a className="outline-button" href="/admin/claims">Review profile claims</a><a className="outline-button" href="/admin/directory-submissions">Directory submissions</a><a className="outline-button" href="/admin/leads">Client leads</a><a className="outline-button" href="/admin/searches">Search analytics</a>
+  </nav>}
+  {data.profiles.length>1&&<label>Choose a profile<select value={selected?.bar_number} onChange={e=>setSelected(data.profiles.find(p=>p.bar_number===e.target.value)||null)}>{data.profiles.map(p=><option key={p.bar_number} value={p.bar_number}>{p.name}</option>)}</select></label>}
+  {data.profiles.length>0&&<p><a className="outline-button" href="/account/analytics">My profile analytics</a></p>}
+  {selected?<section className="profile-editor">
+   <div className="editor-heading"><div><h2>{selected.name} <img className="claimed-badge" src="/claimed-badge.png" alt="Claimed profile"/></h2><p>GA #{selected.bar_number} · {selected.company}</p><a href={'/attorney?bar='+selected.bar_number}>View your public profile</a></div></div>
+   <div className="photo-editor">{selected.photo_key?<img src={'/api/profile-photo?bar='+selected.bar_number+'&v='+encodeURIComponent(selected.photo_key)} alt="Your profile photo"/>:<div className="photo-placeholder">Your photo</div>}<label>Add or replace your profile photo<input type="file" accept="image/jpeg,image/png" disabled={busy} onChange={e=>photo(e.target.files?.[0])}/><small>JPEG or PNG · maximum 3 MB · use a photo you have permission to publish.</small></label></div>
+   <form onSubmit={save}>
+    <label>Professional headline<input maxLength={160} value={selected.headline} onChange={e=>setSelected({...selected,headline:e.target.value})} placeholder="A short introduction to your practice"/></label>
+    <label>About you<textarea rows={7} maxLength={5000} value={selected.bio} onChange={e=>setSelected({...selected,bio:e.target.value})} placeholder="Describe your experience and approach"/></label>
+    <fieldset className="practice-choices"><legend>Practice areas for discovery</legend><p>Select the areas you practice so people can find your profile.</p>{practiceAreas.map(area=>{const values=selected.practice_areas.split(',').map(v=>v.trim()).filter(Boolean),checked=values.some(v=>v.toLowerCase()===area.name.toLowerCase());return <label key={area.id}><input type="checkbox" checked={checked} onChange={()=>setSelected({...selected,practice_areas:(checked?values.filter(v=>v.toLowerCase()!==area.name.toLowerCase()):[...values,area.name]).join(', ')})}/>{area.name}</label>;})}</fieldset>
+    <label>Practice areas and other specialties (comma separated)<input maxLength={500} value={selected.practice_areas} onChange={e=>setSelected({...selected,practice_areas:e.target.value})} placeholder="For example: Family law, mediation"/></label>
+    <label>Professional website<input type="url" maxLength={500} value={selected.website} onChange={e=>setSelected({...selected,website:e.target.value})} placeholder="https://yourfirm.com"/></label>
+    <p className="record-note">Your State Bar name, bar number, membership status, and other imported records are maintained separately.</p><button className="gold-button" disabled={busy}>{busy?'Saving…':'Save profile details'}</button>
+   </form>
+  </section>:<div className="chart-empty"><div><h2>Make your profile your own.</h2><p>Search for your attorney record and choose “Claim this profile” to request free editing access.</p><a className="gold-button" href="/">Find your profile</a></div></div>}
+  {data.claims.length>0&&<section className="account-claims"><h2>Your claims</h2>{data.claims.map(c=><article key={c.bar_number}><h3><a href={'/attorney?bar='+c.bar_number}>{c.name}</a></h3><p className="claim-status">{c.status}</p>{c.review_note&&<p>{c.review_note}</p>}</article>)}</section>}</>}
+ </div></main>;
+}

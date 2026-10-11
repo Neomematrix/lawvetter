@@ -1,0 +1,52 @@
+{
+  "checkedAt": "2026-10-09T14:05:10.914622+00:00",
+  "scope": "All State Bar directory records with state=GA; includes inactive statuses.",
+  "sourceTotal": 52321,
+  "sourceUnique": 52321,
+  "previousUnique": 52304,
+  "missingBefore": [
+    "127697",
+    "158008",
+    "277155",
+    "278075",
+    "293734",
+    "298439",
+    "315135",
+    "406401",
+    "463028",
+    "517822",
+    "537159",
+    "545559",
+    "579011",
+    "582029",
+    "583733",
+    "609999",
+    "647894",
+    "656660",
+    "874819"
+  ],
+  "updatedOrAdded": 47,
+  "absentFromCurrentGeorgiaFilter": [
+    "16453P",
+    "71884P"
+  ],
+  "mergedUnique": 52323,
+  "kessler": {
+    "id": "B2F7B6241CC0FEF97B7CDB2D147ED4BC",
+    "barNumber": "004170",
+    "city": "Atlanta",
+    "state": "GA",
+    "county": "Fulton",
+    "status": "Active Member in Good Standing",
+    "admitDate": "1988-06-06T00:00:00",
+    "lawSchool": "Emory University",
+    "name": "Randall Mark Kessler",
+    "company": "Kessler & Solomiany LLC",
+    "address": "101 Marietta Street Suite 3500",
+    "zip": "30303",
+    "phone": "(404) 688-0099",
+    "email": "rkessler@ksfamilylaw.com",
+    "sourceUrl": "https://www.gabar.org/member-directory/?id=B2F7B6241CC0FEF97B7CDB2D147ED4BC",
+    "importedAt": "2026-10-08T20:16:45.404813+00:00"
+  }
+}

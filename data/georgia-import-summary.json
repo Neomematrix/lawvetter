@@ -1,0 +1,39 @@
+{
+  "source": "https://www.gabar.org/member-directory/?state=GA",
+  "directoryRows": 52321,
+  "attorneys": 52323,
+  "statuses": {
+    "Active Member in Good Standing": 35084,
+    "Resigned Membership": 554,
+    "Deceased": 8261,
+    "Inactive Member in Good Standing": 2660,
+    "Emeritus": 3463,
+    "Unpaid License Fees - Ineligible to Practice": 310,
+    "Provisional Membership Expired": 111,
+    "Terminated - Nonpayment of License Fees": 778,
+    "Resigned License Fees Deficient": 92,
+    "CLE and Administrative Suspensions": 20,
+    "Disbarment": 662,
+    "Resigned CLE/License Fees Deficient": 4,
+    "Administrative Suspension - License Fees": 161,
+    "CLE Suspension and Unpaid License Fees": 26,
+    "Provisional Member": 20,
+    "CLE and Administrative Suspensions'": 18,
+    "CLE Suspension - Non-compliance": 29,
+    "Foreign Law Consultant - Uncertified": 4,
+    "Retired": 24,
+    "OGC Suspensions": 13,
+    "OGC and CLE Suspensions": 1,
+    "Resigned CLE Deficient": 2,
+    "OGC and CLE Suspensions and Unpaid Fees": 2,
+    "Suspension-OGC and Administrative": 10,
+    "Foreign Law Consultant": 12,
+    "OGC Suspension and Unpaid License Fees": 1,
+    "Suspension-Nonpayment of Child Support": 1
+  },
+  "completedAt": "2026-10-09T14:05:10.914622+00:00",
+  "retainedHistoricalRecords": [
+    "16453P",
+    "71884P"
+  ]
+}

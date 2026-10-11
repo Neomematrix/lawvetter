@@ -1,0 +1,64 @@
+{
+  "restoreCommand": "node scripts/restore-large-data.mjs",
+  "datasets": [
+    {
+      "path": "data/firm-web-search-audit.json",
+      "bytes": 12892031,
+      "gitBlobSha": "5a3c1263e5c24d918a43c6313b5f353b4f698cf4",
+      "parts": [
+        "data_firm-web-search-audit_json.part001",
+        "data_firm-web-search-audit_json.part002",
+        "data_firm-web-search-audit_json.part003",
+        "data_firm-web-search-audit_json.part004",
+        "data_firm-web-search-audit_json.part005",
+        "data_firm-web-search-audit_json.part006",
+        "data_firm-web-search-audit_json.part007",
+        "data_firm-web-search-audit_json.part008"
+      ]
+    },
+    {
+      "path": "data/firm-website-audit.json",
+      "bytes": 3043136,
+      "gitBlobSha": "6588b09887ccd01069a5f4460b5165a596a3e94f",
+      "parts": [
+        "data_firm-website-audit_json.part001",
+        "data_firm-website-audit_json.part002"
+      ]
+    },
+    {
+      "path": "data/georgia-attorneys.jsonl",
+      "bytes": 28014201,
+      "gitBlobSha": "99e4ab98830bbfff84a56e8ca09c9282788aefeb",
+      "parts": [
+        "data_georgia-attorneys_jsonl.part001",
+        "data_georgia-attorneys_jsonl.part002",
+        "data_georgia-attorneys_jsonl.part003",
+        "data_georgia-attorneys_jsonl.part004",
+        "data_georgia-attorneys_jsonl.part005",
+        "data_georgia-attorneys_jsonl.part006",
+        "data_georgia-attorneys_jsonl.part007",
+        "data_georgia-attorneys_jsonl.part008",
+        "data_georgia-attorneys_jsonl.part009",
+        "data_georgia-attorneys_jsonl.part010",
+        "data_georgia-attorneys_jsonl.part011",
+        "data_georgia-attorneys_jsonl.part012",
+        "data_georgia-attorneys_jsonl.part013",
+        "data_georgia-attorneys_jsonl.part014",
+        "data_georgia-attorneys_jsonl.part015",
+        "data_georgia-attorneys_jsonl.part016",
+        "data_georgia-attorneys_jsonl.part017",
+        "data_georgia-attorneys_jsonl.part018",
+        "data_georgia-attorneys_jsonl.part019",
+        "data_georgia-attorneys_jsonl.part020"
+      ]
+    },
+    {
+      "path": "data/verified-firm-websites.json",
+      "bytes": 1863281,
+      "gitBlobSha": "98b61418eb55f53c31a5b5ace765ba421f4ac575",
+      "parts": [
+        "data_verified-firm-websites_json.part001"
+      ]
+    }
+  ]
+}

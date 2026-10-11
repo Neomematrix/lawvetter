@@ -1,0 +1,163 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {DatabaseSync} from 'node:sqlite';
+import fs from 'node:fs';
+import path from 'node:path';
+import vm from 'node:vm';
+import ts from 'typescript';
+import * as nodeCrypto from 'node:crypto';
+const {webcrypto}=nodeCrypto;
+const root=path.resolve('.');
+function database(){const sql=new DatabaseSync(':memory:');sql.exec('PRAGMA foreign_keys=ON');for(const file of fs.readdirSync('drizzle').filter(f=>f.endsWith('.sql')).sort())sql.exec(fs.readFileSync('drizzle/'+file,'utf8'));const db={prepare(text){let args=[];return {bind(...values){args=values;return this},async first(){return sql.prepare(text).get(...args)||null},async all(){return {results:sql.prepare(text).all(...args)}},async run(){const x=sql.prepare(text).run(...args);return {meta:{changes:Number(x.changes)}}}}},async batch(statements){sql.exec('BEGIN');try{const results=[];for(const s of statements)results.push(await s.run());sql.exec('COMMIT');return results;}catch(e){sql.exec('ROLLBACK');throw e;}}};return {sql,db};}
+async function runtime(options={}){const {sql,db}=database(),files=new Map();const env={DB:db,CLAIM_ADMIN_EMAIL:'admin@example.test',PROFILE_PHOTOS:{async put(key,buffer,metadata){files.set(key,{body:buffer,...metadata});},async get(key){return files.get(key)},async delete(key){files.delete(key)}}};const context=vm.createContext({console,Request,Response,URL,File,FormData,Uint8Array,Buffer,Date,Intl,crypto:webcrypto,AbortSignal,fetch:options.fetch});const cache=new Map();async function module(file){if(cache.has(file))return cache.get(file);if(file==='node:crypto'){const m=new vm.SyntheticModule(Object.keys(nodeCrypto),function(){for(const [k,v] of Object.entries(nodeCrypto))this.setExport(k,v)},{context});cache.set(file,m);await m.link(()=>{});return m;}if(file==='cloudflare:workers'){const m=new vm.SyntheticModule(['env'],function(){this.setExport('env',env)},{context});cache.set(file,m);await m.link(()=>{});return m;}const text=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;const m=new vm.SourceTextModule(text,{context,identifier:file});cache.set(file,m);await m.link(async(spec,parent)=>module((spec==='cloudflare:workers'||spec==='node:crypto')?spec:path.resolve(path.dirname(parent.identifier),spec)+'.ts'));return m;}async function load(file){const m=await module(path.join(root,file));await m.evaluate();return m.namespace;}function seed(bar,name,company='Example Legal LLC',status='Active Member in Good Standing'){sql.prepare('INSERT INTO attorneys(bar_number,source_id,name,company,city,status,source_url,imported_at) VALUES(?,?,?,?,?,?,?,?)').run(bar,bar,name,company,'Atlanta',status,'https://example.test/record','2026-10-08T00:00:00Z');}return {sql,db,load,seed,files,env};}
+function request(data,user='attorney-a',email='a@example.test'){const headers={'Content-Type':'application/json',Origin:'https://counsel.test'};if(user){headers['oai-authenticated-user-id']=user;headers['oai-authenticated-user-email']=email;}return new Request('https://counsel.test/api/profiles',{method:'POST',headers,body:JSON.stringify(data)});}
+test('Directory initials find full middle names without breaking word boundaries or practice filters',async()=>{
+ const x=await runtime();x.seed('004170','Randall Mark Kessler','Kessler & Solomiany LLC');x.seed('100001','Randall Michael Other');x.seed('100002','United Smith');
+ const api=await x.load('app/api/attorneys/route.ts');
+ for(const q of ['Randall M. Kessler','Randall Kessler','Randy Kessler','R. M. Kessler','004170']){
+  const r=await(await api.POST(request({q,statusGroup:'active'}))).json();assert.equal(r.total,1,q);assert.equal(r.attorneys[0].bar_number,'004170',q);
+ }
+ assert.equal((await(await api.POST(request({q:'Ted'}))).json()).total,0);
+ const family=await(await api.POST(request({q:'Randall M. Kessler',practice:'family-law',statusGroup:'active'}))).json();assert.equal(family.attorneys[0].bar_number,'004170');
+ const firms=await x.load('app/firm-websites.ts');const keys=await x.load('app/api/attorneys/firm.ts');
+ assert.equal(firms.websitesByFirm[keys.firmKey('Smith, Gambrell & Russell LLP')],'https://www.sgrlaw.com/');
+ assert.equal(firms.websitesByFirm[keys.firmKey('Kessler &  Solomiany, LLC')],'https://www.ksfamilylaw.com/');
+ assert.equal(firms.attorneyLinkedIn['004170'],'https://www.linkedin.com/in/randallkessler/');
+ for(const url of [...Object.values(firms.websitesByFirm),...Object.values(firms.linkedInByFirm),...Object.values(firms.attorneyLinkedIn)]){const parsed=new URL(url);assert.equal(parsed.protocol,'https:');assert.equal(parsed.username,'');assert.equal(parsed.password,'');}
+});
+test('Directory reconciliation requires its secret and preserves claimed profiles and search history',async()=>{
+ const x=await runtime();x.seed('004170','Old Name','Old Company');x.env.ATTORNEY_IMPORT_KEY='test-import-key';
+ x.sql.prepare('INSERT INTO attorney_profiles(bar_number,owner_id,claimed_at,updated_at) VALUES(?,?,?,?)').run('004170','owner','2026-10-08','2026-10-08');
+ x.sql.prepare('INSERT INTO attorney_search_events VALUES(?,?,?)').run('old-event','004170',new Date().toISOString());
+ const api=await x.load('app/api/admin/import/route.ts');assert.equal((await api.GET(request({}))).status,401);assert.equal((await api.POST(request([]))).status,401);
+ const row={barNumber:'004170',id:'ABC123',name:'Randall Mark Kessler',company:'Kessler & Solomiany LLC',city:'Atlanta',state:'GA',county:'Fulton',status:'Active Member in Good Standing',admitDate:'1988-06-06',lawSchool:'Emory University',address:'',zip:'',phone:'',email:'',sourceUrl:'https://www.gabar.org/member-directory/?id=ABC123',importedAt:'2026-10-09'};
+ const req=()=>new Request('https://counsel.test/api/admin/import',{method:'POST',headers:{Authorization:'Bearer test-import-key','Content-Type':'application/json'},body:JSON.stringify([row])});
+ assert.equal((await api.POST(req())).status,200);assert.equal((await api.POST(req())).status,200);
+ assert.equal(x.sql.prepare('SELECT count(*) n FROM attorneys').get().n,1);assert.equal(x.sql.prepare('SELECT name FROM attorneys').get().name,row.name);
+ assert.equal(x.sql.prepare('SELECT owner_id FROM attorney_profiles').get().owner_id,'owner');assert.equal(x.sql.prepare('SELECT count(*) n FROM attorney_search_events').get().n,1);
+ assert.equal((await(await api.GET(req())).json()).bars[0],'004170');
+});
+test('Claim approval, ownership isolation, durable profile edits and private shortlists',async()=>{const x=await runtime();x.seed('100001','Fictional Attorney A');x.seed('100002','Fictional Attorney B');const profiles=await x.load('app/api/profiles/route.ts');
+ assert.equal((await profiles.POST(request({action:'claim'},''))).status,401);
+ assert.equal((await profiles.POST(request({action:'claim',bar:'100001',fullName:'Fictional Attorney A',verification:'Official firm profile is available for independent verification.',attestation:true}))).status,200);
+ let state=await (await profiles.POST(request({action:'view',bar:'100001'}))).json();assert.equal(state.profile,null);assert.equal(state.claim.status,'pending');
+ const id=JSON.stringify(['attorney-a','100001']);
+ assert.equal((await profiles.POST(request({action:'review',id,decision:'approve',verified:true},'attorney-b','b@example.test'))).status,403);
+ assert.equal((await profiles.POST(request({action:'review',id,decision:'approve'},'site-owner','admin@example.test'))).status,400);
+ assert.equal((await profiles.POST(request({action:'review',id,decision:'approve',verified:true},'site-owner','admin@example.test'))).status,200);
+ state=await (await profiles.POST(request({action:'view',bar:'100001'}))).json();assert.ok(state.profile);assert.equal(state.isOwner,true);
+ const edit={action:'save',bar:'100001',headline:'Fictional headline',bio:'Saved bio',practiceAreas:'Mediation',website:'https://example.test'};
+ assert.equal((await profiles.POST(request(edit,'attorney-b','b@example.test'))).status,403);assert.equal((await profiles.POST(request(edit))).status,200);
+ assert.equal((await (await profiles.POST(request({action:'view',bar:'100001'}))).json()).profile.bio,'Saved bio');
+ assert.equal((await profiles.POST(request({...edit,website:'javascript:alert(1)'}))).status,400);
+ const shortlist=await x.load('app/api/shortlist/route.ts');assert.equal((await shortlist.POST(request({action:'list'},''))).status,401);
+ await shortlist.POST(request({action:'save',bar:'100001'}));await shortlist.POST(request({action:'save',bar:'100001'}));
+ assert.equal((await (await shortlist.POST(request({action:'list'}))).json()).attorneys.length,1);
+ assert.equal((await (await shortlist.POST(request({action:'list'},'attorney-b','b@example.test'))).json()).attorneys.length,0);
+ await shortlist.POST(request({action:'remove',bar:'100001'},'attorney-b','b@example.test'));assert.equal((await (await shortlist.POST(request({action:'list'}))).json()).attorneys.length,1);
+ assert.equal(x.sql.prepare('SELECT count(*) AS n FROM attorneys').get().n,2);
+ const photos=await x.load('app/api/profile-photo/route.ts');const form=new FormData();form.set('bar','100001');form.set('photo',new File([fs.readFileSync('public/claimed-badge.png')],'test.png',{type:'image/png'}));
+ const photoReq=(user)=>new Request('https://counsel.test/api/profile-photo',{method:'POST',headers:{'oai-authenticated-user-id':user,Origin:'https://counsel.test'},body:form});
+ assert.equal((await photos.POST(photoReq('attorney-b'))).status,403);assert.equal((await photos.POST(photoReq('attorney-a'))).status,200);
+ const downloaded=await photos.GET(new Request('https://counsel.test/api/profile-photo?bar=100001'));assert.equal(downloaded.status,200);assert.equal(downloaded.headers.get('Content-Type'),'image/png');assert.ok((await downloaded.arrayBuffer()).byteLength>0);
+ const account=await(await profiles.POST(request({action:'account'},'attorney-b','b@example.test'))).json();assert.equal(account.profiles.length,0);assert.equal(account.claims.length,0);
+});
+test('Charts use real, deduplicated recent searches, preserve ties, and group firm variants',async()=>{const x=await runtime();x.seed('100001','Fictional Attorney A','Example Legal, LLC.');x.seed('100002','Fictional Attorney B','Example Legal LLC');x.seed('100003','Fictional Inactive','Other Legal LLC','Inactive Member in Good Standing');const charts=await x.load('app/api/attorneys/charts.ts');assert.equal(charts.monthStart(new Date('2026-10-08T20:00:00Z')),'2026-10-01T04:00:00.000Z');assert.equal(charts.monthStart(new Date('2027-01-08T20:00:00Z')),'2027-01-01T05:00:00.000Z');
+ for(const [id,bar,date] of [['one','100001','2026-10-08T12:00:00Z'],['two','100002','2026-10-08T12:00:00Z'],['old','100001','2026-09-01T12:00:00Z'],['inactive','100003','2026-10-08T12:00:00Z']])x.sql.prepare('INSERT INTO attorney_search_events VALUES(?,?,?)').run(id,bar,date);
+ x.sql.prepare('INSERT INTO firm_search_events VALUES(?,?,?,?)').run('one','examplelegalllc','Example Legal LLC','2026-10-08T12:00:00Z');
+ const bounds=['2026-10-01T12:00:00Z','2026-10-08T20:00:00Z'];const attorneys=x.sql.prepare(charts.attorneyChartSQL).all(...bounds);assert.equal(attorneys.length,2);assert.equal(attorneys[0].rank,1);assert.equal(attorneys[1].rank,1);assert.equal(attorneys[0].searches,1);
+ const firms=x.sql.prepare(charts.firmChartSQL).all(...bounds,...bounds);assert.equal(firms[0].firm_key,'examplelegalllc');assert.equal(firms[0].searches,2);
+ const api=await x.load('app/api/attorneys/route.ts');const firm=await(await api.POST(request({kind:'firms',q:'Example Legal'}))).json();assert.equal(firm.total,1);assert.equal(firm.firms[0].attorneys,2);
+ const profile=await(await api.POST(request({firm:'Example Legal, L.L.C.'}))).json();assert.equal(profile.firm.total,2);
+ const active=await(await api.POST(request({q:'Fictional',statusGroup:'active'}))).json();const inactive=await(await api.POST(request({q:'Fictional',statusGroup:'not-active'}))).json();assert.equal(active.total,2);assert.equal(inactive.total,1);assert.equal(inactive.attorneys[0].bar_number,'100003');
+});
+test('Practice browsing combines sourced classifications and exact owner-provided areas without inventing coverage',async()=>{const x=await runtime();x.seed('231458','Source Classified Attorney');x.seed('100001','Owner Classified Attorney');x.seed('100002','Unrelated Attorney');x.sql.prepare('INSERT INTO attorney_profiles(bar_number,owner_id,practice_areas,claimed_at,updated_at) VALUES(?,?,?,?,?)').run('100001','owner','Family law, Employment law','2026-10-08','2026-10-08');x.sql.prepare('INSERT INTO attorney_profiles(bar_number,owner_id,practice_areas,claimed_at,updated_at) VALUES(?,?,?,?,?)').run('100002','other','Non-family law related consulting','2026-10-08','2026-10-08');const api=await x.load('app/api/attorneys/route.ts');const results=await(await api.POST(request({practice:'family-law',statusGroup:'active'}))).json();assert.equal(results.total,2);assert.deepEqual(results.attorneys.map(a=>a.bar_number).sort(),['100001','231458']);assert.equal((await api.POST(request({practice:'made-up'}))).status,400);const narrowed=await(await api.POST(request({practice:'family-law',q:'Owner'}))).json();assert.equal(narrowed.total,1);assert.equal(narrowed.attorneys[0].bar_number,'100001');});
+test('Client requests persist once, require consent, and remain owner-only',async()=>{const x=await runtime(),api=await x.load('app/api/leads/route.ts');const data={id:'12345678-1234-4123-8123-123456789012',name:'Test Client',email:'client@example.test',phone:'',city:'Atlanta, GA',practice:'family-law',summary:'I need help with a family law matter.',contactMethod:'email',consent:true};assert.equal((await api.POST(request({...data,consent:false},''))).status,400);assert.equal((await api.POST(request(data,''))).status,201);assert.equal((await api.POST(request(data,''))).status,200);assert.equal(x.sql.prepare('SELECT count(*) AS n FROM client_leads').get().n,1);assert.equal((await api.GET(request({},''))).status,403);assert.equal((await api.GET(request({},'other','other@example.test'))).status,403);const result=await(await api.GET(request({},'admin','admin@example.test'))).json();assert.equal(result.leads[0].email,data.email);assert.equal((await api.POST(request({action:'status',id:data.id,status:'contacted'},'other'))).status,403);assert.equal((await api.POST(request({action:'status',id:data.id,status:'contacted'},'admin','admin@example.test'))).status,200);assert.equal(x.sql.prepare('SELECT status FROM client_leads').get().status,'contacted');const cross=new Request('https://counsel.test/api/leads',{method:'POST',headers:{Origin:'https://other.test','Content-Type':'application/json'},body:JSON.stringify(data)});assert.equal((await api.POST(cross)).status,403);});
+test('Expanded practice results paginate all matched records without a bind-per-attorney limit',async()=>{const x=await runtime(),{practiceSources,practiceAreas}=await x.load('app/practice-areas.ts');for(const bar of Object.keys(practiceSources))x.seed(bar,'Attorney '+bar);const api=await x.load('app/api/attorneys/route.ts');for(const area of practiceAreas){const expected=Object.entries(practiceSources).filter(([,s])=>s.areas.includes(area.id)).map(([bar])=>bar).sort();const found=[];for(let page=1;page<=Math.ceil(expected.length/25);page++){const result=await(await api.POST(request({practice:area.id,statusGroup:'active',page}))).json();assert.equal(result.total,expected.length);found.push(...result.attorneys.map(a=>a.bar_number));}assert.deepEqual(found.sort(),expected);}assert.ok(Object.values(practiceSources).filter(s=>s.areas.includes('family-law')).length>25);});
+test('Exact search totals stay out of visitor data and owner analytics reject other users',async()=>{const x=await runtime();x.seed('100001','Test Attorney');x.sql.prepare('INSERT INTO attorney_search_events VALUES(?,?,?)').run('event','100001',new Date().toISOString());const charts=await x.load('app/api/attorneys/charts.ts');const visible=await charts.discoveryData(x.db);assert.equal(visible.weekly.length,1);assert.equal('searches' in visible.weekly[0],false);const api=await x.load('app/api/admin/searches/route.ts');assert.equal((await api.GET(request({},'other','other@example.test'))).status,403);const owner=await(await api.GET(request({},'admin','admin@example.test'))).json();assert.equal(owner.weekly[0].searches,1);});
+test('Firm roster sorts by current monthly search rank before name',async()=>{const x=await runtime();x.seed('100001','Aaron First');x.seed('100002','Zoe Popular');const now=new Date().toISOString();x.sql.prepare('INSERT INTO attorney_search_events VALUES(?,?,?)').run('one','100002',now);const api=await x.load('app/api/attorneys/route.ts');const results=await(await api.POST(request({firm:'Example Legal LLC'}))).json();assert.deepEqual(results.attorneys.map(a=>a.bar_number),['100002','100001']);assert.equal('searches' in results.attorneys[0],false);});
+test('Attorney analytics require sign-in and approved ownership, and never expose another profile',async()=>{const x=await runtime();x.seed('100001','Attorney One');x.seed('100002','Attorney Two');for(const [bar,owner] of [['100001','one'],['100002','two']])x.sql.prepare('INSERT INTO attorney_profiles(bar_number,owner_id,claimed_at,updated_at) VALUES(?,?,?,?)').run(bar,owner,'2026-10-08','2026-10-08');const api=await x.load('app/api/account/analytics/route.ts');assert.equal((await api.GET(request({},''))).status,401);assert.equal((await api.GET(request({},'unapproved'))).status,403);const result=await(await api.GET(request({},'one'))).json();assert.equal(result.profiles.length,1);assert.equal(result.profiles[0].bar_number,'100001');});
+
+test('Client passwords, persistent sessions, ownership, review approval and logout',async()=>{
+ const x=await runtime();x.seed('100001','Fictional Attorney');
+ const auth=await x.load('app/api/client-auth/route.ts'),reviews=await x.load('app/api/client-reviews/route.ts');
+ const password='fictional test password only';
+ const account={action:'register',firstName:'Test',lastName:'Client',email:'test@example.test',password,consent:true};
+ const req=(data,cookie='',user='',email='')=>new Request('https://counsel.test/api/client-auth',{method:'POST',headers:{Origin:'https://counsel.test','Content-Type':'application/json',Cookie:cookie,'oai-authenticated-user-id':user,'oai-authenticated-user-email':email},body:JSON.stringify(data)});
+ const cookie=r=>r.headers.get('set-cookie').split(';')[0];
+ const tooShort=await auth.POST(req({...account,password:'12345678'}));assert.equal(tooShort.status,400);assert.equal((await tooShort.json()).error,'Password must be at least 9 characters.');
+ const registered=await auth.POST(req(account));assert.equal(registered.status,201);let session=cookie(registered);assert.match(registered.headers.get('set-cookie'),/HttpOnly; Secure; SameSite=Lax/);
+ const user=x.sql.prepare('SELECT user_id FROM client_profiles WHERE email=?').get(account.email).user_id;
+ const stored=x.sql.prepare('SELECT password_hash FROM client_passwords').get().password_hash;assert.ok(!stored.includes(password));assert.match(stored,/^scrypt\$/);
+ assert.equal((await auth.POST(req(account))).status,409);
+ const status=await(await auth.GET(req({},session))).json();assert.equal(status.client.email,account.email);
+ assert.equal((await auth.POST(req({action:'login',email:account.email,password:'incorrect password'}))).status,401);
+ const login=await auth.POST(req({action:'login',email:' TEST@EXAMPLE.TEST ',password}));assert.equal(login.status,200);const otherSession=cookie(login);
+ const submitted={action:'request',bar:'100001',docket:'PRIVATE-CASE-42',attestation:true};
+ assert.equal((await reviews.POST(req(submitted))).status,401);
+ assert.equal((await reviews.POST(req(submitted,session))).status,200);
+ const id=JSON.stringify([user,'100001']);const review={action:'publish',id,body:'My attorney explained the process clearly and answered my questions.',mode:'anonymous',consent:true};
+ assert.equal((await reviews.POST(req(review,session))).status,403);
+ assert.equal((await reviews.POST(req({action:'admin-list'},session))).status,403);
+ const approve={action:'decide',id,decision:'approve',court:'Fictional Superior Court',county:'Fictional County',note:'Verified through independent evidence.',source:'https://researchga.tylerhost.net/CourtRecordsSearch/case/test-fixture',identityEvidence:'Independent identity evidence recorded for this test client.',representationEvidence:'Court appearance record identifies this client and this attorney.',identityChecked:true,recordChecked:true,relationshipChecked:true};
+ assert.equal((await reviews.POST(req(approve,session))).status,403);
+ assert.equal((await reviews.POST(req({...approve,identityChecked:false},'','owner','admin@example.test'))).status,400);
+ assert.equal((await reviews.POST(req({...approve,court:''},'','owner','admin@example.test'))).status,400);
+ assert.equal((await reviews.POST(req(approve,'','owner','admin@example.test'))).status,200);
+ assert.equal((await reviews.POST(req({...review,consent:false},session))).status,400);
+ assert.equal((await reviews.POST(req(review,session))).status,200);
+ const publicReviews=()=>reviews.GET(new Request('https://counsel.test/api/client-reviews?bar=100001')).then(r=>r.json());
+ let publicData=await publicReviews();assert.equal(publicData.reviews[0].author,'Anonymous');for(const secret of [account.email,'PRIVATE-CASE-42','identity_evidence',user])assert.ok(!JSON.stringify(publicData).includes(secret));
+ assert.equal((await reviews.POST(req({...review,mode:'named'},session))).status,200);assert.equal((await publicReviews()).reviews[0].author,'Test Client');
+ const b=await auth.POST(req({...account,email:'second@example.test',firstName:'Second',password:'123456789'}));assert.equal(b.status,201);const bCookie=cookie(b);
+ assert.equal((await reviews.POST(req(review,bCookie))).status,403);assert.equal((await(await reviews.POST(req({action:'account'},bCookie))).json()).requests.length,0);
+ const own=await(await reviews.POST(req({action:'account'},session))).json();assert.equal(own.requests[0].id,id);assert.ok(!JSON.stringify(own).includes('identity_evidence'));
+ const change=await auth.POST(req({action:'change-password',email:account.email,password:'a completely different passphrase',currentPassword:password},session));assert.equal(change.status,200);const updatedSession=cookie(change);
+ assert.equal((await auth.GET(req({},session)).then(r=>r.json())).client,null);assert.equal((await auth.GET(req({},otherSession)).then(r=>r.json())).client,null);
+ assert.equal((await auth.POST(req({action:'logout'},updatedSession))).status,200);assert.equal((await reviews.POST(req({action:'account'},updatedSession))).status,401);
+ // Even platform identity does not silently re-open a password session after logout.
+ assert.equal((await reviews.POST(req({action:'account'},'',user,account.email))).status,401);
+ assert.equal((await auth.POST(new Request('https://counsel.test/api/client-auth',{method:'POST',headers:{Origin:'https://evil.test'},body:JSON.stringify(account)}))).status,403);
+ assert.equal((await reviews.POST(req({action:'decide',id,decision:'revoke',note:'Evidence no longer supports verification.'},'','owner','admin@example.test'))).status,200);assert.equal((await publicReviews()).reviews.length,0);
+});
+test('Existing profiles set passwords only through their original platform identity; login throttles and expiry apply',async()=>{
+ const x=await runtime(),auth=await x.load('app/api/client-auth/route.ts');
+ x.sql.prepare('INSERT INTO client_profiles(user_id,legal_name,email,created_at) VALUES(?,?,?,?)').run('legacy','Legacy Client','legacy@example.test','2026-10-09');
+ const req=(data,user='',email='',cookie='')=>new Request('https://counsel.test/api/client-auth',{method:'POST',headers:{Origin:'https://counsel.test','oai-authenticated-user-id':user,'oai-authenticated-user-email':email,Cookie:cookie},body:JSON.stringify(data)});
+ const data={action:'set-password',password:'legacy client passphrase'};
+ assert.equal((await auth.POST(req(data))).status,401);assert.equal((await auth.POST(req(data,'wrong','legacy@example.test'))).status,403);
+ const good=await auth.POST(req(data,'legacy','legacy@example.test'));assert.equal(good.status,200);const cookie=good.headers.get('set-cookie').split(';')[0];
+ assert.equal((await auth.POST(req(data,'legacy','legacy@example.test'))).status,409);
+ assert.equal((await auth.GET(req({},'','','forged=123')).then(r=>r.json())).client,null);
+ x.sql.prepare('UPDATE client_sessions SET expires_at=0').run();assert.equal((await auth.GET(req({},'','',cookie)).then(r=>r.json())).client,null);
+ let last;for(let i=0;i<11;i++)last=await auth.POST(req({action:'login',email:'legacy@example.test',password:'incorrect password'}));assert.equal(last.status,429);
+ assert.equal(x.sql.prepare('SELECT count(*) AS n FROM client_profiles').get().n,1);
+});
+
+test('Approval email is private, queued without configuration, idempotent and blocked after revocation',async()=>{
+ const calls=[];const x=await runtime({fetch:async(url,init)=>{calls.push({url,init});return Response.json({id:'provider-test-id'});}});x.seed('100001','Test Attorney');
+ x.sql.prepare('INSERT INTO client_profiles(user_id,legal_name,email,created_at) VALUES(?,?,?,?)').run('client-test','Private Client','client@example.test','2026-10-09');
+ x.sql.prepare("INSERT INTO client_verifications(id,user_id,bar_number,legal_name,court,county,docket,relationship_key,status,submitted_at,updated_at) VALUES('request','client-test','100001','Private Client','Court','County','SECRET-DOCKET','key','approved','now','now')").run();
+ x.sql.prepare("INSERT INTO client_approval_emails(verification_id,id,recipient,status) VALUES('request','stable-key','client@example.test','pending')").run();
+ const email=await x.load('db/approval-email.ts');assert.equal(await email.sendApprovalEmail('request'),'not-configured');assert.equal(calls.length,0);
+ x.env.RESEND_API_KEY='fictional-test-key';x.env.APPROVAL_EMAIL_FROM='LawVetter <test@example.test>';
+ assert.equal(await email.sendApprovalEmail('request'),'accepted');assert.equal(calls.length,1);assert.equal(calls[0].init.headers['Idempotency-Key'],'stable-key');
+ const payload=JSON.parse(calls[0].init.body);assert.equal(payload.to[0],'client@example.test');assert.ok(!calls[0].init.body.includes('SECRET-DOCKET'));assert.ok(payload.text.includes('/client-reviews'));
+ assert.equal(await email.sendApprovalEmail('request'),'accepted');assert.equal(calls.length,1);
+ x.sql.prepare("UPDATE client_approval_emails SET status='pending',first_attempt=?").run(Date.now()-24*3600000);assert.equal(await email.sendApprovalEmail('request'),'check-provider');assert.equal(calls.length,1);
+ x.sql.prepare("UPDATE client_verifications SET status='revoked'").run();assert.equal(await email.sendApprovalEmail('request'),'not-queued');assert.equal(calls.length,1);
+});
+test('New verification requests notify the owner without exposing private client data',async()=>{
+ const calls=[];const x=await runtime({fetch:async(url,init)=>{calls.push({url,init});return Response.json({id:'owner-alert-provider-id'});}});x.seed('100001','Test Attorney');
+ x.env.RESEND_API_KEY='fictional-test-key';x.env.APPROVAL_EMAIL_FROM='LawVetter <test@example.test>';
+ const auth=await x.load('app/api/client-auth/route.ts'),reviews=await x.load('app/api/client-reviews/route.ts');
+ const account={action:'register',firstName:'Alert',lastName:'Client',email:'alert-client@example.test',password:'fictional alert password',consent:true},docket='PRIVATE-ALERT-DOCKET';
+ const req=(data,cookie='',user='',email='')=>new Request('https://counsel.test/api/client-reviews',{method:'POST',headers:{Origin:'https://counsel.test','Content-Type':'application/json',Cookie:cookie,'oai-authenticated-user-id':user,'oai-authenticated-user-email':email},body:JSON.stringify(data)});
+ const registered=await auth.POST(req(account));const session=registered.headers.get('set-cookie').split(';')[0];
+ const response=await reviews.POST(req({action:'request',bar:'100001',docket,attestation:true},session));assert.equal(response.status,200);assert.equal((await response.json()).notificationEmailStatus,'accepted');
+ assert.equal(calls.length,1);const payload=JSON.parse(calls[0].init.body);assert.equal(payload.to[0],'admin@example.test');assert.ok(payload.text.includes('/admin/client-reviews'));
+ for(const privateValue of [account.firstName,account.lastName,account.email,docket])assert.ok(!calls[0].init.body.includes(privateValue));
+ const queued=x.sql.prepare('SELECT id,status,recipient FROM client_verification_request_emails').get();assert.equal(queued.status,'accepted');assert.equal(queued.recipient,'admin@example.test');assert.equal(calls[0].init.headers['Idempotency-Key'],queued.id);
+ assert.equal((await reviews.POST(req({action:'request',bar:'100001',docket,attestation:true},session))).status,409);assert.equal(calls.length,1);
+ const owner=await(await reviews.POST(req({action:'admin-list'},'','owner','admin@example.test'))).json();assert.equal(owner.requests[0].notification_email_status,'accepted');assert.equal(owner.ownerNotificationConfigured,true);
+});
