@@ -16,7 +16,7 @@ export default function LandingHero(){
    <section className="landing-hero-proof" aria-labelledby="lawvetter-review-check-title">
     <h2 id="lawvetter-review-check-title">We check the client relationship behind every review.</h2>
     <ol>
-     <li><span>01</span><div><strong>Case number checked</strong><small>When provided, we compare it with available court-docket records.</small></div></li>
+     <li><span>01</span><div><strong>Case number checked</strong><small>When provided, we compare it with available court docket records.</small></div></li>
      <li><span>02</span><div><strong>Client connection reviewed</strong><small>We confirm the reviewer is connected to the legal matter.</small></div></li>
      <li><span>03</span><div><strong>Review connected</strong><small>The review appears on the attorney&rsquo;s profile.</small></div></li>
     </ol>

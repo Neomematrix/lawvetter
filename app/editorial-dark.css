@@ -369,6 +369,16 @@ a,button{font-weight:700}
 .popular-attorneys-section .poster-rank{background:#FE6B05;-webkit-text-stroke:0;text-shadow:none}
 .popular-attorneys-section .lawyer-poster .poster-label{border-color:#FE6B05}
 .popular-attorneys-section .carousel-footer{margin-top:26px;padding-top:20px;border-top:1px solid #FFFFFF42}
+.firm-feature{padding:42px 40px 36px;background:#1E6FAF;border:1px solid #155487;border-radius:5px;box-shadow:0 18px 38px -26px #172A3ACC}
+.firm-feature .section-heading{border-top:0;padding-top:0}
+.firm-feature .section-heading h2,.firm-feature .firm-rank-card h3 a{color:#FFFFFF}
+.firm-feature .section-kicker,.firm-feature .firm-position{color:#FFB06F}
+.firm-feature .text-action{color:#FFFFFF}
+.firm-feature .section-description{color:#E7F2FA}
+.firm-feature .firm-rank-card{padding-left:16px;padding-right:16px;border-color:#FFFFFF42;background:#FFFFFF0D}
+.firm-feature .firm-rank-card:hover{background:#FFFFFF17;border-color:#FFB06F}
+.firm-feature .firm-card-arrow{color:#FFB06F}
+@media(max-width:700px){.firm-feature{padding:30px 20px 24px}.firm-feature .firm-rank-card{padding-left:12px;padding-right:12px}}
 .popular-attorneys-section .carousel-footer>p,.popular-attorneys-section .carousel-controls>span{color:#F4F8FB}
 .popular-attorneys-section .carousel-controls .outline-button{background:#FFFFFF;color:#175B91;border:1px solid #FE6B05}
 @media(max-width:700px){
