@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "LawVetter | Real reviews from real clients",
     description:
-      "Read verified client reviews, explore Georgia attorney records, and compare lawyers with confidence.",
+      "Read verified client reviews, explore attorney records, and compare lawyers with confidence.",
     icons: {
       icon: [
         { url: "/favicon.svg", type: "image/svg+xml" },
@@ -42,7 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: "LawVetter | Real reviews from real clients",
       description:
-        "Read verified client reviews, explore Georgia attorney records, and compare lawyers with confidence.",
+        "Read verified client reviews, explore attorney records, and compare lawyers with confidence.",
       images: [{ url: imageUrl, width: 1200, height: 630, alt: "LawVetter attorney reviews and referrals" }],
       type: "website",
     },
@@ -50,7 +50,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: "LawVetter | Real reviews from real clients",
       description:
-        "Read verified client reviews, explore Georgia attorney records, and compare lawyers with confidence.",
+        "Read verified client reviews, explore attorney records, and compare lawyers with confidence.",
       images: [imageUrl],
     },
   };

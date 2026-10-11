@@ -3,7 +3,7 @@ export default function LandingHero(){
   <div className="landing-hero-copy">
    <p className="landing-hero-kicker">CLIENT EXPERIENCES · PROFESSIONAL RECORDS</p>
    <h1 id="lawvetter-hero-title">Real reviews from real clients of lawyers.</h1>
-   <p className="landing-hero-deck">Read verified client experiences, explore Georgia attorney records, and compare the details before you decide.</p>
+   <p className="landing-hero-deck">Read verified client experiences, explore attorney records, and compare the details before you decide.</p>
    <div className="landing-hero-actions">
     <a className="landing-primary-cta" href="/client-reviews">Read client reviews</a>
     <a className="landing-secondary-cta" href="#attorney-search">Find an attorney</a>
