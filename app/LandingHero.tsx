@@ -11,10 +11,6 @@ export default function LandingHero(){
   </div>
   <div className="landing-hero-visual" aria-label="How LawVetter client reviews work">
    <article className="landing-proof-card">
-    <div className="landing-proof-rail" aria-hidden="true">
-     <span>LAWVETTER</span>
-     <b>01—03</b>
-    </div>
     <div className="landing-proof-body">
      <p className="landing-proof-eyebrow">Review check</p>
      <h2>We check the client relationship behind every review.</h2>
