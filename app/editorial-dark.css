@@ -122,13 +122,6 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
 .directory-detail .profile-body h3{font-weight:600}
 .directory-detail .profile-body dt,.directory-detail .profile-body dd,.directory-detail .profile-body p,.directory-detail .profile-body address,.directory-detail .profile-body a{font-weight:600}
 
-/* Original supplied artwork, finished in metallic gold with CSS alpha masks. */
-.nav-shell>.brand{gap:20px}
-.nav-shell>.brand .brand-emblem{display:block;flex:0 0 auto;width:68px;height:90px;filter:drop-shadow(0 1px 0 #fff3b080) drop-shadow(0 3px 2px #00000066) drop-shadow(0 0 6px #e6b84038)}
-.brand-emblem::before{content:"";display:block;width:100%;height:100%;background:linear-gradient(125deg,#a86812 0%,#e5b743 20%,#fff1a6 35%,#d49c22 48%,#ffe99a 61%,#bc801b 78%,#f1cc65 100%);-webkit-mask:var(--emblem) center/contain no-repeat;mask:var(--emblem) center/contain no-repeat}
-.brand-emblem-left{--emblem:url('/brand/counsel-lawyer.svg')}
-.brand-emblem-right{--emblem:url('/brand/counsel-lawyer-right.png')}
-@media(max-width:700px){.nav-shell>.brand{font-size:clamp(20px,5.5vw,35px);gap:9px;letter-spacing:-1.2px}.nav-shell>.brand .brand-emblem{width:36px;height:54px}}
 @media(max-width:700px){.discovery-header .client-login-link{padding:8px 11px}}
 
 /* Keep the firm website heading and link in separate, aligned boxes. */
@@ -369,4 +362,12 @@ a,button{font-weight:700}
 .popular-attorneys-section .lawyer-card{background:#FBFAF7;box-shadow:0 8px 20px #172A3A0D}
 @media(max-width:700px){
  .popular-attorneys-section{padding:25px 18px 20px;border-left-width:3px}
+}
+/* LawVetter identity: the supplied vector badge replaces the former paired portraits. */
+.nav-shell>.brand{gap:0}
+.lawvetter-brand-logo{display:block;width:clamp(280px,28vw,380px);height:auto}
+.legal-footer .lawvetter-footer-logo{display:block;width:min(260px,100%);height:auto}
+@media(max-width:700px){
+ .lawvetter-brand-logo{width:min(72vw,250px)}
+ .legal-footer .lawvetter-footer-logo{width:min(230px,82vw)}
 }

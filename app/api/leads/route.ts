@@ -7,7 +7,7 @@ export async function GET(request:Request){
  try{const page=Math.max(1,Number.parseInt(new URL(request.url).searchParams.get('page')||'1')||1),db=rawDb();const [leads,count]=await Promise.all([db.prepare('SELECT * FROM client_leads ORDER BY created_at DESC,id LIMIT 25 OFFSET ?').bind((page-1)*25).all(),db.prepare('SELECT count(*) AS total FROM client_leads').first<{total:number}>()]);return reply({leads:leads.results,total:count?.total||0,page});}catch{return reply({error:'Leads are temporarily unavailable. Please try again.'},503);}
 }
 export async function POST(request:Request){
- if(request.headers.get('origin')!==new URL(request.url).origin)return reply({error:'Please submit this form from CounselCheck.'},403);
+ if(request.headers.get('origin')!==new URL(request.url).origin)return reply({error:'Please submit this form from LawVetter.'},403);
  if(!request.headers.get('content-type')?.includes('application/json'))return reply({error:'Unsupported form format.'},415);
  try{
  const text=await request.text();if(text.length>16000)return reply({error:'Your message is too long.'},413);

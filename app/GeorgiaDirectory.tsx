@@ -30,7 +30,7 @@ export default function GeorgiaDirectory({view='discover',onView,initialHome=nul
    <label className="search-city"><span>City</span><input value={city} onChange={e=>setCity(e.target.value)} placeholder="Any Georgia city"/></label><button className="gold-button search-submit" type="submit" aria-label="Search">Search</button>
   </form></section>
   <div className="page-shell discovery-shell"><ShortlistNotice/>
-   {error&&<div className="directory-error" role="alert">{error} <button onClick={()=>selected?open(selected):searched?setQuery({...query}):loadHome()}>Try again</button> <a href="/" target="_top">Reopen CounselCheck</a></div>}
+   {error&&<div className="directory-error" role="alert">{error} <button onClick={()=>selected?open(selected):searched?setQuery({...query}):loadHome()}>Try again</button> <a href="/" target="_top">Reopen LawVetter</a></div>}
    {selected?<><button className="outline-button" onClick={()=>setSelected(null)}>Back to {searched?'results':view==='shortlist'?'shortlist':view==='charts'?'charts':'discovery'}</button><AttorneyProfile attorney={selected} loading={detailLoading}/></>
    :searched?<section className="search-results">
     <div className="section-heading"><div><p className="section-kicker">{query.kind==='firms'?'FIRM':'ATTORNEY'} SEARCH</p><h1>{loading?'Searching…':`${(result?.total||0).toLocaleString()} results`}</h1></div><div className="directory-grow-actions"><a className="outline-button" href="/add-listing?type=lawyer">+ Add lawyer</a><a className="outline-button" href="/add-listing?type=firm">+ Add firm</a><button className="text-action" onClick={()=>{setSearched(false);loadHome();}}>Back to discovery</button></div></div>
@@ -45,7 +45,7 @@ export default function GeorgiaDirectory({view='discover',onView,initialHome=nul
     </>:!error&&<div className="chart-empty"><div><h2>No matches yet.</h2><p>Try another search, or use Add lawyer or Add firm above to suggest the missing listing.</p></div></div>}
    </section>
    :view==='shortlist'?<ShortlistPage onOpen={open}/>
-   :homeLoading?<div className="discovery-loading" role="status"><span/><p>Loading CounselCheck discovery…</p></div>
+   :homeLoading?<div className="discovery-loading" role="status"><span/><p>Loading LawVetter discovery…</p></div>
    :home?view==='charts'?<Charts data={home} onOpen={open}/>:<DiscoveryHome data={home} onOpen={open} onPractice={browsePractice} onView={onView}/>:null}
   </div>
  </>;

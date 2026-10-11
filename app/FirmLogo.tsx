@@ -4,7 +4,7 @@ import {firmKey} from './api/attorneys/firm';
 
 function initials(name:string){
  const words=name.replace(/\b(llc|llp|pc|pa|pllc|inc|attorneys?|law|firm)\b/gi,' ').split(/[^\p{L}\p{N}]+/u).filter(Boolean);
- return (words.length>1?words.slice(0,2):words.slice(0,1)).map(word=>word[0]).join('').toUpperCase()||'CC';
+ return (words.length>1?words.slice(0,2):words.slice(0,1)).map(word=>word[0]).join('').toUpperCase()||'LV';
 }
 
 export default function FirmLogo({name,website}:{name:string;website?:string}){

@@ -8,7 +8,7 @@ export function ShortlistProvider({children}:{children:ReactNode}){
  async function request(action:string,bar?:string){
   const r=await fetch('/api/shortlist',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({action,bar})});
   if(r.status===401){setRequiresSignIn(true);setSignedIn(false);setAttorneys([]);if(action==='list')return;throw new Error('Log in to save and compare attorneys.');}
-  if(!r.headers.get('Content-Type')?.includes('application/json'))throw new Error('Reopen CounselCheck to access your shortlist.');
+  if(!r.headers.get('Content-Type')?.includes('application/json'))throw new Error('Reopen LawVetter to access your shortlist.');
   const x=await r.json() as {error?:string;attorneys:Attorney[]};if(!r.ok)throw new Error(x.error||'Unable to load your shortlist.');setRequiresSignIn(false);setSignedIn(true);setAttorneys(x.attorneys);
  }
  async function reload(){setLoading(true);setError('');try{await request('list');}catch(e){setError(e instanceof Error?e.message:'Unable to load your shortlist.');}finally{setLoading(false);}}

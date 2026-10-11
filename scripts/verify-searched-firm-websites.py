@@ -17,7 +17,7 @@ def fetch(url):
  if cache.exists():return json.loads(cache.read_text())
  result={'requested':url,'status':'unreachable'}
  try:
-  req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 (compatible; CounselCheck professional directory verification)'})
+  req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 (compatible; LawVetter professional directory verification)'})
   with urllib.request.urlopen(req,timeout=7) as r:
    if 'html' not in r.headers.get('Content-Type','').lower():raise ValueError('not HTML')
    raw=r.read(800000).decode('utf-8','replace');final=r.url

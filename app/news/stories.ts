@@ -1,4 +1,4 @@
-export const SITE_ORIGIN='https://counselcheck-reviews.kyle-george-1801.chatgpt.site';
+export const SITE_ORIGIN='https://lawvetter.kyle-george-1801.chatgpt.site';
 const originalSettlements=[
  {
  slug:'independence-blue-cross-22-5-million-medicare-settlement',amount:'$22.5M',topic:'Healthcare',date:'September 30, 2026',sourceDate:'2026-09-30',

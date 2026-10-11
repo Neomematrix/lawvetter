@@ -29,7 +29,7 @@ function normalized(value:string){return value.toLowerCase().normalize('NFKD').r
 async function checkOfficialSource(kind:string,name:string,barNumber:string,url:URL){
  if(!trustedOfficialHost(url.hostname))return {status:'manual_official_check_required',note:'The source is saved, but its domain is not on the automated official-registry allowlist.'};
  try{
-  const response=await fetch(url.toString(),{headers:{'User-Agent':'CounselCheck directory verification/1.0'},redirect:'follow',signal:AbortSignal.timeout(7000)});
+  const response=await fetch(url.toString(),{headers:{'User-Agent':'LawVetter directory verification/1.0'},redirect:'follow',signal:AbortSignal.timeout(7000)});
   if(!response.ok)return {status:'manual_official_check_required',note:`The official source returned HTTP ${response.status}; owner review is required.`};
   const contentType=response.headers.get('content-type')||'';
   if(!contentType.includes('text/'))return {status:'official_source_reachable',note:'The official source is reachable; the owner must confirm the record.'};

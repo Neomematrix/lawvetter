@@ -1,4 +1,4 @@
-"""Write sanitized attorney records to CounselCheck; credentials arrive on stdin."""
+"""Write sanitized attorney records to LawVetter; credentials arrive on stdin."""
 import json,urllib.request,pathlib,time,concurrent.futures
 config=json.loads(input())
 path=pathlib.Path(__file__).resolve().parents[1]/'data/georgia-attorneys.jsonl'

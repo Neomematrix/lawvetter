@@ -1,6 +1,6 @@
 import {scryptSync,randomBytes,createHash,timingSafeEqual} from 'node:crypto';
 import {rawDb} from './raw';
-export const cookieName='__Host-counsel-client';
+export const cookieName='__Host-lawvetter-client';
 export const digest=(s:string)=>createHash('sha256').update(s).digest('hex');
 export function hashPassword(password:string){const salt=randomBytes(16).toString('hex');return 'scrypt$'+salt+'$'+scryptSync(password,salt,32,{N:32768,r:8,p:3,maxmem:64*1024*1024}).toString('hex');}
 export function checkPassword(password:string,stored:string){const parts=stored.split('$');const salt=parts[1]||'00000000000000000000000000000000';const hash=scryptSync(password,salt,32,{N:32768,r:8,p:3,maxmem:64*1024*1024});const expected=Buffer.from(parts[2]||'00'.repeat(32),'hex');return parts[0]==='scrypt'&&hash.length===expected.length&&timingSafeEqual(hash,expected);}

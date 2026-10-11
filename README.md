@@ -111,7 +111,7 @@ Read GET after PUT and verify the returned timestamp, 12 featured stories, two-f
 
 ## Verified client reviews
 
-Attorney profiles link to `/client-reviews?bar=...`. Clients use their CounselCheck email/password account and create a private, immutable legal-name profile without providing a case number. A docket is required only when requesting verification for a specific attorney. Account creation and knowledge of a public docket are **not** identity verification.
+Attorney profiles link to `/client-reviews?bar=...`. Clients use their LawVetter email/password account and create a private, immutable legal-name profile without providing a case number. A docket is required only when requesting verification for a specific attorney. Account creation and knowledge of a public docket are **not** identity verification.
 
 The owner queue is `/admin/client-reviews` (also linked from the attorney account administration links). Access uses the existing `CLAIM_ADMIN_EMAIL` server-side check. The owner must use their own authorized re:SearchGA account, independently establish the applicant's identity, and verify that the selected attorney represented that party—not just another party in the same case. Require an actual case-page reference plus private identity and representation evidence notes. Do not store government identification numbers, ID copies, session tokens or confidential court documents in notes. Unavailable, sealed or ambiguous records remain unapproved. Owner self-approval is prohibited.
 

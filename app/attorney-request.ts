@@ -7,8 +7,8 @@ export async function requestAttorneyData<T>(parameters: Record<string, string |
     headers:attempt===0?{Accept:'application/json','Content-Type':'application/json'}:{Accept:'application/json'},
     ...(attempt===0?{body:JSON.stringify(parameters)}:{}),signal,
    });
-   if(response.status===401||response.status===403)throw new Error('Your session needs to be refreshed. Reopen CounselCheck to continue.');
-   if(!response.headers.get('Content-Type')?.includes('application/json')){if(attempt===0)continue;throw new Error('Your session needs to be refreshed. Reopen CounselCheck to continue.');}
+   if(response.status===401||response.status===403)throw new Error('Your session needs to be refreshed. Reopen LawVetter to continue.');
+   if(!response.headers.get('Content-Type')?.includes('application/json')){if(attempt===0)continue;throw new Error('Your session needs to be refreshed. Reopen LawVetter to continue.');}
    const data=await response.json() as T & {error?:string};
    if(!response.ok){if(attempt===0&&response.status>=500)continue;throw new Error(data.error||unavailable);}
    return data;

@@ -48,7 +48,7 @@ def fetch(domain):
  result={'domain':domain,'status':'unreachable'}
  for host in [domain] + ([] if domain.startswith('www.') else ['www.'+domain]):
   try:
-   req=urllib.request.Request('https://'+host+'/',headers={'User-Agent':'Mozilla/5.0 (compatible; CounselCheck directory verification)'})
+   req=urllib.request.Request('https://'+host+'/',headers={'User-Agent':'Mozilla/5.0 (compatible; LawVetter directory verification)'})
    with urllib.request.urlopen(req,timeout=9) as r:
     if 'html' not in r.headers.get('Content-Type','').lower():result['status']='not-html';break
     raw=r.read(650000).decode('utf-8','replace');url=r.url

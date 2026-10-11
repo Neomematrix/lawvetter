@@ -27,24 +27,28 @@ export async function generateMetadata(): Promise<Metadata> {
   const imageUrl = `${protocol}://${host}/og.png`;
 
   return {
-    title: "CounselCheck | Know who represents you",
+    title: "LawVetter | Know who represents you",
     description:
       "Explore Georgia attorneys and firms, follow search rankings, and save a shortlist to compare professional records.",
     icons: {
-      icon: "/counselcheck-favicon-gold.png",
-      shortcut: "/counselcheck-favicon-gold.png",
-      apple: "/counselcheck-favicon-gold.png",
+      icon: [
+        { url: "/favicon.svg", type: "image/svg+xml" },
+        { url: "/favicon.ico", sizes: "any" },
+      ],
+      shortcut: "/favicon.ico",
+      apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
     },
+    manifest: "/site.webmanifest",
     openGraph: {
-      title: "CounselCheck | Know who represents you",
+      title: "LawVetter | Know who represents you",
       description:
         "Explore Georgia attorneys and firms, follow search rankings, and save a shortlist to compare professional records.",
-      images: [{ url: imageUrl, width: 1200, height: 630, alt: "CounselCheck attorney reviews and referrals" }],
+      images: [{ url: imageUrl, width: 1200, height: 630, alt: "LawVetter attorney reviews and referrals" }],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: "CounselCheck | Know who represents you",
+      title: "LawVetter | Know who represents you",
       description:
         "Explore Georgia attorneys and firms, follow search rankings, and save a shortlist to compare professional records.",
       images: [imageUrl],
