@@ -417,21 +417,23 @@ a,button{font-weight:700}
 .landing-primary-cta:hover{background:#E85F00;color:#FFFFFF}
 .landing-secondary-cta{background:transparent;color:#FFFFFF;border:1px solid #FFFFFFAA}
 .landing-secondary-cta:hover{background:#FFFFFF;color:#155B96}
-.landing-hero-visual{position:relative;display:flex;align-items:center;justify-content:center;min-width:0;padding:60px clamp(32px,4vw,70px);background:linear-gradient(145deg,#FE6B05 0%,#F47C24 54%,#FFB06F 100%);isolation:isolate}
-.landing-hero-visual:before,.landing-hero-visual:after{content:'';position:absolute;z-index:-1;border:1px solid #FFFFFF55;border-radius:50%}
-.landing-hero-visual:before{width:430px;height:430px;right:-145px;top:-125px}
-.landing-hero-visual:after{width:260px;height:260px;left:-95px;bottom:-115px}
-.landing-hero-owl{position:absolute;z-index:-1;right:28px;bottom:15px;width:min(43%,250px);height:auto;filter:brightness(0) invert(1);opacity:.12}
-.landing-proof-card{width:min(100%,510px);padding:38px 38px 30px;background:#FFFDF9;color:#17344B;border:1px solid #FFFFFF;border-top:6px solid #155B96;box-shadow:14px 16px 0 #17344B22,0 22px 55px #84370038}
-.landing-proof-eyebrow{margin:0 0 10px;color:#C94F00;font-size:10px;font-weight:850;letter-spacing:1.7px;text-transform:uppercase}
-.landing-proof-card h2{max-width:390px;margin:0 0 28px;color:#17344B;font-family:var(--font-jakarta),Arial,sans-serif;font-size:clamp(27px,2.3vw,38px);font-weight:700;letter-spacing:-.04em;line-height:1.13}
+.landing-hero-visual{position:relative;display:flex;align-items:center;justify-content:center;min-width:0;padding:60px clamp(32px,4vw,70px);background:#FE6B05;isolation:isolate}
+.landing-hero-visual:before{content:'';position:absolute;z-index:-1;inset:30px 0 30px 30px;border:1px solid #FFFFFF5C;border-right:0}
+.landing-hero-visual:after{content:'CLIENT REVIEW / CHECKED';position:absolute;z-index:-1;right:18px;bottom:18px;color:#FFFFFF70;font-size:9px;font-weight:800;letter-spacing:2px;writing-mode:vertical-rl}
+.landing-proof-card{display:grid;grid-template-columns:72px minmax(0,1fr);width:min(100%,540px);background:#123B59;color:#FFFFFF;border:1px solid #0B2D45;box-shadow:12px 12px 0 #FFFFFF}
+.landing-proof-rail{display:flex;align-items:center;justify-content:space-between;flex-direction:column;padding:25px 0;background:#FFF8F0;color:#123B59;border-right:1px solid #D9E1E7}
+.landing-proof-rail span{font-size:9px;font-weight:850;letter-spacing:2px;writing-mode:vertical-rl;transform:rotate(180deg)}
+.landing-proof-rail b{color:#FE6B05;font-size:11px;letter-spacing:.5px;writing-mode:vertical-rl;transform:rotate(180deg)}
+.landing-proof-body{padding:34px 34px 28px}
+.landing-proof-eyebrow{margin:0 0 11px;color:#FFB37D;font-size:10px;font-weight:850;letter-spacing:1.9px;text-transform:uppercase}
+.landing-proof-card h2{max-width:385px;margin:0 0 24px;color:#FFFFFF;font-family:var(--font-jakarta),Arial,sans-serif;font-size:clamp(28px,2.25vw,36px);font-weight:650;letter-spacing:-.035em;line-height:1.12}
 .landing-proof-card ol{display:grid;gap:0;margin:0;padding:0;list-style:none}
-.landing-proof-card li{display:grid;grid-template-columns:48px minmax(0,1fr);gap:14px;align-items:start;padding:16px 0;border-top:1px solid #DCE5EB}
-.landing-proof-card li>span{display:grid;place-items:center;width:42px;height:42px;background:#E6F1F8;color:#155B96;border-radius:50%;font-size:11px;font-weight:850}
+.landing-proof-card li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:13px;align-items:start;padding:15px 0;border-top:1px solid #FFFFFF30}
+.landing-proof-card li>span{padding-top:3px;color:#FF9B55;font-size:11px;font-weight:850;letter-spacing:.8px}
 .landing-proof-card li div{display:grid;gap:4px}
-.landing-proof-card li strong{color:#17344B;font-size:15px;line-height:1.35}
-.landing-proof-card li small{color:#5B6871;font-size:12px;font-weight:600;line-height:1.5}
-.landing-proof-note{margin:18px 0 0;padding-top:17px;border-top:1px solid #DCE5EB;color:#65717A;font-size:10px;font-weight:650;line-height:1.55}
+.landing-proof-card li strong{color:#FFFFFF;font-size:15px;line-height:1.35}
+.landing-proof-card li small{color:#C9D8E2;font-size:12px;font-weight:550;line-height:1.5}
+.landing-proof-note{margin:17px 0 0;padding-top:16px;border-top:1px solid #FFFFFF30;color:#ADC3D1;font-size:10px;font-weight:600;line-height:1.55}
 .lawvetter-landing-hero+.discovery-search{background:#FFF9EF;border-bottom:1px solid #E7D9C7;box-shadow:0 8px 22px #17344B0D}
 .lawvetter-landing-hero+.discovery-search form{max-width:1360px;padding:24px 32px;filter:none}
 .lawvetter-landing-hero+.discovery-search .search-submit{background:#155B96;border-color:#0E4778;box-shadow:0 2px 0 #0E365B}
@@ -445,7 +447,8 @@ a,button{font-weight:700}
  .discovery-header .client-login-link,.discovery-header .hire-lawyer-link{padding-left:12px;padding-right:12px}
  .lawvetter-landing-hero{grid-template-columns:minmax(0,1.05fr) minmax(390px,.95fr)}
  .landing-hero-copy{padding-left:50px;padding-right:50px}
- .landing-proof-card{padding:31px 30px 26px}
+ .landing-proof-card{grid-template-columns:64px minmax(0,1fr)}
+ .landing-proof-body{padding:30px 28px 25px}
 }
 
 @media(max-width:900px){
@@ -486,10 +489,14 @@ a,button{font-weight:700}
  .landing-hero-actions{display:grid;width:100%;grid-template-columns:1fr}
  .landing-hero-actions a{width:100%;min-height:52px}
  .landing-hero-visual{padding:40px 18px 46px}
- .landing-proof-card{padding:28px 22px 22px;box-shadow:8px 10px 0 #17344B22}
- .landing-proof-card h2{font-size:30px;margin-bottom:21px}
- .landing-proof-card li{grid-template-columns:42px minmax(0,1fr);gap:11px;padding:14px 0}
- .landing-proof-card li>span{width:38px;height:38px}
+ .landing-hero-visual:before{inset:18px 0 18px 18px}
+ .landing-hero-visual:after{display:none}
+ .landing-proof-card{grid-template-columns:1fr;box-shadow:8px 8px 0 #FFFFFF}
+ .landing-proof-rail{min-height:42px;padding:0 18px;flex-direction:row;border-right:0;border-bottom:1px solid #D9E1E7}
+ .landing-proof-rail span,.landing-proof-rail b{writing-mode:horizontal-tb;transform:none}
+ .landing-proof-body{padding:27px 22px 22px}
+ .landing-proof-card h2{font-size:29px;margin-bottom:20px}
+ .landing-proof-card li{grid-template-columns:34px minmax(0,1fr);gap:8px;padding:14px 0}
  .lawvetter-landing-hero+.discovery-search form{grid-template-columns:minmax(0,1fr);gap:10px;padding:18px 16px}
  .lawvetter-landing-hero+.discovery-search .search-kind,.lawvetter-landing-hero+.discovery-search .primary-search,.lawvetter-landing-hero+.discovery-search .search-city,.lawvetter-landing-hero+.discovery-search .search-submit{grid-column:1}
 }

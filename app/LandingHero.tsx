@@ -10,16 +10,21 @@ export default function LandingHero(){
    </div>
   </div>
   <div className="landing-hero-visual" aria-label="How LawVetter client reviews work">
-   <img className="landing-hero-owl" src="/brand/lawvetter-icon.svg" alt="" aria-hidden="true"/>
    <article className="landing-proof-card">
-    <p className="landing-proof-eyebrow">A clearer review record</p>
-    <h2>Experience, connected to evidence.</h2>
-    <ol>
-     <li><span>01</span><div><strong>Client identity checked</strong><small>The reviewer is matched to the person named in the case.</small></div></li>
-     <li><span>02</span><div><strong>Relationship reviewed</strong><small>The attorney–client relationship is checked before posting unlocks.</small></div></li>
-     <li><span>03</span><div><strong>Professional record linked</strong><small>Reviews appear alongside the attorney&rsquo;s directory information.</small></div></li>
-    </ol>
-    <p className="landing-proof-note">Verification confirms a client relationship—not every statement in a review.</p>
+    <div className="landing-proof-rail" aria-hidden="true">
+     <span>LAWVETTER</span>
+     <b>01—03</b>
+    </div>
+    <div className="landing-proof-body">
+     <p className="landing-proof-eyebrow">Review check</p>
+     <h2>Every review starts with a real client.</h2>
+     <ol>
+      <li><span>01</span><div><strong>Client matched</strong><small>Reviewer identity is checked against the case record.</small></div></li>
+      <li><span>02</span><div><strong>Relationship confirmed</strong><small>The attorney–client relationship is verified.</small></div></li>
+      <li><span>03</span><div><strong>Review connected</strong><small>The review appears on the attorney&rsquo;s profile.</small></div></li>
+     </ol>
+     <p className="landing-proof-note">Verification confirms the relationship—not every claim in a review.</p>
+    </div>
    </article>
   </div>
  </section>;
