@@ -29,6 +29,11 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "CounselCheck | Know who represents you",
     description:
       "Explore Georgia attorneys and firms, follow search rankings, and save a shortlist to compare professional records.",
+    icons: {
+      icon: "/counselcheck-favicon-gold.png",
+      shortcut: "/counselcheck-favicon-gold.png",
+      apple: "/counselcheck-favicon-gold.png",
+    },
     openGraph: {
       title: "CounselCheck | Know who represents you",
       description:
