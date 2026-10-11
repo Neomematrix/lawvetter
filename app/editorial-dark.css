@@ -355,17 +355,31 @@ a,button{font-weight:700}
  body{font-size:16px}.listing-kind-tabs{grid-template-columns:1fr}.add-listing-intro{font-size:16px}
 }
 
-/* Set the weekly popularity chart apart as a softly tinted editorial feature. */
-.popular-attorneys-section{padding:34px 32px 26px;background:linear-gradient(135deg,#E9E5DC 0%,#F2EEE6 58%,#E5DFD3 100%);border:1px solid #D2C7B3;border-left:4px solid #AA8B52;border-radius:3px;box-shadow:0 14px 34px -28px #172A3A80}
+/* Set the weekly chart apart with the blue and orange LawVetter palette. */
+.popular-attorneys-section{padding:42px 40px 32px;background:linear-gradient(135deg,#175B91 0%,#1E6DA7 58%,#155487 100%);border:1px solid #0F456F;border-top:5px solid #FE6B05;border-left:5px solid #FE6B05;border-radius:5px;box-shadow:0 18px 38px -26px #172A3ACC}
 .popular-attorneys-section .section-heading{border-top:0;padding-top:0}
-.popular-attorneys-section .section-description{color:#4A545D}
-.popular-attorneys-section .lawyer-card{background:#FBFAF7;box-shadow:0 8px 20px #172A3A0D}
+.popular-attorneys-section .section-heading h2{color:#FFFFFF}
+.popular-attorneys-section .section-kicker{color:#FFB06F}
+.popular-attorneys-section .text-action{color:#FFFFFF}
+.popular-attorneys-section .section-description{color:#E7F2FA}
+.popular-attorneys-section .lawyer-card{background:#FFFFFF;border:1px solid #D9E4EC;border-top:4px solid #FE6B05;box-shadow:0 12px 24px #0C365A30}
+.popular-attorneys-section .lawyer-card-body{padding:24px 22px 22px;background:#FFFFFF}
+.popular-attorneys-section .poster-rank{background:#FE6B05;-webkit-text-stroke:0;text-shadow:none}
+.popular-attorneys-section .lawyer-poster .poster-label{border-color:#FE6B05}
+.popular-attorneys-section .carousel-footer{margin-top:26px;padding-top:20px;border-top:1px solid #FFFFFF42}
+.popular-attorneys-section .carousel-footer>p,.popular-attorneys-section .carousel-controls>span{color:#F4F8FB}
+.popular-attorneys-section .carousel-controls .outline-button{background:#FFFFFF;color:#175B91;border:1px solid #FE6B05}
 @media(max-width:700px){
- .popular-attorneys-section{padding:25px 18px 20px;border-left-width:3px}
+ .popular-attorneys-section{padding:28px 18px 24px;border-left-width:4px}
+ .popular-attorneys-section .lawyer-card-body{padding:18px 16px 17px}
+}
+@media(max-width:560px){
+ .popular-attorneys-section .popular-carousel-grid{grid-template-columns:1fr}
+ .popular-attorneys-section .lawyer-card-body{padding:22px 20px 20px}
 }
 /* LawVetter identity: the supplied vector badge replaces the former paired portraits. */
 .nav-shell>.brand{gap:0}
-.lawvetter-brand-logo{display:block;width:clamp(340px,34vw,480px);height:auto}
+.lawvetter-brand-logo{display:block;width:clamp(380px,40vw,560px);height:auto}
 .legal-footer .lawvetter-footer-logo{display:block;width:min(260px,100%);height:auto}
 @media(max-width:700px){
  .lawvetter-brand-logo{width:min(75vw,290px)}
