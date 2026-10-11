@@ -361,3 +361,12 @@ a,button{font-weight:700}
 @media(max-width:460px){
  body{font-size:16px}.listing-kind-tabs{grid-template-columns:1fr}.add-listing-intro{font-size:16px}
 }
+
+/* Set the weekly popularity chart apart as a softly tinted editorial feature. */
+.popular-attorneys-section{padding:34px 32px 26px;background:linear-gradient(135deg,#E9E5DC 0%,#F2EEE6 58%,#E5DFD3 100%);border:1px solid #D2C7B3;border-left:4px solid #AA8B52;border-radius:3px;box-shadow:0 14px 34px -28px #172A3A80}
+.popular-attorneys-section .section-heading{border-top:0;padding-top:0}
+.popular-attorneys-section .section-description{color:#4A545D}
+.popular-attorneys-section .lawyer-card{background:#FBFAF7;box-shadow:0 8px 20px #172A3A0D}
+@media(max-width:700px){
+ .popular-attorneys-section{padding:25px 18px 20px;border-left-width:3px}
+}
