@@ -575,3 +575,36 @@ a,button{font-weight:700}
  .shortlist-attorney-link{margin-top:5px}
  .shortlist-attorney-card>.save-attorney{margin-left:100px;width:calc(100% - 112px)}
 }
+
+/* Final narrow-screen guardrails: keep the header, open menu, and page inside the
+   visual viewport on iPhone Safari as well as device-emulation viewports. */
+@media(max-width:560px){
+ html,body{width:100%;max-width:100%;overflow-x:hidden}
+ body{position:relative}
+ body>main,main,.site-header,.legal-footer,.discovery-search,.page-shell{width:100%;max-width:100%;min-width:0;box-sizing:border-box}
+ .site-header.discovery-header{overflow-x:hidden}
+ .discovery-header .nav-shell{
+  width:100%;max-width:100%;min-width:0;box-sizing:border-box;
+  grid-template-columns:minmax(0,1fr) 42px;gap:0 10px;
+  padding-left:max(12px,env(safe-area-inset-left))!important;
+  padding-right:max(12px,env(safe-area-inset-right))!important;
+ }
+ .discovery-header .nav-shell>.brand{width:auto;min-width:0;max-width:100%;overflow:hidden}
+ .lawvetter-brand-logo{display:block;width:min(100%,198px);max-width:100%;height:auto}
+ .mobile-menu-toggle{width:42px;min-width:42px;max-width:42px;height:42px;justify-self:end;box-sizing:border-box}
+ .mobile-menu-toggle span{left:9px;width:22px}
+ .discovery-header .responsive-menu,.discovery-header .responsive-menu nav{width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow-x:hidden}
+ .discovery-header .responsive-menu nav button,.discovery-header .responsive-menu nav>a,.discovery-header .responsive-menu .shortlist-nav,.discovery-header .responsive-menu>a.attorney-account-link,.discovery-header .responsive-menu .hire-lawyer-link{max-width:100%;min-width:0;box-sizing:border-box;overflow-wrap:anywhere}
+ .lawvetter-landing-hero,.landing-hero-copy,.landing-hero-visual,.landing-hero-photo,.landing-hero-proof,.landing-hero-actions,.discovery-search form,.discovery-shell,.spotlight-layout,.monthly-spotlight,.discovery-section,.shortlist-banner,.settlement-slide,.popular-attorneys-section{width:100%;max-width:100%;min-width:0;box-sizing:border-box}
+ .landing-hero-photo{overflow:hidden}
+ .landing-hero-photo img{width:100%;max-width:100%;transform:none;object-position:left 27%}
+ .page-shell{padding-left:18px;padding-right:18px}
+ .monthly-spotlight,.settlement-slide{overflow:hidden}
+}
+@media(max-width:360px){
+ .discovery-header .nav-shell{grid-template-columns:minmax(0,1fr) 40px;gap:0 8px;padding-left:max(10px,env(safe-area-inset-left))!important;padding-right:max(10px,env(safe-area-inset-right))!important}
+ .lawvetter-brand-logo{width:min(100%,178px)}
+ .mobile-menu-toggle{width:40px;min-width:40px;max-width:40px;height:40px}
+ .mobile-menu-toggle span{left:8px}
+ .page-shell{padding-left:14px;padding-right:14px}
+}
