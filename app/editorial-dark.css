@@ -542,3 +542,36 @@ a,button{font-weight:700}
  .landing-hero-deck{font-size:15px}
  .landing-hero-photo img{object-position:left 27%}
 }
+
+/* Use current chart leaders in the shortlist preview instead of empty mock cards. */
+.shortlist-banner{grid-template-columns:1.05fr 1.3fr;gap:42px;overflow:visible}
+.shortlist-attorneys{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;align-items:start;padding:20px 0 11px}
+.shortlist-attorney-card{min-width:0;background:linear-gradient(145deg,#FFFFFF 0%,#F4F8FB 62%,#E8F0F5 100%);border:1px solid #D8D4C9;border-bottom:5px solid #1E6FAF;border-radius:14px;box-shadow:0 7px 0 #C8D9E6,0 20px 32px -23px #172A3AB8,inset 0 1px 0 #FFFFFF;overflow:hidden}
+.shortlist-attorney-card:nth-child(1){transform:rotate(-2deg) translateY(8px)}
+.shortlist-attorney-card:nth-child(2){transform:translateY(-8px)}
+.shortlist-attorney-card:nth-child(3){transform:rotate(2deg) translateY(4px)}
+.shortlist-attorney-main{width:100%;display:flex;flex-direction:column;align-items:flex-start;text-align:left;background:transparent;color:#172A3A;padding:13px 13px 10px}
+.shortlist-attorney-main:hover .shortlist-attorney-link{color:#FE6B05}
+.shortlist-attorney-photo{width:100%;aspect-ratio:1.15/1;display:grid;place-items:center;overflow:hidden;background:linear-gradient(145deg,#DDEAF3,#F7FAFC);color:#1E6FAF;font-size:40px;font-weight:800;letter-spacing:-2px;border-radius:8px;margin-bottom:12px}
+.shortlist-attorney-photo img{width:100%;height:100%;object-fit:cover}
+.shortlist-attorney-rank{color:#1E6FAF;font-size:9px;letter-spacing:1.15px;text-transform:uppercase;font-weight:800}
+.shortlist-attorney-main strong{font-family:var(--font-jakarta),Arial,sans-serif;font-size:15px;line-height:1.25;margin:7px 0;overflow-wrap:anywhere}
+.shortlist-attorney-main small{color:#5B6268;font-size:10px;line-height:1.4;min-height:28px;overflow-wrap:anywhere}
+.shortlist-attorney-link{font-size:10px;font-weight:800;color:#1E6FAF;margin-top:12px}
+.shortlist-attorney-card>.save-attorney{width:calc(100% - 24px);margin:0 12px 12px;min-height:32px;padding:7px 8px;font-size:9px}
+@media(max-width:1000px){
+ .shortlist-banner{grid-template-columns:1fr;gap:22px}
+ .shortlist-attorneys{max-width:680px}
+}
+@media(max-width:700px){
+ .shortlist-banner{padding:25px 20px;overflow:hidden}
+ .shortlist-attorneys{grid-template-columns:1fr;gap:12px;padding:4px 0 9px}
+ .shortlist-attorney-card,.shortlist-attorney-card:nth-child(1),.shortlist-attorney-card:nth-child(2),.shortlist-attorney-card:nth-child(3){transform:none}
+ .shortlist-attorney-main{display:grid;grid-template-columns:74px minmax(0,1fr);grid-template-rows:auto auto auto auto;column-gap:14px;padding:12px 12px 9px}
+ .shortlist-attorney-photo{grid-column:1;grid-row:1/5;width:74px;height:92px;aspect-ratio:auto;margin:0;font-size:25px}
+ .shortlist-attorney-rank,.shortlist-attorney-main strong,.shortlist-attorney-main small,.shortlist-attorney-link{grid-column:2;min-width:0}
+ .shortlist-attorney-main strong{font-size:16px;margin:4px 0}
+ .shortlist-attorney-main small{min-height:0}
+ .shortlist-attorney-link{margin-top:5px}
+ .shortlist-attorney-card>.save-attorney{margin-left:100px;width:calc(100% - 112px)}
+}
