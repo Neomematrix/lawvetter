@@ -7,6 +7,7 @@ import {FirmLink} from './FirmLink';
 import {ShortlistNotice} from './Shortlist';
 import {AttorneyCard,Charts,DiscoveryHome,ShortlistPage,type DiscoveryData,type View} from './Discovery';
 import {requestAttorneyData} from './attorney-request';
+import LandingHero from './LandingHero';
 
 export type Attorney={bar_number:string;name:string;company:string;city:string;county:string;status:string;admit_date:string;imported_at:string;law_school?:string;address?:string;zip?:string;phone?:string;email?:string;photo_key?:string;source_url?:string};
 type Results={attorneys?:Attorney[];firms?:{name:string;firm_key:string;attorneys:number}[];total:number;page:number;updated?:string};
@@ -24,6 +25,7 @@ export default function GeorgiaDirectory({view='discover',onView,initialHome=nul
  function browsePractice(practice:string){setCity('');setName('');setKind('attorneys');setSelected(null);setSearched(true);setQuery({q:'',city:'',practice,statusGroup:'active',kind:'attorneys',page:1,eventId:''});document.getElementById('attorney-search')?.scrollIntoView({behavior:'smooth'});}
  async function open(a:Attorney,fromSearch=false){setSelected(a);setDetailLoading(true);setError('');try{const x=await requestAttorneyData<{attorney:Attorney}>({id:a.bar_number,...(fromSearch?{...query,kind:'attorneys'}:{})});setSelected(x.attorney);}catch(e){setError(e instanceof Error?e.message:'Unable to open this record.');}finally{setDetailLoading(false);}}
  return <>
+  {view==='discover'&&!searched&&!selected&&<LandingHero/>}
   <section className="discovery-search" id="attorney-search" aria-label="Attorney and firm search"><form onSubmit={search}>
    <label className="search-kind"><span>Search for</span><select value={kind} onChange={e=>setKind(e.target.value)}><option value="attorneys">Attorneys</option><option value="firms">Firms</option></select></label>
    <div className="primary-search"><AttorneyNameInput value={name} city={city} enabled={kind==='attorneys'} onChange={setName} onSelect={a=>{setName(a.name);setSelected(null);setSearched(true);setQuery({q:a.bar_number,city:city.trim(),practice:'',statusGroup:'active',kind:'attorneys',page:1,eventId:crypto.randomUUID()});}}/></div>

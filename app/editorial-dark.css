@@ -10,7 +10,7 @@ body{background:#F6F4EF;color:#172A3A}
 .discovery-search .search-kind select,.discovery-search .search-submit{border-radius:0}.discovery-search input,.discovery-search select{background:#FFFFFF;color:#172A3A;box-shadow:none;border:1px solid #D8D4C9}.discovery-search input::placeholder{color:#5B6268}.discovery-search .search-city input{border-left-color:#D8D4C9}
 .gold-button,.nav-cta,.submit-button,.success-state button,.directory-filters button{border-radius:2px;font-size:12px;letter-spacing:.8px;text-transform:uppercase;box-shadow:0 2px 0 #172A3A14,0 5px 12px #172A3A14}
 .discovery-shell{padding-top:35px}.discovery-section{margin-top:48px}.section-heading{border-top:2px solid #AA8B52;padding-top:17px;align-items:baseline}.section-heading h2{font-family:var(--font-jakarta),Arial,sans-serif;font-size:34px;font-weight:700;letter-spacing:-1px;border:0;padding-left:0;text-shadow:none}.section-kicker{font-size:10px;letter-spacing:1.8px}.section-description{max-width:850px;font-size:15px}
-.practice-grid{gap:0;border-top:1px solid #D8D4C9;border-left:1px solid #D8D4C9}.practice-tile{border-width:0 1px 1px 0;border-color:#D8D4C9;border-radius:0;box-shadow:none;background:linear-gradient(145deg,#FFFFFF,#F6F4EF);padding:23px;min-height:155px;gap:10px}.practice-tile strong{font-family:var(--font-jakarta),Arial,sans-serif;font-size:23px;font-weight:500;letter-spacing:-.5px}.practice-number{display:block;width:auto;height:auto;background:none;border:0;box-shadow:none;font-size:10px;letter-spacing:1.5px}.practice-tile:hover{background:#FFFFFF;transform:none;border-color:#D8D4C9;box-shadow:none}
+.practice-grid{gap:18px;border:0}.practice-tile{border:1px solid #D8D4C9;border-bottom:5px solid #1E6FAF;border-radius:14px;box-shadow:0 7px 0 #C8D9E6,0 18px 30px -20px #172A3AAA,inset 0 1px 0 #FFFFFF;background:linear-gradient(145deg,#FFFFFF 0%,#F8FAFB 58%,#EEF3F6 100%);padding:30px 26px 26px;min-height:168px;gap:12px}.practice-tile strong{font-family:var(--font-jakarta),Arial,sans-serif;font-size:23px;font-weight:650;letter-spacing:-.5px}.practice-tile:hover{background:linear-gradient(145deg,#FFFFFF,#F3F8FB);transform:translateY(-3px);border-color:#9DBDD4;border-bottom-color:#FE6B05;box-shadow:0 10px 0 #B9D0E0,0 24px 34px -22px #172A3ACC,inset 0 1px 0 #FFFFFF}
 .lawyer-card,.trending-card{border-radius:0;border-width:0 0 1px;border-color:#AA8B52;background:transparent;box-shadow:none}.lawyer-poster{min-height:245px;border-radius:0}.lawyer-card-body{padding:20px 0;background:transparent}.lawyer-card h3{font-family:var(--font-jakarta),Arial,sans-serif;font-size:21px;font-weight:500;line-height:1.25}.poster-rank{background:var(--yellow)}.save-attorney,.outline-button{border-radius:1px;box-shadow:none}.save-attorney{font-size:11px;letter-spacing:.8px;text-transform:uppercase}.lawyer-card:hover,.trending-card:hover{transform:none;box-shadow:none;border-color:var(--yellow)}
 .settlement-slide{grid-template-columns:.85fr 1.4fr;border-radius:0;border:1px solid #AA8B52;border-width:1px 0;box-shadow:none;background:#F6F4EF;background-image:none}.settlement-visual{background:linear-gradient(130deg,#ECE9E1,#FFFFFF);border-right:1px solid #AA8B52;box-shadow:none}.settlement-visual>strong{font-family:var(--font-jakarta),Arial,sans-serif;font-weight:400;font-size:clamp(45px,5vw,72px);letter-spacing:-3px;text-shadow:none;color:var(--yellow)}.settlement-lines{opacity:.35}.settlement-copy h3{font-family:var(--font-jakarta),Arial,sans-serif;font-size:35px;letter-spacing:-1px;line-height:1.13;font-weight:700}.settlement-copy h3 a{color:#172A3A}.settlement-copy h3 a:hover{color:var(--yellow)}.settlement-copy>p:not(.section-kicker){color:#5B6268;font-size:16px}.settlement-copy .news-source{font-size:13px!important}
 .firm-rank-card{border-radius:0;border-width:0 0 1px;box-shadow:none;background:transparent}.firm-rank-card h3{font-family:var(--font-jakarta),Arial,sans-serif;font-size:20px}.city-card{border-radius:0;border-width:1px 0;background:transparent;box-shadow:none}.city-card strong{font-family:var(--font-jakarta),Arial,sans-serif;font-size:26px;font-weight:500}.city-card:after{display:none}.city-card:hover{transform:none;box-shadow:none}.firm-rank-card:hover{transform:none;box-shadow:none}
@@ -19,7 +19,7 @@ body{background:#F6F4EF;color:#172A3A}
 .news-index h1,.news-article h1,.news-story-grid h2,.news-body h2,.news-related h2{font-family:var(--font-jakarta),Arial,sans-serif;letter-spacing:-.035em}.news-article-header h1{font-size:clamp(36px,5vw,64px);line-height:1.08}.news-body p{font-family:var(--font-jakarta),Arial,sans-serif;font-size:19px;line-height:1.8}.news-source-box{border-radius:0;border:1px solid #AA8B52;background:#F6F4EF}.news-source-box p{font-family:var(--font-lato),Arial,sans-serif;font-size:14px}.news-fact{border-radius:0;box-shadow:none;background:linear-gradient(135deg,#FFFFFF,#F6F4EF)}.news-story-grid .profile-card{border-width:1px 0 0;padding:24px 0;background:transparent;box-shadow:none}.news-amount{font-family:var(--font-jakarta),Arial,sans-serif;font-weight:400}.news-related a{font-family:var(--font-jakarta),Arial,sans-serif;font-size:21px}
 footer{border-top:4px double #AA8B52}.footer-brand{font-family:var(--font-jakarta),Arial,sans-serif;font-size:20px}.footer-brand .brand-mark{display:none}
 @media(max-width:850px){.settlement-slide{grid-template-columns:1fr}.settlement-visual{border-right:0;border-bottom:1px solid #AA8B52}.settlement-copy h3{font-size:29px}}
-@media(max-width:700px){.nav-shell{padding:14px 18px 12px!important;gap:10px 20px}.nav-shell>.brand{font-size:35px;letter-spacing:-1.5px}.discovery-header nav{order:initial;width:auto;gap:15px}.discovery-header nav button,.discovery-header nav>a{font-size:10px;letter-spacing:.5px}.shortlist-nav{margin-left:auto}.attorney-account-link{font-size:11px}.section-heading h2{font-size:27px}.lawyer-poster{min-height:185px}.lawyer-card h3{font-size:19px}.practice-tile{padding:19px 15px}.practice-tile strong{font-size:20px}.discovery-search .search-city input{background:#FFFFFF;color:#172A3A}.news-body p{font-size:17px}.section-description{font-size:14px}}
+@media(max-width:700px){.nav-shell{padding:14px 18px 12px!important;gap:10px 20px}.nav-shell>.brand{font-size:35px;letter-spacing:-1.5px}.discovery-header nav{order:initial;width:auto;gap:15px}.discovery-header nav button,.discovery-header nav>a{font-size:10px;letter-spacing:.5px}.shortlist-nav{margin-left:auto}.attorney-account-link{font-size:11px}.section-heading h2{font-size:27px}.lawyer-poster{min-height:185px}.lawyer-card h3{font-size:19px}.practice-tile{padding:24px 18px 21px}.practice-tile strong{font-size:20px}.discovery-search .search-city input{background:#FFFFFF;color:#172A3A}.news-body p{font-size:17px}.section-description{font-size:14px}}
 /* Client intake and private lead inbox */
 .hire-lawyer-link{display:inline-flex;padding:10px 16px;background:var(--yellow);color:#5B6268!important;border-bottom:2px solid #AA8B52;font-size:12px;font-weight:700;letter-spacing:.7px;text-transform:uppercase}
 .intake-page{display:grid;grid-template-columns:1fr 1.2fr;gap:70px;padding-top:65px;padding-bottom:80px;max-width:1180px}.intake-intro h1{font-family:var(--font-jakarta),Arial,sans-serif;font-size:clamp(42px,5vw,67px);line-height:1.06;font-weight:400;margin:25px 0}.intake-deck{font-size:20px;line-height:1.6;color:#5B6268}.intake-aside{margin-top:45px;border-top:1px solid #AA8B52;padding-top:26px}.intake-aside span{font-size:11px;letter-spacing:1.7px;color:var(--yellow)}.intake-aside p{color:#5B6268;line-height:1.65;margin:10px 0 28px}.intake-panel{background:linear-gradient(140deg,#FFFFFF,#F6F4EF);border:1px solid #AA8B52;padding:35px;box-shadow:9px 10px 0 #172A3A14}.intake-panel h2{font-family:var(--font-jakarta),Arial,sans-serif;font-size:36px;font-weight:400;margin:12px 0}.intake-panel>p{color:#5B6268;font-size:13px}.intake-form{display:grid;gap:20px;margin-top:28px}.intake-form label,.lead-card label{display:grid;gap:9px;font-size:13px;color:#172A3A}.intake-form input,.intake-form select,.intake-form textarea,.lead-card select{width:100%;background:#F6F4EF;border:1px solid #D8D4C9;border-radius:2px;color:#172A3A;padding:13px;font:inherit;box-sizing:border-box}.intake-form input:focus,.intake-form select:focus,.intake-form textarea:focus{outline:2px solid var(--yellow);outline-offset:2px}.intake-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}.intake-form .lead-consent{display:flex;align-items:flex-start;font-size:12px;line-height:1.7}.lead-consent input{width:18px;height:18px;flex-shrink:0;margin-top:3px;accent-color:var(--yellow)}.intake-form .lead-trap{display:none}.intake-form .record-note{font-size:12px;line-height:1.7;margin:0}.intake-form button{padding:17px}.lead-success{padding:30px 0}.lead-success p{line-height:1.8}.lead-success a{display:inline-block;margin-top:20px}.lead-card{border-top:1px solid #AA8B52;padding:26px 0}.lead-card-heading{display:flex;justify-content:space-between;gap:25px}.lead-card h2{font-family:var(--font-jakarta),Arial,sans-serif;font-size:29px;margin:12px 0}.lead-card a{color:var(--yellow)}.lead-summary{white-space:pre-wrap;line-height:1.7;overflow-wrap:anywhere}.lead-card small{color:#5B6268}.lead-card select{min-width:130px}
@@ -74,21 +74,21 @@ body{background:var(--pale-blue);color:#172A3A}
 .site-header,.discovery-header{background:#F6F4EF;border-bottom-color:#AA8B52}
 .nav-shell>.brand{color:#172A3A}.brand>span>span{color:#AA8B52}
 .section-heading{border-top-color:#AA8B52}
-.hire-lawyer-link,.gold-button,.nav-cta,.submit-button,.success-state button,.directory-filters button,.rank,.poster-rank,.brand-mark,.segmented button[aria-pressed=true],.search-submit{color:#FFFFFF!important;background:#243E52;border-color:#172A3A}
-.gold-button:hover,.hire-lawyer-link:hover,.search-submit:hover{background:#172A3A}
+.hire-lawyer-link,.gold-button,.nav-cta,.submit-button,.success-state button,.directory-filters button,.rank,.poster-rank,.brand-mark,.segmented button[aria-pressed=true],.search-submit{color:#FFFFFF!important;background:#1E6298;border-color:#17486F}
+.gold-button:hover,.hire-lawyer-link:hover,.search-submit:hover{background:#174E78}
 .practice-tile{background:linear-gradient(145deg,#FFFFFF,#F6F4EF)}.practice-tile:hover{background:#ECE9E1;border-color:#AA8B52}
 .monthly-spotlight,.lawyer-poster,.attorney-tile{background:linear-gradient(135deg,#ECE9E1,#F6F4EF);border-color:#AA8B52}
 .settlement-visual,.news-fact{background:linear-gradient(135deg,#ECE9E1,#F6F4EF)}
 .hire-lawyer-link{box-shadow:0 3px 0 #172A3A}
 ::selection{background:#AA8B52;color:#FFFFFF}
 
-/* Navy masthead, ivory paper, and restrained brass detailing. */
-:root{--navy:#172A3A;--ivory:#F6F4EF;--brass:#AA8B52}
-.site-header,.discovery-header{background:#172A3A;border-bottom:4px double #AA8B52;box-shadow:0 6px 20px #172A3A14}
+/* Clearer brand-blue masthead, ivory paper, and restrained brass detailing. */
+:root{--navy:#175B91;--ivory:#F6F4EF;--brass:#AA8B52}
+.site-header,.discovery-header{background:#175B91;border-bottom:4px double #AA8B52;box-shadow:0 6px 20px #172A3A14}
 .nav-shell>.brand{color:#F6F4EF}.brand>span>span{color:#C8AF7C}
 .discovery-header nav button,.discovery-header nav>a,.discovery-header .shortlist-nav,.discovery-header .attorney-account-link{color:#E5E7E9}
 .discovery-header nav button.active,.discovery-header nav button:hover,.discovery-header nav>a:hover{color:#E4C997;border-bottom-color:#AA8B52}
-.discovery-header .shortlist-nav span{background:#2B4051;color:#E4C997}
+.discovery-header .shortlist-nav span{background:#236DA4;color:#F0D7A5}
 .discovery-header .client-login-link{display:inline-flex;align-items:center;justify-content:center;padding:9px 15px;background:#F6F4EF;color:#172A3A!important;border:1px solid #C8AF7C;border-radius:2px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;text-decoration:none;line-height:1.2;transition:background-color .18s ease,border-color .18s ease}
 .discovery-header .client-login-link:hover{background:#D9C79F;color:#172A3A!important;border-color:#E4C997}
 .hire-lawyer-link{background:#C8AF7C;color:#172A3A!important;border-color:#AA8B52;box-shadow:0 2px 0 #907443}
@@ -102,7 +102,7 @@ body{background:var(--pale-blue);color:#172A3A}
 .poster-initials,.initials{color:#243E52;text-shadow:none}
 .settlement-visual,.news-fact{background:#EAE6DC}
 .gold-button,.nav-cta,.submit-button,.success-state button,.directory-filters button{box-shadow:0 2px 0 #0C1D29,0 5px 12px #172A3A14}
-.discovery-footer{background:#172A3A;color:#F6F4EF;border-top-color:#AA8B52}
+.discovery-footer{background:#175B91;color:#F6F4EF;border-top-color:#AA8B52}
 .discovery-footer p,.discovery-footer small{color:#C1C9CF}.discovery-footer a,.discovery-footer button{color:#DCC69E}
 
 /* Font families from the supplied page; preserve existing sizes and spacing. */
@@ -172,6 +172,8 @@ h1,h2,h3,h4,h5,h6,button,.gold-button,.outline-button,.hire-lawyer-link,.nav-cta
 .create-account-button{color:#172A3A;background:linear-gradient(120deg,#B99552 0%,#E4C997 52%,#C8AF7C 100%);border:1px solid #AA8B52;border-radius:2px;box-shadow:0 2px 0 #80642E,0 5px 12px #172A3A14;transition:background .18s ease,border-color .18s ease,transform .18s ease}
 .create-account-button:hover{background:linear-gradient(120deg,#C8AF7C 0%,#F0DCB4 52%,#D9C79F 100%);border-color:#80642E;transform:translateY(-1px)}
 .create-account-button:focus-visible{outline:3px solid #E4C997;outline-offset:3px}
+.forgot-password-link{justify-self:start;background:transparent;color:#1769A8;padding:0;border:0;font:inherit;font-size:14px;font-weight:700;text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.forgot-password-link:hover{color:#FF6B00}.forgot-password-link:focus-visible{outline:3px solid #E4C997;outline-offset:4px}
 @media(max-width:520px){.client-auth-main-actions{grid-template-columns:minmax(0,1fr)}}
 
 .nav-shell>.brand .brand-wordmark{font-family:var(--font-editorial),Georgia,serif;font-weight:700;letter-spacing:-.045em;font-size:1.13em;line-height:1.1;text-transform:none}.brand-wordmark>span{font-style:italic;font-weight:600}
@@ -355,19 +357,262 @@ a,button{font-weight:700}
  body{font-size:16px}.listing-kind-tabs{grid-template-columns:1fr}.add-listing-intro{font-size:16px}
 }
 
-/* Set the weekly popularity chart apart as a softly tinted editorial feature. */
-.popular-attorneys-section{padding:34px 32px 26px;background:linear-gradient(135deg,#E9E5DC 0%,#F2EEE6 58%,#E5DFD3 100%);border:1px solid #D2C7B3;border-left:4px solid #AA8B52;border-radius:3px;box-shadow:0 14px 34px -28px #172A3A80}
+/* Set the weekly chart apart with the blue and orange LawVetter palette. */
+.popular-attorneys-section{padding:42px 40px 32px;background:linear-gradient(135deg,#175B91 0%,#1E6DA7 58%,#155487 100%);border:1px solid #0F456F;border-top:5px solid #FE6B05;border-left:5px solid #FE6B05;border-radius:5px;box-shadow:0 18px 38px -26px #172A3ACC}
 .popular-attorneys-section .section-heading{border-top:0;padding-top:0}
-.popular-attorneys-section .section-description{color:#4A545D}
-.popular-attorneys-section .lawyer-card{background:#FBFAF7;box-shadow:0 8px 20px #172A3A0D}
+.popular-attorneys-section .section-heading h2{color:#FFFFFF}
+.popular-attorneys-section .section-kicker{color:#FFB06F}
+.popular-attorneys-section .text-action{color:#FFFFFF}
+.popular-attorneys-section .section-description{color:#E7F2FA}
+.popular-attorneys-section .lawyer-card{background:#FFFFFF;border:1px solid #D9E4EC;border-top:4px solid #FE6B05;box-shadow:0 12px 24px #0C365A30}
+.popular-attorneys-section .lawyer-card-body{padding:24px 22px 22px;background:#FFFFFF}
+.popular-attorneys-section .poster-rank{background:#FE6B05;-webkit-text-stroke:0;text-shadow:none}
+.popular-attorneys-section .lawyer-poster .poster-label{border-color:#FE6B05}
+.popular-attorneys-section .carousel-footer{margin-top:26px;padding-top:20px;border-top:1px solid #FFFFFF42}
+.firm-feature{padding:42px 40px 36px;background:#1E6FAF;border:1px solid #155487;border-radius:5px;box-shadow:0 18px 38px -26px #172A3ACC}
+.firm-feature .section-heading{border-top:0;padding-top:0}
+.firm-feature .section-heading h2,.firm-feature .firm-rank-card h3 a{color:#FFFFFF}
+.firm-feature .section-kicker,.firm-feature .firm-position{color:#FFB06F}
+.firm-feature .text-action{color:#FFFFFF}
+.firm-feature .section-description{color:#E7F2FA}
+.firm-feature .firm-rank-card{padding-left:16px;padding-right:16px;border-color:#FFFFFF42;background:#FFFFFF0D}
+.firm-feature .firm-rank-card:hover{background:#FFFFFF17;border-color:#FFB06F}
+.firm-feature .firm-card-arrow{color:#FFB06F}
+@media(max-width:700px){.firm-feature{padding:30px 20px 24px}.firm-feature .firm-rank-card{padding-left:12px;padding-right:12px}}
+.popular-attorneys-section .carousel-footer>p,.popular-attorneys-section .carousel-controls>span{color:#F4F8FB}
+.popular-attorneys-section .carousel-controls .outline-button{background:#FFFFFF;color:#175B91;border:1px solid #FE6B05}
 @media(max-width:700px){
- .popular-attorneys-section{padding:25px 18px 20px;border-left-width:3px}
+ .popular-attorneys-section{padding:28px 18px 24px;border-left-width:4px}
+ .popular-attorneys-section .lawyer-card-body{padding:18px 16px 17px}
+}
+@media(max-width:560px){
+ .popular-attorneys-section .popular-carousel-grid{grid-template-columns:1fr;grid-template-rows:none}
+ .popular-attorneys-section .popular-carousel-grid .lawyer-card{display:block;grid-row:auto}
+ .popular-attorneys-section .popular-carousel-grid .lawyer-card-body{display:flex;grid-row:auto;padding:22px 20px 20px}
+ .popular-attorneys-section .lawyer-card h3,.popular-attorneys-section .lawyer-card .card-firm{min-height:0}
 }
 /* LawVetter identity: the supplied vector badge replaces the former paired portraits. */
 .nav-shell>.brand{gap:0}
-.lawvetter-brand-logo{display:block;width:clamp(280px,28vw,380px);height:auto}
+.lawvetter-brand-logo{display:block;width:clamp(380px,40vw,560px);height:auto}
 .legal-footer .lawvetter-footer-logo{display:block;width:min(260px,100%);height:auto}
 @media(max-width:700px){
- .lawvetter-brand-logo{width:min(72vw,250px)}
+ .lawvetter-brand-logo{width:min(75vw,290px)}
  .legal-footer .lawvetter-footer-logo{width:min(230px,82vw)}
+}
+
+/* Review-led landing page: compact navigation, direct message and split hero. */
+.site-header.discovery-header{position:sticky;top:0;z-index:100;background:#FFFFFF;border-bottom:1px solid #D9E2E9;box-shadow:0 5px 18px #173D5C12}
+.discovery-header .nav-shell{display:flex;flex-wrap:nowrap;justify-content:flex-start;max-width:1440px;min-height:86px;padding:13px 32px!important;gap:28px}
+.nav-shell>.brand{flex:0 0 auto;width:auto;justify-content:flex-start}
+.lawvetter-brand-logo{width:clamp(210px,17vw,258px);height:auto}
+.discovery-header .responsive-menu{display:flex;align-items:center;flex:1;gap:24px;min-width:0}
+.discovery-header .responsive-menu nav{display:flex;align-items:center;gap:25px;white-space:nowrap}
+.discovery-header nav button,.discovery-header nav>a{display:inline-flex;align-items:center;min-height:42px;padding:8px 0;color:#17344B!important;border-bottom:3px solid transparent;font-size:12px;font-weight:800;letter-spacing:.45px;text-decoration:none;text-transform:none}
+.discovery-header nav button.active,.discovery-header nav button:hover,.discovery-header nav>a:hover{color:#155B96!important;border-bottom-color:#FE6B05}
+.discovery-header .shortlist-nav{color:#17344B!important;white-space:nowrap}
+.discovery-header .shortlist-nav span{background:#E8F2F9;color:#155B96}
+.discovery-header .responsive-menu>.client-login-link{margin-left:auto}
+.discovery-header .client-login-link{min-height:44px;padding:10px 16px;background:#FFFFFF;color:#17344B!important;border:1px solid #BFCFDA;border-radius:3px;box-shadow:none;font-size:11px;letter-spacing:.6px}
+.discovery-header .client-login-link:hover{background:#F2F7FA;color:#155B96!important;border-color:#155B96}
+.discovery-header .attorney-account-link:not(.client-login-link){color:#17344B!important;font-size:12px;font-weight:750;text-decoration:none;white-space:nowrap}
+.discovery-header .hire-lawyer-link{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 18px;background:#FE6B05;color:#FFFFFF!important;border:1px solid #D95700;border-bottom:3px solid #B94B03;border-radius:3px;box-shadow:none;font-size:11px;letter-spacing:.65px;white-space:nowrap}
+.discovery-header .hire-lawyer-link:hover{background:#E85F00;color:#FFFFFF!important}
+
+.lawvetter-landing-hero{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(410px,.92fr);gap:24px;min-height:650px;padding:24px;background:#FFF4EA;color:#FFFFFF;overflow:hidden}
+.landing-hero-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:72px clamp(40px,7.5vw,122px);background:#1E6FAF;border-radius:28px;box-shadow:0 18px 42px #224D6D1C}
+.landing-hero-kicker{margin:0 0 22px;color:#FFD5B6;font-size:11px;font-weight:800;letter-spacing:2px;line-height:1.5}
+.landing-hero-copy h1{max-width:800px;margin:0 0 27px;color:#FFFFFF;font-family:var(--font-jakarta),Arial,sans-serif;font-size:clamp(50px,5.4vw,82px);font-weight:650;letter-spacing:-.055em;line-height:1.02;text-wrap:balance}
+.landing-hero-deck{max-width:690px;margin:0 0 34px;color:#EAF4FB;font-size:clamp(17px,1.45vw,22px);font-weight:500;line-height:1.6}
+.landing-hero-actions{display:flex;flex-wrap:wrap;gap:13px}
+.landing-hero-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:54px;padding:13px 22px;border-radius:12px;font-family:var(--font-jakarta),Arial,sans-serif;font-size:13px;font-weight:800;letter-spacing:.25px;text-decoration:none}
+.landing-primary-cta{background:#FE6B05;color:#FFFFFF;border:1px solid #D95700;box-shadow:0 3px 0 #B94B03}
+.landing-primary-cta:hover{background:#E85F00;color:#FFFFFF}
+.landing-secondary-cta{background:transparent;color:#FFFFFF;border:1px solid #FFFFFFAA}
+.landing-secondary-cta:hover{background:#FFFFFF;color:#155B96}
+.landing-hero-visual{position:relative;display:block;min-width:0;padding:22px;background:linear-gradient(145deg,#F7D5BC 0%,#EEAF7F 100%);border-radius:28px;box-shadow:0 18px 42px #9B5D3217;overflow:hidden}
+.landing-hero-photo{position:absolute;inset:22px;width:auto;min-height:0;margin:0;border:1px solid #FFFFFFA6;border-radius:21px;box-shadow:0 18px 40px #67391B24;overflow:hidden}
+.landing-hero-photo img{display:block;width:100%;height:100%;min-height:0;object-fit:cover;object-position:left center;transform:translateX(-155px) scale(1.12);transform-origin:left center}
+.landing-hero-photo::after{position:absolute;inset:0;content:"";pointer-events:none;background:linear-gradient(90deg,transparent 74%,#EFB18324 86%,#EFB1838F 100%)}
+.landing-hero-proof{position:absolute;z-index:1;top:22px;right:22px;bottom:22px;display:flex;width:min(56%,310px);padding:27px 23px;background:#FFFCF8;color:#17344B;border:1px solid #FFFFFF;border-radius:21px;box-shadow:-12px 0 32px #6A3D2126;flex-direction:column;justify-content:center}
+.landing-hero-proof h2{margin:0 0 13px;color:#17344B;font-family:var(--font-jakarta),Arial,sans-serif;font-size:clamp(21px,1.65vw,26px);font-weight:700;letter-spacing:-.035em;line-height:1.13}
+.landing-hero-proof ol{display:grid;margin:0;padding:0;list-style:none}
+.landing-hero-proof li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;padding:10px 0;border-top:1px solid #DDE7EE}
+.landing-hero-proof li>span{padding-top:2px;color:#E96308;font-size:11px;font-weight:850;letter-spacing:.7px}
+.landing-hero-proof li div{display:grid;gap:2px}
+.landing-hero-proof li strong{font-size:14px;line-height:1.3}
+.landing-hero-proof li small{color:#5C6C77;font-size:11px;font-weight:550;line-height:1.42}
+.lawvetter-landing-hero+.discovery-search{background:#FFF9EF;border-bottom:1px solid #E7D9C7;box-shadow:0 8px 22px #17344B0D}
+.lawvetter-landing-hero+.discovery-search form{max-width:1360px;padding:24px 32px;filter:none}
+.lawvetter-landing-hero+.discovery-search .search-submit{background:#155B96;border-color:#0E4778;box-shadow:0 2px 0 #0E365B}
+
+@media(max-width:1180px) and (min-width:901px){
+ .discovery-header .nav-shell{gap:20px;padding-left:22px!important;padding-right:22px!important}
+ .lawvetter-brand-logo{width:205px}
+ .discovery-header .responsive-menu{gap:15px}
+ .discovery-header .responsive-menu nav{gap:17px}
+ .discovery-header nav button,.discovery-header nav>a,.discovery-header .attorney-account-link:not(.client-login-link){font-size:11px}
+ .discovery-header .client-login-link,.discovery-header .hire-lawyer-link{padding-left:12px;padding-right:12px}
+ .lawvetter-landing-hero{grid-template-columns:minmax(0,1.05fr) minmax(390px,.95fr)}
+ .landing-hero-copy{padding-left:50px;padding-right:50px}
+ .landing-hero-photo img{object-position:left center}
+}
+
+@media(max-width:900px){
+ .site-header.discovery-header{position:relative}
+ .discovery-header .nav-shell{display:grid;grid-template-columns:minmax(0,1fr) 48px;min-height:74px;gap:0 16px;padding:11px 20px!important}
+ .nav-shell>.brand{grid-column:1;grid-row:1;width:auto;min-width:0;justify-content:flex-start}
+ .lawvetter-brand-logo{width:min(54vw,230px)}
+ .mobile-menu-toggle{display:flex;grid-column:2;grid-row:1;justify-self:end;position:relative;width:46px;height:44px;margin:0;padding:8px;background:#FFFFFF;border:1px solid #BFCFDA;border-radius:3px;color:#155B96}
+ .mobile-menu-toggle span{position:absolute;left:10px;top:20px;width:24px;height:2px;background:#155B96;border-radius:2px}
+ .mobile-menu-toggle span:nth-child(1){transform:translateY(-8px)}
+ .mobile-menu-toggle span:nth-child(2){transform:none}
+ .mobile-menu-toggle span:nth-child(3){transform:translateY(8px)}
+ .mobile-menu-toggle[aria-expanded=true] span:nth-child(1){transform:rotate(45deg)}
+ .mobile-menu-toggle[aria-expanded=true] span:nth-child(2){opacity:0}
+ .mobile-menu-toggle[aria-expanded=true] span:nth-child(3){transform:rotate(-45deg)}
+ .discovery-header .responsive-menu{display:none;grid-column:1/-1;grid-row:2;width:100%;padding:10px 0 4px!important;border-top:1px solid #D9E2E9;flex-direction:column;align-items:stretch;gap:0!important}
+ .discovery-header .responsive-menu.is-open{display:flex}
+ .discovery-header .responsive-menu nav{display:flex;flex-direction:column;align-items:stretch;width:100%;gap:0}
+ .discovery-header .responsive-menu nav button,.discovery-header .responsive-menu nav>a,.discovery-header .responsive-menu .shortlist-nav,.discovery-header .responsive-menu>a.attorney-account-link{display:flex!important;align-items:center!important;justify-content:flex-start!important;width:100%!important;min-height:48px;margin:0!important;padding:12px 10px!important;border:0;border-bottom:1px solid #E1E7EB;border-radius:0;background:transparent;color:#17344B!important;text-align:left!important;font-size:12px;line-height:1.35;font-weight:750;letter-spacing:.2px;text-transform:none;box-shadow:none}
+ .discovery-header .responsive-menu .shortlist-nav{justify-content:space-between!important}
+ .discovery-header .responsive-menu .shortlist-nav span{margin-left:auto}
+ .discovery-header .responsive-menu>.client-login-link{margin-left:0}
+ .discovery-header .responsive-menu .hire-lawyer-link{width:100%!important;min-height:50px;margin:12px 0 4px!important;padding:13px 18px!important;justify-content:center!important;border:1px solid #D95700;border-bottom:3px solid #B94B03;border-radius:3px;background:#FE6B05;color:#FFFFFF!important;text-align:center!important;box-shadow:none}
+ .lawvetter-landing-hero{grid-template-columns:1fr;min-height:0}
+ .landing-hero-copy{min-height:510px;padding:64px clamp(24px,7vw,58px)}
+ .landing-hero-copy h1{font-size:clamp(47px,8vw,67px)}
+ .lawvetter-landing-hero{gap:18px;padding:18px}
+ .landing-hero-copy,.landing-hero-visual{border-radius:24px}
+ .landing-hero-visual{display:grid;grid-template-rows:minmax(360px,.9fr) auto;gap:16px;min-height:0;padding:20px}
+ .landing-hero-photo{position:relative;inset:auto;width:100%}
+ .landing-hero-photo img{min-height:360px;object-position:left 27%;transform:scale(1.1)}
+ .landing-hero-proof{position:relative;inset:auto;width:100%;padding:25px 24px 21px;box-shadow:0 12px 30px #6A3D2120}
+}
+
+@media(max-width:560px){
+ .discovery-header .nav-shell{min-height:68px;padding:9px 16px!important}
+ .lawvetter-brand-logo{width:min(62vw,220px)}
+ .landing-hero-copy{min-height:0;padding:52px 22px 56px}
+ .landing-hero-kicker{font-size:9px;letter-spacing:1.45px;margin-bottom:18px}
+ .landing-hero-copy h1{font-size:clamp(43px,13vw,57px);line-height:1.01;margin-bottom:22px}
+ .landing-hero-deck{font-size:17px;line-height:1.55;margin-bottom:29px}
+ .landing-hero-actions{display:grid;width:100%;grid-template-columns:1fr}
+ .landing-hero-actions a{width:100%;min-height:52px}
+ .lawvetter-landing-hero{gap:12px;padding:12px}
+ .landing-hero-copy,.landing-hero-visual{border-radius:20px}
+ .landing-hero-visual{min-height:0;padding:14px}
+ .landing-hero-photo{border-radius:15px}
+ .landing-hero-photo img{min-height:340px;object-position:left 27%}
+ .landing-hero-proof{padding:21px 19px 17px;border-radius:15px}
+ .landing-hero-proof h2{font-size:26px}
+ .landing-hero-proof li{grid-template-columns:30px minmax(0,1fr);gap:8px;padding:11px 0}
+ .landing-hero-proof li strong{font-size:14px}
+ .landing-hero-proof li small{font-size:12px}
+ .lawvetter-landing-hero+.discovery-search form{grid-template-columns:minmax(0,1fr);gap:10px;padding:18px 16px}
+ .lawvetter-landing-hero+.discovery-search .search-kind,.lawvetter-landing-hero+.discovery-search .primary-search,.lawvetter-landing-hero+.discovery-search .search-city,.lawvetter-landing-hero+.discovery-search .search-submit{grid-column:1}
+}
+
+/* Keep the attorney search fully visible below the sticky desktop navigation. */
+#attorney-search{scroll-margin-top:104px}
+@media(max-width:900px){#attorney-search{scroll-margin-top:16px}}
+
+/* Keep the landing page inside narrow iPhone viewports, including during font swap. */
+.lawvetter-landing-hero,.landing-hero-copy,.landing-hero-visual,.landing-hero-photo,.landing-hero-proof,.landing-hero-actions{min-width:0;max-width:100%;box-sizing:border-box}
+.landing-hero-copy h1,.landing-hero-deck{min-width:0;max-width:100%;overflow-wrap:break-word}
+@media(max-width:560px){
+ .site-header.discovery-header,.discovery-header .nav-shell,.lawvetter-landing-hero{width:100%;max-width:100%;overflow-x:clip}
+ .discovery-header .nav-shell{grid-template-columns:minmax(0,1fr) 44px;gap:0 10px;padding-left:max(14px,env(safe-area-inset-left))!important;padding-right:max(14px,env(safe-area-inset-right))!important}
+ .nav-shell>.brand{max-width:100%;overflow:hidden}
+ .lawvetter-brand-logo{width:min(100%,205px);max-width:calc(100vw - 84px)}
+ .mobile-menu-toggle{width:44px;max-width:44px}
+ .landing-hero-copy{width:100%;padding:46px max(20px,env(safe-area-inset-right)) 50px max(20px,env(safe-area-inset-left))}
+ .landing-hero-copy h1{font-size:clamp(40px,11.8vw,52px);letter-spacing:-.047em;text-wrap:wrap}
+ .landing-hero-deck{font-size:16px;line-height:1.55}
+ .landing-hero-actions{width:100%}
+ .landing-hero-actions a{width:100%;max-width:100%;padding-left:14px;padding-right:14px;text-align:center;white-space:normal}
+ .landing-hero-visual{width:100%;padding:14px}
+ .landing-hero-photo{width:100%}
+}
+@media(max-width:360px){
+ .discovery-header .nav-shell{padding-left:max(12px,env(safe-area-inset-left))!important;padding-right:max(12px,env(safe-area-inset-right))!important}
+ .lawvetter-brand-logo{width:min(100%,188px);max-width:calc(100vw - 78px)}
+ .landing-hero-copy{padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right))}
+ .landing-hero-kicker{font-size:8px;letter-spacing:1.15px}
+ .landing-hero-copy h1{font-size:clamp(37px,11.8vw,43px)}
+ .landing-hero-deck{font-size:15px}
+ .landing-hero-photo img{object-position:left 27%}
+}
+
+/* Use current chart leaders in the shortlist preview instead of empty mock cards. */
+.shortlist-banner{grid-template-columns:1.05fr 1.3fr;gap:42px;overflow:visible}
+.shortlist-attorneys{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;align-items:start;padding:20px 0 11px}
+.shortlist-attorney-card{min-width:0;background:linear-gradient(145deg,#FFFFFF 0%,#F4F8FB 62%,#E8F0F5 100%);border:1px solid #D8D4C9;border-bottom:5px solid #1E6FAF;border-radius:14px;box-shadow:0 7px 0 #C8D9E6,0 20px 32px -23px #172A3AB8,inset 0 1px 0 #FFFFFF;overflow:hidden}
+.shortlist-attorney-card:nth-child(1){transform:rotate(-2deg) translateY(8px)}
+.shortlist-attorney-card:nth-child(2){transform:translateY(-8px)}
+.shortlist-attorney-card:nth-child(3){transform:rotate(2deg) translateY(4px)}
+.shortlist-attorney-main{width:100%;display:flex;flex-direction:column;align-items:flex-start;text-align:left;background:transparent;color:#172A3A;padding:13px 13px 10px}
+.shortlist-attorney-main:hover .shortlist-attorney-link{color:#FE6B05}
+.shortlist-attorney-photo{width:100%;aspect-ratio:1.15/1;display:grid;place-items:center;overflow:hidden;background:linear-gradient(145deg,#DDEAF3,#F7FAFC);color:#1E6FAF;font-size:40px;font-weight:800;letter-spacing:-2px;border-radius:8px;margin-bottom:12px}
+.shortlist-attorney-photo img{width:100%;height:100%;object-fit:cover}
+.shortlist-attorney-rank{color:#1E6FAF;font-size:9px;letter-spacing:1.15px;text-transform:uppercase;font-weight:800}
+.shortlist-attorney-main strong{font-family:var(--font-jakarta),Arial,sans-serif;font-size:15px;line-height:1.25;margin:7px 0;overflow-wrap:anywhere}
+.shortlist-attorney-main small{color:#5B6268;font-size:10px;line-height:1.4;min-height:28px;overflow-wrap:anywhere}
+.shortlist-attorney-link{font-size:10px;font-weight:800;color:#1E6FAF;margin-top:12px}
+.shortlist-attorney-card>.save-attorney{width:calc(100% - 24px);margin:0 12px 12px;min-height:32px;padding:7px 8px;font-size:9px}
+@media(max-width:1000px){
+ .shortlist-banner{grid-template-columns:1fr;gap:22px}
+ .shortlist-attorneys{max-width:680px}
+}
+@media(max-width:700px){
+ .shortlist-banner{padding:25px 20px;overflow:hidden}
+ .shortlist-attorneys{grid-template-columns:1fr;gap:12px;padding:4px 0 9px}
+ .shortlist-attorney-card,.shortlist-attorney-card:nth-child(1),.shortlist-attorney-card:nth-child(2),.shortlist-attorney-card:nth-child(3){transform:none}
+ .shortlist-attorney-main{display:grid;grid-template-columns:74px minmax(0,1fr);grid-template-rows:auto auto auto auto;column-gap:14px;padding:12px 12px 9px}
+ .shortlist-attorney-photo{grid-column:1;grid-row:1/5;width:74px;height:92px;aspect-ratio:auto;margin:0;font-size:25px}
+ .shortlist-attorney-rank,.shortlist-attorney-main strong,.shortlist-attorney-main small,.shortlist-attorney-link{grid-column:2;min-width:0}
+ .shortlist-attorney-main strong{font-size:16px;margin:4px 0}
+ .shortlist-attorney-main small{min-height:0}
+ .shortlist-attorney-link{margin-top:5px}
+ .shortlist-attorney-card>.save-attorney{margin-left:100px;width:calc(100% - 112px)}
+}
+
+/* Final narrow-screen guardrails: keep the header, open menu, and page inside the
+   visual viewport on iPhone Safari as well as device-emulation viewports. */
+@media(max-width:560px){
+ html,body{width:100%;max-width:100%;overflow-x:hidden}
+ body{position:relative}
+ body>main,main,.site-header,.legal-footer,.discovery-search,.page-shell{width:100%;max-width:100%;min-width:0;box-sizing:border-box}
+ .site-header.discovery-header{overflow-x:hidden}
+ .discovery-header .nav-shell{
+  width:100%;max-width:100%;min-width:0;box-sizing:border-box;
+  grid-template-columns:minmax(0,1fr) 42px;gap:0 10px;
+  padding-left:max(12px,env(safe-area-inset-left))!important;
+  padding-right:max(12px,env(safe-area-inset-right))!important;
+ }
+ .discovery-header .nav-shell>.brand{width:auto;min-width:0;max-width:100%;overflow:hidden}
+ .lawvetter-brand-logo{display:block;width:min(100%,198px);max-width:100%;height:auto}
+ .mobile-menu-toggle{width:42px;min-width:42px;max-width:42px;height:42px;justify-self:end;box-sizing:border-box}
+ .mobile-menu-toggle span{left:9px;width:22px}
+ .discovery-header .responsive-menu,.discovery-header .responsive-menu nav{width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow-x:hidden}
+ .discovery-header .responsive-menu nav button,.discovery-header .responsive-menu nav>a,.discovery-header .responsive-menu .shortlist-nav,.discovery-header .responsive-menu>a.attorney-account-link,.discovery-header .responsive-menu .hire-lawyer-link{max-width:100%;min-width:0;box-sizing:border-box;overflow-wrap:anywhere}
+ .lawvetter-landing-hero,.landing-hero-copy,.landing-hero-visual,.landing-hero-photo,.landing-hero-proof,.landing-hero-actions,.discovery-search form,.discovery-shell,.spotlight-layout,.monthly-spotlight,.discovery-section,.shortlist-banner,.settlement-slide,.popular-attorneys-section{width:100%;max-width:100%;min-width:0;box-sizing:border-box}
+ .landing-hero-photo{overflow:hidden}
+ .landing-hero-photo img{width:100%;max-width:100%;transform:none;object-position:left 27%}
+ .page-shell{padding-left:18px;padding-right:18px}
+ .monthly-spotlight,.settlement-slide{overflow:hidden}
+}
+@media(max-width:360px){
+ .discovery-header .nav-shell{grid-template-columns:minmax(0,1fr) 40px;gap:0 8px;padding-left:max(10px,env(safe-area-inset-left))!important;padding-right:max(10px,env(safe-area-inset-right))!important}
+ .lawvetter-brand-logo{width:min(100%,178px)}
+ .mobile-menu-toggle{width:40px;min-width:40px;max-width:40px;height:40px}
+ .mobile-menu-toggle span{left:8px}
+ .page-shell{padding-left:14px;padding-right:14px}
+ .popular-attorneys-section .popular-carousel,.popular-attorneys-section .carousel-footer{width:100%;max-width:100%;min-width:0}
+ .popular-attorneys-section .carousel-controls{display:grid;width:100%;max-width:100%;min-width:0;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:7px}
+ .popular-attorneys-section .carousel-controls>.outline-button{width:100%;min-width:0;padding:8px 7px}
+ .popular-attorneys-section .carousel-controls>span{grid-column:2;grid-row:1;min-width:36px}
+ .popular-attorneys-section .carousel-controls>.outline-button:nth-of-type(1){grid-column:1;grid-row:1}
+ .popular-attorneys-section .carousel-controls>.outline-button:nth-of-type(2){grid-column:1/-1;grid-row:2}
+ .popular-attorneys-section .carousel-controls>.outline-button:nth-of-type(3){grid-column:3;grid-row:1}
+ .practice-tile strong,.practice-tile>span{max-width:100%;overflow-wrap:anywhere}
 }

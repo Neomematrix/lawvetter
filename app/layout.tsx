@@ -27,9 +27,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const imageUrl = `${protocol}://${host}/og.png`;
 
   return {
-    title: "LawVetter | Know who represents you",
+    title: "LawVetter | Real reviews from real clients",
     description:
-      "Explore Georgia attorneys and firms, follow search rankings, and save a shortlist to compare professional records.",
+      "Read verified client reviews, explore attorney records, and compare lawyers with confidence.",
     icons: {
       icon: [
         { url: "/favicon.svg", type: "image/svg+xml" },
@@ -40,17 +40,17 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     manifest: "/site.webmanifest",
     openGraph: {
-      title: "LawVetter | Know who represents you",
+      title: "LawVetter | Real reviews from real clients",
       description:
-        "Explore Georgia attorneys and firms, follow search rankings, and save a shortlist to compare professional records.",
+        "Read verified client reviews, explore attorney records, and compare lawyers with confidence.",
       images: [{ url: imageUrl, width: 1200, height: 630, alt: "LawVetter attorney reviews and referrals" }],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: "LawVetter | Know who represents you",
+      title: "LawVetter | Real reviews from real clients",
       description:
-        "Explore Georgia attorneys and firms, follow search rankings, and save a shortlist to compare professional records.",
+        "Read verified client reviews, explore attorney records, and compare lawyers with confidence.",
       images: [imageUrl],
     },
   };

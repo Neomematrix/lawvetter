@@ -145,6 +145,12 @@ export const clientAuthLimits=sqliteTable('client_auth_limits',{
  count:integer('count').notNull(),
  expiresAt:integer('expires_at').notNull(),
 });
+export const clientPasswordResetTokens=sqliteTable('client_password_reset_tokens',{
+ tokenHash:text('token_hash').primaryKey(),
+ userId:text('user_id').notNull().references(()=>clientProfiles.userId),
+ expiresAt:integer('expires_at').notNull(),
+ requestedAt:text('requested_at').notNull(),
+},t=>[index('client_password_reset_tokens_user_idx').on(t.userId)]);
 export const clientApprovalEmails=sqliteTable('client_approval_emails',{
  verificationId:text('verification_id').primaryKey().references(()=>clientVerifications.id),
  id:text('id').notNull(),
