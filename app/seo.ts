@@ -1,6 +1,6 @@
 export const SITE_ORIGIN='https://lawvetter.kyle-george-1801.chatgpt.site';
 export const SITE_NAME='LawVetter';
-export const SITE_DESCRIPTION='Find Georgia lawyers, review professional records, read verified client experiences, and compare attorneys before deciding whom to contact.';
+export const SITE_DESCRIPTION='Find lawyers, review professional records, read verified client experiences, and compare attorneys before deciding whom to contact.';
 
 export type AttorneyIdentity={bar_number:string;name:string};
 

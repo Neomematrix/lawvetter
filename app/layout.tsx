@@ -24,7 +24,7 @@ const jakarta = Plus_Jakarta_Sans({
 const googleVerification=(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION||'').trim();
 export const metadata:Metadata={
     metadataBase:new URL(SITE_ORIGIN),
-    title:{default:"Find and Compare Georgia Lawyers | LawVetter",template:"%s | LawVetter"},
+    title:{default:"Find and Compare Lawyers | LawVetter",template:"%s | LawVetter"},
     description:SITE_DESCRIPTION,
     applicationName:SITE_NAME,
     category:"legal directory",
@@ -43,15 +43,15 @@ export const metadata:Metadata={
     manifest: "/site.webmanifest",
     openGraph: {
       siteName:SITE_NAME,
-      title: "Find and Compare Georgia Lawyers | LawVetter",
+      title: "Find and Compare Lawyers | LawVetter",
       description:SITE_DESCRIPTION,
       url:SITE_ORIGIN,
-      images: [{ url: "/og.png", width: 1200, height: 630, alt: "LawVetter Georgia lawyer directory" }],
+      images: [{ url: "/og.png", width: 1200, height: 630, alt: "LawVetter lawyer directory" }],
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: "Find and Compare Georgia Lawyers | LawVetter",
+      title: "Find and Compare Lawyers | LawVetter",
       description:SITE_DESCRIPTION,
       images: ["/og.png"],
     },
