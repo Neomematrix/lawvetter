@@ -8,7 +8,7 @@ export async function POST(request:Request){
  try{
   const data=await request.json() as Record<string,unknown>;
   if(!data||Array.isArray(data))return failure('Invalid request.');
-  const platform=profileIdentity(request),client=await clientIdentity(request),passwordOnly=data.authentication==='password';
+  const platform=(await profileIdentity(request)),client=await clientIdentity(request),passwordOnly=data.authentication==='password';
   const {user,email}=client||(!passwordOnly?platform:{user:'',email:''}),admin=!passwordOnly&&platform.admin,db=rawDb();
   const action=String(data.action||''),bar=typeof data.bar==='string'?data.bar:'';
   if(action==='view'){

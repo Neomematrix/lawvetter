@@ -97,7 +97,7 @@ export async function POST(request:Request){
    try{await db.prepare("INSERT INTO directory_submissions(id,kind,name,firm_name,state,bar_number,city,website,official_source_url,submitter_name,submitter_email,notes,verification_status,verification_note,status,submitted_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,'pending',?)").bind(id,kind,name,firmName,state,barNumber,city,website,source.toString(),submitterName,submitterEmail,notes,verification.status,verification.note,now).run();}catch(e){await discardSubmissionPhoto(photoKey);throw e;}
    const notificationEmailStatus=await notifyDirectorySubmission(id,new URL(request.url).origin);return Response.json({submitted:true,id,verificationStatus:verification.status,notificationEmailStatus});
   }
-  const {user,admin}=profileIdentity(request);
+  const {user,admin}=(await profileIdentity(request));
   if(!user||!admin)return failure('Only the site owner can review directory submissions.',403);
   if(action==='list'){await reconcileApprovedListings();await retryDirectoryNotices(new URL(request.url).origin);
    const rows=await db.prepare("SELECT * FROM directory_submissions ORDER BY CASE WHEN status='pending' THEN 0 ELSE 1 END,submitted_at DESC LIMIT 300").all();

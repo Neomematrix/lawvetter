@@ -4,11 +4,10 @@ import {rawDb} from '../../../db/raw';
 import {profileIdentity,sameOrigin} from '../../../db/profile-access';
 export const dynamic='force-dynamic';
 export async function GET(){try{return Response.json(await readNews(),{headers:{'Cache-Control':'no-store'}});}catch(e){console.error('News read failed',e);return Response.json({error:'News temporarily unavailable'},{status:503});}}
-// This Site is owner-private. Dispatch authenticates non-user service requests.
-// If sharing changes, disable service writes until a separate writer credential is configured.
+// Public-site writes require a dedicated authenticated administrator session.
 export async function PUT(request:Request){
- const identity=profileIdentity(request);
- if(!sameOrigin(request)||(identity.user&&!identity.admin))return Response.json({error:'Forbidden'},{status:403});
+ const identity=(await profileIdentity(request));
+ if(!sameOrigin(request)||!identity.admin)return Response.json({error:'Forbidden'},{status:403});
  try{
   const text=await request.text();if(text.length>5000000)return Response.json({error:'Edition too large'},{status:413});
   const body=JSON.parse(text);const expectedUpdatedAt=body?.expectedUpdatedAt;

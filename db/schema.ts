@@ -249,3 +249,13 @@ export const reviewModerationEmails=sqliteTable('review_moderation_emails',{
  providerId:text('provider_id'),
  createdAt:text('created_at').notNull(),
 });
+
+export const adminCredentials=sqliteTable('admin_credentials',{
+ email:text('email').primaryKey(),passwordHash:text('password_hash').notNull(),updatedAt:text('updated_at').notNull(),
+});
+export const adminSessions=sqliteTable('admin_sessions',{
+ tokenHash:text('token_hash').primaryKey(),email:text('email').notNull(),expiresAt:integer('expires_at').notNull(),
+});
+export const adminPasswordTokens=sqliteTable('admin_password_tokens',{
+ tokenHash:text('token_hash').primaryKey(),email:text('email').notNull(),expiresAt:integer('expires_at').notNull(),
+});

@@ -33,7 +33,7 @@ export async function GET(request:Request){
 }
 export async function POST(request:Request){
  try{
-  const platform=profileIdentity(request),client=await clientIdentity(request);
+  const platform=(await profileIdentity(request)),client=await clientIdentity(request);
   const admin=platform.admin;
   let user=client?.user||'',email=client?.email||'';
   if(!sameOrigin(request))return fail('Invalid request origin.',403);

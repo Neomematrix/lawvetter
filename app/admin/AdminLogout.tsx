@@ -1,0 +1,3 @@
+'use client';
+import {useState} from 'react';
+export default function AdminLogout(){const [error,setError]=useState(''),[busy,setBusy]=useState(false);async function logout(){setBusy(true);try{const r=await fetch('/api/admin/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'logout'})});if(!r.ok)throw Error();location.assign('/admin');}catch{setError('Sign out failed. Please try again.');setBusy(false);}}return <div className="page-shell" style={{display:'flex',justifyContent:'flex-end',gap:16,paddingTop:12}}>{error&&<span role="alert">{error}</span>}<button className="outline-button" disabled={busy} onClick={logout}>Sign out of admin</button></div>;}
