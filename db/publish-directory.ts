@@ -13,7 +13,7 @@ export async function publishDirectoryListing(item:Listing,status:string,reviewe
  const now=new Date().toISOString(),details=directoryDetails(item.notes),firmName=await directoryFirmName(item.firm_name);
  const result=await db.batch([
   db.prepare("INSERT INTO attorneys(bar_number,license_number,source_id,name,company,city,state,status,source_url,imported_at) SELECT ?,bar_number,'owner-reviewed:'||id,name,?,city,state,?,?,? FROM directory_submissions WHERE id=? AND kind='lawyer' AND status IN ('pending','approved_for_import') AND notes=?").bind(attorneyId,firmName,status,item.official_source_url,now,item.id,item.notes),
-  db.prepare("INSERT INTO attorney_profiles(bar_number,owner_id,website,photo_key,claimed_at,updated_at) SELECT ?,'',?,?, '',? FROM directory_submissions WHERE id=? AND status IN ('pending','approved_for_import') AND notes=?").bind(attorneyId,item.website,details.photoKey||'',now,item.id,item.notes),
+  db.prepare("INSERT INTO attorney_profiles(bar_number,owner_id,practice_areas,website,photo_key,claimed_at,updated_at) SELECT ?,'',?,?,?, '',? FROM directory_submissions WHERE id=? AND status IN ('pending','approved_for_import') AND notes=?").bind(attorneyId,details.practiceAreas||'',item.website,details.photoKey||'',now,item.id,item.notes),
   db.prepare("UPDATE directory_submissions SET status='published',review_note=?,reviewed_at=?,reviewed_by=? WHERE id=? AND status IN ('pending','approved_for_import') AND notes=?").bind(note,now,reviewer,item.id,item.notes)
  ]);if(!result[2].meta.changes)throw Error('This submission changed during publication. Reload and try again.');
 }

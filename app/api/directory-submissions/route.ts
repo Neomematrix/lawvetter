@@ -70,6 +70,8 @@ export async function POST(request:Request){
    if(client&&(!await allowAuth(request,client.email)))return failure('Too many attempts. Please try again in 15 minutes.',429);
    const submitterName=text(data.submitterName,150),submitterEmail=client?.email||text(data.submitterEmail,254).toLowerCase();
    const firmWebsite=text(data.firmWebsite,500);if(firmWebsite&&(!firmName||!safeHttps(firmWebsite)))return failure('Enter the firm name and a complete HTTPS firm website.');
+   if(data.practiceAreas!==undefined&&(typeof data.practiceAreas!=='string'||data.practiceAreas.length>500))return failure('Practice areas must be text of 500 characters or fewer.');
+   const practiceAreas=kind==='lawyer'?text(data.practiceAreas,500):'';
    let notes=text(data.notes,2500);if(!client&&notes.startsWith('LAWVETTER_'))return failure('Invalid notes.');
    if(client){
     if(kind!=='lawyer'||state!=='GA'||!/^\d{1,20}$/.test(barNumber)||data.attestation!==true)return failure('Confirm your identity and enter your Georgia bar number.');
@@ -84,7 +86,7 @@ export async function POST(request:Request){
    if(kind==='lawyer'&&!barNumber)return failure('Enter the lawyer’s state license or bar number.');
    const source=safeHttps(officialSourceUrl);if(!source)return failure('Use a complete HTTPS link to an official regulator, court, bar, or firm roster.');
    if(website&&!safeHttps(website))return failure('Use a complete HTTPS website address.');
-   notes=withDirectoryDetails(notes,{firmWebsite});
+   notes=withDirectoryDetails(notes,{firmWebsite,practiceAreas});
    const since=new Date(Date.now()-86400000).toISOString();
    const recent=await db.prepare('SELECT COUNT(*) AS total FROM directory_submissions WHERE submitter_email=? AND submitted_at>=?').bind(submitterEmail,since).first<{total:number}>();
    if(Number(recent?.total||0)>=8)return failure('Submission limit reached. Please try again tomorrow.',429);
