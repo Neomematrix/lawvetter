@@ -1,18 +1,18 @@
 import {env} from 'cloudflare:workers';
 
-const config=()=>env as unknown as {RESEND_API_KEY?:string;APPROVAL_EMAIL_FROM?:string};
+const config=()=>env as unknown as {RESEND_API_KEY?:string};
 
 export function passwordResetEmailConfigured(){
  const c=config();
- return !!(c.RESEND_API_KEY&&c.APPROVAL_EMAIL_FROM);
+ return !!c.RESEND_API_KEY;
 }
 
 export async function sendPasswordResetEmail(recipient:string,token:string,origin:string){
  const c=config();
  if(!passwordResetEmailConfigured())return false;
- const resetUrl=origin+'/client-reviews?reset='+encodeURIComponent(token);
+ const resetUrl=origin+'/reset-password?reset='+encodeURIComponent(token);
  const payload=JSON.stringify({
-  from:c.APPROVAL_EMAIL_FROM,
+  from:'LawVetter <no-reply@lawvetter.com>',
   to:[recipient],
   subject:'Reset your LawVetter password',
   text:'We received a request to reset your LawVetter password. Use the secure link below within 30 minutes.\n\n'+resetUrl+'\n\nIf you did not request this change, you can ignore this email. Your password will remain unchanged.',

@@ -11,10 +11,15 @@ export const hinesRoster = {
 };
 export function verifiedFirmRoster(key:string){
  if(['kesslerandsolomianyllc','kesslerandsolomianyfamilylaw'].includes(key))return kesslerRoster;
+ if(['royalandcrossllc','royalandcrossfamilylaw','royalcrossllc','royalcrossfamilylaw','royalandcross'].includes(key))return crossRoster;
  return ['lawofficesofmatthewchinesllc','lawofficesofmatthewchines','hineslawfirm','hineslaw'].includes(key)?hinesRoster:undefined;
 }
 export const kesslerRoster:typeof hinesRoster={
  name:'Kessler & Solomiany LLC',source:'https://www.ksfamilylaw.com/attorneys/',checked:'2026-10-09',
  bars:['004170','665798','142015','424064','526375','349724','826770','503793','108562','390087','133392','355086','864339','636618','875149','025208','379617','553775','681971'],additional:[],
 };
-export function verifiedFirmForAttorney(bar:string){return [hinesRoster,kesslerRoster].find(roster=>roster.bars.includes(bar));}
+export const crossRoster:typeof hinesRoster={
+ name:'Royal & Cross, LLC',source:'https://crossfamilylaw.com/#our-team',checked:'2026-10-11',
+ bars:['501513','238455','128532'],additional:[],
+};
+export function verifiedFirmForAttorney(bar:string){return [hinesRoster,kesslerRoster,crossRoster].find(roster=>roster.bars.includes(bar));}

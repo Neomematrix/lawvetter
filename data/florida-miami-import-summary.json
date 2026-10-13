@@ -1,0 +1,39 @@
+{
+  "sourceType": "Owner-supplied official Florida Bar PDFs",
+  "sources": [
+    {
+      "file": "Find a Florida Bar Lawyer.pdf",
+      "sha256": "7f19e0cf1ab162c6f44ea96f5e82d71d8fbafa43810674eaef5a74481529892e",
+      "records": 10,
+      "results": "Showing 1 - 10 of 11,928 results."
+    },
+    {
+      "file": "Find a sssBar Lawyer.pdf",
+      "sha256": "2e86426b00b1024cd2ee2c3c78984bee07c9d68b65d0b7103f1ec25d6d6a6b15",
+      "records": 10,
+      "results": "Showing 11 - 20 of 11,928 results."
+    },
+    {
+      "file": "listFind a Florida Bar Lawyer.pdf",
+      "sha256": "b406ca96903b7339bb1be71ab8b2660472f6cd13b56be23728d007dc993ce9eb",
+      "records": 50,
+      "results": "Showing 101 - 150 of 11,928 results."
+    },
+    {
+      "file": "next listFind a Florida Bar Lawyer.pdf",
+      "sha256": "7302fed21f02b2e2d2bf7b6811f6e7dde0aea51f2843aced29f4f08bc4b4cdc6",
+      "records": 50,
+      "results": "Showing 151 - 200 of 11,928 results."
+    }
+  ],
+  "uniqueAttorneys": 120,
+  "status": "Member in Good Standing; Eligible to Practice Law in Florida",
+  "snapshotDate": "2026-10-12",
+  "completeMiamiDirectory": false,
+  "excludedFields": [
+    "Cell numbers",
+    "Fax numbers"
+  ],
+  "omittedResults": "21-100 and 201 onward",
+  "collectedAt": "2026-10-12T19:21:20.695047+00:00"
+}

@@ -1,5 +1,6 @@
 // Search words must stand on their own: "Ted" must not match "United".
 export function attorneyNameSearch(query: string) {
+ const licenseQuery=query.replace(/^[a-z]{2}:/,'');
  const words = query.split(/[\s.,;:()&/"-]+/).filter(Boolean).slice(0,20);
  const escape = (s:string) => s.replace(/[\\%_]/g,'\\$&');
  const wordColumn = (column:string) => {
@@ -15,11 +16,11 @@ export function attorneyNameSearch(query: string) {
  // Tedd is accepted as a spelling variant of the published nickname Ted.
  const searchableName = "CASE WHEN bar_number = '231458' THEN name || ' Ted Tedd S' WHEN bar_number = '004170' THEN name || ' Randy' ELSE name END";
  const name = expression(searchableName), company = expression('company');
- if(!words.length) return {where:'lower(bar_number) = ?',args:[query],order:'',orderArgs:[] as string[]};
+ if(!words.length) return {where:'lower(COALESCE(license_number,bar_number)) = ?',args:[licenseQuery],order:'',orderArgs:[] as string[]};
  return {
-  where:`((${name}) OR (${company}) OR lower(bar_number) = ?)`,
-  args:[...patterns,...patterns,query],
-  order:`CASE WHEN lower(bar_number) = ? THEN 0 WHEN (${name}) THEN 1 ELSE 2 END, `,
-  orderArgs:[query,...patterns],
+  where:`((${name}) OR (${company}) OR lower(COALESCE(license_number,bar_number)) = ?)`,
+  args:[...patterns,...patterns,licenseQuery],
+  order:`CASE WHEN lower(COALESCE(license_number,bar_number)) = ? THEN 0 WHEN (${name}) THEN 1 ELSE 2 END, `,
+  orderArgs:[licenseQuery,...patterns],
  };
 }

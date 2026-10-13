@@ -2,8 +2,9 @@ import type {Metadata} from 'next';
 import SiteHeader from '../SiteHeader';
 
 export const metadata:Metadata={
- title:'Disclaimer & Content Use | LawVetter',
+ title:'Disclaimer & Content Use',
  description:'Important information about LawVetter, attorney-directory data, client reviews, rankings, and permitted use of site content.',
+ alternates:{canonical:'https://lawvetter.kyle-george-1801.chatgpt.site/disclaimer'},
 };
 
 export default function DisclaimerPage(){

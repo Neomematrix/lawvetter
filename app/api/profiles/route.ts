@@ -1,3 +1,6 @@
+import {validAttorneyId} from '../../attorney-identity';
+import {clientIdentity} from '../../../db/client-auth';
+import {decodeAttorneyDraft} from '../../../db/attorney-submission';
 import {rawDb} from '../../../db/raw';
 import {profileIdentity,sameOrigin} from '../../../db/profile-access';
 const failure=(error:string,status=400)=>Response.json({error},{status});
@@ -5,7 +8,8 @@ export async function POST(request:Request){
  try{
   const data=await request.json() as Record<string,unknown>;
   if(!data||Array.isArray(data))return failure('Invalid request.');
-  const {user,email,admin}=profileIdentity(request),db=rawDb();
+  const platform=profileIdentity(request),client=await clientIdentity(request),passwordOnly=data.authentication==='password';
+  const {user,email}=client||(!passwordOnly?platform:{user:'',email:''}),admin=!passwordOnly&&platform.admin,db=rawDb();
   const action=String(data.action||''),bar=typeof data.bar==='string'?data.bar:'';
   if(action==='view'){
    const profile=await db.prepare('SELECT bar_number,headline,bio,practice_areas,website,photo_key,claimed_at,updated_at FROM attorney_profiles WHERE bar_number=?').bind(bar).first();
@@ -13,19 +17,19 @@ export async function POST(request:Request){
    const claim=user?await db.prepare('SELECT status,review_note FROM profile_claims WHERE bar_number=? AND user_id=? ORDER BY submitted_at DESC LIMIT 1').bind(bar,user).first():null;
    return Response.json({profile,isOwner:!!owned,claim,signedIn:!!user,isAdmin:admin},{headers:{'Cache-Control':'private, no-store'}});
   }
-  if(!user||!email)return failure('Sign in with ChatGPT to claim or manage an attorney profile.',401);
+  if(!user||!email)return failure('Log in to claim or manage an attorney profile.',401);
   if(!sameOrigin(request))return failure('Invalid request origin.',403);
   if(action==='account'){
    const [profiles,claims]=await Promise.all([
-    db.prepare('SELECT p.*,a.name,a.company FROM attorney_profiles p JOIN attorneys a ON a.bar_number=p.bar_number WHERE p.owner_id=? ORDER BY a.name').bind(user).all(),
-    db.prepare('SELECT c.bar_number,c.status,c.review_note,c.submitted_at,a.name FROM profile_claims c JOIN attorneys a ON a.bar_number=c.bar_number WHERE c.user_id=? ORDER BY c.submitted_at DESC').bind(user).all()
-   ]);return Response.json({profiles:profiles.results,claims:claims.results,isAdmin:admin});
+    db.prepare('SELECT p.*,a.name,a.company,a.state FROM attorney_profiles p JOIN attorneys a ON a.bar_number=p.bar_number WHERE p.owner_id=? ORDER BY a.name').bind(user).all(),
+    db.prepare('SELECT c.bar_number,c.status,c.review_note,c.submitted_at,a.name,a.state FROM profile_claims c JOIN attorneys a ON a.bar_number=c.bar_number WHERE c.user_id=? ORDER BY c.submitted_at DESC').bind(user).all()
+   ]);const submitted=await db.prepare('SELECT id,name,bar_number,status,review_note,notes FROM directory_submissions WHERE submitter_email=? ORDER BY submitted_at DESC').bind(email).all<{id:string;name:string;bar_number:string;status:string;review_note:string;notes:string}>();return Response.json({profiles:profiles.results,claims:claims.results,isAdmin:admin,submissions:submitted.results.filter(r=>decodeAttorneyDraft(r.notes)?.owner===user).map(({notes,...r})=>r)},{headers:{'Cache-Control':'private, no-store'}});
   }
   if(action==='claim'){
    const fullName=typeof data.fullName==='string'?data.fullName.trim():'',verification=typeof data.verification==='string'?data.verification.trim():'';
-   if(!/^\d{1,20}$/.test(bar)||fullName.length<3||fullName.length>150||verification.length<20||verification.length>2000||data.attestation!==true)return failure('Complete your name, verification details, and ownership confirmation.');
+   if(!validAttorneyId(bar)||fullName.length<3||fullName.length>150||verification.length<20||verification.length>2000||data.attestation!==true)return failure('Complete your name, verification details, and ownership confirmation.');
    const a=await db.prepare('SELECT bar_number FROM attorneys WHERE bar_number=?').bind(bar).first();if(!a)return failure('Attorney not found.',404);
-   if(await db.prepare('SELECT bar_number FROM attorney_profiles WHERE bar_number=?').bind(bar).first())return failure('This profile has already been claimed. Contact the site owner to resolve ownership.',409);
+   if(await db.prepare("SELECT bar_number FROM attorney_profiles WHERE bar_number=? AND owner_id<>''").bind(bar).first())return failure('This profile has already been claimed. Contact the site owner to resolve ownership.',409);
    const id=JSON.stringify([user,bar]);
    const old=await db.prepare('SELECT status FROM profile_claims WHERE id=?').bind(id).first<{status:string}>();
    if(old?.status==='pending')return failure('Your claim is already awaiting review.',409);
@@ -44,7 +48,7 @@ export async function POST(request:Request){
   }
   if(action==='review-list'){
    if(!admin)return failure('Only the site owner can review claims.',403);
-   const rows=await db.prepare("SELECT c.*,a.name,a.email AS directory_email,a.phone AS directory_phone,a.source_url,a.status AS bar_status,a.company FROM profile_claims c JOIN attorneys a ON a.bar_number=c.bar_number ORDER BY CASE WHEN c.status='pending' THEN 0 ELSE 1 END,c.submitted_at DESC LIMIT 200").all();return Response.json({claims:rows.results});
+   const rows=await db.prepare("SELECT c.*,a.name,a.state,a.email AS directory_email,a.phone AS directory_phone,a.source_url,a.status AS bar_status,a.company FROM profile_claims c JOIN attorneys a ON a.bar_number=c.bar_number ORDER BY CASE WHEN c.status='pending' THEN 0 ELSE 1 END,c.submitted_at DESC LIMIT 200").all();return Response.json({claims:rows.results});
   }
   if(action==='review'){
    if(!admin)return failure('Only the site owner can review claims.',403);
@@ -54,9 +58,9 @@ export async function POST(request:Request){
    const now=new Date().toISOString();
    if(data.decision==='approve'){
     if(data.verified!==true)return failure('Verify the attorney’s identity and authority before approving.');
-    const existing=await db.prepare('SELECT owner_id FROM attorney_profiles WHERE bar_number=?').bind(claim.bar_number).first<{owner_id:string}>();if(existing&&existing.owner_id!==claim.user_id)return failure('Another owner already controls this profile.',409);
+    const existing=await db.prepare('SELECT owner_id FROM attorney_profiles WHERE bar_number=?').bind(claim.bar_number).first<{owner_id:string}>();if(existing&&existing.owner_id&&existing.owner_id!==claim.user_id)return failure('Another owner already controls this profile.',409);
     await db.batch([
-     db.prepare("INSERT OR IGNORE INTO attorney_profiles(bar_number,owner_id,claimed_at,updated_at) SELECT bar_number,user_id,?,? FROM profile_claims WHERE id=? AND status='pending'").bind(now,now,data.id),
+     db.prepare("INSERT INTO attorney_profiles(bar_number,owner_id,claimed_at,updated_at) SELECT bar_number,user_id,?,? FROM profile_claims WHERE id=? AND status='pending' ON CONFLICT(bar_number) DO UPDATE SET owner_id=excluded.owner_id,claimed_at=excluded.claimed_at,updated_at=excluded.updated_at WHERE attorney_profiles.owner_id='' OR attorney_profiles.owner_id=excluded.owner_id").bind(now,now,data.id),
      db.prepare("UPDATE profile_claims SET status='approved',review_note=?,reviewed_at=?,reviewed_by=? WHERE id=? AND status='pending' AND EXISTS(SELECT 1 FROM attorney_profiles p WHERE p.bar_number=profile_claims.bar_number AND p.owner_id=profile_claims.user_id)").bind(note,now,user,data.id),
      db.prepare("UPDATE profile_claims SET status='rejected',review_note='Another claim for this profile was approved.',reviewed_at=?,reviewed_by=? WHERE bar_number=? AND id<>? AND status='pending' AND EXISTS(SELECT 1 FROM attorney_profiles p WHERE p.bar_number=profile_claims.bar_number)").bind(now,user,claim.bar_number,data.id)
     ]);

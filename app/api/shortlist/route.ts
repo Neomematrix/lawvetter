@@ -1,3 +1,4 @@
+import {validAttorneyId} from '../../attorney-identity';
 import {rawDb} from '../../../db/raw';
 import {clientIdentity} from '../../../db/client-auth';
 export async function POST(request:Request){
@@ -10,7 +11,7 @@ export async function POST(request:Request){
   if(!data||!['list','save','remove'].includes(data.action||''))return Response.json({error:'Invalid shortlist request.'},{status:400});
   const db=rawDb();
   if(data.action!=='list'){
-   if(typeof data.bar!=='string'||!/^\d{1,20}$/.test(data.bar))return Response.json({error:'Invalid attorney.'},{status:400});
+   if(typeof data.bar!=='string'||!validAttorneyId(data.bar))return Response.json({error:'Invalid attorney.'},{status:400});
    const id=JSON.stringify([user,data.bar]);
    if(data.action==='remove')await db.prepare('DELETE FROM shortlist WHERE id=? AND user_id=?').bind(id,user).run();
    else {

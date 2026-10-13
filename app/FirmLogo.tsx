@@ -1,5 +1,6 @@
 'use client';
 import {useEffect,useState} from 'react';
+import {verifiedFirmLogos} from './verified-firm-logos';
 import {firmKey} from './api/attorneys/firm';
 
 function initials(name:string){
@@ -13,7 +14,7 @@ export default function FirmLogo({name,website}:{name:string;website?:string}){
  const showImage=Boolean(website)&&!failed;
  return <div className="firm-logo-block">
   <div className="firm-logo-surface">
-   {showImage?<img src={'/api/firm-logo?key='+encodeURIComponent(firmKey(name))+'&v=2'} alt={name+' logo'} onError={()=>setFailed(true)}/>:<span className="firm-logo-monogram" role="img" aria-label={name+' logo'}>{initials(name)}</span>}
+   {showImage?<img src={verifiedFirmLogos[firmKey(name)]||'/api/firm-logo?key='+encodeURIComponent(firmKey(name))+'&v=2'} alt={name+' logo'} onError={()=>setFailed(true)}/>:<span className="firm-logo-monogram" role="img" aria-label={name+' logo'}>{initials(name)}</span>}
   </div>
  </div>;
 }

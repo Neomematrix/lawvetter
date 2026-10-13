@@ -20,6 +20,9 @@ const originalSources:Record<string,{areas:string[];url:string}> = {
  '646135':{areas:['employment-law','litigation'],url:'https://www.justiceatwork.com/our-team/amanda-a-farahany/'},
  '282450':{areas:['estate-planning','business-law'],url:'https://www.gabar.org/lawyers/member-benefits---resources/speaker-clearinghouse/speaker-detail/282450'},
  '429940':{areas:['immigration'],url:'https://immigration.net/our-people/our-people-bios/'},
+ '501513':{areas:['family-law','litigation','estate-planning'],url:'https://crossfamilylaw.com/team/kelsie-royal-cross/'},
+ '238455':{areas:['family-law','litigation'],url:'https://crossfamilylaw.com/team/brennan-j-mcelhone/'},
+ '128532':{areas:['family-law'],url:'https://crossfamilylaw.com/team/megan-long/'},
 };
 export const practiceSources:Record<string,{areas:string[];url:string;sources:Record<string,string>}> = {...publishedIndex};
 for(const bar of kesslerRoster.bars){
@@ -31,3 +34,6 @@ for (const [bar, source] of Object.entries(originalSources)) {
 }
 export function practiceSourceUrl(bar:string,area:string){return practiceSources[bar]?.sources[area];}
 export const practiceCoverage='Practice-area coverage is being expanded. Results include published practice information and details supplied by approved profile owners; the State Bar roster does not classify every attorney by practice.';
+
+// Recognize a whole practice category without treating attorney or firm names as categories.
+export function searchPracticeArea(value:string){const q=value.trim().toLowerCase().replace(/[-_]+/g,' ').replace(/\s+/g,' ');const aliases:Record<string,string>={'family':'family-law','criminal law':'criminal-defense','immigration law':'immigration','estate law':'estate-planning','business':'business-law','employment':'employment-law'};return practiceAreas.find(a=>a.name.toLowerCase()===q||a.id.replace(/-/g,' ')===q||a.id===aliases[q]);}

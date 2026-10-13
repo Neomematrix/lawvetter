@@ -5,7 +5,7 @@ export default function LandingHero(){
    <h1 id="lawvetter-hero-title">Real reviews from real clients of lawyers.</h1>
    <p className="landing-hero-deck">Read verified client experiences, explore attorney records, and compare the details before you decide.</p>
    <div className="landing-hero-actions">
-    <a className="landing-primary-cta" href="/client-reviews">Read client reviews</a>
+    <a className="landing-primary-cta" href="/client-reviews">Leave Client Review</a>
     <a className="landing-secondary-cta" href="#attorney-search">Find an attorney</a>
    </div>
   </div>

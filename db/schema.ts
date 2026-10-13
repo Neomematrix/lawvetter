@@ -1,6 +1,8 @@
+import {sql} from 'drizzle-orm';
 import { integer, sqliteTable, text, index, uniqueIndex } from 'drizzle-orm/sqlite-core';
 export const attorneys = sqliteTable('attorneys', {
  barNumber: text('bar_number').primaryKey(),
+ licenseNumber: text('license_number'),
  sourceId: text('source_id').notNull(),
  name: text('name').notNull(),
  company: text('company').notNull().default(''),
@@ -16,7 +18,7 @@ export const attorneys = sqliteTable('attorneys', {
  email: text('email').notNull().default(''),
  sourceUrl: text('source_url').notNull(),
  importedAt: text('imported_at').notNull(),
-}, t => [index('attorneys_name_idx').on(t.name), index('attorneys_city_idx').on(t.city), index('attorneys_status_idx').on(t.status)]);
+}, t => [uniqueIndex('attorneys_state_license_idx').on(t.state,sql`COALESCE(license_number,bar_number)`),index('attorneys_name_idx').on(t.name), index('attorneys_city_idx').on(t.city), index('attorneys_status_idx').on(t.status)]);
 
 export const attorneySearchEvents = sqliteTable('attorney_search_events', {
  eventId: text('event_id').primaryKey(),
@@ -100,6 +102,14 @@ export const clientVerifications = sqliteTable('client_verifications', {
  legalName:text('legal_name').notNull(),
  court:text('court').notNull(),
  county:text('county').notNull(),
+ state:text('state').notNull().default('GA'),
+ opposingParty:text('opposing_party').notNull().default(''),
+ documentName:text('document_name').notNull().default(''),
+ documentDate:text('document_date').notNull().default(''),
+ partyRole:text('party_role').notNull().default(''),
+ representationStart:text('representation_start').notNull().default(''),
+ representationEnd:text('representation_end').notNull().default(''),
+ requestNotes:text('request_notes').notNull().default(''),
  docket:text('docket').notNull(),
  relationshipKey:text('relationship_key').notNull(),
  status:text('status').notNull().default('pending'),
@@ -111,6 +121,15 @@ export const clientVerifications = sqliteTable('client_verifications', {
  representationEvidence:text('representation_evidence').notNull().default(''),
  decisionNote:text('decision_note').notNull().default(''),
  reviewBody:text('review_body').notNull().default(''),
+ reviewDraft:text('review_draft').notNull().default(''),
+ reviewStatus:text('review_status').notNull().default(''),
+ reviewRevision:text('review_revision').notNull().default(''),
+ reviewSubmittedAt:text('review_submitted_at'),
+ reviewDecisionNote:text('review_decision_note').notNull().default(''),
+ ratingUseAgain:integer('rating_use_again'),
+ ratingCaredFor:integer('rating_cared_for'),
+ ratingRights:integer('rating_rights'),
+ ratingOutcome:integer('rating_outcome'),
  publicMode:text('public_mode').notNull().default('anonymous'),
  publishedAt:text('published_at'),
  updatedAt:text('updated_at').notNull(),
@@ -196,3 +215,25 @@ export const directorySubmissions=sqliteTable('directory_submissions',{
  index('directory_submissions_submitter_idx').on(t.submitterEmail,t.submittedAt),
  index('directory_submissions_identity_idx').on(t.kind,t.state,t.barNumber,t.name),
 ]);
+
+export const clientRejectionEmails=sqliteTable('client_rejection_emails',{
+ id:text('id').primaryKey(),
+ verificationId:text('verification_id').notNull().references(()=>clientVerifications.id),
+ recipient:text('recipient').notNull(),
+ status:text('status').notNull().default('pending'),
+ payload:text('payload').notNull().default(''),
+ firstAttempt:integer('first_attempt'),
+ providerId:text('provider_id').notNull().default(''),
+ createdAt:text('created_at').notNull(),
+},t=>[index('client_rejection_emails_verification_idx').on(t.verificationId)]);
+
+export const reviewModerationEmails=sqliteTable('review_moderation_emails',{
+ id:text('id').primaryKey(),
+ verificationId:text('verification_id').notNull().references(()=>clientVerifications.id),
+ recipient:text('recipient').notNull(),
+ status:text('status').notNull().default('pending'),
+ payload:text('payload').notNull(),
+ firstAttempt:integer('first_attempt'),
+ providerId:text('provider_id'),
+ createdAt:text('created_at').notNull(),
+});

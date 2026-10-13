@@ -5,8 +5,8 @@ export function firmKey(name:string){
  for(const character of firmPunctuation)key=key.replaceAll(character,'');
  return key;
 }
-export function firmColumn(){
- let expression="replace(lower(company), '&', 'and')";
+export function firmColumn(column="company"){
+ let expression=`replace(lower(${column}), '&', 'and')`;
  for(const character of firmPunctuation)expression=`replace(${expression}, '${character.replaceAll("'","''")}', '')`;
  return expression;
 }

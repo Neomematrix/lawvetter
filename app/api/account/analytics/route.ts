@@ -1,8 +1,9 @@
+import {clientIdentity} from '../../../../db/client-auth';
 import {rawDb} from '../../../../db/raw';
 import {profileIdentity} from '../../../../db/profile-access';
 import {monthStart} from '../../attorneys/charts';
 export async function GET(request:Request){
- const headers={'Cache-Control':'private, no-store'}, {user}=profileIdentity(request);
+ const headers={'Cache-Control':'private, no-store'}, {user}=(await clientIdentity(request))||profileIdentity(request);
  if(!user)return Response.json({error:'Sign in to view your profile analytics.'},{status:401,headers});
  try{const db=rawDb(),now=new Date(),end=now.toISOString(),week=new Date(now.getTime()-7*86400000).toISOString(),month=monthStart(now);
  const rows=await db.prepare(`SELECT p.bar_number,a.name,

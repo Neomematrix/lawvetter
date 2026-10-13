@@ -1,2 +1,2 @@
-import AttorneyAccount from './AttorneyAccount';
-export default function Page(){return <AttorneyAccount/>;}
+import AttorneyLogin from './AttorneyLogin';
+export default function Page(){return <AttorneyLogin/>;}

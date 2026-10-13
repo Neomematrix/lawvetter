@@ -50,10 +50,14 @@ export const firmWebsites:Record<string,string> = {
   "639998": "https://hineslaw.org/",
   "504883": "https://hineslaw.org/",
   "214647": "https://hineslaw.org/",
-  "360208": "https://www.banksstubbs.com/"
+  "360208": "https://www.banksstubbs.com/",
+  "501513": "https://crossfamilylaw.com/",
+  "238455": "https://crossfamilylaw.com/",
+  "128532": "https://crossfamilylaw.com/"
 };
 
 export const websitesByFirm:Record<string,string> = {
+  "floridalawadviserspa":"https://www.floridalegaladvice.com/",
   ...Object.fromEntries(Object.entries(auditedFirmContacts).map(([key,value])=>[key,value.website])),
   ...searchedFirmWebsites,
   ...Object.fromEntries(Object.entries(firmContactOverrides).map(([key,value])=>[key,value.website])),
@@ -72,7 +76,11 @@ export const websitesByFirm:Record<string,string> = {
   "nicholsonrevellllp": "https://nicholsonrevell.com/",
   "warnerbatesmcginnisandanthony": "https://www.warnerbates.com/",
   "antoniniandcohen": "https://www.antoniniandcohen.com/",
-  "banksstubbsandmcfarlandllp": "https://www.banksstubbs.com/"
+  "banksstubbsandmcfarlandllp": "https://www.banksstubbs.com/",
+  "royalandcrossllc": "https://crossfamilylaw.com/",
+  "royalandcrossfamilylaw": "https://crossfamilylaw.com/",
+  "royalcrossllc": "https://crossfamilylaw.com/",
+  "royalcrossfamilylaw": "https://crossfamilylaw.com/"
 };
 export const linkedInByFirm:Record<string,string>={
  ...Object.fromEntries(Object.entries(auditedFirmContacts).filter(([,value])=>value.linkedin).map(([key,value])=>[key,value.linkedin])),

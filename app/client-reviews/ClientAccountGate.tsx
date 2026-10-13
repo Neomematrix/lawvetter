@@ -4,26 +4,26 @@ import ClientReviewAccount from './ClientReviewAccount';
 
 type State={client:{email:string}|null;legacy?:{email:string}|null;passwordResetAvailable?:boolean};
 
-export default function ClientAccountGate({bar}:{bar:string}){
- const [state,setState]=useState<State|null>(null),[mode,setMode]=useState('login'),[error,setError]=useState(''),[busy,setBusy]=useState(false),[email,setEmail]=useState(''),[firstName,setFirst]=useState(''),[lastName,setLast]=useState(''),[password,setPassword]=useState(''),[confirm,setConfirm]=useState(''),[currentPassword,setCurrent]=useState(''),[consent,setConsent]=useState(false),[changing,setChanging]=useState(false),[message,setMessage]=useState(''),[resetToken,setResetToken]=useState('');
+export default function ClientAccountGate({bar,initialMode='login'}:{bar:string;initialMode?:'login'|'request-reset'|'reset-password'}){
+ const [state,setState]=useState<State|null>(null),[mode,setMode]=useState<'login'|'register'|'set-password'|'request-reset'|'reset-password'>(initialMode),[error,setError]=useState(''),[busy,setBusy]=useState(false),[email,setEmail]=useState(''),[firstName,setFirst]=useState(''),[lastName,setLast]=useState(''),[password,setPassword]=useState(''),[confirm,setConfirm]=useState(''),[currentPassword,setCurrent]=useState(''),[consent,setConsent]=useState(false),[changing,setChanging]=useState(false),[message,setMessage]=useState(''),[resetToken,setResetToken]=useState('');
 
  async function load(){
   const r=await fetch('/api/client-auth',{cache:'no-store',credentials:'include'});
   const d=await r.json() as State&{error?:string};
   if(!r.ok)throw new Error(d.error);
   setState(d);
-  if(d.legacy&&!new URLSearchParams(window.location.search).get('reset')){setEmail(d.legacy.email);setMode('set-password');}
+  if(d.legacy&&initialMode==='login'&&!new URLSearchParams(window.location.search).get('reset')){setEmail(d.legacy.email);setMode('set-password');}
  }
 
  useEffect(()=>{
   const params=new URLSearchParams(window.location.search),token=params.get('reset')||'';
-  if(/^[a-f0-9]{64}$/.test(token)){setResetToken(token);setMode('reset-password');}
+  if(initialMode==='reset-password'||token){setResetToken(token);setMode('reset-password');window.history.replaceState({},'',window.location.pathname);}
   else if(params.get('mode')==='register')setMode('register');
   load().catch(e=>setError(e.message));
  },[]);
 
  function flashError(text:string){setError(text);window.setTimeout(()=>setError(current=>current===text?'':current),4000);}
- function showLogin(keepMessage=false){setMode('login');setResetToken('');setPassword('');setConfirm('');setError('');if(!keepMessage)setMessage('');window.history.replaceState({},'',window.location.pathname+(bar?'?bar='+encodeURIComponent(bar):''));}
+ function showLogin(keepMessage=false){setMode('login');setResetToken('');setPassword('');setConfirm('');setError('');if(!keepMessage)setMessage('');window.history.replaceState({},'','/client-reviews'+(bar?'?bar='+encodeURIComponent(bar):''));}
 
  async function submit(e:FormEvent){
   e.preventDefault();setError('');setMessage('');
@@ -40,7 +40,7 @@ export default function ClientAccountGate({bar}:{bar:string}){
     return;
    }
    if(action==='reset-password'){
-    setMessage('Your password has been reset. You can now log in.');
+    setState({client:null});setMessage('Your password has been reset. You can now log in.');window.dispatchEvent(new Event('client-auth-changed'));
     showLogin(true);
     return;
    }
@@ -65,7 +65,7 @@ export default function ClientAccountGate({bar}:{bar:string}){
 
  if(!state)return <div className="page-shell"><p role={error?'alert':'status'}>{error||'Loading client account…'}</p>{error&&<button className="outline-button" onClick={()=>{setError('');load().catch(e=>setError(e.message));}}>Retry</button>}</div>;
 
- if(state.client)return <><div className="page-shell client-session-bar"><p>Signed in as <strong>{state.client.email}</strong></p><div className="form-actions"><button className="outline-button" onClick={()=>{setChanging(!changing);setError('');setPassword('');setConfirm('');}}>Change password</button><button className="outline-button" disabled={busy} onClick={logout}>Log out</button></div>{error&&<p role="alert">{error}</p>}{message&&<p role="status">{message}</p>}{changing&&<form className="client-review-form" onSubmit={submit}><h2>Change password</h2><label>Current password<input type="password" required autoComplete="current-password" maxLength={128} value={currentPassword} onChange={e=>setCurrent(e.target.value)}/></label>{passwordFields}<button className="gold-button" disabled={busy}>Save password</button></form>}</div><ClientReviewAccount bar={bar}/></>;
+ if(state.client&&mode!=='reset-password'&&mode!=='request-reset')return <><div className="page-shell client-session-bar"><p>Signed in as <strong>{state.client.email}</strong></p><div className="form-actions"><button className="outline-button" onClick={()=>{setChanging(!changing);setError('');setPassword('');setConfirm('');}}>Change password</button><button className="outline-button" disabled={busy} onClick={logout}>Log out</button></div>{error&&<p role="alert">{error}</p>}{message&&<p role="status">{message}</p>}{changing&&<form className="client-review-form client-auth-panel" onSubmit={submit}><h2>Change password</h2><label>Current password<input type="password" required autoComplete="current-password" maxLength={128} value={currentPassword} onChange={e=>setCurrent(e.target.value)}/></label>{passwordFields}<button className="gold-button" disabled={busy}>Save password</button></form>}</div><ClientReviewAccount bar={bar}/></>;
 
  const heading=mode==='register'?'Create your client account':mode==='set-password'?'Set your account password':mode==='request-reset'?'Reset your password':mode==='reset-password'?'Choose a new password':'Log in to LawVetter';
  return <div className="page-shell account-page">
@@ -74,14 +74,14 @@ export default function ClientAccountGate({bar}:{bar:string}){
   {mode==='request-reset'&&<p>Enter the email address on your account. We will send a secure reset link if it matches a LawVetter account.</p>}
   {mode==='reset-password'&&<p>Create a new password for your LawVetter account. This link can be used once and expires after 30 minutes.</p>}
   {message&&<p className="success-message" role="status">{message}</p>}
-  <form className="client-review-form" onSubmit={submit}>
+  <form className="client-review-form client-auth-panel" onSubmit={submit}>
    {mode==='register'&&<div className="client-name-fields"><label>First name<input required autoComplete="given-name" maxLength={75} value={firstName} onChange={e=>setFirst(e.target.value)}/></label><label>Last name<input required autoComplete="family-name" maxLength={75} value={lastName} onChange={e=>setLast(e.target.value)}/></label></div>}
    {mode!=='reset-password'&&<label>Email address<input type="email" autoComplete="username" required maxLength={254} value={mode==='set-password'?state.legacy?.email||email:email} readOnly={mode==='set-password'} onChange={e=>setEmail(e.target.value)}/></label>}
    {mode!=='request-reset'&&passwordFields}
-   {mode==='login'&&(state.passwordResetAvailable?<button type="button" className="forgot-password-link" onClick={()=>{setMode('request-reset');setError('');setMessage('');setPassword('');}}>Forgot password?</button>:<p className="record-note">Forgotten-password email recovery is not available yet.</p>)}
+   {mode==='login'&&<a className="forgot-password-link" href="/forgot-password">Forgot Password?</a>}
    {mode==='register'&&<><label className="claim-attestation"><input type="checkbox" required checked={consent} onChange={e=>setConsent(e.target.checked)}/><span>I agree to LawVetter storing my name and email privately for account and verification purposes.</span></label><p className="record-note">No case number is needed to create an account. You will provide one only when requesting verification to review a specific attorney.</p></>}
    {error&&<p role="alert">{error}</p>}
-   {mode==='login'?<div className="client-auth-main-actions"><button className="gold-button" disabled={busy}>{busy?'Please wait…':'Log in'}</button><button type="button" className="create-account-button" onClick={()=>{setMode('register');setPassword('');setConfirm('');setError('');setMessage('');}}>Create a new account</button></div>:<button className="gold-button" disabled={busy}>{busy?'Please wait…':mode==='register'?'Create account':mode==='request-reset'?'Send reset link':mode==='reset-password'?'Save new password':'Save password and sign in'}</button>}
+   {mode==='login'?<div className="client-auth-main-actions"><button type="button" className="create-account-button" onClick={()=>{setMode('register');setPassword('');setConfirm('');setError('');setMessage('');}}>Create a new account</button><button className="gold-button" disabled={busy}>{busy?'Please wait…':'Log in'}</button></div>:<button className="gold-button" disabled={busy}>{busy?'Please wait…':mode==='register'?'Create account':mode==='request-reset'?'Send reset link':mode==='reset-password'?'Save new password':'Save password and sign in'}</button>}
   </form>
   <div className="client-auth-options">
    {mode==='register'&&<button className="outline-button" onClick={()=>showLogin()}>Already registered? Log in</button>}

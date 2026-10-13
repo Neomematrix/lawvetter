@@ -5,8 +5,8 @@ import {passwordResetEmailConfigured,sendPasswordResetEmail} from '../../../db/p
 import {randomBytes} from 'node:crypto';
 const json=(body:unknown,status=200,cookie?:string)=>Response.json(body,{status,headers:{'Cache-Control':'private, no-store',...(cookie?{'Set-Cookie':cookie}:{})}});
 const str=(v:unknown)=>typeof v==='string'?v.trim():'';
-const resetMessage='If a LawVetter account uses that email address, a password-reset link has been sent.';
-export async function GET(request:Request){try{const passwordResetAvailable=passwordResetEmailConfigured(),client=await clientIdentity(request);if(client)return json({client,passwordResetAvailable});const platform=profileIdentity(request);const legacy=platform.user?await rawDb().prepare('SELECT first_name,last_name,email FROM client_profiles p WHERE user_id=? AND lower(trim(email))=? AND NOT EXISTS(SELECT 1 FROM client_passwords c WHERE c.user_id=p.user_id)').bind(platform.user,platform.email).first():null;return json({client:null,legacy,passwordResetAvailable});}catch{return json({error:'Account service is temporarily unavailable.'},503);}}
+const resetMessage='If a LawVetter account uses that email address, you will receive a password-reset link. Check your inbox and spam folder.';
+export async function GET(request:Request){try{const passwordResetAvailable=passwordResetEmailConfigured(),client=await clientIdentity(request);if(client)return json({client,passwordResetAvailable});const platform=profileIdentity(request);const legacy=platform.user?await rawDb().prepare('SELECT first_name,last_name,email FROM client_profiles p WHERE user_id=? AND lower(trim(email))=? AND NOT EXISTS(SELECT 1 FROM client_passwords c WHERE c.user_id=p.user_id)').bind(platform.user,platform.email).first():null;const attorneyLegacy=platform.user?await rawDb().prepare('SELECT a.name FROM attorney_profiles p JOIN attorneys a ON a.bar_number=p.bar_number WHERE p.owner_id=? AND NOT EXISTS(SELECT 1 FROM client_passwords WHERE user_id=?) LIMIT 1').bind(platform.user,platform.user).first<{name:string}>():null;return json({client:null,legacy,attorneyLegacy:attorneyLegacy?{name:attorneyLegacy.name,email:platform.email}:null,passwordResetAvailable});}catch{return json({error:'Account service is temporarily unavailable.'},503);}}
 export async function POST(request:Request){try{
  if(request.headers.get('origin')!==new URL(request.url).origin)return json({error:'Invalid request origin.'},403);
  const text=await request.text();if(text.length>10000)return json({error:'Request too large.'},413);
@@ -22,10 +22,10 @@ export async function POST(request:Request){try{
    if(account){
     const token=randomBytes(32).toString('hex'),tokenHash=digest(token),expiresAt=Date.now()+30*60*1000;
     await db.batch([db.prepare('DELETE FROM client_password_reset_tokens WHERE user_id=? OR expires_at<=?').bind(account.user_id,Date.now()),db.prepare('INSERT INTO client_password_reset_tokens(token_hash,user_id,expires_at,requested_at) VALUES(?,?,?,?)').bind(tokenHash,account.user_id,expiresAt,now)]);
-    if(!await sendPasswordResetEmail(email,token,new URL(request.url).origin))await db.prepare('DELETE FROM client_password_reset_tokens WHERE token_hash=?').bind(tokenHash).run();
+    if(!await sendPasswordResetEmail(email,token,new URL(request.url).origin)){await db.prepare('DELETE FROM client_password_reset_tokens WHERE token_hash=?').bind(tokenHash).run();console.error('LawVetter password-reset email delivery failed; check Resend configuration and provider logs.');}
    }
   }
-  return json({saved:true,message:resetMessage});
+  return json({accepted:true,message:resetMessage});
  }
  if(action==='reset-password'){
   const token=str(d.token);
@@ -36,9 +36,10 @@ export async function POST(request:Request){try{
   if(password.length>128)return json({error:'Password is too long.'},400);
   const tokenHash=digest(token),reset=await db.prepare('SELECT user_id FROM client_password_reset_tokens WHERE token_hash=? AND expires_at>?').bind(tokenHash,Date.now()).first<{user_id:string}>();
   if(!reset)return json({error:'This password-reset link is invalid or has expired. Request a new one.'},400);
-  const results=await db.batch([db.prepare('UPDATE client_passwords SET password_hash=?,updated_at=? WHERE user_id=? AND EXISTS(SELECT 1 FROM client_password_reset_tokens WHERE token_hash=? AND user_id=? AND expires_at>?)').bind(hashPassword(password),now,reset.user_id,tokenHash,reset.user_id,Date.now()),db.prepare('DELETE FROM client_sessions WHERE user_id=?').bind(reset.user_id),db.prepare('DELETE FROM client_password_reset_tokens WHERE user_id=?').bind(reset.user_id)]);
-  if(!results[0].meta.changes)return json({error:'This password-reset link is invalid or has expired. Request a new one.'},400);
-  return json({saved:true});
+  const newHash=hashPassword(password),validAt=Date.now();
+  const results=await db.batch([db.prepare('DELETE FROM client_sessions WHERE user_id=? AND EXISTS(SELECT 1 FROM client_password_reset_tokens WHERE token_hash=? AND user_id=? AND expires_at>?)').bind(reset.user_id,tokenHash,reset.user_id,validAt),db.prepare('UPDATE client_passwords SET password_hash=?,updated_at=? WHERE user_id=? AND EXISTS(SELECT 1 FROM client_password_reset_tokens WHERE token_hash=? AND user_id=? AND expires_at>?)').bind(newHash,now,reset.user_id,tokenHash,reset.user_id,validAt),db.prepare('DELETE FROM client_password_reset_tokens WHERE token_hash=?').bind(tokenHash)]);
+  if(!results[1].meta.changes)return json({error:'This password-reset link is invalid or has expired. Request a new one.'},400);
+  return json({saved:true},200,sessionCookie(''));
  }
  if(!await allowAuth(request,email))return json({error:'Too many attempts. Please wait 15 minutes and try again.'},429);
  if(!password)return json({error:'Enter your password.'},400);
@@ -60,7 +61,7 @@ export async function POST(request:Request){try{
  const platform=profileIdentity(request);
  if(action==='set-password'){
   if(!platform.user||!platform.email)return json({error:'Sign in with the original ChatGPT account to secure your existing profile.'},401);
-  const profile=await db.prepare('SELECT user_id FROM client_profiles WHERE user_id=? AND lower(trim(email))=?').bind(platform.user,platform.email).first();if(!profile)return json({error:'Existing profile not found.'},403);
+  let profile=await db.prepare('SELECT user_id FROM client_profiles WHERE user_id=? AND lower(trim(email))=?').bind(platform.user,platform.email).first();if(!profile){const owned=await db.prepare('SELECT a.name FROM attorney_profiles p JOIN attorneys a ON a.bar_number=p.bar_number WHERE p.owner_id=? LIMIT 1').bind(platform.user).first<{name:string}>();if(!owned)return json({error:'Existing profile not found.'},403);const parts=owned.name.trim().split(/\s+/);try{await db.batch([db.prepare('INSERT INTO client_profiles(user_id,legal_name,email,created_at,first_name,last_name,initial_docket) VALUES(?,?,?,?,?,?,?)').bind(platform.user,owned.name,platform.email,now,parts[0],parts.slice(1).join(' '),''),db.prepare('INSERT INTO client_account_emails(email,user_id) VALUES(?,?)').bind(platform.email,platform.user)]);}catch{return json({error:'This email already has an account. Contact LawVetter to reconcile your existing profile ownership.'},409);}}
   const r=await db.prepare('INSERT OR IGNORE INTO client_passwords(user_id,password_hash,updated_at) VALUES(?,?,?)').bind(platform.user,hashPassword(password),now).run();if(!r.meta.changes)return json({error:'A password is already set. Use Log in.'},409);
   await db.prepare('INSERT OR IGNORE INTO client_account_emails(email,user_id) VALUES(?,?)').bind(platform.email,platform.user).run();
   return json({saved:true},200,sessionCookie(await newSession(platform.user)));

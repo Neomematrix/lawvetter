@@ -64,3 +64,21 @@ When host retrieval is blocked, indexed official pages provide that evidence.
 Generic names, domain parking, unrelated directories, conflicting destinations,
 and insufficiently corroborated sites remain unresolved. Unresolved means
 verification is incomplete; it does not mean that the firm has no website.
+
+## Florida Miami PDF import, October 12, 2026
+
+The owner supplied four official Florida Bar search-result PDFs covering Miami
+results 1–20 and 101–200. `florida-miami-attorneys.jsonl` contains 120 unique
+records. Each source entry explicitly says Member in Good Standing and Eligible
+to Practice Law in Florida and includes a matching official profile hyperlink.
+This is the supplied dated snapshot, not a live registry lookup or a complete
+Miami roster. Results 21–100 and 201 onward were not supplied.
+
+`florida-miami-import-summary.json` retains source names, SHA-256 hashes and
+coverage. Only published office contact fields are retained; Cell and Fax are
+excluded. Schools, admission dates and county are not invented. Personal
+addressee lines are not treated as law firms. Florida licenses use state-aware
+identity keys; partial listings preserve existing detailed data and never alter
+claims, reviews, photos or user records. The import endpoint is secret-protected
+and requires both good standing and eligibility for Florida records. Temporary
+import credentials are supplied via hidden stdin and removed after completion.
