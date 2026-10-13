@@ -14,7 +14,7 @@ export default function LegalFooter(){
     <a href="https://www.gabar.org/member-directory/?state=GA" target="_blank" rel="noopener noreferrer">State Bar directory</a>
    </nav>
    <p className="legal-footer-summary" role="note">LawVetter provides general information, not legal advice. <a href="/disclaimer">Read the full disclaimer and content-use terms.</a></p>
-   <div className="legal-footer-bottom"><small>© 2026 LawVetter. All rights reserved.</small><button className="footer-logo-top" type="button" aria-label="LawVetter: back to top" title="Back to top" onClick={()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'})}><img className="lawvetter-footer-logo" src="/brand/lawvetter-header.svg" alt="LawVetter"/></button></div>
+   <p className="legal-footer-summary">Our directory is growing and does not include every attorney. A missing listing does not indicate licensing status or qualifications. We use a monthly browser identifier to measure visits and inquiry rates; contact details and inquiry messages are never included in our analytics events.</p><div className="legal-footer-bottom"><small>© 2026 LawVetter. All rights reserved.</small><button className="footer-logo-top" type="button" aria-label="LawVetter: back to top" title="Back to top" onClick={()=>window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'})}><img className="lawvetter-footer-logo" src="/brand/lawvetter-header.svg" alt="LawVetter"/></button></div>
   </div>
  </footer>;
 }

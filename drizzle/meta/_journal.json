@@ -127,6 +127,13 @@
       "when": 1791830903852,
       "tag": "0017_magical_spiral",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "6",
+      "when": 1791856199667,
+      "tag": "0018_wooden_synch",
+      "breakpoints": true
     }
   ]
 }

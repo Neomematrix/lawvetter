@@ -4,7 +4,8 @@ import "./globals.css";
 import "./editorial-dark.css";
 import {ShortlistProvider} from "./Shortlist";
 import LegalFooter from "./LegalFooter";
-import GoogleAnalytics from "./GoogleAnalytics";
+import GoogleAnalytics from './GoogleAnalytics';
+import InquiryMetrics from './InquiryMetrics';
 import {SITE_DESCRIPTION,SITE_NAME,SITE_ORIGIN,safeJsonLd} from './seo';
 
 const editorial = Cormorant_Garamond({variable:"--font-editorial",subsets:["latin"],weight:["600","700"],style:["normal","italic"],display:"swap"});
@@ -66,7 +67,7 @@ export default function RootLayout({
     <html lang="en">
       <head><script type="application/ld+json" dangerouslySetInnerHTML={{__html:safeJsonLd({'@context':'https://schema.org','@graph':[{'@type':'Organization','@id':SITE_ORIGIN+'/#organization',name:SITE_NAME,url:SITE_ORIGIN,logo:SITE_ORIGIN+'/brand/lawvetter-icon.svg',description:SITE_DESCRIPTION},{'@type':'WebSite','@id':SITE_ORIGIN+'/#website',url:SITE_ORIGIN,name:SITE_NAME,description:SITE_DESCRIPTION,publisher:{'@id':SITE_ORIGIN+'/#organization'},inLanguage:'en-US'}]})}}/><GoogleAnalytics/></head>
       <body className={`${lato.variable} ${jakarta.variable} ${editorial.variable}`}>
-        <ShortlistProvider>{children}<LegalFooter/></ShortlistProvider>
+        <InquiryMetrics/><ShortlistProvider>{children}<LegalFooter/></ShortlistProvider>
       </body>
     </html>
   );

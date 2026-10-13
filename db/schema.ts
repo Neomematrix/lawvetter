@@ -65,7 +65,19 @@ export const attorneyProfiles = sqliteTable('attorney_profiles', {
  updatedAt: text('updated_at').notNull(),
 },t=>[index('profiles_owner_idx').on(t.ownerId)]);
 
+export const inquiryVisitors=sqliteTable('inquiry_visitors',{
+ key:text('key').primaryKey(),month:text('month').notNull(),converted:integer('converted').notNull().default(0),
+},t=>[index('inquiry_visitors_month_idx').on(t.month)]);
 export const clientLeads = sqliteTable('client_leads', {
+ attorneyBar:text('attorney_bar').notNull().default(''),
+ attorneyName:text('attorney_name').notNull().default(''),
+ notificationStatus:text('notification_status').notNull().default('not_queued'),
+ notificationPayload:text('notification_payload').notNull().default(''),
+ notificationFirstAttempt:integer('notification_first_attempt'),
+ notificationLease:integer('notification_lease').notNull().default(0),
+ notificationProviderId:text('notification_provider_id').notNull().default(''),
+ acknowledgedAt:text('acknowledged_at'),
+ acknowledgedBy:text('acknowledged_by'),
  id:text('id').primaryKey(),
  name:text('name').notNull(),
  email:text('email').notNull(),
