@@ -1,0 +1,25 @@
+name: Enrichment fixture checks (no production access)
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: enrichment-checks-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run typecheck
+      - run: npm run build
+      # Repository-wide lint currently has 47 pre-existing errors. New enrichment
+      # implementation is checked separately until the baseline is repaired.
+      - run: npx eslint app/admin/enrichment app/api/admin/enrichment app/api/enrichment-image app/FirmBanner.tsx lib/enrichment worker/index.ts db/schema.ts tests/enrichment-agent.test.mjs tests/enrichment-security.test.mjs scripts/preview-enrichment.mjs

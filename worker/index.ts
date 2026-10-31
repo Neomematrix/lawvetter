@@ -1,10 +1,16 @@
 /** Cloudflare Worker entry point for the vinext-starter template. */
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
+import {scheduledTick} from '../lib/enrichment/engine.mjs';
+import {inspectImages} from '../lib/enrichment/images.mjs';
+import {researchDb} from '../lib/enrichment/research-db.mjs';
 
 interface Env {
   ASSETS: Fetcher;
   DB: D1Database;
+  PROFILE_PHOTOS: R2Bucket;
+  ENRICHMENT_SCHEDULE_ENABLED?: string;
+  ENRICHMENT_SOURCE_ACCESS?: string;
   IMAGES: {
     input(stream: ReadableStream): {
       transform(options: Record<string, unknown>): {
@@ -26,6 +32,13 @@ interface ExecutionContext {
 // const imageConfig: ImageConfig = { dangerouslyAllowSVG: true };
 
 const worker = {
+  scheduled(_controller: ScheduledController, env: Env, ctx: ExecutionContext) {
+    // Deployment config is deliberately opt-in. The scheduled path has no
+    // approval function and only inserts research proposals, jobs and receipts.
+    ctx.waitUntil(scheduledTick(env.DB, env.ENRICHMENT_SCHEDULE_ENABLED === 'enabled' && env.ENRICHMENT_SOURCE_ACCESS === 'enabled', {
+      inspectImage: (common: Parameters<typeof inspectImages>[2]) => inspectImages(researchDb(env.DB), env.PROFILE_PHOTOS, common),
+    }));
+  },
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 

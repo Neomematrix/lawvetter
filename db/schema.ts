@@ -259,3 +259,36 @@ export const adminSessions=sqliteTable('admin_sessions',{
 export const adminPasswordTokens=sqliteTable('admin_password_tokens',{
  tokenHash:text('token_hash').primaryKey(),email:text('email').notNull(),expiresAt:integer('expires_at').notNull(),
 });
+
+// Enrichment is a separate review queue. Custom approval/rollback triggers live
+// in migration 0020; never remove them when regenerating the schema.
+export const enrichmentScans=sqliteTable('enrichment_scans',{
+ id:text('id').primaryKey(),nightKey:text('night_key').unique(),status:text('status').notNull().default('queued'),
+ createdAt:text('created_at').notNull(),finishedAt:text('finished_at'),leaseToken:text('lease_token').notNull().default(''),leaseUntil:integer('lease_until').notNull().default(0),
+ scanned:integer('scanned').notNull().default(0),missing:integer('missing').notNull().default(0),errors:integer('errors').notNull().default(0),requestedBy:text('requested_by').notNull(),
+});
+export const enrichmentJobs=sqliteTable('enrichment_jobs',{
+ id:text('id').primaryKey(),scanId:text('scan_id').notNull().references(()=>enrichmentScans.id),barNumber:text('bar_number').notNull().references(()=>attorneys.barNumber),
+ status:text('status').notNull().default('queued'),attempts:integer('attempts').notNull().default(0),nextAttempt:integer('next_attempt').notNull().default(0),fingerprint:text('fingerprint').notNull(),error:text('error').notNull().default(''),
+},t=>[index('enrichment_jobs_scan_idx').on(t.scanId,t.status)]);
+export const enrichmentReceipts=sqliteTable('enrichment_receipts',{
+ barNumber:text('bar_number').primaryKey(),fingerprint:text('fingerprint').notNull(),checkedAt:integer('checked_at').notNull(),
+});
+export const enrichmentEvidence=sqliteTable('enrichment_evidence',{
+ id:text('id').primaryKey(),sourceUrl:text('source_url').notNull(),retrievedAt:text('retrieved_at').notNull(),contentHash:text('content_hash').notNull(),
+ identity:text('identity').notNull(),excerpt:text('excerpt').notNull(),verified:integer('verified').notNull().default(0),rights:text('rights').notNull().default(''),
+});
+export const enrichmentProposals=sqliteTable('enrichment_proposals',{
+ id:text('id').primaryKey(),scanId:text('scan_id').references(()=>enrichmentScans.id),entity:text('entity').notNull(),entityId:text('entity_id').notNull(),name:text('name').notNull(),state:text('state').notNull(),kind:text('kind').notNull(),field:text('field').notNull(),
+ original:text('original').notNull(),proposed:text('proposed').notNull(),baseIdentity:text('base_identity').notNull(),evidenceId:text('evidence_id').notNull().references(()=>enrichmentEvidence.id),explanation:text('explanation').notNull(),
+ status:text('status').notNull().default('pending'),createdAt:text('created_at').notNull(),decidedAt:text('decided_at'),actor:text('actor').notNull().default(''),note:text('note').notNull().default(''),
+},t=>[index('enrichment_proposals_queue_idx').on(t.status,t.state,t.kind,t.createdAt),index('enrichment_proposals_entity_idx').on(t.entity,t.entityId,t.field)]);
+export const enrichmentAudit=sqliteTable('enrichment_audit',{
+ id:integer('id').primaryKey({autoIncrement:true}),proposalId:text('proposal_id').notNull(),action:text('action').notNull(),actor:text('actor').notNull(),createdAt:text('created_at').notNull(),note:text('note').notNull(),
+});
+export const enrichmentFirmAssets=sqliteTable('enrichment_firm_assets',{
+ firmName:text('firm_name').primaryKey(),bannerKey:text('banner_key').notNull().default(''),
+});
+export const enrichmentImageVariants=sqliteTable('enrichment_image_variants',{
+ desktopKey:text('desktop_key').primaryKey(),mobileKey:text('mobile_key').notNull(),originalKey:text('original_key').notNull(),kind:text('kind').notNull(),
+});

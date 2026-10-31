@@ -4,6 +4,7 @@ import SiteHeader from '../SiteHeader';
 export const dynamic = 'force-dynamic';
 
 const sections = [
+  {href:'/admin/enrichment',title:'AI Profile Enrichment',description:'Review verified profile corrections, photo improvements and firm banners before publication.'},
   {href:'/admin/experience',title:'View as User',description:'Walk through client, attorney, and law firm experiences safely using demo content.'},
   {href:'/admin/claims',title:'Attorney profile claims',description:'Review requests to claim and manage attorney profiles.'},
   {href:'/admin/client-reviews',title:'Client review verification',description:'Review supporting evidence and approve or reject client verification.'},
