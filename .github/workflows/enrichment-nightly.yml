@@ -1,32 +1,25 @@
-name: Attorney enrichment audit (review only)
+name: Enrichment fixture checks (no production access)
 on:
-  schedule:
-    # 04:00 UTC during EDT, 05:00 UTC during EST.
-    - cron: '0 4,5 * * *'
+  pull_request:
   workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: enrichment-checks-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
-  audit:
+  verify:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
-      - name: Gate to midnight America/New_York
-        id: gate
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-        run: |
-          if [ "$EVENT_NAME" = "workflow_dispatch" ] || [ "$(TZ=America/New_York date +%H)" = "00" ]; then
-            echo "run=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "run=false" >> "$GITHUB_OUTPUT"
-          fi
-      - name: Test audit logic (no production database access)
-        if: steps.gate.outputs.run == 'true'
-        run: node --test tests/enrichment-audit.test.mjs
-      - name: Explain dry-run scope
-        if: steps.gate.outputs.run == 'true'
-        run: echo "Dry-run only. No database credentials, scraping, publishing, or writes configured."
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run typecheck
+      - run: npm run build
+      # Repository-wide lint currently has 47 pre-existing errors. New enrichment
+      # implementation is checked separately until the baseline is repaired.
+      - run: npx eslint app/admin/enrichment app/api/admin/enrichment app/api/enrichment-image app/FirmBanner.tsx lib/enrichment worker/index.ts db/schema.ts tests/enrichment-agent.test.mjs tests/enrichment-security.test.mjs scripts/preview-enrichment.mjs

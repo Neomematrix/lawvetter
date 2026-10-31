@@ -9,6 +9,7 @@ import AttorneyProfile from '../AttorneyProfile';
 import {SaveAttorneyButton,ShortlistNotice} from '../Shortlist';
 import {requestAttorneyData} from '../attorney-request';
 import FirmLogo from '../FirmLogo';
+import FirmBanner from '../FirmBanner';
 import {attorneyPath} from '../seo';
 type FirmResults={firm:{name:string;website?:string;verifiedRoster?:typeof hinesRoster;total:number;active:number;updated:string;cities:string[]};attorneys:Attorney[];page:number};
 export default function FirmProfile({name}:{name:string}){
@@ -24,7 +25,7 @@ export default function FirmProfile({name}:{name:string}){
  const firm=result?.firm;
  const website=firm?.website||websitesByFirm[firmKey(firm?.name||name)];
  const linkedIn=linkedInByFirm[firmKey(firm?.name||name)];
- return <><section className="firm-hero"><div className="firm-summary"><a className="firm-back" href="/">Back to attorney search</a><FirmLogo name={firm?.name||name||'LawVetter firm'} website={website}/><div className="firm-summary-title"><p className="section-kicker">Firm Profile</p><h1>{firm?.name||name||'Find a firm'}</h1>{firm&&<p className="hero-intro">{firm.cities.join(' · ')||'Location not listed'}</p>}</div><div className="firm-summary-links">{website?<a className="outline-button website-link" href={website} target="_blank" rel="noopener noreferrer">Firm Website<img className="website-link-icon" src="/internet-icon.png" alt="" aria-hidden="true"/></a>:firm&&<p className="record-note">Website not yet listed.</p>}{linkedIn&&<a className="outline-button" href={linkedIn} target="_blank" rel="noopener noreferrer">LinkedIn</a>}</div></div></section><div className="page-shell"><ShortlistNotice/>
+ return <><FirmBanner key={firm?.name||name} name={firm?.name||name}/><section className="firm-hero"><div className="firm-summary"><a className="firm-back" href="/">Back to attorney search</a><FirmLogo name={firm?.name||name||'LawVetter firm'} website={website}/><div className="firm-summary-title"><p className="section-kicker">Firm Profile</p><h1>{firm?.name||name||'Find a firm'}</h1>{firm&&<p className="hero-intro">{firm.cities.join(' · ')||'Location not listed'}</p>}</div><div className="firm-summary-links">{website?<a className="outline-button website-link" href={website} target="_blank" rel="noopener noreferrer">Firm Website<img className="website-link-icon" src="/internet-icon.png" alt="" aria-hidden="true"/></a>:firm&&<p className="record-note">Website not yet listed.</p>}{linkedIn&&<a className="outline-button" href={linkedIn} target="_blank" rel="noopener noreferrer">LinkedIn</a>}</div></div></section><div className="page-shell"><ShortlistNotice/>
   {error&&<div className="directory-error" role="alert">{error} {name&&<button onClick={()=>setRetry(v=>v+1)}>Try again</button>}</div>}
   {selected?<><button className="outline-button" onClick={()=>setSelected(null)}>Back to firm attorneys</button>{detailError&&<p className="directory-error" role="alert">{detailError} <button onClick={()=>open(selected)}>Try again</button></p>}<AttorneyProfile attorney={selected} loading={detailLoading}/></>:<>
    <div className="section-heading"><h2>Attorneys at this firm</h2>{firm&&<span className="period-label">{(firm.total+(firm.verifiedRoster?.additional.length||0)).toLocaleString()} attorneys</span>}</div>

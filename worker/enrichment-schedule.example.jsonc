@@ -1,0 +1,10 @@
+// Review-only deployment fragment. No production resource IDs or credentials.
+// Merge these settings into the staging Worker's existing deployment config.
+// Keep the existing main, D1, R2, IMAGES and asset bindings.
+{
+  "triggers": { "crons": ["* * * * *"] },
+  "vars": {
+    "ENRICHMENT_SCHEDULE_ENABLED": "disabled",
+    "ENRICHMENT_SOURCE_ACCESS": "disabled"
+  }
+}
