@@ -1,0 +1,32 @@
+name: Attorney enrichment audit (review only)
+on:
+  schedule:
+    # 04:00 UTC during EDT, 05:00 UTC during EST.
+    - cron: '0 4,5 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Gate to midnight America/New_York
+        id: gate
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] || [ "$(TZ=America/New_York date +%H)" = "00" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Test audit logic (no production database access)
+        if: steps.gate.outputs.run == 'true'
+        run: node --test tests/enrichment-audit.test.mjs
+      - name: Explain dry-run scope
+        if: steps.gate.outputs.run == 'true'
+        run: echo "Dry-run only. No database credentials, scraping, publishing, or writes configured."
