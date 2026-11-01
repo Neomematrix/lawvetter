@@ -26,11 +26,12 @@ export default function GeorgiaDirectory({view='discover',onView,initialHome=nul
  function browsePractice(practice:string){setCity('');setName(practiceAreas.find(a=>a.id===practice)?.name||'');setSelected(null);setSearched(true);setQuery({q:'',city:'',practice,statusGroup:'active',kind:'attorneys',page:1,eventId:''});document.getElementById('attorney-search')?.scrollIntoView({behavior:'smooth'});}
  async function open(a:Attorney,fromSearch=false){setSelected(a);setDetailLoading(true);setError('');try{const x=await requestAttorneyData<{attorney:Attorney}>({id:a.bar_number,...(fromSearch?{...query,kind:'attorneys'}:{})});setSelected(x.attorney);}catch(e){setError(e instanceof Error?e.message:'Unable to open this record.');}finally{setDetailLoading(false);}}
  return <>
-  {view==='discover'&&!searched&&!selected&&<LandingHero/>}
+  <div className="mobile-search-first">{view==='discover'&&!searched&&!selected&&<LandingHero/>}
   <section className="discovery-search" id="attorney-search" aria-label="Attorney and firm search"><form onSubmit={search}>
    <div className="primary-search"><AttorneyNameInput value={name} city={city} enabled onChange={setName} onSelect={a=>{setName(a.name);setSelected(null);setSearched(true);setQuery({q:a.bar_number,city:city.trim(),practice:'',statusGroup:'active',kind:'attorneys',page:1,eventId:crypto.randomUUID()});}}/></div>
    <label className="search-city"><span>City or State</span><input value={city} onChange={e=>setCity(e.target.value)} placeholder="Any City or State"/></label><button className="gold-button search-submit" type="submit" aria-label="Search">Search</button>
-  </form></section>
+  </form></section></div>
+  <style>{`@media (max-width: 767px) { .mobile-search-first { display: flex; flex-direction: column; } .mobile-search-first > .discovery-search { order: -1; } }`}</style>
   <div className="page-shell discovery-shell"><ShortlistNotice/>
    {error&&<div className="directory-error" role="alert">{error} <button onClick={()=>selected?open(selected):searched?setQuery({...query}):loadHome()}>Try again</button> <a href="/" target="_top">Reopen LawVetter</a></div>}
    {selected?<><button className="outline-button" onClick={()=>setSelected(null)}>Back to {searched?'results':view==='shortlist'?'shortlist':view==='charts'?'charts':'discovery'}</button><AttorneyProfile attorney={selected} loading={detailLoading}/></>
