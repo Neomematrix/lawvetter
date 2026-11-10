@@ -1,0 +1,1 @@
+ALTER TABLE `attorney_profiles` ADD `hide_bar_number` integer DEFAULT 0 NOT NULL;

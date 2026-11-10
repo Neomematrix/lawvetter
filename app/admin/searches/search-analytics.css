@@ -1,0 +1,8 @@
+.sa-reporting-note{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px}
+.sa-incomplete-key{display:inline-flex;align-items:center;gap:7px}
+.sa-incomplete-key:before{content:'';width:20px;border-top:2px dashed #718bab}
+
+.admin-workspace .sa-metrics{grid-template-columns:repeat(4,minmax(0,1fr))}
+.admin-workspace .sa-icon-views{color:#087e54;background:#e9f7ef}
+.admin-workspace .sa-profile-views,.admin-workspace .sa-profile-trend{margin-top:18px}
+@media(max-width:800px){.admin-workspace .sa-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}

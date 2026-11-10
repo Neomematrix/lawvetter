@@ -1,38 +1,34 @@
+declare const __LAWVETTER_BUILD_ID__: string;
+import './firm-workspace.css';
+import ViewAsBanner from './ViewAsBanner';
+import {siteOrigin,publicSettings} from '../db/site-settings';
 import type { Metadata } from "next";
-import { Lato, Plus_Jakarta_Sans, Cormorant_Garamond } from "next/font/google";
+import "./fonts.css";
+import {fontPreloads} from "./font-assets";
 import "./globals.css";
 import "./editorial-dark.css";
+import "./chart-halo.css";
+import "./firm-profile.css";
+import "./website-badge.css";
 import {ShortlistProvider} from "./Shortlist";
 import LegalFooter from "./LegalFooter";
 import GoogleAnalytics from './GoogleAnalytics';
+import {assetRecoveryScript} from './asset-recovery';
 import InquiryMetrics from './InquiryMetrics';
+import ClientErrorBoundary from './ClientErrorBoundary';
 import {SITE_DESCRIPTION,SITE_NAME,SITE_ORIGIN,safeJsonLd} from './seo';
 
-const editorial = Cormorant_Garamond({variable:"--font-editorial",subsets:["latin"],weight:["600","700"],style:["normal","italic"],display:"swap"});
-
-const lato = Lato({
-  variable: "--font-lato",
-  subsets: ["latin"],
-  weight: ["400", "700", "900"],
-  style: ["normal", "italic"],
-});
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
-  subsets: ["latin"],
-  display: "swap",
-});
-
 const googleVerification=(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION||'').trim();
-export const metadata:Metadata={
+export async function generateMetadata():Promise<Metadata>{const settings=await publicSettings(),SITE_ORIGIN=settings.origin;return {
     metadataBase:new URL(SITE_ORIGIN),
-    title:{default:"Find and Compare Lawyers | LawVetter",template:"%s | LawVetter"},
+    title:{default:"LawVetter | Find Lawyers & Read Client Reviews",template:"%s | LawVetter"},
     description:SITE_DESCRIPTION,
     applicationName:SITE_NAME,
     category:"legal directory",
     creator:SITE_NAME,
     publisher:SITE_NAME,
     robots:{index:true,follow:true,googleBot:{index:true,follow:true,'max-image-preview':'large','max-snippet':-1,'max-video-preview':-1}},
-    ...(googleVerification?{verification:{google:googleVerification}}:{}),
+    verification:{...(settings.googleVerification||googleVerification?{google:settings.googleVerification||googleVerification}:{}),...(settings.bingVerification?{other:{'msvalidate.01':settings.bingVerification}}:{})},
     icons: {
       icon: [
         { url: "/favicon.svg", type: "image/svg+xml" },
@@ -44,7 +40,7 @@ export const metadata:Metadata={
     manifest: "/site.webmanifest",
     openGraph: {
       siteName:SITE_NAME,
-      title: "Find and Compare Lawyers | LawVetter",
+      title: "LawVetter | Find Lawyers & Read Client Reviews",
       description:SITE_DESCRIPTION,
       url:SITE_ORIGIN,
       images: [{ url: "/og.png", width: 1200, height: 630, alt: "LawVetter lawyer directory" }],
@@ -52,22 +48,23 @@ export const metadata:Metadata={
     },
     twitter: {
       card: "summary_large_image",
-      title: "Find and Compare Lawyers | LawVetter",
+      title: "LawVetter | Find Lawyers & Read Client Reviews",
       description:SITE_DESCRIPTION,
       images: ["/og.png"],
     },
-  };
+  };}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings=await publicSettings(),SITE_ORIGIN=settings.origin;
   return (
     <html lang="en">
-      <head><script type="application/ld+json" dangerouslySetInnerHTML={{__html:safeJsonLd({'@context':'https://schema.org','@graph':[{'@type':'Organization','@id':SITE_ORIGIN+'/#organization',name:SITE_NAME,url:SITE_ORIGIN,logo:SITE_ORIGIN+'/brand/lawvetter-icon.svg',description:SITE_DESCRIPTION},{'@type':'WebSite','@id':SITE_ORIGIN+'/#website',url:SITE_ORIGIN,name:SITE_NAME,description:SITE_DESCRIPTION,publisher:{'@id':SITE_ORIGIN+'/#organization'},inLanguage:'en-US'}]})}}/><GoogleAnalytics/></head>
-      <body className={`${lato.variable} ${jakarta.variable} ${editorial.variable}`}>
-        <InquiryMetrics/><ShortlistProvider>{children}<LegalFooter/></ShortlistProvider>
+      <head>{Object.values(fontPreloads).map(href=><link key={href} rel="preload" href={href} as="font" type="font/woff2" crossOrigin="anonymous"/>)}<script dangerouslySetInnerHTML={{__html:assetRecoveryScript}}/><script type="application/ld+json" dangerouslySetInnerHTML={{__html:safeJsonLd({'@context':'https://schema.org','@graph':[{'@type':'Organization','@id':SITE_ORIGIN+'/#organization',name:SITE_NAME,url:SITE_ORIGIN,logo:SITE_ORIGIN+'/brand/lawvetter-icon.svg',description:SITE_DESCRIPTION,sameAs:['https://www.linkedin.com/company/law-vetter/'],subjectOf:{'@id':SITE_ORIGIN+'/about#page'}},{'@type':'WebSite','@id':SITE_ORIGIN+'/#website',url:SITE_ORIGIN,name:SITE_NAME,description:SITE_DESCRIPTION,publisher:{'@id':SITE_ORIGIN+'/#organization'},inLanguage:'en-US'}]})}}/><GoogleAnalytics measurementId={settings.gaMeasurementId}/></head>
+      <body>
+        <ClientErrorBoundary><ViewAsBanner/><InquiryMetrics/><ShortlistProvider>{children}<LegalFooter/></ShortlistProvider></ClientErrorBoundary>
       </body>
     </html>
   );

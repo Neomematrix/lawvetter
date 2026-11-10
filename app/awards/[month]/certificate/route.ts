@@ -1,0 +1,3 @@
+import {monthlyAward} from '../../../../db/monthly-awards';
+import {awardCertificate} from '../../certificate';
+export async function GET(_request:Request,{params}:{params:Promise<{month:string}>}){const {month}=await params,award=await monthlyAward(month);if(!award)return new Response('No finalized award for this month',{status:404});const pdf=await awardCertificate(award);return new Response(new Uint8Array(pdf),{headers:{'Content-Type':'application/pdf','Content-Disposition':`attachment; filename="lawvetter-certificate-${month}.pdf"`,'Cache-Control':'public, max-age=86400','X-Content-Type-Options':'nosniff'}});}

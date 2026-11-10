@@ -1,0 +1,8 @@
+ 'use client';
+import {useState} from 'react';
+import SiteHeader from '../SiteHeader';
+export default function ConfirmProfileEmail(){
+ const [busy,setBusy]=useState(false),[message,setMessage]=useState(''),[done,setDone]=useState(false);
+ async function confirm(){setBusy(true);try{const token=new URLSearchParams(window.location.search).get('token')||'',r=await fetch('/api/account/email-access',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'confirm',token})}),d=await r.json() as {error?:string};if(!r.ok)throw Error(d.error);setDone(true);setMessage('Email confirmed. Your matching profiles are now linked to your account.');window.history.replaceState({},'','/confirm-profile-email');}catch(e){setMessage(e instanceof Error?e.message:'Unable to confirm email.');}finally{setBusy(false);}}
+ return <main><SiteHeader/><div className="page-shell account-page"><h1>Confirm your email</h1><section className="attorney-login-card"><p>Sign in to the LawVetter account that requested this email, then confirm to unlock your matching professional profiles.</p>{!done&&<><button className="gold-button" disabled={busy} onClick={confirm}>{busy?'Confirming…':'Confirm email and unlock access'}</button><p><a href="/client-reviews" target="_blank" rel="noopener noreferrer">Sign in in a new tab</a>, then return here.</p></>}{message&&<p role="status">{message}</p>}{done&&<div className="form-actions"><a className="gold-button" href="/account">Attorney dashboard</a><a className="outline-button" href="/client-reviews">Firm dashboard</a></div>}</section></div></main>;
+}

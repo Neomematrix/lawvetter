@@ -139,3 +139,66 @@ Client requests collect full legal name, docket number, county, state/territory,
 The rendering tests exercise the real LawVetter hero with React server rendering; they do not import a Cloudflare Worker into plain Node. Full Worker and browser integration tests remain a separate staging check. Ranking ties use consecutive positions with alphabetical ordering, matching the displayed methodology. Shortlists require a LawVetter client session rather than platform identity headers.
 
 Clients can complete or revise their own pending requests using the Complete or update case details action. Older incomplete requests automatically show the details form when selected. Updates preserve the request ID and create a new administrator notification; older unsent notifications are superseded. Only pending requests can be updated, and failed sends for the newest revision are recoverable even if an older notification was accepted.
+
+
+## Owner administration
+
+`/admin` and `/admin-login` use the configured `CLAIM_ADMIN_EMAIL`, with no public administrator registration. Login requires a scrypt password followed by a six-digit email code sent through the existing Resend configuration. Codes expire after ten minutes, allow five attempts, and are consumed atomically. Session credentials are random, stored hashed, and issued only through Secure, HttpOnly, SameSite=Strict cookies. Sessions expire after two hours or twenty minutes of inactivity; the new migration invalidates older sessions. Password resets revoke all sessions and pending codes. Administrator pages disable caching, indexing, referrer sharing, and framing. Unsafe cookie-authenticated API requests require an exact same-origin Origin header.
+
+The owner workspace includes database counts, daily/weekly/monthly/yearly unique-browser totals, a fourteen-day chart, oldest-first review and verification queues, existing claim/submission/inquiry screens, and paginated attorney/firm/client search and editing. Attorney edits preserve ownership. Client edits revoke sessions and reset links. Record writes append an owner audit entry.
+
+XLSX/CSV upload runs in the browser, supports column mapping and a server-validated preview, then saves batches of up to 100 rows. State plus license identifies duplicates; GA numeric licenses retain six-digit padding. Blank cells preserve existing fields, photos and ownership. Imported HTTPS photo URLs redirect through the photo endpoint without server-side fetching. Store spreadsheet license columns as text. Failed batches/rows are reported; already saved rows can be retried without creating duplicates. Imports require an explicit official-record review confirmation. Missing licensing status is marked not independently verified.
+
+Visitor counts begin with this version and exclude administrator sessions, detected bots, and privacy opt-outs. Identifiers reset monthly; year/week/month totals may count a browser again after its identifier resets. These are browser counts, not a census of people. Existing Google Analytics integration requires an actual `NEXT_PUBLIC_GA_MEASUREMENT_ID`; there is currently no configured Google Analytics ID in the runtime environment. No historical daily counts are fabricated.
+
+Validation: product/security tests exercise D1 through SQLite and mocked email delivery. They do not establish real inbox delivery or visual browser behavior. A managed browser controller was unavailable during this update.
+
+
+### Google Authenticator and admin edit corrections
+
+`/admin/security` provides owner-only QR enrollment. The owner re-enters the password, scans the locally generated QR, and confirms a six-digit TOTP code before email login changes to Authenticator. TOTP follows RFC 6238 with SHA1, 30-second steps, a one-step clock tolerance, and replay prevention. Shared secrets are AES-256-GCM encrypted using the separate secret runtime key `ADMIN_MFA_ENCRYPTION_KEY`, with the owner email authenticated as associated data. Never replace this key while enrolled accounts exist. Setup expires after ten minutes. Ten random, hashed, single-use recovery codes are displayed once. Enrollment revokes other sessions and outstanding login challenges; password reset preserves MFA, and enabled accounts cannot fall back to email login. Keep the owner's Authenticator and recovery codes available for account recovery.
+
+The Edit action opens a native dialog with keyboard focus containment, visible errors, a save action, and a public-profile link. Admin edits preserve ownership and stored biography, website, practice areas, and photo fields are public even when unclaimed; editing does not grant a claimed badge. Owner-edited firm affiliations and explicit contact clears take priority over bundled historical display overrides. Firm website updates are shown on both public firm and attorney pages. Empty import cells continue to preserve data; explicit edits can clear fields.
+
+Import mappings show plain destination labels, recognize annotated headers such as `company (law firm name)`, disallow selecting the same destination twice, and support `profile_photo_filename` through matching JPEG/PNG uploads. The weekly rotating cards now use the rounded gradient panels and raised blue edges of the shortlist cards. Explicit Bing, Applebot, and Applebot-Extended robots groups allow public pages and exclude admin, API, account and recovery pages; permission does not guarantee crawling, indexing or inclusion in AI training.
+
+
+Spreadsheet import accepts matching state prefixes such as FL-123473 and FL:123473, normalizes them to the plain license number before duplicate matching, and rejects conflicting prefixes. Validation errors identify the Excel row and specific field. The admin overview links directly to Authenticator QR setup; setup uses locally generated SVG QR images with a four-module quiet zone. Ranking badges retain the original orange color.
+
+Public name and practice searches now start with All statuses, so imported records whose supplied status says Member in Good Standing remain discoverable without inventing active eligibility. The Active and Other statuses filters remain available.
+
+
+## October 13 form and directory update
+
+Admin record editing uses a centered, scrollable native dialog and supports JPEG/PNG photos up to 3 MB. Record changes and uploaded photos persist through the existing protected APIs and appear on public profiles. Excel import extracts modern in-cell photos and row-anchored images, maps their physical worksheet row/column to the selected photo column, previews them, and uploads them after each attorney record is saved. External image links are never fetched by the extractor. Card labels use first and last names while profile pages retain the full legal name. Placeholder portraits use the existing icon; chart rank accents stay orange.
+
+Cloudflare Turnstile is available for contact inquiries, directory/profile submissions, client/attorney registration and login, and password reset. Create a Managed widget for the deployed hostname and set production `TURNSTILE_SITE_KEY` and secret `TURNSTILE_SECRET_KEY`. Both keys are required to activate verification. Admin Security shows its actual configuration status. Partial configuration fails closed. Tokens are checked on the server against hostname and form action; used/expired tokens are rejected by Siteverify and widgets reset after submission attempts. No test keys are deployed. Unconfigured forms retain their rate limits and validation. CAPTCHA is separate from administrator Google Authenticator.
+
+Public contact, listing and account identity fields reject HTML/scripts, control characters and incorrect types. Database values remain bound parameters, including apostrophes and SQL-like text. Request size, origin, consent, photo signature and safe URL checks remain enforced.
+
+
+The contact inquiry form suggests complete city/state pairs after two typed characters using `/api/cities?format=locations`; identical city names remain distinguishable by state. It accepts manual city/state entry when suggestions are unavailable or the locality is not listed. Suggestion requests are debounced and stale requests are cancelled. Situation descriptions require at least eight words on both the client and server, with a visible live count; punctuation alone does not count as a word.
+
+Attorney cards keep text and actions within the card width with consistent side padding and wrapping. Contact form and confirmation copy use direct wording without hyphenated follow up phrasing.
+
+Profile pages use matching rounded blue-bordered panels, a larger portrait, and a practice area panel at the upper right of the identity. On narrow screens, practice areas move below the identity. Practice-only data no longer produces a second lower profile panel.
+
+
+## Automatic practice directories
+
+Saving practice areas on a published attorney profile automatically supplies matching practice tiles, linked categories, category pages, intake options, and sitemap entries. Separate multiple areas with commas, semicolons, vertical bars, or newlines. Categories use normalized identifiers so case and punctuation differences do not create duplicate tiles. Each attorney appears in every selected category; matching uses complete category tokens, not substrings. Existing sourced classifications remain available unless an owner edit replaces them. Pending submissions do not contribute categories until approved and published.
+
+Category pages list attorneys with pagination and city/state and exact 5 digit ZIP filters. ZIP+4 records match their first five digits. Empty and unknown categories, invalid ZIP codes, and unrelated partial practice names are handled without broadening the results. Practice area links sit in the upper right profile panel, and a practice-only lower pane is omitted.
+
+The Add lawyer / Add firm submission page uses matching rounded blue-bordered panels, an orange form accent, clear field outlines, accessible focus states, and raised type selector buttons.
+
+
+## Required verification and submission visibility
+
+Production enables `DIRECTORY_CAPTCHA_REQUIRED=true`. Directory/profile submissions and contact inquiries fail closed when the CAPTCHA provider is unconfigured, incomplete, unavailable, or rejects the token. The Add listing page displays a human verification panel and keeps submission disabled until verification passes. Configure the real `TURNSTILE_SITE_KEY` and secret `TURNSTILE_SECRET_KEY` for the deployed hostname to resume public submissions; no dummy CAPTCHA credentials are used. Administrator login, review actions, and spreadsheet imports remain available for site management.
+
+The admin overview includes a directory submission count, attention link, and a table of pending submissions followed by recent published/rejected records. Its pending count includes pending and approved-for-import records only. The overview and submission review page refresh every 30 seconds while visible and on window focus. Background refresh preserves open review notes and selections. Pending submissions are ordered oldest first; published listings remain visible as history.
+
+Canonical lawyer profile routing compares decoded URL segments so state-qualified IDs such as `CA:264554` do not redirect to the same encoded URL repeatedly. Both raw and encoded route parameters resolve to the existing attorney; renamed slugs redirect once, and malformed encoding is treated as an invalid profile.
+
+Turnstile production credentials are configured through runtime variables. The secret is stored as a secret and is never included in client code. The public privacy notice references Cloudflare’s Turnstile Privacy Addendum, including background verification.

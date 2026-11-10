@@ -1,0 +1,1 @@
+export function googleTraffic(referrer:unknown){if(typeof referrer!=='string'||referrer.length>2000)return false;try{const host=new URL(referrer).hostname.toLowerCase();return /^(?:www\.|search\.)?google\.(?:com|[a-z]{2,3}|com\.[a-z]{2}|co\.[a-z]{2})$/.test(host);}catch{return false;}}

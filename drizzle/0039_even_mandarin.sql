@@ -1,0 +1,1 @@
+ALTER TABLE `firm_settings` ADD `practice_areas` text DEFAULT '' NOT NULL;

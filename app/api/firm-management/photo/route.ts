@@ -1,0 +1,19 @@
+import {firmBannerError} from '../../../firm-banner';
+import {env} from 'cloudflare:workers';
+import {clientIdentity} from '../../../../db/client-auth';
+import {rawDb} from '../../../../db/raw';
+import {firmAccess,firmAccessGuard,firmRecord} from '../../../../db/firm-access';
+import {firmKey,firmColumn} from '../../attorneys/firm';
+import {resolveAttorneyReference} from '../../../../db/attorney-reference';
+const json=(body:unknown,status=200)=>Response.json(body,{status,headers:{'Cache-Control':'private, no-store'}});
+export async function POST(request:Request){try{
+ if(request.headers.get('origin')!==new URL(request.url).origin)return json({error:'Invalid request origin.'},403);const client=await clientIdentity(request);if(!client)return json({error:'Log in first.'},401);
+ const reader=request.body?.getReader();if(!reader)return json({error:'Choose an image.'},400);let size=0;const chunks:Uint8Array[]=[];while(true){const part=await reader.read();if(part.done)break;size+=part.value.byteLength;if(size>4*1024*1024){await reader.cancel();return json({error:'Choose a JPEG or PNG smaller than 3 MB.'},413);}chunks.push(part.value);}const bytes=new Uint8Array(size);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length;}
+ const form=await new Response(bytes,{headers:{'Content-Type':request.headers.get('content-type')||''}}).formData(),key=firmKey(String(form.get('firm')||'').slice(0,200)),barRef=String(form.get('bar')||''),bar=barRef?await resolveAttorneyReference(barRef):'',photo=form.get('photo'),firm=await firmRecord(key),db=rawDb();if(!firm||!await firmAccess(client.user,key))return json({error:'Approved firm management access is required.'},403);
+ if(barRef&&(!bar||!await db.prepare('SELECT bar_number FROM attorneys WHERE bar_number=? AND '+firmColumn()+'=?').bind(bar,key).first()))return json({error:'This attorney is not attached to your approved firm.'},403);
+ if(!(photo instanceof File)||photo.size<24||photo.size>3*1024*1024)return json({error:'Choose a JPEG or PNG smaller than 3 MB.'},400);const data=await photo.arrayBuffer(),head=new Uint8Array(data),png=[137,80,78,71,13,10,26,10].every((n,i)=>head[i]===n),jpeg=head[0]===255&&head[1]===216&&head[2]===255;if(!png&&!jpeg)return json({error:'Choose a JPEG or PNG image.'},400);
+ if(!bar){const bannerError=firmBannerError(head);if(bannerError)return json({error:bannerError},400);}
+ const storageKey=(bar?'attorneys/'+bar:'firm-logos/'+encodeURIComponent(key)+'/banner')+'/'+crypto.randomUUID()+(png?'.png':'.jpg');await env.PROFILE_PHOTOS.put(storageKey,data,{httpMetadata:{contentType:png?'image/png':'image/jpeg'}});
+ try{const now=new Date().toISOString(),statement=bar?db.prepare("INSERT INTO attorney_profiles(bar_number,owner_id,claimed_at,updated_at,photo_key) SELECT bar_number,'','',?,? FROM attorneys WHERE bar_number=? AND "+firmColumn()+'=? AND '+firmAccessGuard+' ON CONFLICT(bar_number) DO UPDATE SET photo_key=excluded.photo_key,updated_at=excluded.updated_at').bind(now,storageKey,bar,key,key,client.user):db.prepare('INSERT INTO firm_settings(key,name,banner_key,updated_at) SELECT ?,?,?,? WHERE '+firmAccessGuard+' ON CONFLICT(key) DO UPDATE SET banner_key=excluded.banner_key,updated_at=excluded.updated_at').bind(key,firm.name,storageKey,now,key,client.user);
+ const results=await db.batch([statement,db.prepare('INSERT INTO admin_audit(id,actor,action,record_id,created_at) SELECT ?,?,?,?,? WHERE changes()>0').bind(crypto.randomUUID(),client.user,bar?'firm-owner-attorney-photo':'firm-owner-logo',bar||key,now)]);if(!results[0].meta.changes){await env.PROFILE_PHOTOS.delete(storageKey);return json({error:'Firm access or affiliation changed. Reload the dashboard.'},409);}return json({saved:true});}catch(error){await env.PROFILE_PHOTOS.delete(storageKey);throw error;}
+ }catch{return json({error:'Unable to upload the image. Please try again.'},503);}}

@@ -1,3 +1,11 @@
+import {accountFirm} from '../../../db/account-firm';
+import {reviewAuthor} from '../../review-author';
+import {publicRecords} from '../../../db/public-records';
+import {resolveAttorneyReference,resolveVerificationReference} from '../../../db/attorney-reference';
+import {env} from 'cloudflare:workers';
+import {isJudicialProfile} from '../../../db/judicial-profile';
+import {submissionInput} from '../../../db/directory-upload';
+import {validateClientEvidence} from '../../../db/client-evidence';
 import {validAttorneyId} from '../../attorney-identity';
 import {moderationRecipient,moderationPayload,sendModerationEmail} from '../../../db/review-moderation-email';
 import {adminUrl,accountUrl} from '../../../db/mail-markup';
@@ -14,21 +22,23 @@ const str=(v:unknown)=>typeof v==='string'?v.trim():'';
 const normal=(v:string)=>v.normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]/gu,'');
 export async function GET(request:Request){
  try{
-  const url=new URL(request.url),bar=url.searchParams.get('bar')||'',offset=Number(url.searchParams.get('offset')||'0');
+  const url=new URL(request.url),bar=await resolveAttorneyReference(url.searchParams.get('bar')||''),offset=Number(url.searchParams.get('offset')||'0');
   if(url.searchParams.has('bars')){
-   const bars=[...new Set((url.searchParams.get('bars')||'').split(','))];
+   const references=[...new Set((url.searchParams.get('bars')||'').split(','))];
+   if(references.length>50)return fail('Choose up to 50 attorneys.');
+   const bars=await Promise.all(references.map(resolveAttorneyReference));
    if(!bars.length||bars.length>50||bars.some(value=>!validAttorneyId(value)))return fail('Choose up to 50 attorneys.');
    const rows=await rawDb().prepare("SELECT v.bar_number,count(*) AS total,AVG(CASE WHEN v.rating_use_again IS NOT NULL AND v.rating_cared_for IS NOT NULL AND v.rating_rights IS NOT NULL AND v.rating_outcome IS NOT NULL THEN (v.rating_use_again+v.rating_cared_for+v.rating_rights+v.rating_outcome)/4.0 END) AS average,(SELECT latest.review_body FROM client_verifications latest WHERE latest.bar_number=v.bar_number AND latest.status='approved' AND latest.published_at IS NOT NULL AND latest.review_body<>'' ORDER BY latest.published_at DESC,latest.rowid DESC LIMIT 1) AS excerpt FROM client_verifications v WHERE v.bar_number IN ("+bars.map(()=>'?').join(',')+") AND v.status='approved' AND v.published_at IS NOT NULL AND v.review_body<>'' GROUP BY v.bar_number").bind(...bars).all<{bar_number:string;total:number;average:number|null;excerpt:string}>();
-   return json({summaries:rows.results.map(row=>({...row,excerpt:row.excerpt.length>160?row.excerpt.slice(0,160).replace(/\s+\S*$/,'')+'…':row.excerpt}))});
+   return json(await publicRecords({summaries:rows.results.map(row=>({...row,excerpt:row.excerpt.length>160?row.excerpt.slice(0,160).replace(/\s+\S*$/,'')+'…':row.excerpt}))}));
   }
   if(!validAttorneyId(bar))return fail('Choose an attorney.');
   if(!Number.isSafeInteger(offset)||offset<0||offset>1000000)return fail('Invalid review page.');
   const db=rawDb(),where="bar_number=? AND status='approved' AND published_at IS NOT NULL AND review_body<>''";
   const [rows,summary]=await Promise.all([
-   db.prepare("SELECT CASE WHEN public_mode='named' THEN legal_name ELSE 'Anonymous verified client' END AS author,public_mode='anonymous' AS anonymous,review_body AS body,published_at AS publishedAt,rating_use_again,rating_cared_for,rating_rights,rating_outcome FROM client_verifications WHERE "+where+" ORDER BY published_at DESC,rowid DESC LIMIT 5 OFFSET ?").bind(bar,offset).all(),
+   db.prepare("SELECT CASE WHEN public_mode='named' THEN legal_name ELSE '' END AS author,(SELECT first_name FROM client_profiles p WHERE p.user_id=client_verifications.user_id) AS first_name,(SELECT last_name FROM client_profiles p WHERE p.user_id=client_verifications.user_id) AS last_name,public_mode='anonymous' AS anonymous,review_body AS body,published_at AS publishedAt,rating_use_again,rating_cared_for,rating_rights,rating_outcome FROM client_verifications WHERE "+where+" ORDER BY published_at DESC,rowid DESC LIMIT 5 OFFSET ?").bind(bar,offset).all(),
    db.prepare("SELECT count(*) AS total,AVG(CASE WHEN rating_use_again IS NOT NULL AND rating_cared_for IS NOT NULL AND rating_rights IS NOT NULL AND rating_outcome IS NOT NULL THEN (rating_use_again+rating_cared_for+rating_rights+rating_outcome)/4.0 END) AS average,AVG(rating_use_again) AS rating_use_again,AVG(rating_cared_for) AS rating_cared_for,AVG(rating_rights) AS rating_rights,AVG(rating_outcome) AS rating_outcome FROM client_verifications WHERE "+where).bind(bar).first()
   ]);
-  return json({reviews:rows.results,summary});
+  return json({reviews:rows.results.map(({first_name,last_name,...review})=>({...review,author:review.anonymous?'Anonymous':reviewAuthor(review.author,first_name,last_name)})),summary});
  }catch{return fail('Client reviews are temporarily unavailable.',503);}
 }
 export async function POST(request:Request){
@@ -37,16 +47,15 @@ export async function POST(request:Request){
   const admin=platform.admin;
   let user=client?.user||'',email=client?.email||'';
   if(!sameOrigin(request))return fail('Invalid request origin.',403);
-  const text=await request.text();if(text.length>20000)return fail('Request is too large.',413);
-  let d:Record<string,unknown>;try{d=JSON.parse(text);}catch{return fail('Invalid request.');}
-  if(!d||typeof d!=='object'||Array.isArray(d))return fail('Invalid request.');
+  let d:Record<string,unknown>,evidence:File|null;try{const parsed=await submissionInput(request,21*1024*1024);d=parsed.data;evidence=parsed.photo;}catch{return fail('Invalid request. Choose a PDF, JPG, or PNG up to 20 MB.');}
   const db=rawDb(),action=str(d.action),now=new Date().toISOString();
+  if(typeof d.id==='string')d.id=await resolveVerificationReference(d.id);
   if(action==='review-decide'||action==='admin-list'||action==='decide'||action==='retry-email'||action==='retry-owner-email'||action==='retry-rejection-email'){if(!admin)return fail('Only the site administrator can manage verification requests.',403);user=platform.user;email=platform.email;}
   if(!user||!email)return fail('Log in to your client account to continue.',401);
   if(action==='account'){
    const profile=await db.prepare('SELECT legal_name,first_name,last_name,initial_docket,email,created_at FROM client_profiles WHERE user_id=?').bind(user).first();
-   const rows=await db.prepare('SELECT v.id,v.bar_number,a.name AS attorney_name,v.legal_name,v.court,v.county,v.state,v.opposing_party,v.document_name,v.document_date,v.party_role,v.representation_start,v.representation_end,v.request_notes,v.docket,v.status,v.decision_note,v.submitted_at,v.review_body,v.public_mode,v.published_at,v.rating_use_again,v.rating_cared_for,v.rating_rights,v.rating_outcome,v.review_draft,v.review_status,v.review_revision,v.review_decision_note FROM client_verifications v JOIN attorneys a ON a.bar_number=v.bar_number WHERE v.user_id=? ORDER BY v.submitted_at DESC').bind(user).all();
-   return json({profile,requests:rows.results,isAdmin:admin,signedInEmail:email});
+   const rows=await db.prepare('SELECT v.id,v.evidence_name,v.bar_number,a.name AS attorney_name,(SELECT photo_key FROM attorney_profiles ap WHERE ap.bar_number=v.bar_number) AS attorney_photo_key,v.legal_name,v.court,v.county,v.state,v.opposing_party,v.document_name,v.document_date,v.party_role,v.representation_start,v.representation_end,v.request_notes,v.docket,v.status,v.decision_note,v.submitted_at,v.review_body,v.public_mode,v.published_at,v.rating_use_again,v.rating_cared_for,v.rating_rights,v.rating_outcome,v.review_draft,v.review_status,v.review_revision,v.review_decision_note FROM client_verifications v JOIN attorneys a ON a.bar_number=v.bar_number WHERE v.user_id=? ORDER BY v.submitted_at DESC').bind(user).all();
+   return json({profile,firm:await accountFirm(user),requests:await publicRecords(rows.results.map(row=>({...row,public_author:reviewAuthor(row.legal_name,profile?.first_name,profile?.last_name)}))),isAdmin:admin,signedInEmail:email});
   }
   if(action==='create-profile'){
    const firstName=str(d.firstName),lastName=str(d.lastName),submittedEmail=str(d.email).toLowerCase();
@@ -63,7 +72,7 @@ export async function POST(request:Request){
    return json({saved:true});
   }
   if(action==='request'||action==='update-request'){
-   const bar=str(d.bar),court=str(d.court),county=str(d.county),docket=str(d.docket),state=str(d.state).toUpperCase(),legalName=str(d.legalName),opposingParty=str(d.opposingParty),documentName=str(d.documentName),documentDate=str(d.documentDate),partyRole=str(d.partyRole),representationStart=str(d.representationStart),representationEnd=str(d.representationEnd),requestNotes=str(d.requestNotes);
+   const bar=await resolveAttorneyReference(str(d.bar)),court=str(d.court),county=str(d.county),docket=str(d.docket),state=str(d.state).toUpperCase(),legalName=str(d.legalName),opposingParty=str(d.opposingParty),documentName=str(d.documentName),documentDate=str(d.documentDate),partyRole=str(d.partyRole),representationStart=str(d.representationStart),representationEnd=str(d.representationEnd),requestNotes=str(d.requestNotes);
    if(!validAttorneyId(bar)||court.length>150||county.length>80||docket.length<3||docket.length>100||!normal(docket)||d.attestation!==true)return fail('Enter the attorney and case docket number, and confirm you were this attorney’s client.');
    if(!await allowAuth(request,'verification:'+user))return fail('Too many requests. Please wait 15 minutes and try again.',429);
    if(legalName.length<3||legalName.length>150||legalName.split(/\s+/).length<2||court.length<3||county.length<2||!usStates.includes(state as typeof usStates[number])||!['plaintiff','defendant'].includes(partyRole)||opposingParty.length>200||documentName.length>250||requestNotes.length>2000)return fail('Enter your full legal name, state, county, court, and role in the case.');
@@ -72,15 +81,21 @@ export async function POST(request:Request){
    const profile=await db.prepare('SELECT legal_name FROM client_profiles WHERE user_id=?').bind(user).first<{legal_name:string}>();
    if(!profile)return fail('Create your private client profile first.',403);
    if(!await db.prepare('SELECT bar_number FROM attorneys WHERE bar_number=?').bind(bar).first())return fail('Attorney not found.',404);
+   if(await isJudicialProfile(db,bar))return fail('Client reviews are not available for judges.',403);
    const id=JSON.stringify([user,bar]),key=JSON.stringify([state,normal(county),normal(court),normal(docket),normal(legalName),bar]),notificationId=crypto.randomUUID(),recipient=verificationRequestRecipient();
    if(action==='update-request'&&!await db.prepare("SELECT id FROM client_verifications WHERE id=? AND user_id=? AND status='pending'").bind(id,user).first())return fail('Only your own pending request can be updated.',409);
+   let proof:Awaited<ReturnType<typeof validateClientEvidence>>;try{proof=await validateClientEvidence(evidence);}catch(e){return fail(e instanceof Error?e.message:'Invalid proof file.');}
+   const evidenceKey=proof?'client-evidence/'+crypto.randomUUID()+proof.extension:'';
    const statements=[
     db.prepare("INSERT INTO client_verifications(id,user_id,bar_number,legal_name,court,county,state,opposing_party,document_name,document_date,party_role,representation_start,representation_end,request_notes,docket,relationship_key,status,submitted_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'pending',?,?) ON CONFLICT(id) DO UPDATE SET legal_name=excluded.legal_name,court=excluded.court,county=excluded.county,state=excluded.state,opposing_party=excluded.opposing_party,document_name=excluded.document_name,document_date=excluded.document_date,party_role=excluded.party_role,representation_start=excluded.representation_start,representation_end=excluded.representation_end,request_notes=excluded.request_notes,docket=excluded.docket,relationship_key=excluded.relationship_key,status='pending',submitted_at=excluded.submitted_at,updated_at=excluded.updated_at,decision_note='',reviewed_at=NULL,reviewed_by=NULL,source_url='',identity_evidence='',representation_evidence='' WHERE client_verifications.status=CASE WHEN ?='update-request' THEN 'pending' ELSE 'rejected' END").bind(id,user,bar,legalName,court,county,state,opposingParty,documentName,documentDate,partyRole,representationStart,representationEnd,requestNotes,docket,key,now,now,action),
     db.prepare("INSERT INTO client_verification_audit(id,verification_id,actor_id,action,note,created_at) SELECT ?,id,?,?,?,? FROM client_verifications WHERE id=? AND status='pending' AND submitted_at=?").bind(crypto.randomUUID(),user,action==='update-request'?'updated':'submitted',action==='update-request'?'Client updated case details for manual review.':'Client requested relationship verification.',now,id,now)
    ];
    if(action==='update-request')statements.push(db.prepare("UPDATE client_verification_request_emails SET status='superseded' WHERE verification_id=? AND status='pending' AND EXISTS(SELECT 1 FROM client_verifications v WHERE v.id=? AND v.submitted_at=? AND v.status='pending')").bind(id,id,now));
    if(recipient)statements.push(db.prepare("INSERT INTO client_verification_request_emails(id,verification_id,recipient,status,created_at) SELECT ?,id,?,'pending',? FROM client_verifications WHERE id=? AND status='pending' AND submitted_at=?").bind(notificationId,recipient,now,id,now));
-   const results=await db.batch(statements);
+   if(proof)statements.push(db.prepare("UPDATE client_verifications SET evidence_key=?,evidence_name=?,evidence_type=? WHERE id=? AND user_id=? AND status='pending' AND submitted_at=?").bind(evidenceKey,proof.name,proof.type,id,user,now));
+   if(proof)await env.PROFILE_PHOTOS.put(evidenceKey,proof.bytes,{httpMetadata:{contentType:proof.type}});
+   let results;try{results=await db.batch(statements);}catch(e){if(evidenceKey)await env.PROFILE_PHOTOS.delete(evidenceKey);throw e;}
+   if(!results[0].meta.changes&&evidenceKey)await env.PROFILE_PHOTOS.delete(evidenceKey);
    if(!results[0].meta.changes)return fail('This attorney already has a pending, approved, or revoked request on your account.',409);
    const notificationEmailStatus=recipient?await sendVerificationRequestEmail(notificationId):'not-configured';
    return json({saved:true,status:'pending',notificationEmailStatus});
@@ -90,8 +105,9 @@ export async function POST(request:Request){
    if(body.length<10||body.length>2000||!['named','anonymous'].includes(mode)||d.consent!==true)return fail('Write 10–2,000 characters, choose your public name setting, and confirm publication.');
    const ratings=reviewRatingCategories.map(({key})=>d[key]);
    if(ratings.some(value=>typeof value!=='number'||!Number.isInteger(value)||value<1||value>5))return fail('Choose 1–5 stars for every rating category.');
-   const verified=await db.prepare("SELECT id,published_at FROM client_verifications WHERE id=? AND user_id=? AND status='approved'").bind(id,user).first<{id:string;published_at:string|null}>();
+   const verified=await db.prepare("SELECT id,published_at,bar_number FROM client_verifications WHERE id=? AND user_id=? AND status='approved'").bind(id,user).first<{id:string;published_at:string|null;bar_number:string}>();
    if(!verified)return fail('Only the approved client can submit a review for this attorney.',403);
+   if(await isJudicialProfile(db,verified.bar_number))return fail('Client reviews are not available for judges.',403);
    if(!verified.published_at){
     const publication=crypto.randomUUID();
     const results=await db.batch([db.prepare("UPDATE client_verifications SET review_body=?,public_mode=?,rating_use_again=?,rating_cared_for=?,rating_rights=?,rating_outcome=?,published_at=?,review_status='published',review_draft='',review_revision=?,review_decision_note='',updated_at=? WHERE id=? AND user_id=? AND status='approved' AND published_at IS NULL").bind(body,mode,...ratings,now,publication,now,id,user),db.prepare("INSERT INTO client_verification_audit(id,verification_id,actor_id,action,note,created_at) SELECT ?,id,?,'review-published',?,? FROM client_verifications WHERE id=? AND review_revision=? AND published_at=?").bind(crypto.randomUUID(),user,'Verified client published their first review.',now,id,publication,now)]);
@@ -136,7 +152,7 @@ export async function POST(request:Request){
    }
    const unsent=await db.prepare("SELECT id FROM review_moderation_emails WHERE status='pending' ORDER BY created_at LIMIT 10").all<{id:string}>();
    await Promise.all(unsent.results.map(row=>sendModerationEmail(row.id)));
-   const rows=await db.prepare("SELECT v.*,p.email,a.name AS attorney_name,(SELECT status FROM client_approval_emails e WHERE e.verification_id=v.id) AS email_status,(SELECT status FROM client_rejection_emails e WHERE e.verification_id=v.id ORDER BY e.created_at DESC,e.id DESC LIMIT 1) AS rejection_email_status,(SELECT status FROM client_verification_request_emails n WHERE n.verification_id=v.id ORDER BY n.created_at DESC,n.rowid DESC LIMIT 1) AS notification_email_status FROM client_verifications v JOIN client_profiles p ON p.user_id=v.user_id JOIN attorneys a ON a.bar_number=v.bar_number ORDER BY CASE WHEN v.review_status='pending' OR v.status='pending' THEN 0 ELSE 1 END,v.submitted_at DESC LIMIT 200").all();
+   const rows=await db.prepare("SELECT v.*,p.email,a.name AS attorney_name,(SELECT status FROM client_approval_emails e WHERE e.verification_id=v.id) AS email_status,(SELECT status FROM client_rejection_emails e WHERE e.verification_id=v.id ORDER BY e.created_at DESC,e.id DESC LIMIT 1) AS rejection_email_status,(SELECT status FROM client_verification_request_emails n WHERE n.verification_id=v.id ORDER BY n.created_at DESC,n.rowid DESC LIMIT 1) AS notification_email_status FROM client_verifications v JOIN client_profiles p ON p.user_id=v.user_id JOIN attorneys a ON a.bar_number=v.bar_number ORDER BY CASE WHEN v.review_status='pending' OR v.status='pending' THEN 0 ELSE 1 END,COALESCE(v.review_submitted_at,v.submitted_at) ASC").all();
    return json({requests:rows.results,emailConfigured:emailConfigured(),ownerNotificationConfigured:verificationRequestEmailConfigured()});
   }
   if(action==='decide'){

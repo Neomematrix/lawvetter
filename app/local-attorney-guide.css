@@ -1,0 +1,32 @@
+.local-attorney-guide{margin:48px 0 24px;padding-top:34px;border-top:1px solid #d8d4c9}
+.local-guide-heading{max-width:660px;margin-bottom:26px}
+.local-guide-heading .section-kicker{margin:0 0 12px;font-size:11px;letter-spacing:1.5px;color:#936026}
+.seo-guide .local-guide-heading h2{font-size:clamp(25px,3vw,34px);line-height:1.25;letter-spacing:-.9px;margin:0 0 12px}
+.local-guide-heading>p:last-child{font-size:16px;line-height:1.7;color:#58636c;margin:0;max-width:60ch}
+.local-guide-layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(280px,1fr);gap:26px;align-items:start}
+.local-guide-questions{min-width:0;background:#fff;border:1px solid #d6dfe5;border-radius:16px;overflow:hidden;box-shadow:0 10px 26px -22px #17344b66}
+.local-guide-questions>header{padding:26px 28px 20px;border-bottom:1px solid #e5eaee}
+.local-guide-questions h3,.local-guide-shortlist h3{font-size:21px;line-height:1.4;letter-spacing:-.4px;color:#19384e;margin:0 0 8px}
+.local-guide-questions>header p{font-size:14px;line-height:1.65;color:#64717b;margin:0}
+.seo-guide .local-guide-questions ol{list-style:none;margin:0;padding:0 28px}
+.seo-guide .local-guide-questions li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:15px;padding:21px 0;border-bottom:1px solid #e5eaee}
+.seo-guide .local-guide-questions li:last-child{border-bottom:0}
+.local-guide-questions li>span{font-size:13px;line-height:1.8;font-weight:800;color:#c65708;font-variant-numeric:tabular-nums}
+.local-guide-questions li>p{font-size:15px;font-weight:600;line-height:1.75;color:#243d50;margin:0;max-width:65ch}
+.local-guide-tip{margin:0 20px 20px;padding:16px 18px;border-radius:9px;background:#f0f6fa;border-left:3px solid #1e6faf}
+.local-guide-tip strong{display:block;font-size:13px;color:#1b4867;margin-bottom:5px}
+.local-guide-tip p{font-size:13px;line-height:1.7;color:#506474;margin:0;max-width:65ch}
+.local-guide-shortlist{padding:26px;border:1px solid #c6d8e6;border-radius:16px;background:#edf4f9;min-width:0}
+.local-guide-shortlist .section-kicker{font-size:10px;letter-spacing:1.4px;color:#366b8e;margin:0 0 12px}
+.local-guide-shortlist>p:not(.section-kicker){font-size:14px;line-height:1.75;color:#526676;margin:0}
+.seo-guide .local-guide-shortlist ul{list-style:none;margin:20px 0 24px;padding:0;display:grid;gap:18px}
+.seo-guide .local-guide-shortlist li{position:relative;padding:0 0 0 23px;line-height:1.65}
+.local-guide-shortlist li:before{content:'✓';position:absolute;left:0;top:0;color:#1b7056;font-weight:800;font-size:14px}
+.local-guide-shortlist li strong{display:block;font-size:14px;color:#24475f;margin-bottom:4px}
+.local-guide-shortlist li span{display:block;font-size:13px;color:#526676;line-height:1.7}
+.local-guide-shortlist .gold-button{width:100%;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0;padding:14px 18px;text-decoration:none;font-size:12px;border-radius:8px}
+.local-guide-shortlist>p.local-guide-context{font-size:12px;line-height:1.7;margin-top:20px;padding-top:18px;border-top:1px solid #ccdae4;color:#60717f}
+.local-attorney-guide>.local-guide-disclosure{margin:22px 0 0;font-size:12px;line-height:1.75;color:#6b747b;max-width:95ch}
+.local-guide-shortlist-only{grid-template-columns:minmax(0,640px)}
+@media(max-width:800px){.local-guide-layout{grid-template-columns:minmax(0,1fr);gap:20px}.local-guide-shortlist{padding:24px}.local-guide-shortlist .gold-button{max-width:320px}}
+@media(max-width:480px){.local-attorney-guide{margin-top:34px;padding-top:26px}.local-guide-heading{margin-bottom:22px}.local-guide-heading>p:last-child{font-size:15px}.local-guide-questions>header{padding:22px 20px 18px}.local-guide-questions h3,.local-guide-shortlist h3{font-size:20px}.seo-guide .local-guide-questions ol{padding:0 20px}.seo-guide .local-guide-questions li{gap:10px;grid-template-columns:24px minmax(0,1fr);padding:18px 0}.local-guide-questions li>p{font-size:14px;line-height:1.8}.local-guide-tip{margin:0 14px 14px;padding:14px}.local-guide-shortlist{padding:22px 20px}.local-guide-shortlist .gold-button{max-width:none}}

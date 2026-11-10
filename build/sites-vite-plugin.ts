@@ -17,6 +17,7 @@ async function exists(path: string): Promise<boolean> {
 // Packages Sites metadata and migrations after Vite finishes compiling.
 export function sites(): Plugin {
   let root = process.cwd();
+  let metadataWrite: Promise<void> | undefined;
 
   return {
     name: "sites",
@@ -25,6 +26,9 @@ export function sites(): Plugin {
       root = config.root;
     },
     async closeBundle() {
+      // Multiple Vite environments can finish together. Share one metadata copy.
+      if (metadataWrite) return metadataWrite;
+      metadataWrite = (async () => {
       const outputDirectory = resolve(root, "dist", ".openai");
       const hostingConfig = resolve(root, ".openai", "hosting.json");
       const drizzleSource = resolve(root, "drizzle");
@@ -40,6 +44,8 @@ export function sites(): Plugin {
           recursive: true,
         });
       }
+      })();
+      return metadataWrite;
     },
   };
 }

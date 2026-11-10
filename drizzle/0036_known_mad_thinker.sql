@@ -1,0 +1,1 @@
+ALTER TABLE `firm_settings` ADD `additional_locations` text DEFAULT '[]' NOT NULL;

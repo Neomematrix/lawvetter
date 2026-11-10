@@ -1,0 +1,4 @@
+CREATE INDEX `admin_audit_action_record_idx` ON `admin_audit` (`action`,`record_id`);--> statement-breakpoint
+CREATE INDEX `attorney_search_events_bar_date_idx` ON `attorney_search_events` (`bar_number`,`created_at`);--> statement-breakpoint
+CREATE INDEX `attorneys_firm_key_idx` ON `attorneys` (replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(lower(company), '&', 'and'), ' ', ''), char(9), ''), char(10), ''), char(13), ''), '.', ''), ',', ''), '-', ''), '''', ''), '’', ''), '/', ''), '(', ''), ')', ''));--> statement-breakpoint
+CREATE INDEX `client_reviews_status_date_idx` ON `client_verifications` (`status`,`published_at`,`bar_number`);

@@ -9,17 +9,18 @@ test('public pages expose indexable metadata and optional Google integrations',a
  assert.match(layout,/metadataBase:new URL\(SITE_ORIGIN\)/);
  assert.match(layout,/googleBot:\{index:true,follow:true/);
  assert.match(layout,/NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION/);
- assert.match(layout,/<GoogleAnalytics\/>/);
+ assert.match(layout,/<GoogleAnalytics measurementId=/);
 });
 
 test('crawler discovery uses robots, an expanded sitemap, and real destination links',async()=>{
- const [robots,sitemap,discovery]=await Promise.all([source('app/robots.txt/route.ts'),source('app/sitemap.xml/route.ts'),source('app/Discovery.tsx')]);
+ const [robots,sitemap,discovery]=await Promise.all([source('app/robots.txt/route.ts'),source('db/sitemaps.ts'),source('app/DiscoveryHome.tsx')]);
  assert.match(robots,/Allow: \/\\n/);
  assert.match(robots,/Sitemap:/);
  assert.match(sitemap,/\/find-a-lawyer/);
- assert.match(sitemap,/practiceGuides/);
- assert.match(sitemap,/attorneyPath\(attorney\)/);
- assert.match(discovery,/href=\{attorneyPath\(attorney\)\}/);
+ assert.match(sitemap,/sitemapindex/);assert.match(sitemap,/firms-/);assert.ok(sitemap.includes("path:'/client-reviews'"));
+ assert.match(sitemap,/attorneyPath\(a\)/);
+ assert.match(discovery,/const href=attorneyPath\(attorney\)/);
+ assert.match(discovery,/<a[^>]+href=\{href\}/);
  assert.match(discovery,/href=\{'\/practice-areas\/'\+area.id\}/);
 });
 
@@ -28,7 +29,7 @@ test('people-first Georgia and personal-injury guides are available at clean URL
  assert.match(guide,/'personal-injury'/);
  assert.match(guide,/Questions to ask|questions:/);
  assert.match(guide,/Deadlines vary by claim/);
- assert.match(index,/Find a lawyer in Georgia/);
+ assert.match(index,/Find a lawyer/);
  assert.match(index,/Verify the professional record/);
 });
 

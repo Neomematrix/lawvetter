@@ -1,7 +1,13 @@
+import {firmBannerError} from '../../firm-banner';
+import {env} from 'cloudflare:workers';
+import {adminIdentity} from '../../../db/admin-auth';
+import {rawDb} from '../../../db/raw';
+import {firmKey,firmColumn} from '../attorneys/firm';
 import {websitesByFirm} from '../../firm-websites';
 import {verifiedFirmLogos} from '../../verified-firm-logos';
 
-const cacheHeaders={'Cache-Control':'public, max-age=86400, s-maxage=604800, stale-while-revalidate=2592000'};
+const cacheHeaders={'Cache-Control':'public, max-age=300, s-maxage=300'};
+const uploadKey=(key:string)=>'firm-logos/'+encodeURIComponent(key)+'/banner';
 const browserHeaders={
  'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/141.0.0.0 Safari/537.36',
  'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
@@ -78,11 +84,14 @@ async function readPage(url:string){
 }
 
 export async function GET(request:Request){
- const key=new URL(request.url).searchParams.get('key')||'';
+ const params=new URL(request.url).searchParams,key=params.get('key')||'';
+ const responseCacheHeaders=params.has('preview')?{'Cache-Control':'no-store'}:cacheHeaders;
+ if(!key||key.length>500)return new Response('Invalid firm.',{status:400});
+ try{const setting=await rawDb().prepare('SELECT banner_key FROM firm_settings WHERE key=?').bind(key).first<{banner_key:string}>();const file=setting?.banner_key&&await env.PROFILE_PHOTOS.get(setting.banner_key);if(file)return new Response(file.body,{headers:{'Cache-Control':'no-store','Content-Type':file.httpMetadata?.contentType||'image/png','X-Content-Type-Options':'nosniff'}});}catch{return new Response('Logo unavailable.',{status:503,headers:{'Cache-Control':'no-store'}});}
  const override=verifiedFirmLogos[key];
- if(override)return new Response(null,{status:302,headers:{...cacheHeaders,Location:override}});
+ if(override)return new Response(null,{status:302,headers:{...responseCacheHeaders,Location:override}});
  const website=websitesByFirm[key];
- if(!website)return new Response('Firm website not found.',{status:404,headers:cacheHeaders});
+ if(!website)return new Response('Firm website not found.',{status:404,headers:{'Cache-Control':'no-store'}});
  try{
   const home=await readPage(website);
   if(home){
@@ -90,9 +99,30 @@ export async function GET(request:Request){
    const about=aboutPage(home.html,home.url);
    if(about){const page=await readPage(about);if(page)candidates.push(...logoCandidates(page.html,page.url));}
    const logo=candidates.sort((a,b)=>b.score-a.score)[0]?.url;
-   if(logo)return new Response(null,{status:302,headers:{...cacheHeaders,Location:logo}});
+   if(logo)return new Response(null,{status:302,headers:{...responseCacheHeaders,Location:logo}});
   }
  }catch{}
  // Accuracy is more important than coverage: never substitute a favicon for a full firm logo.
- return new Response('Verified full logo not found.',{status:404,headers:cacheHeaders});
+ return new Response('Verified full logo not found.',{status:404,headers:{'Cache-Control':'no-store'}});
+}
+
+export async function POST(request:Request){
+ if(request.headers.get('origin')!==new URL(request.url).origin)return Response.json({error:'Invalid request origin.'},{status:403});
+ if(!await adminIdentity(request))return Response.json({error:'Sign in as administrator.'},{status:401});
+ try{
+  const reader=request.body?.getReader();if(!reader)return Response.json({error:'Choose a firm image.'},{status:400});
+  let size=0;const chunks:Uint8Array[]=[];
+  while(true){const part=await reader.read();if(part.done)break;size+=part.value.byteLength;if(size>4*1024*1024){await reader.cancel();return Response.json({error:'Upload a JPEG or PNG smaller than 3 MB.'},{status:413});}chunks.push(part.value);}
+  const bytes=new Uint8Array(size);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length;}
+  const form=await new Response(bytes,{headers:{'Content-Type':request.headers.get('content-type')||''}}).formData();
+  const name=String(form.get('firm')||'').trim(),photo=form.get('photo'),key=firmKey(name);
+  if(!key||name.length>200||!(photo instanceof File)||photo.size<24||photo.size>3*1024*1024)return Response.json({error:'Choose a law firm and a JPEG or PNG smaller than 3 MB.'},{status:400});
+  if(!await rawDb().prepare('SELECT key FROM firm_settings WHERE key=? UNION SELECT '+firmColumn()+' AS key FROM attorneys WHERE '+firmColumn()+'=? LIMIT 1').bind(key,key).first())return Response.json({error:'Save an attorney with this firm first.'},{status:404});
+  const buffer=await photo.arrayBuffer(),head=new Uint8Array(buffer),png=[137,80,78,71,13,10,26,10].every((n,i)=>head[i]===n),jpeg=head[0]===255&&head[1]===216&&head[2]===255;
+  if(!png&&!jpeg)return Response.json({error:'Only JPEG and PNG images are accepted.'},{status:400});
+  const bannerError=firmBannerError(head);if(bannerError)return Response.json({error:bannerError},{status:400});
+  const storedKey=uploadKey(key)+'/'+crypto.randomUUID();await env.PROFILE_PHOTOS.put(storedKey,buffer,{httpMetadata:{contentType:png?'image/png':'image/jpeg'}});
+  try{await rawDb().prepare('INSERT INTO firm_settings(key,name,banner_key,updated_at) VALUES(?,?,?,?) ON CONFLICT(key) DO UPDATE SET banner_key=excluded.banner_key,updated_at=excluded.updated_at').bind(key,name,storedKey,new Date().toISOString()).run();}catch(error){await env.PROFILE_PHOTOS.delete(storedKey);throw error;}
+  return Response.json({saved:true,photoUrl:'/api/firm-logo?key='+encodeURIComponent(key)});
+ }catch{return Response.json({error:'Firm image could not be uploaded. Please try again.'},{status:503});}
 }

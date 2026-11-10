@@ -1,0 +1,3 @@
+DROP INDEX `attorneys_firm_key_idx`;
+--> statement-breakpoint
+CREATE INDEX `attorneys_firm_key_idx` ON attorneys (CASE replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(lower(company), '&', 'and'), ' ', ''), char(9), ''), char(10), ''), char(13), ''), '.', ''), ',', ''), '-', ''), '''', ''), '’', ''), '/', ''), '(', ''), ')', '') WHEN 'thriftmclemore' THEN 'thriftmclemorellc' ELSE replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(replace(lower(company), '&', 'and'), ' ', ''), char(9), ''), char(10), ''), char(13), ''), '.', ''), ',', ''), '-', ''), '''', ''), '’', ''), '/', ''), '(', ''), ')', '') END);

@@ -1,0 +1,30 @@
+import fontkit from '@pdf-lib/fontkit';
+import {awardSerif,awardSans,awardBold} from './fonts';
+import {PDFDocument,rgb} from 'pdf-lib';
+import QRCode from 'qrcode';
+import {awardLogoPng} from './logo';
+import {monthLabel,type Award} from './core';
+export async function awardCertificate(award:Award){
+ const doc=await PDFDocument.create();doc.registerFontkit(fontkit);const page=doc.addPage([792,612]),serif=await doc.embedFont(awardSerif,{subset:true}),sans=await doc.embedFont(awardSans,{subset:true}),bold=await doc.embedFont(awardBold,{subset:true});
+ const navy=rgb(.06,.18,.29),orange=rgb(1,.47,0),muted=rgb(.31,.39,.45);
+ const text=(s:string)=>s.replace(/[\r\n\t]/g,' ');
+ const center=(value:string,y:number,size:number,font=serif,color=navy)=>{value=text(value);while(font.widthOfTextAtSize(value,size)>650&&size>9)size-=.5;page.drawText(value,{x:(792-font.widthOfTextAtSize(value,size))/2,y,size,font,color});};
+ page.drawRectangle({x:20,y:20,width:752,height:572,borderWidth:3,borderColor:navy});page.drawRectangle({x:28,y:28,width:736,height:556,borderWidth:1,borderColor:orange});
+ const logo=await doc.embedPng(awardLogoPng);page.drawImage(logo,{x:231,y:474,width:330,height:72.5});
+ center('CERTIFICATE OF RECOGNITION',440,12,bold,muted);
+ center('Lawyer of the Month',390,34);
+ center('MOST SEARCHED ON LAWVETTER',357,12,bold,muted);
+ center(monthLabel(award.month).toUpperCase(),322,18,bold);
+ page.drawLine({start:{x:250,y:302},end:{x:542,y:302},thickness:2,color:orange});
+ center('PRESENTED TO',273,10,bold,muted);center(award.name,231,30);
+ center(award.firm,207,13,sans);center([award.city,award.state].filter(Boolean).join(', '),186,11,sans,muted);
+ center('Recognized for the highest eligible search activity during this completed month.',153,11,sans);
+ center('Search popularity is not a measure of legal ability or client satisfaction.',134,10,sans,muted);
+ const url='https://www.lawvetter.com/awards/'+award.month,qr=QRCode.create(url,{errorCorrectionLevel:'M'}),size=60,cell=size/qr.modules.size;
+ for(let row=0;row<qr.modules.size;row++)for(let col=0;col<qr.modules.size;col++)if(qr.modules.get(row,col))page.drawRectangle({x:663+col*cell,y:51+(qr.modules.size-1-row)*cell,width:cell,height:cell,color:navy});
+ page.drawText('Verify this award',{x:657,y:40,size:8,font:sans,color:muted});
+ page.drawText('LV-MONTHLY-'+award.month,{x:62,y:91,size:10,font:bold,color:navy});
+ page.drawText('Permanent record: '+url,{x:62,y:73,size:9,font:sans,color:muted});
+ page.drawText('Finalized '+award.finalizedAt.slice(0,10)+' | Methodology version 1',{x:62,y:55,size:9,font:sans,color:muted});
+ doc.setTitle('LawVetter '+monthLabel(award.month)+' - '+award.name);doc.setAuthor('LawVetter');doc.setSubject('Monthly search popularity recognition');return doc.save();
+}

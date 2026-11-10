@@ -2,6 +2,7 @@ import vinext from "vinext";
 import { defineConfig } from "vite";
 import hostingConfig from "./.openai/hosting.json";
 import { sites } from "./build/sites-vite-plugin";
+import { randomUUID } from "node:crypto";
 
 const SITE_CREATOR_PLACEHOLDER_DATABASE_ID =
   "00000000-0000-4000-8000-000000000000";
@@ -42,8 +43,14 @@ export default defineConfig(async () => {
 
   // Wrangler snapshots its log path while the Cloudflare plugin is imported.
   const { cloudflare } = await import("@cloudflare/vite-plugin");
+  const buildId = randomUUID();
+  const assetRelease = process.env.LAWVETTER_ASSET_RELEASE || buildId;
 
   return {
+    define: { __LAWVETTER_BUILD_ID__: JSON.stringify(buildId) },
+    // A fresh directory prevents hosting/CDN route caches from sending a new
+    // release's asset request to the Worker that previously handled that URL.
+    build: { assetsDir: `assets/${assetRelease}` },
     server: isCodexSeatbeltSandbox
       ? { watch: { useFsEvents: false, usePolling: true } }
       : undefined,

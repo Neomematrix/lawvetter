@@ -1,0 +1,283 @@
+# Only content-addressed image derivatives are immutable.
+/attorneys/placeholder.73de70770474.webp
+  Cache-Control: public, max-age=31536000, immutable
+/images/lawvetter-attorney-welcome-1440.250bb6d6942b.webp
+  Cache-Control: public, max-age=31536000, immutable
+/images/lawvetter-attorney-welcome-1800.08b74481f0a4.webp
+  Cache-Control: public, max-age=31536000, immutable
+/images/lawvetter-attorney-welcome-960.58808731a7b8.webp
+  Cache-Control: public, max-age=31536000, immutable
+/practice-icons/aviation.9827e0fc37b4.webp
+  Cache-Control: public, max-age=31536000, immutable
+/practice-icons/civil.50c186278209.webp
+  Cache-Control: public, max-age=31536000, immutable
+/practice-icons/commercial-disputes.e781c6e5991e.webp
+  Cache-Control: public, max-age=31536000, immutable
+/practice-icons/criminal-defense.b564ced99294.webp
+  Cache-Control: public, max-age=31536000, immutable
+/practice-icons/employment-law.cc6d6fce84d2.webp
+  Cache-Control: public, max-age=31536000, immutable
+/practice-icons/estate-planning.7b4beb613e58.webp
+  Cache-Control: public, max-age=31536000, immutable
+/practice-icons/family-law.33a49b8b65a7.webp
+  Cache-Control: public, max-age=31536000, immutable
+/practice-icons/immigration.a0416d8a093f.webp
+  Cache-Control: public, max-age=31536000, immutable
+/practice-icons/intellectual-property.e37c0256e941.webp
+  Cache-Control: public, max-age=31536000, immutable
+/practice-icons/international-arbitration.49c1f17d26fe.webp
+  Cache-Control: public, max-age=31536000, immutable
+/practice-icons/labor.5351e1716e14.webp
+  Cache-Control: public, max-age=31536000, immutable
+/practice-icons/litigation.d034862fe422.webp
+  Cache-Control: public, max-age=31536000, immutable
+/practice-icons/patent.1a2c8ba1883d.webp
+  Cache-Control: public, max-age=31536000, immutable
+/practice-icons/personal-injury.98dfc7e04875.webp
+  Cache-Control: public, max-age=31536000, immutable
+/practice-icons/real-estate.4cdb8e358082.webp
+  Cache-Control: public, max-age=31536000, immutable
+/practice-icons/social-security-disability.5fd960d75a42.webp
+  Cache-Control: public, max-age=31536000, immutable
+/practice-icons/workers-compensation.2c3710a6be5e.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+# Font file names include their content hash.
+/fonts/cormorant-garamond.06bc9a8c179a.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/cormorant-garamond.3170a883f196.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/cormorant-garamond.3512ad3b4ddd.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/cormorant-garamond.5d618c462b7a.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/cormorant-garamond.826f73ca737f.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/cormorant-garamond.919a7720ae16.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/cormorant-garamond.9dc38267bdee.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/cormorant-garamond.d04439363ec8.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/cormorant-garamond.d81372bae1f8.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/cormorant-garamond.e6d6d1d73858.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/lato.26876f0971d5.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/lato.4b833d8ce706.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/lato.5aaafef33d89.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/lato.5c3360f8439a.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/lato.78e850d56983.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/lato.7a7ce1a34f3e.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/lato.948d8c34cc2a.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/lato.a30702089e10.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/lato.b85c84c655bc.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/lato.bd9a6192274f.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/lato.d4ae5188a653.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/lato.faa2f0453abc.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/plus-jakarta-sans.0303e02b53b0.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/plus-jakarta-sans.5c913fc1b1f8.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/plus-jakarta-sans.a16f29d7d2a2.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/fonts/plus-jakarta-sans.cd8db90cd950.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/019e79984ae5ed09.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/0a24b09aad0d103e.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/14232108e4ade10c.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/14fdc78ad716ee47.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/1521154c9e29a717.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/1709acd976cbc3c3.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/177314af0bab5e58.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/1e947015c603ab68.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/218a9723b09aadf6.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/237e5e607b63d993.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/2a4a33a3edf63a12.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/36529ab7d5d480dc.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/4d417413a54c4022.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/52d96f3aa4de0dc4.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/575fd2eae1b6e295.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/634c714c562d5d5e.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/695f0cb96d0e04c9.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/6f24d21e31310cc2.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/716151d7351c7dd5.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/75dc14cdd1bebb3a.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/808c38bca79de689.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/8725263b49eb18d4.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/89567f57820306fb.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/8a1ad1d9a914bdd3.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/92769532b044c8d1.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/966a754b96258fb4.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/981bf2a98875f758.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/9ab435525eb39816.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/9c5c65fda25763ff.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/a007bc6a8dd06330.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/a2040e6f7c9513f1.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/aafbe0e3d8884457.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/b1ef42c2c63c0474.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/b59cdf8ed69f1334.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/bd70dbc19db3d937.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/dcdce8de58398fac.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/df14d487aaedf3ce.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/e13de93fa7172ebd.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/eefe0b117ab4c465.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/efe2d875583613b0.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/f5e27619bd4f9ca4.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/f712be6b754c9ca4.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/f83dba4ebf122024.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/f871862cce725a98.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/chart-avatars/f915a78543b00b32.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/practice-icons/1121525032ef0112.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/practice-icons/18142798b0f7b580.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/practice-icons/1caebf5bedc16a5f.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/practice-icons/3e36b21d411c0b5e.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/practice-icons/4d887cfa7d399c63.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/practice-icons/6044cfa8527ae569.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/practice-icons/72ad4a7e888fd1dc.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/practice-icons/86ea024e616299c7.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/practice-icons/9243e00683287414.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/practice-icons/9459290492c6d878.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/practice-icons/974556a7b5f607a0.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/practice-icons/97dde278839328e1.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/practice-icons/a2c47542beb83ab5.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/practice-icons/dec963fcec8fee47.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/practice-icons/e26881d8dcd72b35.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/practice-icons/eda3ea66444318d3.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/practice-icons/fb0ca39f71f2eb3e.webp
+  Cache-Control: public, max-age=31536000, immutable

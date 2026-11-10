@@ -1,0 +1,20 @@
+.professional-signup .professional-account-types{display:inline-flex;align-items:center;gap:3px;max-width:100%;padding:3px;margin:0 0 18px;border:1px solid #d6e2eb;border-radius:9px;background:#f0f5f9}
+.professional-signup .professional-account-types button{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:36px;padding:8px 12px;border:1px solid transparent;border-radius:6px;background:transparent;box-shadow:none;color:#557082;font:650 12px/1.4 var(--font-jakarta),Arial,sans-serif;letter-spacing:0;text-transform:none;white-space:nowrap}
+.professional-signup .professional-account-types button[aria-pressed=true]{background:#fff;border-color:#d4e0e9;color:#194f75;box-shadow:0 1px 3px #163c5410}
+.professional-signup .professional-account-types button:hover{color:#155b86;background:#ffffffa6}
+.professional-signup .professional-account-types button:disabled{opacity:.6;cursor:default}
+.professional-account-types svg{width:15px;height:15px;flex:none}
+.professional-signup .professional-account-types button:focus-visible,.professional-signup .professional-auth-modes button:focus-visible,.professional-signup .professional-account-submit:focus-visible{outline:2px solid #ed9350;outline-offset:3px}
+.professional-signup>h1{margin-top:0}
+.professional-signup p.professional-account-copy{margin:0 0 10px;font-size:14px;line-height:1.7;color:#355369}
+.professional-signup p.professional-access-note{margin:0 0 18px;font-size:12px;line-height:1.7;color:#6a8090}
+.professional-signup .professional-auth-modes{display:inline-flex;align-items:center;gap:4px;margin:0 0 18px;padding:0;border-bottom:1px solid #dce5ec}
+.professional-signup .professional-auth-modes button{min-height:35px;padding:8px 12px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;box-shadow:none;color:#648092;font-size:12px;font-weight:650;letter-spacing:0;text-transform:none}
+.professional-signup .professional-auth-modes button[aria-pressed=true]{border-bottom-color:#1e638f;color:#1b5277;background:transparent}
+.professional-signup .professional-auth-modes button:hover{background:#f3f7fa;color:#1b5277;transform:none}
+.professional-signup .professional-account-submit{display:inline-flex;align-items:center;justify-content:center;width:auto;min-height:40px;padding:10px 15px;border:1px solid #1d5b85;border-radius:7px;background:#205f8a;color:#fff;box-shadow:none;font-size:12px;font-weight:650;letter-spacing:0;text-transform:none;text-decoration:none}
+.professional-signup .professional-account-submit:hover{background:#174e75;box-shadow:none;transform:none}
+.professional-signup .professional-account-submit:disabled{opacity:.6}
+.professional-signup .professional-auth-actions{align-items:center;gap:12px}
+@media(max-width:480px){.professional-signup .professional-account-types{display:flex;width:100%;margin-bottom:16px}.professional-signup .professional-account-types button{flex:1;padding:8px;gap:5px;font-size:11px}.professional-signup p.professional-account-copy{font-size:13px}.professional-signup .professional-account-submit{min-height:44px}}
+@media(pointer:coarse){.professional-signup .professional-account-types button,.professional-signup .professional-auth-modes button{min-height:44px}}

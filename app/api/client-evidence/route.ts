@@ -1,0 +1,6 @@
+import {resolveVerificationReference} from '../../../db/attorney-reference';
+import {env} from 'cloudflare:workers';
+import {rawDb} from '../../../db/raw';
+import {profileIdentity} from '../../../db/profile-access';
+import {clientIdentity} from '../../../db/client-auth';
+export async function GET(request:Request){try{const platform=await profileIdentity(request),client=await clientIdentity(request),id=await resolveVerificationReference(new URL(request.url).searchParams.get('id')||''),row=await rawDb().prepare('SELECT user_id,evidence_key,evidence_type FROM client_verifications WHERE id=?').bind(id).first<{user_id:string;evidence_key:string;evidence_type:string}>();if(!row?.evidence_key||(!platform.admin&&(!client||row.user_id!==client.user)))return new Response('Not found',{status:404});const file=await env.PROFILE_PHOTOS.get(row.evidence_key);if(!file)return new Response('Not found',{status:404});const extension=row.evidence_type==='application/pdf'?'pdf':row.evidence_type==='image/png'?'png':'jpg';return new Response(file.body,{headers:{'Content-Type':row.evidence_type,'Content-Disposition':'attachment; filename="ClientVerification.'+extension+'"','Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff','Content-Security-Policy':"sandbox; default-src 'none'"}});}catch{return new Response('Evidence unavailable',{status:503});}}

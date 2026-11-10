@@ -44,3 +44,7 @@ next-env.d.ts
 tsconfig.tsbuildinfo
 
 /tmp/
+
+# Ignore transient workspace synchronization files.
+.rsync-tmp/
+.openai/client-asset-history/files/**/.*

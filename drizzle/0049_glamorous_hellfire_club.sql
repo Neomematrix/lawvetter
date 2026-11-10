@@ -1,0 +1,1 @@
+CREATE INDEX `attorneys_state_source_idx` ON `attorneys` (`state`,`source_url`);

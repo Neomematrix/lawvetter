@@ -1,0 +1,2 @@
+CREATE INDEX `directory_page_views_date_idx` ON `directory_page_views` (`created_at`,`target_kind`);--> statement-breakpoint
+CREATE INDEX `directory_page_views_source_date_idx` ON `directory_page_views` (`target_kind`,`source`,`created_at`,`target_key`,`event_id`);

@@ -1,0 +1,8 @@
+import SiteHeader from '../SiteHeader';
+import {awardArchive} from '../../db/monthly-awards';
+import {currentMonth,monthLabel} from './core';
+import AwardMethod from './Method';
+import './awards.css';
+export const dynamic='force-dynamic';
+export const metadata={title:'Monthly Awards | LawVetter',alternates:{canonical:'https://www.lawvetter.com/awards'}};
+export default async function Awards(){const archive=await awardArchive(),month=currentMonth();return <main><SiteHeader/><article className="page-shell awards-page"><p className="section-kicker">LAWVETTER RECOGNITION</p><h1>Monthly awards</h1><section className="award-current" aria-label="Current monthly award"><div className="award-current-copy"><span className="award-current-status">{monthLabel(month)} · In progress</span><h2>Lawyer of the Month</h2><p>See who’s leading this month. The winner is announced after the month ends.</p><nav className="award-current-actions" aria-label="Monthly award links"><a className="award-action-primary" href="/?view=charts">View current rankings</a><a className="award-action-secondary" href={'/awards/'+month}>View monthly award</a></nav></div><div className="award-current-art"><img src="/awards/preview/badge" alt="Preview of the LawVetter Lawyer of the Month badge. Not an issued award." width={1000} height={440}/></div></section><section><h2>Permanent award archive</h2>{archive.length?<div className="award-archive">{archive.map(({month,award})=><a key={month} href={'/awards/'+month}><span>{monthLabel(month)}</span><strong>{award?.name||'No award issued'}</strong><small>{award?'Most searched on LawVetter':'No eligible search activity'}</small></a>)}</div>:<p>No completed awards have been issued yet.</p>}</section><AwardMethod/></article></main>}

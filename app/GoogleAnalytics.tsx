@@ -1,11 +1,5 @@
-const measurementId=(process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID||'').trim();
-const enabled=/^G-[A-Z0-9]+$/i.test(measurementId);
-
-export default function GoogleAnalytics(){
- if(!enabled)return null;
- return <>
-  <script async src={'https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(measurementId)}/>
-  <script dangerouslySetInnerHTML={{__html:`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config',${JSON.stringify(measurementId)},{anonymize_ip:true,send_page_view:false,page_location:location.origin,page_title:'LawVetter',page_referrer:'',allow_google_signals:false,allow_ad_personalization_signals:false});if(!/^\\/(admin|admin-login|account|client-reviews|reset-password)(\\/|$)/.test(location.pathname)){gtag('event','page_view',{page_location:location.origin,page_title:'LawVetter'});}`}}/>
- </>;
+export default function GoogleAnalytics({measurementId=(process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID||'').trim()}:{measurementId?:string}={}){
+ if(!/^G-[A-Z0-9]{5,20}$/i.test(measurementId))return null;
+ const code=`(function(){if(navigator.doNotTrack==='1'||navigator.globalPrivacyControl)return;window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config',${JSON.stringify(measurementId)},{send_page_view:false,page_location:location.origin,page_title:'LawVetter',page_referrer:'',allow_google_signals:false,allow_ad_personalization_signals:false});var last='';function track(){var path=location.pathname;if(/^\\/(admin|admin-login|account|dashboard|client-reviews|forgot-password|reset-password)(\\/|$)/.test(path))return;var view=new URLSearchParams(location.search).get('view');if(view==='shortlist')return;if(path==='/'&&(view==='charts'||view==='discover'))path+='?view='+view;if(path===last)return;last=path;gtag('event','page_view',{page_location:location.origin+path,page_path:path,page_title:'LawVetter',page_referrer:''});}['pushState','replaceState'].forEach(function(name){var original=history[name];history[name]=function(){var result=original.apply(this,arguments);track();return result;};});window.addEventListener('popstate',track);track();var script=document.createElement('script');script.async=true;script.src='https://www.googletagmanager.com/gtag/js?id='+${JSON.stringify(measurementId)};document.head.appendChild(script);var interactions=document.createElement('script');interactions.defer=true;interactions.src='/analytics-events-v1.js';document.head.appendChild(interactions);})();`;
+ return <script dangerouslySetInnerHTML={{__html:code}}/>;
 }
-

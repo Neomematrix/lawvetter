@@ -1,0 +1,35 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+import ts from 'typescript';
+import {JSDOM} from 'jsdom';
+
+test('Admin Add and Edit offer exactly three types, show employer fields and submit selected employment',async()=>{
+ const dom=new JSDOM('<!doctype html><html><body><div id="root"></div></body></html>',{url:'https://lawvetter.test/admin/records'});
+ globalThis.window=dom.window;globalThis.document=dom.window.document;const priorNavigator=Object.getOwnPropertyDescriptor(globalThis,'navigator');Object.defineProperty(globalThis,'navigator',{value:dom.window.navigator,configurable:true});globalThis.IS_REACT_ACT_ENVIRONMENT=true;
+ const React=await import('react'),jsx=await import('react/jsx-runtime'),{createRoot}=await import('react-dom/client');
+ dom.window.HTMLDialogElement.prototype.showModal=function(){this.setAttribute('open','');};dom.window.HTMLDialogElement.prototype.close=function(){this.removeAttribute('open');};
+ const requests=[];let saved=null,uploaded=null,firmUploaded=null,deleted=null,failFirmUpload=false;const row={photo_key:'attorneys/100001/existing.jpg',bar_number:'100001',license_number:'100001',state:'GA',name:'Example Attorney',company:'Example Firm',website:'https://example.test/people/attorney',firm_website:'https://example.test/',email:'',status:'Active Member in Good Standing',source_url:'https://example.test',practice_areas:'Family Law'};
+ const fetch=async(url,opts={})=>{requests.push(String(url));if(!opts.method&&String(url).startsWith('/api/profile-photo?'))return new Response(new Blob(['saved portrait'],{type:'image/jpeg'}));if(!opts.method&&String(url).includes('firmKey='))return Response.json({records:[row],total:1});if(!opts.method&&String(url).includes('kind=firms'))return Response.json({records:[{key:'examplefirm',name:'Example Firm',website:'https://example.test/',attorneys:1}],total:1});if(opts.method==='DELETE'){deleted=JSON.parse(opts.body);return Response.json({deleted:true});}if(String(url).startsWith('/api/cities?'))return Response.json({cities:['Atlanta','Alpharetta']});if(url==='/api/firm-logo'){firmUploaded=opts.body;return failFirmUpload?Response.json({error:'Image upload rejected.'},{status:413}):Response.json({saved:true});}if(url==='/api/profile-photo'){uploaded=opts.body;return Response.json({saved:true});}if(opts.method==='POST'){saved=JSON.parse(opts.body);return Response.json({saved:true});}return Response.json({records:deleted?[]:[row],total:deleted?0:1});};
+ const draws=[];dom.window.HTMLCanvasElement.prototype.getContext=function(){return {fillRect(){},drawImage(...args){draws.push(args);}};};dom.window.HTMLCanvasElement.prototype.toBlob=function(callback){callback(new Blob(['framed-photo'],{type:'image/jpeg'}));};
+ class PreviewImage{naturalWidth=600;naturalHeight=1000;set src(value){Promise.resolve().then(()=>this.onload?.());}}
+ const context=vm.createContext({Image:PreviewImage,File,console,setTimeout,clearTimeout,AbortController,fetch,URL,FormData,window:dom.window,location:dom.window.location,URLSearchParams});
+ const source=ts.transpileModule(fs.readFileSync('app/admin/records/page.tsx','utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022,jsx:ts.JsxEmit.ReactJSX}}).outputText;
+ const module=new vm.SourceTextModule(source,{context});await module.link(async spec=>{if(spec.startsWith('.')){const path=await import('node:path');async function local(file){const actual=['.ts','.tsx'].map(ext=>file+ext).find(f=>fs.existsSync(f));const code=ts.transpileModule(fs.readFileSync(actual,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022,jsx:ts.JsxEmit.ReactJSX,resolveJsonModule:true}}).outputText;const mod=new vm.SourceTextModule(code,{context});await mod.link(async dep=>{if(dep.startsWith('.'))return local(path.resolve(path.dirname(actual),dep));const exports=dep==='react'?React:jsx;return new vm.SyntheticModule(Object.keys(exports),function(){for(const key of Object.keys(exports))this.setExport(key,exports[key]);},{context});});return mod;}return local(path.resolve('app/admin/records',spec));}const exports=spec==='next/navigation'?{useSearchParams:()=>new URLSearchParams()}:spec==='react'?React:jsx;return new vm.SyntheticModule(Object.keys(exports),function(){for(const key of Object.keys(exports))this.setExport(key,exports[key]);},{context});});await module.evaluate();
+ let root=createRoot(document.getElementById('root'));await React.act(async()=>root.render(React.createElement(module.namespace.default)));await React.act(async()=>new Promise(r=>setTimeout(r,350)));
+ const setter=Object.getOwnPropertyDescriptor(dom.window.HTMLInputElement.prototype,'value').set;
+ const button=text=>[...document.querySelectorAll('button')].find(b=>b.textContent===text);
+ async function input(label,value){const el=label==='City'?document.querySelector('dialog input[name=city]'):[...document.querySelector('dialog').querySelectorAll('label')].find(l=>l.textContent.startsWith(label)).querySelector('input');await React.act(async()=>{setter.call(el,value);el.dispatchEvent(new dom.window.Event('input',{bubbles:true}));});}
+ async function select(el,value){await React.act(async()=>{el.value=value;el.dispatchEvent(new dom.window.Event('change',{bubbles:true}));});}
+ for(const mode of ['Add attorney','Edit record'])for(const type of ['Law Firm Attorney','In House Counsel','Government Attorney']){
+  await React.act(async()=>button(mode).click());const dialog=document.querySelector('dialog'),typeSelect=dialog.querySelector('select[name=employmentType]');assert.equal(typeSelect.value,'Law Firm Attorney');assert.deepEqual([...typeSelect.options].map(o=>o.value),['Law Firm Attorney','In House Counsel','Government Attorney']);
+  await select(typeSelect,type);assert.equal(!!dialog.querySelector('input[name=company]'),type==='Law Firm Attorney');
+  if(type!=='Law Firm Attorney'){await input('Employer or organization name','Example Employer');await input('Employer website','https://employer.example/');assert.equal(dialog.querySelector('.admin-firm-image'),null);}
+  await input('First name','Example');await input('Last name','Attorney');
+  const stateSelect=[...dialog.querySelectorAll('label')].find(l=>l.textContent.startsWith('State')).querySelector('select');await select(stateSelect,'GA');
+  await input('City','Atlanta');await input('Bar / license number','123456');await select(dialog.querySelector('select[name=status]'),'Member in Good Standing');
+  await React.act(async()=>dialog.querySelector('form').dispatchEvent(new dom.window.Event('submit',{bubbles:true,cancelable:true})));assert.equal(saved.record.employmentType,type);if(type!=='Law Firm Attorney'){assert.equal(saved.record.employerName,'Example Employer');assert.equal(saved.record.employerWebsite,'https://employer.example/');assert.equal(saved.record.company,'');}assert.equal(dialog.open,false);
+ }
+ await React.act(async()=>root.unmount());dom.window.close();if(priorNavigator)Object.defineProperty(globalThis,'navigator',priorNavigator);
+});

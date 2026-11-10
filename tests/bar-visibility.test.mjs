@@ -1,0 +1,34 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+import ts from 'typescript';
+import {DatabaseSync} from 'node:sqlite';
+
+test('All public licenses are hidden regardless of owner preference; stored license and state survive',async()=>{
+ const module=new vm.SourceTextModule(ts.transpileModule(fs.readFileSync('db/public-attorney.ts','utf8'),{compilerOptions:{module:ts.ModuleKind.ES2022,target:ts.ScriptTarget.ES2022}}).outputText);
+ await module.link(()=>{});await module.evaluate();
+ const db=new DatabaseSync(':memory:');
+ const schema=fs.readFileSync('db/schema.ts','utf8').split("sqliteTable('attorneys', {")[1].split('}, t =>')[0];
+ const columns=[...schema.matchAll(/(?:text|integer)\('([^']+)'\)/g)].map(m=>m[1]);
+ db.exec('CREATE TABLE attorneys('+columns.map(c=>c+' TEXT').join(',')+');');
+ db.exec("CREATE TABLE attorney_profiles(bar_number TEXT PRIMARY KEY,owner_id TEXT,headline TEXT,bio TEXT,practice_areas TEXT,website TEXT,linkedin_url TEXT,updated_at TEXT);");
+ db.exec(fs.readFileSync('drizzle/0032_warm_klaw.sql','utf8'));
+ db.prepare('INSERT INTO attorneys(bar_number,license_number,state) VALUES(?,?,?)').run('691343','691343','GA');
+ db.prepare('INSERT INTO attorney_profiles(bar_number,owner_id) VALUES(?,?)').run('691343','owner');
+ db.exec("ALTER TABLE attorney_profiles ADD COLUMN languages TEXT NOT NULL DEFAULT ''");
+ const update=fs.readFileSync('app/api/profiles/route.ts','utf8').match(/prepare\('(UPDATE attorney_profiles SET languages=[^']+)'\)/)[1];
+ const save=(user,hide)=>db.prepare(update).run(null,'','','','',null,hide,'now','691343',user);
+ const read=()=>db.prepare('SELECT '+module.namespace.publicAttorneyColumns('a')+' FROM attorneys a').get();
+ assert.equal(read().license_number,'');
+ assert.equal(save('someone-else',1).changes,0);
+ assert.equal(read().license_number,'');
+ assert.equal(save('owner',1).changes,1);
+ assert.equal(read().license_number,'');
+ assert.equal(read().state,'GA');
+ assert.equal(read().bar_number,'691343');
+ assert.equal(db.prepare('SELECT license_number FROM attorneys').get().license_number,'691343');
+ save('owner',null);assert.equal(read().license_number,'');
+ save('owner',0);assert.equal(read().license_number,'');
+ db.close();
+});

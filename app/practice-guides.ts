@@ -12,11 +12,11 @@ export const practiceGuides:Record<string,PracticeGuide>={
   name:'Family law',description:'Find Georgia family lawyers and compare records for divorce, custody, support, and related family matters.',
   intro:'Family-law matters can involve finances, parenting, safety, and major changes at home. A useful first conversation should clarify the immediate problem, the county where a case may be filed, and the lawyer’s experience with similar matters.',
   matters:['Divorce, separation, and property division','Child custody, parenting plans, and visitation','Child support, alimony, and enforcement','Adoption, guardianship, and protective orders'],
-  questions:['How often do you handle this kind of family matter?','What information should I bring to the first meeting?','How do you approach negotiation, mediation, and court?','How will fees and communication be managed?'],
+  questions:["Have you handled a case like mine before, and what approach would you recommend?", "Are you familiar with the judge, and have you appeared before them?", "Do you generally favor settling or going to trial, and how much of your work involves representing clients in court?", "What outcomes are realistic, what can you guarantee, and what is outside your control?", "What custody arrangement would you recommend, including holidays, school breaks, and transportation?", "How much child support might I pay or receive, and what affects that amount?", "What can I do if the other parent does not follow the custody or support order?", "What documents and evidence should I gather, what is the estimated total cost, and what could increase it?"],
   note:'Family-law rules and court procedures are fact-specific. Verify the lawyer’s current status and discuss your situation directly.'
  },
  'criminal-defense':{
-  name:'Criminal defense',description:'Find Georgia criminal defense lawyers and compare professional records before requesting a consultation.',
+  name:'Criminal Law',description:'Find Georgia criminal law attorneys and compare professional records before requesting a consultation.',
   intro:'A criminal defense lawyer can explain the charge, possible consequences, available defenses, and upcoming court obligations. Time can matter when a hearing, bond issue, evidence request, or license consequence is involved.',
   matters:['Felony and misdemeanor charges','DUI and traffic-related offenses','Investigations, warrants, and pre-charge advice','Probation, appeals, and post-conviction issues'],
   questions:['How often do you handle this charge in this court?','Who will appear with me and manage the case?','What are the next deadlines or court dates?','What fee arrangement and additional costs should I expect?'],

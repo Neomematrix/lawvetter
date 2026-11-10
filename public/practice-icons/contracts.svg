@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 300" role="img" aria-labelledby="contracts-title contracts-desc">
+ <title id="contracts-title">Contracts</title>
+ <desc id="contracts-desc">A modern contract document and signing pen in LawVetter blue and orange.</desc>
+ <defs>
+  <linearGradient id="contract-paper" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#ECF5FB"/></linearGradient>
+  <linearGradient id="contract-pen" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#2C7CB7"/><stop offset="1" stop-color="#155B96"/></linearGradient>
+  <linearGradient id="contract-orange" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FF974C"/><stop offset="1" stop-color="#FE6B05"/></linearGradient>
+ </defs>
+ <ellipse cx="183" cy="281" rx="141" ry="10" fill="#155B96" opacity=".10"/>
+ <!-- Clean folded contract sheet, angled like the reference. -->
+ <g transform="rotate(-5 167 145)">
+  <path d="M78 28H235L281 74V262Q281 274 268 274H78Q65 274 65 262V41Q65 28 78 28Z" fill="#BCD7E9"/>
+  <path d="M71 20H228L274 66V254Q274 266 261 266H71Q58 266 58 254V33Q58 20 71 20Z" fill="url(#contract-paper)" stroke="#155B96" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M228 20V54Q228 66 240 66H274" fill="#D6EAF7" stroke="#155B96" stroke-width="4" stroke-linejoin="round"/>
+  <rect x="80" y="41" width="43" height="7" rx="3.5" fill="#FE6B05"/>
+  <text x="79" y="91" fill="#155B96" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="27" letter-spacing="1">CONTRACT</text>
+  <path d="M81 111H249" stroke="#FE6B05" stroke-width="4" stroke-linecap="round"/>
+  <g fill="none" stroke="#94B6CE" stroke-width="5" stroke-linecap="round">
+   <path d="M81 132H244M81 150H229M81 168H242M81 186H185"/>
+  </g>
+  <path d="M83 234H181" stroke="#B3CBDB" stroke-width="2" stroke-linecap="round"/>
+  <path d="M88 228C99 218 115 205 110 214C96 239 119 227 132 219C140 214 127 230 139 226L161 221" fill="none" stroke="#155B96" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="81" y="245" width="44" height="3" rx="1.5" fill="#94B6CE"/>
+ </g>
+ <!-- Orange approval seal adds a modern legal-document detail. -->
+ <circle cx="264" cy="240" r="34" fill="#C95203" opacity=".18"/>
+ <circle cx="260" cy="234" r="34" fill="url(#contract-orange)"/>
+ <circle cx="260" cy="234" r="25" fill="none" stroke="#FFFFFF" stroke-width="2" opacity=".75"/>
+ <path d="M248 234L256 242L273 225" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+ <!-- Two-tone signing pen across the page. -->
+ <g transform="translate(72 233) rotate(-27)" stroke-linejoin="round">
+  <path d="M17 5H184L218 17L184 29H17Q4 29 4 17Q4 5 17 5Z" fill="#123C60" opacity=".15"/>
+  <rect x="0" y="-10" width="181" height="24" rx="12" fill="url(#contract-pen)" stroke="#123C60" stroke-width="3"/>
+  <path d="M129-10H177V14H129Z" fill="url(#contract-orange)" stroke="#123C60" stroke-width="3"/>
+  <path d="M179-9L211 2L179 13Z" fill="#DAE8F0" stroke="#123C60" stroke-width="3"/>
+  <path d="M202-1L220 2L202 5Z" fill="#123C60"/>
+  <path d="M17-3H112" fill="none" stroke="#79AED4" stroke-width="3" stroke-linecap="round"/>
+  <path d="M27-13H98Q107-13 107-4" fill="none" stroke="#123C60" stroke-width="5" stroke-linecap="round"/>
+  <path d="M27-14H98Q105-14 105-7" fill="none" stroke="#FE6B05" stroke-width="3" stroke-linecap="round"/>
+  <path d="M16-9V13M119-9V13" stroke="#ECF5FB" stroke-width="3"/>
+ </g>
+</svg>

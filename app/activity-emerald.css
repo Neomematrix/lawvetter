@@ -1,0 +1,59 @@
+/* Compact analytics: neutral heading and one slim emerald metric strip. */
+.activity-panel.emerald-activity{padding:0;border:0;background:transparent;box-shadow:none;min-width:0}
+.emerald-activity .emerald-profile-select{max-width:440px;margin-bottom:16px}
+.emerald-activity>.emerald-hero{display:block;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;color:#1b4054;margin-bottom:0}
+.emerald-activity .emerald-hero-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:13px}
+.emerald-activity .emerald-hero h2{margin:0;color:#1b4054;font-size:21px;line-height:1.3;letter-spacing:-.4px;overflow-wrap:anywhere}
+.emerald-activity .activity-periods{display:flex;align-items:center;gap:2px;flex:none;padding:3px;border:1px solid #d2e4db;border-radius:8px;background:#f6faf8}
+.emerald-activity .activity-periods button{min-height:32px;padding:6px 10px;border:0;border-radius:5px;background:transparent;color:#57786b;box-shadow:none;font-size:11px;font-weight:650;white-space:nowrap}
+.emerald-activity .activity-periods button.active{color:#fff;background:#137b58;box-shadow:none}
+.emerald-activity .activity-periods button:hover{background:#e4f0e9;color:#155c43}
+.emerald-activity .activity-periods button.active:hover{background:#116d4e;color:#fff}
+.emerald-activity .activity-periods button:focus-visible,.emerald-state button:focus-visible{outline:2px solid #e69950;outline-offset:3px}
+.emerald-hero-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;padding:17px 12px;border:1px solid #126c54;border-radius:10px;background:linear-gradient(110deg,#164f45,#106b50);color:#fff}
+.emerald-side-metrics{display:contents}
+.emerald-main-metric,.emerald-side-metrics>div{display:flex;align-items:center;gap:11px;min-width:0;padding:0 15px}
+.emerald-side-metrics>div{border-left:1px solid #ffffff30}
+.emerald-main-metric>div,.emerald-side-metrics>div>div{min-width:0}
+.emerald-hero-icon{display:grid;place-items:center;width:32px;height:32px;flex:none;border-radius:50%;background:#ffffff0b;color:#d0f0e1}
+.emerald-hero-icon svg{width:18px;height:18px}
+.emerald-main-metric>div>span,.emerald-side-metrics>div>div>span{display:block;color:#e6f5ee;font-size:11px;font-weight:600;line-height:1.4}
+.emerald-main-metric strong,.emerald-side-metrics strong{display:block;margin:3px 0 0;color:#fff;font-size:28px;font-weight:650;line-height:1.1;letter-spacing:-.5px;overflow-wrap:anywhere}
+.emerald-activity .emerald-state{font-size:12px;padding:16px;border-radius:9px;background:#f0f7f3;color:#315d4a;margin:0}
+.emerald-state button{margin-left:8px;background:#fff;color:#216d4f;border:1px solid #bfd5c8;padding:6px 10px;border-radius:5px;font-size:11px}
+.emerald-insights{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}
+.emerald-insights>article{padding:21px;border:1px solid #dbe8e4;border-radius:13px;background:#fff;min-width:0}
+.emerald-card-heading{display:flex;align-items:flex-start;gap:11px;margin-bottom:14px}.emerald-card-heading>span{display:grid;place-items:center;width:36px;height:36px;flex:none;background:#eaf6f0;color:#127858;border-radius:50%}.emerald-card-heading svg{width:19px;height:19px}
+.emerald-activity h3{margin:0 0 5px;font-size:15px;line-height:1.45;color:#1b4054;letter-spacing:-.25px}.emerald-card-heading p{margin:0;color:#6a8290;font-size:11px;line-height:1.6}
+.emerald-count-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 0;border-top:1px solid #e7efeb;font-size:12px;color:#31565a}.emerald-count-row strong{font-size:18px;color:#117852}
+.emerald-activity .activity-note{font-size:10px;line-height:1.7;color:#6b827a;margin:10px 0 0}
+.emerald-google-state{padding:5px 0 9px;text-align:center}.emerald-google-state strong{display:block;font-size:29px;font-weight:750;color:#127858;line-height:1.2}.emerald-google-state p{font-size:11px;line-height:1.65;color:#527469;margin:6px 0}
+.emerald-measurement{font-size:11px;color:#12815b;text-align:center}.emerald-measurement summary{cursor:pointer;font-weight:650}.emerald-measurement p{font-size:11px;line-height:1.7;color:#5a796e;text-align:left;margin:12px 0 0}
+.emerald-trend-heading{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:25px 0 13px}.emerald-trend-heading h3{margin-bottom:4px}.emerald-trend-heading p{margin:0;color:#6d827c;font-size:11px}.emerald-trend-heading>span{font-size:10px;color:#678077;white-space:nowrap}
+.emerald-activity .emerald-trends{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:0}
+.emerald-activity .emerald-trends>.emerald-chart{border:1px solid #dae8e1;border-radius:13px;padding:20px;background:linear-gradient(#fff,#fbfefc);min-width:0;overflow:hidden}
+.emerald-chart>header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}.emerald-chart-label{display:block;font-size:12px;font-weight:650;color:#254e43}.emerald-chart>header strong{display:block;font-size:23px;font-weight:750;color:#107a55;margin-top:3px;line-height:1.2}.emerald-chart-unit{font-size:10px;color:#6d857a;margin-top:3px}
+.emerald-chart .activity-graph{margin:0;position:relative}.emerald-chart .activity-graph svg{display:block;width:100%;height:auto;overflow:visible;touch-action:pan-y}.emerald-chart .activity-graph svg text{font-family:inherit;font-size:11px;fill:#779387}
+.emerald-chart-readout{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:10px;line-height:1.5;min-height:24px;margin:0 0 5px;color:#668275}.emerald-chart-readout b{color:#137750;font-weight:650}
+.emerald-activity .emerald-chart-scrubber{display:block;width:100%;height:12px;min-height:0;margin:5px 0 9px;padding:0;border:0;box-shadow:none;accent-color:#16815b;background:transparent;cursor:ew-resize}.emerald-chart-scrubber:focus-visible{outline:2px solid #15805c;outline-offset:3px}.emerald-chart-scrubber:disabled{opacity:.4;cursor:default}
+.emerald-chart>footer{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;font-size:10px;line-height:1.6;color:#718a7e}
+.emerald-activity .emerald-daily{margin-top:18px;font-size:11px;color:#487363}.emerald-daily summary{cursor:pointer;width:fit-content;padding:5px 0}.emerald-table-scroll{width:100%;overflow:auto;margin-top:10px}.emerald-daily table{width:100%;border-collapse:collapse;text-align:left;font-size:11px}.emerald-daily th,.emerald-daily td{padding:9px;border-bottom:1px solid #e2ebe6}.emerald-daily caption{text-align:left;padding:8px 0;color:#668275}
+
+@media(max-width:1000px){.emerald-activity .emerald-trends{grid-template-columns:1fr}.emerald-main-metric,.emerald-side-metrics>div{padding:0 10px;gap:8px}}
+@media(max-width:650px){
+ .emerald-activity .emerald-hero-heading{align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+ .emerald-activity .emerald-hero h2{font-size:19px}
+ .emerald-activity .activity-periods button{min-height:34px;padding:6px 9px}
+ .emerald-hero-metrics{padding:15px 5px;border-radius:9px}
+ .emerald-main-metric,.emerald-side-metrics>div{padding:0 9px;gap:6px}
+ .emerald-hero-icon{display:none}
+ .emerald-main-metric>div>span,.emerald-side-metrics>div>div>span{font-size:10px}
+ .emerald-main-metric strong,.emerald-side-metrics strong{font-size:25px;margin-top:5px}
+ .emerald-insights{grid-template-columns:1fr;gap:13px;margin-top:15px}.emerald-insights>article{padding:18px}
+ .emerald-trend-heading{align-items:flex-start;gap:10px}.emerald-trend-heading>span{display:none}
+ .emerald-activity .emerald-trends{gap:14px}.emerald-activity .emerald-trends>.emerald-chart{padding:17px}
+ .emerald-chart-readout{font-size:10px}.emerald-chart>footer{font-size:10px}
+}
+@media(pointer:coarse){.emerald-activity .activity-periods button{min-height:44px}}
+
+@media(min-width:1001px){.emerald-activity .emerald-trends>.emerald-chart:last-child:nth-child(3){grid-column:1/-1}}

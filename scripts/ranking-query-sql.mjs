@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import ts from 'typescript';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..')+'/';
+const files=['app/api/attorneys/firm.ts','db/public-attorney.ts','db/attorney-verification.ts','db/ranking-activity.ts','app/api/attorneys/charts.ts'];
+const source=files.map(f=>fs.readFileSync(root+f,'utf8').replace(/^import .*;$/gm,'')).join('\n');
+const js=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText;
+const mod=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+process.stdout.write(JSON.stringify({attorneys:mod.attorneyChartSQL,firms:mod.firmChartSQL,firmActivity:mod.firmTotalRankingActivitySQL,firmExpression:mod.firmColumn('a.company')}));

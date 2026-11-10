@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg viewBox="0 0 120 100" role="img" aria-label="Entertainment" xmlns="http://www.w3.org/2000/svg" width="120" height="100">
+  <title>Entertainment</title>
+  <defs>
+ <linearGradient id="es-glass" x1="0" y1="0" x2=".7" y2="1"><stop stop-color="#ffb3c1" stop-opacity=".8"/><stop offset=".4" stop-color="#ed3865" stop-opacity=".65"/><stop offset="1" stop-color="#b40d45" stop-opacity=".9"/></linearGradient>
+ <linearGradient id="es-chrome" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".33" stop-color="#b7b8c1"/><stop offset=".48" stop-color="#fff"/><stop offset=".62" stop-color="#777a87"/><stop offset="1" stop-color="#f5f5fa"/></linearGradient>
+</defs>
+  <rect x="25" y="25" width="70" height="61" rx="18" fill="#ed2b5b" opacity=".2" transform="rotate(-10 60 55)"/>
+  <rect x="16" y="35" width="88" height="53" rx="15" fill="url(#es-glass)" stroke="#ffb5c4" stroke-width="1.4"/>
+  <path d="m17 31-3-14L98 6l3 14Z" fill="url(#es-chrome)"/>
+  <path d="m31 15 11 13m14-16 11 13m14-16 11 13" stroke="#c91d49" stroke-width="7"/>
+  <path d="m50 47 25 15-25 15Z" fill="#fff" opacity=".94"/>
+  <path d="M26 43h66" stroke="#ffe2e9" opacity=".55" stroke-width="2" stroke-linecap="round"/>
+</svg>

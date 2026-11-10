@@ -1,0 +1,31 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+import ts from 'typescript';
+import {DatabaseSync} from 'node:sqlite';
+
+async function setup(){
+ const s=new DatabaseSync(':memory:');s.exec(`CREATE TABLE attorneys(bar_number TEXT PRIMARY KEY,state TEXT,name TEXT,imported_at TEXT,source_id TEXT,public_id TEXT,phone TEXT,company TEXT);
+ CREATE TABLE attorney_profiles(bar_number TEXT PRIMARY KEY,owner_id TEXT,claimed_at TEXT,bio TEXT);
+ CREATE TABLE admin_audit(id TEXT PRIMARY KEY,actor TEXT,action TEXT,record_id TEXT,created_at TEXT);
+ CREATE TABLE reviews(bar_number TEXT,body TEXT);`);
+ let beforeBatch;const plans=[];
+ const db={prepare(sql){let args=[];return {bind(...values){args=values;return this;},async all(){plans.push(...s.prepare('EXPLAIN QUERY PLAN '+sql).all(...args).map(r=>r.detail));return {results:s.prepare(sql).all(...args)};},async run(){return {meta:{changes:s.prepare(sql).run(...args).changes}};}};},async batch(statements){beforeBatch?.();beforeBatch=undefined;s.exec('BEGIN');try{const out=[];for(const q of statements)out.push(await q.run());s.exec('COMMIT');return out;}catch(e){s.exec('ROLLBACK');throw e;}}};
+ const context=vm.createContext({crypto});const modules=new Map();
+ const make=(file)=>{if(modules.has(file))return modules.get(file);const mod=new vm.SourceTextModule(ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022}}).outputText,{context});modules.set(file,mod);return mod;};
+ const mod=make('db/import-name-corrections.ts');await mod.link(async spec=>{if(spec==='./raw')return new vm.SyntheticModule(['rawDb'],function(){this.setExport('rawDb',()=>db);},{context});const dep=make('app/attorney-identity.ts');await dep.link(()=>{throw Error('Unexpected dependency');});return dep;});await mod.evaluate();
+ function seed(bar,{name='Derek John Example',date='2026-11-05T22:06:00.000Z',actor='owner@example.test',claimed=false}={}){s.prepare('INSERT INTO attorneys VALUES(?,?,?,?,?,?,?,?)').run('FL:'+bar,'FL',name,date,'admin:created-'+bar,'public-'+bar,'239-555-0100','Protected Firm');s.prepare('INSERT INTO admin_audit VALUES(?,?,?,?,?)').run('created-'+bar,actor,'attorney-create','FL:'+bar,date);if(claimed)s.prepare('INSERT INTO attorney_profiles VALUES(?,?,?,?)').run('FL:'+bar,'claimed-owner',date,'Protected biography');}
+ return {s,seed,plans,run:(rows,preview=false)=>mod.namespace.correctImportedNames(rows,'owner@example.test',preview),race:fn=>beforeBatch=fn};
+}
+const correction=bar=>({state:'FL',barNumber:bar,previousName:'Derek John Example',name:'Derek Example'});
+
+test('name preview and repair only affect matching records from the current import',async()=>{const {s,seed,run}=await setup();seed('1');seed('2',{date:'2026-11-04T12:00:00.000Z'});seed('3',{actor:'other@example.test'});seed('4',{claimed:true});seed('5',{name:'Intervening Owner Edit'});s.exec("INSERT INTO reviews VALUES('FL:1','Protected review');");const rows=['1','2','3','4','5','6'].map(correction);const preview=await run(rows,true);assert.equal(preview.updated,1);assert.equal(preview.created,0);assert.equal(preview.skipped,5);assert.equal(s.prepare("SELECT name FROM attorneys WHERE bar_number='FL:1'").get().name,'Derek John Example');const result=await run(rows);assert.equal(result.updated,1);assert.equal(result.created,0);assert.equal(result.skipped,5);const updated=s.prepare("SELECT * FROM attorneys WHERE bar_number='FL:1'").get();assert.equal(updated.name,'Derek Example');assert.equal(updated.public_id,'public-1');assert.equal(updated.phone,'239-555-0100');assert.equal(updated.company,'Protected Firm');assert.equal(updated.imported_at,'2026-11-05T22:06:00.000Z');for(const id of ['2','3','4'])assert.equal(s.prepare('SELECT name FROM attorneys WHERE bar_number=?').get('FL:'+id).name,'Derek John Example');assert.equal(s.prepare("SELECT name FROM attorneys WHERE bar_number='FL:5'").get().name,'Intervening Owner Edit');assert.equal(s.prepare('SELECT COUNT(*) n FROM reviews').get().n,1);assert.equal(s.prepare('SELECT COUNT(*) n FROM attorneys').get().n,5);assert.equal(s.prepare("SELECT COUNT(*) n FROM admin_audit WHERE action='attorney-name-update'").get().n,1);assert.equal((await run(rows)).updated,0);s.close();});
+
+test('a concurrent name edit or claim is preserved by the write-time guard',async()=>{const {s,seed,run,race}=await setup();seed('1');seed('2');race(()=>{s.exec("UPDATE attorneys SET name='Manual Name' WHERE bar_number='FL:1';INSERT INTO attorney_profiles VALUES('FL:2','owner','2026','Claimed details');");});const r=await run(['1','2'].map(correction));assert.equal(r.updated,0);assert.equal(r.skipped,2);assert.equal(s.prepare("SELECT name FROM attorneys WHERE bar_number='FL:1'").get().name,'Manual Name');assert.equal(s.prepare("SELECT name FROM attorneys WHERE bar_number='FL:2'").get().name,'Derek John Example');assert.equal(s.prepare("SELECT COUNT(*) n FROM admin_audit WHERE action='attorney-name-update'").get().n,0);s.close();});
+
+test('invalid correction rows fail before any name change',async()=>{const {s,seed,run}=await setup();seed('1');await assert.rejects(()=>run([correction('1'),{...correction('2'),state:'GA'}]));await assert.rejects(()=>run([correction('1'),correction('1')]));assert.equal(s.prepare("SELECT name FROM attorneys WHERE bar_number='FL:1'").get().name,'Derek John Example');s.close();});
+
+test('name changes and their audit entries roll back together on failure',async()=>{const {s,seed,run}=await setup();seed('1');s.exec("CREATE TRIGGER reject_name_audit BEFORE INSERT ON admin_audit WHEN NEW.action='attorney-name-update' BEGIN SELECT RAISE(ABORT,'test failure'); END;");await assert.rejects(()=>run([correction('1')]));assert.equal(s.prepare("SELECT name FROM attorneys WHERE bar_number='FL:1'").get().name,'Derek John Example');s.close();});
+
+ test('name-correction preflight looks up primary keys without scanning attorneys',async()=>{const {s,seed,run,plans}=await setup();for(let i=1;i<=100;i++)seed(String(i));const r=await run(Array.from({length:100},(_,i)=>correction(String(i+1))),true);assert.equal(r.updated,100);assert.equal(plans.some(p=>/SCAN attorneys/.test(p)),false);assert.ok(plans.some(p=>p.includes('sqlite_autoindex_attorneys_1')));s.close();});

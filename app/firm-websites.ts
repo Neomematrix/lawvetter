@@ -87,3 +87,13 @@ export const linkedInByFirm:Record<string,string>={
  ...Object.fromEntries(Object.entries(firmContactOverrides).filter(([,value])=>value.linkedin).map(([key,value])=>[key,value.linkedin])),
 };
 export const attorneyLinkedIn:Record<string,string>={...auditedAttorneyLinkedIn,...attorneyLinkedInOverrides};
+
+// Owner-confirmed website: keep EMC visible when a saved record has an empty URL.
+export function confirmedFirmWebsite(key:string, saved:string|null|undefined){
+ return saved || (key==='eittreimmartincutlerllc'?'https://www.emcfamilylaw.com':saved??undefined);
+}
+
+// Individual biography URLs supplied by the directory owner.
+export const attorneyBiographyWebsites:Record<string,string>={
+ "738212":"https://www.emcfamilylaw.com/staff-profiles/abigail-h-ingram/",
+};

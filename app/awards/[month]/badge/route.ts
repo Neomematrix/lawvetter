@@ -1,0 +1,4 @@
+import {monthlyAward} from '../../../../db/monthly-awards';
+import {awardBadge} from '../../badge';
+import {currentMonth} from '../../core';
+export async function GET(request:Request,{params}:{params:Promise<{month:string}>}){const {month}=await params;if(month==='preview')return new Response(awardBadge(currentMonth()),{headers:{'Content-Type':'image/svg+xml','Cache-Control':'public, max-age=3600','X-Robots-Tag':'noindex'}});const award=await monthlyAward(month);if(!award)return new Response('No finalized award for this month',{status:404});return new Response(awardBadge(month,award.name),{headers:{'Content-Type':'image/svg+xml','Cache-Control':'public, max-age=86400','X-Content-Type-Options':'nosniff',...(new URL(request.url).searchParams.has('download')?{'Content-Disposition':`attachment; filename="lawvetter-award-${month}.svg"`}:{})}});}

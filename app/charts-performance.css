@@ -1,0 +1,52 @@
+/* Chart-only corrections. Never target shared search or homepage selectors. */
+.charts-page .chart-practice-empty{color:#596e7d}
+.charts-page .chart-account-cta[aria-busy="true"]{visibility:hidden;pointer-events:none}
+.charts-page .chart-avatar img[src^="/attorneys/placeholder."]{object-fit:contain}
+.charts-page a.chart-avatar{display:block;cursor:pointer}
+.charts-page a.chart-avatar:focus-visible{outline:3px solid #fe6b05;outline-offset:3px}
+/* Slightly larger chart details and portraits, with compact row spacing. */
+.charts-page .attorney-chart-table .chart-row{grid-template-columns:40px 86px minmax(0,1fr) minmax(150px,24%) auto;padding-top:18px;padding-bottom:18px}
+.charts-page .attorney-chart-table .chart-avatar{width:86px;height:103px}
+.charts-page .attorney-chart-table .chart-person{font-size:19px}
+.charts-page .attorney-chart-table .chart-person p,.charts-page .attorney-chart-table .chart-person p>span{font-size:13px}
+.charts-page .attorney-chart-table .chart-practice-links a,.charts-page .attorney-chart-table .chart-practice-empty{font-size:13px}
+.charts-page .attorney-chart-table .chart-rank{font-size:24px}
+@media(max-width:1000px){
+ .charts-page .attorney-chart-table .chart-row{grid-template-columns:36px 77px minmax(0,1fr) 110px;row-gap:8px}
+ .charts-page .attorney-chart-table .chart-avatar{width:77px;height:92px}
+ .charts-page .attorney-chart-table .chart-practice{grid-column:3/-1;grid-row:2;justify-self:stretch;align-self:start;min-width:0;margin:0;padding:0;text-align:left}
+ .charts-page .chart-practice-links{justify-content:flex-start;align-items:flex-start;margin:0}
+}
+@media(max-width:600px){
+ .charts-page .attorney-chart-table .chart-row{grid-template-columns:28px 77px minmax(0,1fr);column-gap:12px}
+ .charts-page .attorney-chart-table .chart-person{font-size:16px}
+ .charts-page .attorney-chart-table .chart-practice-links a,.charts-page .attorney-chart-table .chart-practice-empty{font-size:12px}
+ .charts-page .attorney-chart-table .chart-rank{font-size:20px}
+}
+@media(max-width:360px){
+ .charts-page .attorney-chart-table .chart-row{grid-template-columns:28px 70px minmax(0,1fr);column-gap:10px}
+ .charts-page .attorney-chart-table .chart-avatar{width:70px;height:86px}
+}
+
+/* Approved profile claims receive a subtle accent along the rounded top edge. */
+.charts-page .chart-row-claimed::before{content:"";position:absolute;top:-1px;left:-1px;right:-1px;height:18px;border-top:2px solid #fe6b05;border-radius:inherit;pointer-events:none}
+
+.charts-page .firm-chart-row{position:relative;padding-right:76px}
+@media(max-width:600px){.charts-page .firm-chart-row{padding-right:58px}}
+
+/* Firm banners sit in the center of each ranking pane, without cropping. */
+.charts-page .firm-chart-row{display:grid;grid-template-columns:40px minmax(0,1fr) minmax(180px,40%) minmax(0,1fr) 40px;min-height:138px;padding:18px 22px;box-sizing:border-box}
+.charts-page .firm-chart-row .chart-person{grid-column:2;grid-row:1}
+.charts-page .firm-chart-banner{grid-column:3;grid-row:1;min-width:0;width:100%;height:100px;align-self:center}
+.charts-page .firm-chart-banner>.firm-link{display:block;border:0;text-decoration:none}
+.charts-page .firm-chart-banner .firm-logo-banner{width:100%;max-width:none;margin:0;padding:0}
+.charts-page .firm-chart-banner .firm-logo-surface{display:flex;align-items:center;justify-content:center;width:100%;height:100px;min-height:0;max-height:none;aspect-ratio:auto;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;box-sizing:border-box}
+.charts-page .firm-chart-banner .firm-logo-surface img{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;object-position:center}
+@media(max-width:700px){
+ .charts-page .firm-chart-row{grid-template-columns:32px minmax(0,1fr);grid-template-rows:minmax(48px,auto) 96px;min-height:182px;gap:10px 14px;padding:18px 52px 18px 14px}
+ .charts-page .firm-chart-row .chart-person{grid-column:2;grid-row:1}
+ .charts-page .firm-chart-banner{grid-column:1/-1;grid-row:2;width:100%;height:96px;padding-left:38px;box-sizing:border-box}
+ .charts-page .firm-chart-banner .firm-logo-surface{height:96px}
+}
+
+.charts-page>.spotlight-layout{margin:24px 0 28px}

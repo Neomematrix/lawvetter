@@ -1,0 +1,2 @@
+import {selectedLanguages} from './languages';
+export default function ProfileLanguages({value}:{value?:string|null}){const languages=selectedLanguages(value);return languages.length?<p className="profile-languages"><svg className="profile-language-icon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m5 8 6 6m-7 0 6-6 2-3H2m5-3h1m14 20-5-11-5 11m2-4h6"/></svg><span className="sr-only">Languages spoken: </span><span>{languages.join(' · ')}</span></p>:null;}

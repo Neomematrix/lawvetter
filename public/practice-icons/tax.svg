@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 300" role="img" aria-labelledby="tax-title tax-desc">
+ <title id="tax-title">Tax</title>
+ <desc id="tax-desc">Green banknotes and coins beside an orange calculator, with a rising green stock-market line behind them.</desc>
+ <defs>
+  <linearGradient id="tax-orange" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FF8B38"/><stop offset="1" stop-color="#FE6B05"/></linearGradient>
+  <linearGradient id="tax-bill" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#E0F5E7"/><stop offset="1" stop-color="#A9DFBD"/></linearGradient>
+ </defs>
+ <!-- Stock-market line behind the money and calculator. -->
+ <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M28 30V174H334" stroke="#BCD8C8" stroke-width="4"/>
+  <path d="M30 126H324M30 78H324M98 32V171M165 32V171M232 32V171M299 32V171" stroke="#E1EEE6" stroke-width="2"/>
+  <path d="M38 151L88 119L121 131L172 84L205 99L257 48L321 21" stroke="#159447" stroke-width="10"/>
+  <path d="M293 20L323 20L317 49" stroke="#159447" stroke-width="10"/>
+ </g>
+ <ellipse cx="185" cy="279" rx="154" ry="10" fill="#155B96" opacity=".10"/>
+ <!-- A small stack of banknotes. -->
+ <g stroke="#17673B" stroke-width="3.5" stroke-linejoin="round">
+  <rect x="32" y="161" width="163" height="92" rx="10" fill="#78BC91" transform="rotate(-12 114 207)"/>
+  <rect x="35" y="153" width="163" height="92" rx="10" fill="#C2E8CE" transform="rotate(-6 116 199)"/>
+  <rect x="36" y="145" width="163" height="92" rx="10" fill="url(#tax-bill)"/>
+  <path d="M63 156H172Q172 170 187 170V212Q172 212 172 226H63Q63 212 48 212V170Q63 170 63 156Z" fill="none" stroke="#429765" stroke-width="2.5"/>
+  <ellipse cx="117" cy="191" rx="27" ry="32" fill="#ECF9F0" stroke="#429765" stroke-width="2.5"/>
+ </g>
+ <g fill="none" stroke="#17673B" stroke-width="4.5" stroke-linecap="round">
+  <path d="M129 179C126 171 106 172 106 182C106 193 129 189 129 200C129 211 108 213 105 203M117 168V216"/>
+ </g>
+ <circle cx="66" cy="191" r="5" fill="#429765"/><circle cx="170" cy="191" r="5" fill="#429765"/>
+ <!-- Calculator in the exact LawVetter logo orange. -->
+ <g stroke="#123C60" stroke-width="4" stroke-linejoin="round">
+  <rect x="199" y="95" width="129" height="175" rx="17" fill="#C64E00"/>
+  <rect x="193" y="87" width="129" height="175" rx="17" fill="url(#tax-orange)"/>
+  <rect x="209" y="104" width="97" height="37" rx="6" fill="#EAF4F7"/>
+ </g>
+ <path d="M274 119H280V129H274ZM286 113H293V129H286Z" fill="#155B96"/>
+ <g fill="#FFFFFF" stroke="#D65500" stroke-width="1.5">
+  <rect x="210" y="154" width="23" height="22" rx="4"/><rect x="246" y="154" width="23" height="22" rx="4"/><rect x="282" y="154" width="23" height="22" rx="4"/>
+  <rect x="210" y="187" width="23" height="22" rx="4"/><rect x="246" y="187" width="23" height="22" rx="4"/>
+  <rect x="210" y="220" width="23" height="22" rx="4"/><rect x="246" y="220" width="23" height="22" rx="4"/>
+ </g>
+ <rect x="282" y="187" width="23" height="55" rx="4" fill="#155B96"/>
+ <path d="M289 210H298M289 219H298" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+ <!-- Gold coins in the foreground. -->
+ <g stroke="#B97817" stroke-width="3">
+  <rect x="92" y="256" width="73" height="14" rx="7" fill="#E7A72E"/><ellipse cx="128.5" cy="255" rx="36.5" ry="10" fill="#FFD477"/>
+  <rect x="92" y="241" width="73" height="14" rx="7" fill="#E7A72E"/><ellipse cx="128.5" cy="240" rx="36.5" ry="10" fill="#FFD477"/>
+  <circle cx="170" cy="245" r="30" fill="#F2B940"/><circle cx="170" cy="245" r="23" fill="#FFE29A" stroke-width="2"/>
+ </g>
+ <path d="M178 236C176 230 162 231 162 238C162 246 178 242 178 250C178 258 163 259 161 252M170 227V263" fill="none" stroke="#9F6715" stroke-width="3.5" stroke-linecap="round"/>
+</svg>

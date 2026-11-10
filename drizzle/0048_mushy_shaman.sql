@@ -1,0 +1,1 @@
+ALTER TABLE `firm_settings` ADD `organization_type` text DEFAULT 'Law Firm' NOT NULL;

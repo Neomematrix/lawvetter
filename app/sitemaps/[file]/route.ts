@@ -1,0 +1,2 @@
+import {savedSitemap} from '../../../db/sitemap-snapshot';
+export async function GET(_request:Request,{params}:{params:Promise<{file:string}>}){try{const {file}=await params,xml=await savedSitemap(file);return xml?new Response(xml,{headers:{'Content-Type':'application/xml; charset=utf-8','Cache-Control':'public, max-age=300'}}):new Response('Sitemap not found',{status:404});}catch{return new Response('Sitemap temporarily unavailable',{status:503,headers:{'Retry-After':'30','Cache-Control':'no-store'}});}}

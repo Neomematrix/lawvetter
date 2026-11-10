@@ -1,15 +1,5 @@
 import publishedIndex from './practice-index';
 import {kesslerRoster} from './verified-firm-rosters';
-export const practiceAreas = [
- {id:'family-law',name:'Family law',description:'Divorce, custody & family matters'},
- {id:'litigation',name:'Litigation',description:'Disputes & courtroom representation'},
- {id:'personal-injury',name:'Personal injury',description:'Injuries, accidents & liability'},
- {id:'criminal-defense',name:'Criminal defense',description:'Criminal charges & defense'},
- {id:'employment-law',name:'Employment law',description:'Workplace rights & disputes'},
- {id:'estate-planning',name:'Estate planning',description:'Wills, trusts & probate'},
- {id:'business-law',name:'Business law',description:'Companies, contracts & transactions'},
- {id:'immigration',name:'Immigration',description:'Visas, residency & citizenship'},
-];
 // Curated from the linked professional sources; checked October 8–9, 2026.
 // These supplement the Bar roster, which does not contain practice areas.
 const originalSources:Record<string,{areas:string[];url:string}> = {
@@ -33,7 +23,4 @@ for (const [bar, source] of Object.entries(originalSources)) {
  practiceSources[bar]={areas:[...new Set([...(existing?.areas||[]),...source.areas])],url:existing?.url||source.url,sources:{...Object.fromEntries(source.areas.map(area=>[area,source.url])),...existing?.sources}};
 }
 export function practiceSourceUrl(bar:string,area:string){return practiceSources[bar]?.sources[area];}
-export const practiceCoverage='Practice-area coverage is being expanded. Results include published practice information and details supplied by approved profile owners; the State Bar roster does not classify every attorney by practice.';
-
-// Recognize a whole practice category without treating attorney or firm names as categories.
-export function searchPracticeArea(value:string){const q=value.trim().toLowerCase().replace(/[-_]+/g,' ').replace(/\s+/g,' ');const aliases:Record<string,string>={'family':'family-law','criminal law':'criminal-defense','immigration law':'immigration','estate law':'estate-planning','business':'business-law','employment':'employment-law'};return practiceAreas.find(a=>a.name.toLowerCase()===q||a.id.replace(/-/g,' ')===q||a.id===aliases[q]);}
+export {practiceAreas,searchPracticeArea} from './practice-catalog';

@@ -12,19 +12,28 @@
     "test": "node --experimental-vm-modules --test tests/*.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "db:generate": "drizzle-kit generate",
-    "typecheck": "tsc --noEmit --incremental false"
+    "typecheck": "tsc --noEmit --incremental false",
+    "test:search": "node --experimental-vm-modules --test tests/search-selection.test.mjs tests/admin-name-search.test.mjs tests/profile-routing.test.mjs tests/public-profile-id.test.mjs",
+    "prebuild": "node scripts/generate-landing-css.mjs && npm run test:search",
+    "postbuild": "node scripts/route-client-assets.mjs && node scripts/retain-client-assets.mjs && node scripts/check-page-bundles.mjs"
   },
   "dependencies": {
+    "@pdf-lib/fontkit": "^1.1.1",
     "drizzle-orm": "0.45.2",
+    "fflate": "^0.8.3",
     "next": "16.2.6",
+    "pdf-lib": "1.17.1",
+    "qrcode": "^1.5.4",
     "react": "19.2.6",
-    "react-dom": "19.2.6"
+    "react-dom": "19.2.6",
+    "read-excel-file": "^9.3.12"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "1.37.1",
     "@cloudflare/workers-types": "^4.20260702.1",
     "@tailwindcss/postcss": "4.2.1",
     "@types/node": "22.19.19",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.2",
@@ -32,6 +41,7 @@
     "drizzle-kit": "0.31.10",
     "eslint": "9.39.4",
     "eslint-config-next": "16.2.6",
+    "jsdom": "^30.1.2",
     "react-server-dom-webpack": "19.2.6",
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3",

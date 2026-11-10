@@ -1,0 +1,241 @@
+.charts-page .chart-halo-banner{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;width:100%;padding:24px 28px;margin:0 0 24px;border-radius:14px;background:radial-gradient(ellipse at center bottom,#286d9d,#10314d 85%);box-shadow:0 8px 18px #163a5218;text-align:center;color:#fff}
+.chart-halo-banner::after{content:"";position:absolute;z-index:-1;right:-130px;top:-30px;width:230px;height:230px;border:1px solid #ffffff22;border-radius:50%;box-shadow:0 0 0 23px #ffffff05,0 0 0 46px #ffffff04;pointer-events:none}
+.charts-page .chart-halo-banner .section-kicker{display:flex;align-items:center;justify-content:center;gap:12px;margin:0;font-size:10px;line-height:1.5;letter-spacing:2.5px;font-weight:700;color:#b7d7ed}
+.chart-halo-banner .section-kicker::before,.chart-halo-banner .section-kicker::after{content:"";height:1px;width:25px;background:#ff9b43}
+.charts-page .chart-halo-banner h1.chart-title{display:block;width:auto;max-width:100%;padding:0;margin:0;border:0;border-radius:0;background:none;box-shadow:none;text-shadow:none;color:#fff;font-size:clamp(28px,3vw,38px);font-weight:800;line-height:1.15;letter-spacing:-1.15px}
+.chart-halo-banner h1.chart-title span{color:#ffb264}
+.charts-page .chart-halo-banner .section-description{max-width:760px;margin:0;color:#d2e3f0;font-size:13px;font-weight:500;line-height:1.65}
+.discovery-search form,.lawvetter-landing-hero+.discovery-search form{grid-template-columns:minmax(0,1fr) 175px 115px 115px 100px}
+.discovery-search .search-zip,.discovery-search .search-within{min-width:0;grid-column:auto;grid-row:auto;margin:0}
+.discovery-search .search-within select{height:56px;margin:0;border:2px solid #acc9e0;border-radius:10px;background:#fff;color:#172a3a;box-shadow:0 4px 0 #082d4955;font-size:15px;padding:10px}
+.discovery-search .search-zip input{margin:0}
+.discovery-search .search-within select:disabled{opacity:.7}
+@media(max-width:950px){.discovery-search form,.lawvetter-landing-hero+.discovery-search form{grid-template-columns:minmax(0,1fr) 115px 115px 100px}.discovery-search .primary-search{grid-column:1/-1}.discovery-search .search-city,.discovery-search .search-zip,.discovery-search .search-within,.discovery-search .search-submit{grid-column:auto;grid-row:auto}}
+@media(max-width:600px){.charts-page .chart-halo-banner{padding:22px 20px;gap:10px;border-radius:12px}.charts-page .chart-halo-banner h1.chart-title{font-size:29px;letter-spacing:-.8px}.charts-page .chart-halo-banner .section-description{font-size:12px}.discovery-search form,.lawvetter-landing-hero+.discovery-search form{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.discovery-search .primary-search,.discovery-search .search-city{grid-column:1/-1}.discovery-search .search-zip,.discovery-search .search-within{grid-column:auto}.discovery-search .search-submit{grid-column:1/-1}.discovery-search .search-within select{font-size:16px}}
+
+/* Explicit areas keep earlier homepage rules from splitting mobile fields. */
+@media(max-width:600px){
+ #attorney-search form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"name name" "city city" "zip radius" "submit submit";gap:10px;padding:18px 16px 20px;align-items:stretch}
+ #attorney-search .primary-search{grid-area:name}
+ #attorney-search .search-city{grid-area:city}
+ #attorney-search .search-zip{grid-area:zip}
+ #attorney-search .search-within{grid-area:radius}
+ #attorney-search .search-submit{grid-area:submit}
+ #attorney-search form>div,#attorney-search form>label{width:100%;min-width:0;margin:0}
+ #attorney-search input,#attorney-search select,#attorney-search .search-submit{width:100%;min-width:0;box-sizing:border-box;height:48px;margin:0;font-size:16px;border-radius:10px}
+ #attorney-search input,#attorney-search select{padding:10px 12px;box-shadow:0 2px 0 #082d4933}
+ #attorney-search .search-submit{margin-top:2px;box-shadow:0 3px 0 #b44400}
+}
+
+/* Keep shortlist search controls proportional to the compact collection. */
+#attorney-search.shortlist-search form{max-width:1120px;padding:14px 24px;gap:10px}
+#attorney-search.shortlist-search input,#attorney-search.shortlist-search select,#attorney-search.shortlist-search .search-submit{height:40px;min-height:40px;box-sizing:border-box;padding:9px 12px;font-size:13px;border-radius:8px;box-shadow:0 2px 0 #082d4933}
+#attorney-search.shortlist-search .search-submit{font-size:12px;box-shadow:0 3px 0 #b44400}
+@media(max-width:760px){#attorney-search.shortlist-search form{padding:12px 18px}}
+@media(max-width:600px){#attorney-search.shortlist-search input,#attorney-search.shortlist-search select{height:42px;min-height:42px;font-size:16px}}
+
+/* Keep chart columns close to the records instead of stretching across the screen. */
+.charts-page{max-width:1000px;margin-inline:auto;min-width:0}
+@media(min-width:1001px){
+ .charts-page .attorney-chart-table .chart-row{grid-template-columns:36px 70px minmax(0,1fr) 220px 100px;gap:16px;padding:18px 64px 18px 20px}
+ .charts-page .attorney-chart-table .chart-table-heading{grid-template-columns:minmax(0,1fr) 220px 100px;gap:16px;padding:14px 64px 14px 20px}
+ .charts-page .attorney-chart-table .chart-avatar{width:70px;height:84px}
+ .charts-page .chart-ownership{right:16px}
+}
+
+/* Compact contact introduction and content-sized receipt, shared by every attorney. */
+.intake-page{max-width:1000px;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);align-items:start;gap:32px;padding-top:28px;padding-bottom:36px}
+.intake-page .intake-intro h1{font-size:32px;line-height:1.2;font-weight:800;letter-spacing:-.8px;margin:12px 0}
+.intake-page .intake-deck{font-size:15px;line-height:1.6;margin:0}
+.intake-page .intake-aside{margin-top:22px;padding-top:18px}.intake-page .intake-aside p{font-size:13px;line-height:1.6;margin:6px 0 18px}
+.referral-receipt-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start;max-width:1000px;margin:0 auto;padding:28px 20px 36px}
+.referral-receipt-intro{min-width:0;padding:10px 0}.referral-receipt-intro .section-kicker{font-size:10px;margin:0 0 10px}.referral-receipt-intro h1{font-size:30px;line-height:1.25;letter-spacing:-.8px;font-weight:800;margin:0 0 10px;overflow-wrap:anywhere}.referral-receipt-intro>p:not(.section-kicker){font-size:14px;line-height:1.6;color:#526879;margin:0}
+.referral-receipt-intro ol{list-style:none;counter-reset:steps;display:grid;gap:10px;margin:20px 0 0;padding:0}.referral-receipt-intro li{counter-increment:steps;position:relative;padding:10px 12px 10px 48px;background:#fff;border:1px solid #d7e3ec;border-radius:10px;box-shadow:0 2px 0 #e3ecf3}.referral-receipt-intro li:before{content:counter(steps);position:absolute;left:12px;top:12px;display:grid;place-items:center;width:24px;height:24px;border-radius:7px;background:#edf5fb;color:#175b91;font-size:12px;font-weight:800}.referral-receipt-intro strong{display:block;font-size:13px;line-height:1.5}.referral-receipt-intro li span{display:block;font-size:12px;line-height:1.6;color:#526879}
+.referral-receipt-layout .referral-confirmation{width:100%;margin:0;padding:24px;min-height:0;align-self:start}.referral-confirmation .referral-receipt-title{margin:0 0 10px;font-size:26px;font-weight:800;line-height:1.25;letter-spacing:-.6px}.referral-receipt-layout .referral-confirmation-summary{font-size:14px;margin-bottom:14px}.referral-receipt-layout .referral-confirmation-next{margin-bottom:16px;padding:12px 14px}
+@media(max-width:760px){.intake-page{grid-template-columns:minmax(0,1fr);gap:20px;padding-top:20px}.intake-page .intake-intro h1{font-size:27px}.referral-receipt-layout{grid-template-columns:minmax(0,1fr);gap:20px;padding:20px 16px 28px}.referral-receipt-intro h1{font-size:26px}.referral-receipt-intro ol{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}.referral-receipt-intro li{padding:10px}.referral-receipt-intro li:before{position:static;margin-bottom:7px}.referral-receipt-intro li span{font-size:11px}}
+@media(max-width:420px){.referral-receipt-intro ol{grid-template-columns:minmax(0,1fr)}.referral-receipt-intro li{padding-left:46px}.referral-receipt-intro li:before{position:absolute;margin:0}.referral-receipt-layout .referral-confirmation{padding:22px 18px}}
+
+/* Dashboard ranking lives in the banner, leaving one logout in site navigation. */
+.attorney-account-workspace .attorney-workspace-heading{display:grid;grid-template-columns:minmax(0,1fr) minmax(210px,260px);gap:24px;padding:24px 28px;align-items:center}
+.attorney-workspace-heading>div{min-width:0}
+.attorney-workspace-heading .attorney-trending-pane{box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 14px;width:100%;min-width:0;padding:16px 18px;background:linear-gradient(135deg,#ffffff18,#ffffff0a);border:1px solid #ffffff40;border-bottom:3px solid #ff9b50;border-radius:12px;box-shadow:0 4px 0 #102f4d55,inset 0 1px 0 #ffffff18}
+.attorney-workspace-heading .attorney-trending-pane>span{font-size:11px;line-height:1.5}.attorney-workspace-heading .attorney-trending-pane>strong{grid-column:2;grid-row:1/3;font-size:26px;line-height:1.2;margin:0;color:#ffb87f;align-self:center}.attorney-workspace-heading .attorney-trending-pane>small{font-size:11px;line-height:1.5}.attorney-workspace-heading .attorney-trending-pane>a{font-size:11px;margin-top:5px;justify-self:start}
+.attorney-account-workspace .compact-profile-strip .editor-heading{justify-content:space-between}.attorney-account-workspace .compact-profile-strip .editor-heading>.gold-button{flex:none}
+@media(max-width:700px){.attorney-account-workspace .attorney-workspace-heading{grid-template-columns:minmax(0,1fr);padding:22px;gap:18px}.attorney-workspace-heading .attorney-trending-pane{max-width:none;padding:13px 16px;grid-template-columns:minmax(0,1fr) auto}.attorney-workspace-heading .attorney-trending-pane>strong{font-size:24px}}
+
+.attorney-account-workspace .dashboard-account-footer{margin-top:28px;padding:16px 0 0;border-top:1px solid #dce4e9;text-align:right}.attorney-account-workspace .dashboard-account-footer a{display:inline-block;padding:4px 0;color:#617384;font-size:11px;line-height:1.6;text-decoration:underline;text-underline-offset:3px}.attorney-account-workspace .dashboard-account-footer a:hover{color:#9e493d}.attorney-account-workspace .dashboard-account-footer a:focus-visible{outline:2px solid #175b91;outline-offset:4px;border-radius:2px}
+
+/* A quiet, compact inbox gives client messages priority. */
+.attorney-account-workspace .attorney-workspace-heading{padding:18px 24px;margin-bottom:16px}
+.attorney-account-workspace .attorney-workspace-heading h1{font-size:29px;margin-bottom:6px}.attorney-workspace-heading .section-kicker{margin-bottom:6px;font-size:9px}.attorney-workspace-heading .attorney-trending-pane{padding:11px 14px}.attorney-workspace-heading .attorney-trending-pane>strong{font-size:23px}
+.attorney-account-workspace .dashboard-shortcuts{margin:0 0 14px}.attorney-account-workspace .dashboard-shortcuts a{padding:8px 12px;min-height:0;font-size:11px}
+.attorney-account-workspace .attorney-workspace-stats{margin-bottom:14px}.attorney-account-workspace .attorney-workspace-stats article{padding:10px 14px}.attorney-account-workspace .attorney-workspace-stats strong{font-size:23px}
+.attorney-account-workspace .compact-profile-strip{padding:14px 18px;margin-bottom:16px}.attorney-account-workspace .compact-profile-strip .editor-heading{grid-template-columns:minmax(0,1fr) auto}.attorney-account-workspace .compact-profile-strip .editor-heading>.gold-button{width:auto;min-width:0;justify-self:end;padding:9px 16px}.attorney-account-workspace .compact-profile-strip .editor-heading h2{font-size:19px}
+.attorney-referrals.attorney-mailbox{padding:18px;background:#fff;border:1px solid #cadbe7;border-top:3px solid #266c9a;border-radius:12px;box-shadow:0 3px 0 #dce8f1,0 10px 22px -22px #173e5b80;margin:16px 0}
+.attorney-mailbox .referral-inbox-heading{margin-bottom:12px;gap:10px}.attorney-mailbox .referral-inbox-heading .section-kicker{display:none}.attorney-mailbox .referral-inbox-heading h2{font-size:20px;margin:0 0 3px}.attorney-mailbox .referral-inbox-heading p{font-size:11px}.attorney-mailbox .mailbox-total{min-width:22px;height:22px;font-size:10px;border:0;background:#edf4f9;border-radius:6px}
+.attorney-mailbox .mailbox-toolbar{display:flex;flex-direction:row;align-items:center;gap:10px;margin:0 0 12px;flex-wrap:wrap}.attorney-mailbox .mailbox-filters{padding:0;gap:2px;border:0;border-radius:6px;background:#f0f5f8;flex:none}.attorney-mailbox .mailbox-filters button{padding:7px 10px;font-size:11px;gap:6px}.attorney-mailbox .mailbox-filters button[aria-pressed=true]{background:#e2eff9;box-shadow:none}.attorney-mailbox .mailbox-search{flex:1;min-width:130px;width:auto;max-width:350px}.attorney-mailbox .mailbox-search input{min-height:32px;padding:6px 10px;border-radius:6px;font-size:11px}.attorney-mailbox .mailbox-heading-actions{margin-left:auto;gap:6px;width:auto;flex-wrap:nowrap}.attorney-mailbox .mailbox-share-button,.attorney-mailbox .mailbox-refresh{padding:6px 10px;min-height:32px;font-size:11px;border-radius:6px;gap:6px;box-shadow:none;border-bottom-width:1px}.attorney-mailbox .mailbox-share-button svg{width:14px;height:14px}
+.attorney-mailbox .mailbox-layout{grid-template-columns:minmax(210px,28%) minmax(0,1fr);min-height:300px;border-radius:8px;box-shadow:none}
+.attorney-mailbox .mailbox-message-list{padding:0;background:#fafcfd;max-height:500px;overscroll-behavior:contain}.attorney-mailbox .mailbox-message-row{padding:12px;margin:0;border:0;border-left:3px solid transparent;border-bottom:1px solid #e6edf3;border-radius:0;box-shadow:none;background:transparent}.attorney-mailbox .mailbox-message-row.is-selected{background:#eaf3fb;border-color:#e6edf3;border-left-color:#2675ad}.attorney-mailbox .mailbox-message-row:hover{background:#f0f6fb}.attorney-mailbox .mailbox-row-heading strong{font-size:12px;font-weight:650;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.attorney-mailbox .is-unread .mailbox-row-heading strong{font-weight:850}.attorney-mailbox .mailbox-row-heading time{font-size:9px}.attorney-mailbox .mailbox-row-topic{font-size:10px;margin:3px 0}.attorney-mailbox .mailbox-row-preview{display:block;white-space:nowrap;text-overflow:ellipsis;font-size:11px;line-height:1.5}.attorney-mailbox .mailbox-row-meta{gap:6px;margin-top:5px;font-size:9px}.attorney-mailbox .referral-urgency{padding:2px 6px;border-radius:4px;font-size:9px;line-height:1.4}
+.attorney-mailbox .mailbox-reader{padding:18px;max-height:500px;overflow:auto;overscroll-behavior:contain}.attorney-mailbox .referral-message-heading{padding-bottom:10px;margin-bottom:10px;gap:14px;align-items:start}.attorney-mailbox .mailbox-reader-kicker{display:none}.attorney-mailbox .referral-message-heading h3{font-size:20px;margin:0 0 4px}.attorney-mailbox .referral-message-heading time{font-size:10px;color:#6a8193}.attorney-mailbox .referral-message-heading label{font-size:10px;min-width:120px;gap:4px}.attorney-mailbox .referral-message-heading select{min-height:30px;padding:5px 8px;margin-top:4px;font-size:11px;border-radius:6px}.attorney-mailbox .mailbox-reader-tags{margin-bottom:12px;gap:6px}.attorney-mailbox .outline-button{min-height:30px;padding:6px 10px;font-size:11px;box-shadow:none;border-radius:6px}.attorney-mailbox .referral-question>strong{font-size:10px}.attorney-mailbox .referral-question p{padding:0;margin:7px 0 16px;background:transparent;border:0;border-radius:0;font-size:13px;line-height:1.7}
+.attorney-mailbox .referral-contact-details{display:flex;flex-wrap:wrap;gap:12px 22px;padding:12px 0;margin:0;border:0;border-top:1px solid #e5edf3;border-radius:0;background:transparent}.attorney-mailbox .referral-contact-details>div{flex:1 1 115px;min-width:0;border:0;padding:0}.attorney-mailbox .referral-contact-details dt{font-size:9px;margin-bottom:4px}.attorney-mailbox .referral-contact-details dd{font-size:11px;line-height:1.6}.attorney-mailbox .mailbox-contact-actions{margin-top:12px;gap:7px}.attorney-mailbox .mailbox-delivery{padding-top:10px;margin-top:14px}.attorney-mailbox .mailbox-reader-empty{min-height:250px;padding:12px}.attorney-mailbox .mailbox-empty-icon{width:45px;height:45px;border-radius:12px;box-shadow:0 2px 0 #d3e4ef;transform:none;margin-bottom:16px}.attorney-mailbox .mailbox-empty-icon svg{width:28px;height:28px}.attorney-mailbox .mailbox-reader-empty h3{font-size:19px}.attorney-mailbox .mailbox-reader-empty>p:not(.section-kicker){font-size:12px;line-height:1.6}
+.attorney-account-workspace .dashboard-claims-disclosure{padding:14px 18px;margin-top:16px;border-top:1px solid #c9dbe8;box-shadow:0 2px 0 #dfEaf2}.dashboard-claims-disclosure>summary{cursor:pointer;font-size:13px;font-weight:750;color:#315b79}.dashboard-claims-disclosure>summary span{margin-left:6px;font-size:10px;color:#6b8295}.dashboard-claims-disclosure article{margin-top:10px;padding:12px}.dashboard-claims-disclosure h3{font-size:13px}.dashboard-claims-disclosure p{font-size:11px}
+@media(max-width:800px){.attorney-mailbox .mailbox-layout{grid-template-columns:minmax(180px,32%) minmax(0,1fr)}.attorney-mailbox .mailbox-reader{padding:14px}.attorney-mailbox .mailbox-search{max-width:none}}
+@media(max-width:600px){.attorney-referrals.attorney-mailbox{padding:12px}.attorney-mailbox .mailbox-toolbar{gap:8px}.attorney-mailbox .mailbox-search{flex-basis:50%;min-width:110px}.attorney-mailbox .mailbox-heading-actions{width:100%;justify-content:flex-end}.attorney-mailbox .mailbox-heading-actions .mailbox-share-button{flex:none}.attorney-mailbox .mailbox-layout{grid-template-columns:minmax(0,1fr)}.attorney-mailbox .mailbox-message-list{max-height:210px;border-right:0;border-bottom:1px solid #d6e4ef}.attorney-mailbox .mailbox-reader{max-height:none;overflow:visible}.attorney-mailbox .referral-message-heading{flex-wrap:wrap}.attorney-account-workspace .attorney-workspace-heading{padding:18px}.attorney-account-workspace .attorney-workspace-heading h1{font-size:26px}.attorney-account-workspace .compact-profile-strip .editor-heading{grid-template-columns:minmax(0,1fr)}.attorney-account-workspace .compact-profile-strip .editor-heading>.gold-button{grid-column:1;grid-row:auto;justify-self:start}}
+
+/* Search cards show the same firm banner as the public firm profile. */
+.search-results .firm-ranking-grid{margin-bottom:18px}.search-results .firm-result-card{min-width:0;overflow:hidden;padding:18px;border:1px solid #bfd4e4;border-radius:12px;background:#fff;box-shadow:0 4px 0 #d6e5ef,0 12px 24px -22px #173e5b66}.search-results .firm-result-card .section-kicker{font-size:10px;color:#56788f}.search-results .firm-result-card h2{font-size:22px;line-height:1.3;margin:9px 0 8px}.search-results .firm-result-card p{font-size:12px;margin:0}.search-results .firm-result-card .firm-logo-banner{display:block;width:100%;max-width:none;margin:0 0 16px}.search-results .firm-result-card .firm-logo-surface{width:100%;height:auto;aspect-ratio:4/1;min-height:80px;max-height:160px;padding:12px 16px;display:flex;align-items:center;justify-content:center;border:1px solid #e0e9f0;border-radius:8px;background:#fff;box-shadow:none}.search-results .firm-result-card .firm-logo-surface img{display:block;width:100%;height:100%;max-height:132px;object-fit:contain;object-position:center}
+@media(max-width:600px){.search-results .firm-result-card{padding:14px}.search-results .firm-result-card h2{font-size:19px}.search-results .firm-result-card .firm-logo-surface{padding:10px;min-height:70px}}
+
+/* Client dashboard: slim workspace with the existing LawVetter site header. */
+.client-review-account.client-slim-workspace{display:grid;grid-template-columns:165px minmax(0,1fr);max-width:1080px;margin:28px auto 38px;padding:0;background:#fff;border:1px solid #bdd4e6;border-radius:14px;box-shadow:0 4px 0 #d4e4ee;overflow:hidden;min-height:390px}
+.client-slim-workspace .client-workspace-sidebar{display:flex;flex-direction:column;gap:12px;background:linear-gradient(145deg,#f1f7fc,#e5f0f8);border-right:1px solid #c8dce9;padding:25px 12px 15px;min-width:0}
+.client-workspace-label{margin:0 10px 5px;font-size:10px;font-weight:800;letter-spacing:.14em;color:#55738a}
+.client-workspace-sidebar nav,.client-workspace-sidebar-bottom{display:flex;flex-direction:column;gap:4px}
+.client-workspace-sidebar nav{order:0;min-width:0}
+.client-workspace-sidebar-bottom{margin-top:auto;padding-top:26px}
+.client-workspace-sidebar button,.client-workspace-sidebar a{display:block;text-align:left;padding:10px 11px;border:1px solid transparent;border-radius:7px;background:transparent;color:#295d80;font-size:12px;font-weight:750;text-decoration:none;line-height:1.5;cursor:pointer;box-sizing:border-box;white-space:normal}
+.client-workspace-sidebar button[aria-current=page]{background:#fff;border-color:#cee0ec;border-left:3px solid #ff6b00;box-shadow:0 2px 0 #d2e2ed;color:#183e59}
+.client-workspace-sidebar button:hover,.client-workspace-sidebar a:hover{background:#fff}
+.client-workspace-main{padding:25px 26px 24px;min-width:0}
+.client-slim-workspace .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.client-workspace-heading{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:22px}
+.client-workspace-heading .client-workspace-welcome{margin:0 0 4px;color:#60788a;font-size:12px;line-height:1.5}
+.client-workspace-heading h1{font-size:27px;line-height:1.2;color:#193d55;margin:0}
+.client-slim-workspace .gold-button,.client-slim-workspace .outline-button{font-size:12px;padding:9px 13px;min-height:36px;line-height:1.4;border-radius:7px;white-space:normal;box-sizing:border-box}
+.client-slim-workspace .client-workspace-heading>.gold-button{flex-shrink:0;background:linear-gradient(125deg,#183c55,#236188);border:1px solid #1e5479;border-bottom:3px solid #ff6b00;box-shadow:0 2px 0 #d4e3ee;color:#fff;text-transform:none}
+.client-review-account.client-slim-workspace .client-accordion{padding:0;margin:0;background:transparent;border:0;border-radius:0}
+.client-slim-workspace .client-accordion .client-request-details>summary{min-height:65px;padding:10px 37px 10px 13px;gap:11px}
+.client-slim-workspace .client-accordion .client-request-details>summary .firm-attorney-photo{width:36px;height:36px;flex-basis:36px}
+.client-slim-workspace .client-accordion .client-request-name{font-size:13px;line-height:1.4}
+.client-slim-workspace .client-row-status{font-size:10px}
+.client-slim-workspace .client-row-status.status-rejected{color:#c62828}
+.client-slim-workspace .client-accordion .client-request-details>summary::after{font-size:18px;right:13px}
+.client-slim-workspace .client-request-content{background:#f8fbfd;padding:15px;border-color:#e0eaf1}
+.client-slim-workspace .client-request-profile{font-size:12px}
+.client-slim-workspace .client-case-details{margin:14px 0;border-top:1px solid #dbe6ee;padding-top:10px}
+.client-slim-workspace .client-case-details>summary{font-size:12px;color:#55738a;cursor:pointer}
+.client-slim-workspace .client-case-details dl{margin-top:12px}
+.client-slim-workspace .published-review-confirmation>p,.client-slim-workspace .client-request-content>p{font-size:13px;line-height:1.6}
+.client-slim-workspace .client-review-form{padding:18px;margin:16px 0}
+.client-slim-workspace .client-review-form h2{font-size:20px;margin:0 0 12px}
+.client-slim-workspace .client-review-form label{font-size:12px}
+.client-slim-workspace .client-review-form input,.client-slim-workspace .client-review-form select,.client-slim-workspace .client-review-form textarea{font-size:14px;min-height:38px;padding:9px 11px}
+.client-slim-workspace .client-review-form input[type=checkbox]{min-height:0;padding:0;flex:none}
+.client-workspace-settings{max-width:540px}
+.client-settings-identity h2{margin:0 0 6px;font-size:16px;color:#204f70}
+.client-settings-identity p{margin:0 0 18px;font-size:13px;color:#55738a;overflow-wrap:anywhere}
+.client-workspace-settings .dashboard-review-help{padding:12px 14px;margin:20px 0 0;font-size:12px}
+.client-workspace-settings .dashboard-review-help p{font-size:12px;line-height:1.6}
+.client-settings-delete{margin-top:26px;padding-top:16px;border-top:1px solid #e0e8ee}
+.client-settings-delete a{color:#6d7f8d;font-size:11px;font-weight:400}
+.client-settings-delete .client-settings-delete-button{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:7px 10px;border:1px solid #d1dce4;border-radius:6px;background:#fafcfd;color:#647787;font-size:11px;font-weight:500;line-height:1.4;text-decoration:none;box-shadow:none}
+.client-settings-delete-button svg{width:14px;height:14px;flex:none}
+.client-settings-delete .client-settings-delete-button:hover{background:#f6f1f1;color:#a23535;border-color:#d9bcbc}
+@media(pointer:coarse){.client-settings-delete .client-settings-delete-button{min-height:44px}}
+.client-workspace-empty{padding:24px 16px;border:1px solid #d9e5ee;border-radius:10px;background:#fbfdfe}
+.client-workspace-empty h2{font-size:18px;margin:0 0 8px;color:#214e6d}
+.client-workspace-empty p{font-size:13px;color:#60788a;line-height:1.6;margin:0 0 16px}
+.client-workspace-saved{border:1px solid #d4e2ed;border-radius:10px;overflow:hidden}
+.client-workspace-saved-row{display:flex;align-items:center;gap:12px;padding:13px;border-bottom:1px solid #e1eaf1}
+.client-workspace-saved-row:last-child{border-bottom:0}
+.client-workspace-saved-row .firm-attorney-photo{width:38px;height:38px;flex:0 0 38px;border-radius:50%;margin:0;overflow:hidden;box-shadow:none}
+.client-workspace-saved-row .firm-attorney-photo img{width:100%;height:100%;object-fit:cover;object-position:center 25%}
+.client-workspace-saved-row>div:not(.firm-attorney-photo){min-width:0;flex:1}
+.client-workspace-saved-row h2{font-size:13px;line-height:1.4;margin:0;overflow-wrap:anywhere}
+.client-workspace-saved-row p{font-size:11px;margin:4px 0 0;color:#60788a}
+.client-workspace-saved-row .save-attorney{padding:7px 10px;font-size:11px;min-height:32px;box-shadow:none}
+.client-workspace-compare{display:inline-block;margin-top:14px;font-size:12px;color:#245f88}
+@media(max-width:800px){.client-review-account.client-slim-workspace{margin:22px 20px 30px;grid-template-columns:145px minmax(0,1fr)}.client-workspace-main{padding:22px 18px}.client-row-identity{flex-wrap:wrap;gap:4px 10px}.client-slim-workspace .client-workspace-heading{align-items:flex-start}}
+@media(max-width:600px){.client-review-account.client-slim-workspace{display:block;margin:18px 14px 28px;min-height:0}.client-slim-workspace .client-workspace-sidebar{padding:10px;border-right:0;border-bottom:1px solid #c8dce9;gap:6px}.client-workspace-label{display:none}.client-workspace-sidebar nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.client-workspace-sidebar nav button{text-align:center;padding:10px 6px;min-height:44px;font-size:11px}.client-workspace-sidebar-bottom{padding-top:0;flex-direction:row;justify-content:flex-end;flex-wrap:wrap}.client-workspace-sidebar-bottom a,.client-workspace-sidebar-bottom button{font-size:11px;padding:7px 9px;min-height:36px}.client-workspace-main{padding:20px 13px}.client-workspace-heading{gap:10px;align-items:center;margin-bottom:18px}.client-workspace-heading h1{font-size:23px}.client-slim-workspace .client-workspace-heading>.gold-button{font-size:11px;padding:8px 10px;min-height:38px}.client-slim-workspace .client-accordion .client-request-details>summary{min-height:70px;padding-left:10px}.client-slim-workspace .client-accordion .client-request-name{font-size:12px}.client-slim-workspace .client-row-status{display:block;margin-top:3px}.client-slim-workspace .client-review-form{padding:14px}.client-slim-workspace .client-review-form input,.client-slim-workspace .client-review-form select,.client-slim-workspace .client-review-form textarea{font-size:16px}.client-workspace-saved-row{flex-wrap:wrap;padding:12px}.client-workspace-saved-row .save-attorney{min-height:40px}.client-slim-workspace .client-case-details dl>div{grid-template-columns:80px minmax(0,1fr);gap:8px}}
+
+/* Mobile account navigation: a compact toolbar and one aligned tab strip. */
+@media(max-width:600px){
+ .client-review-account.client-slim-workspace{width:calc(100% - 28px);max-width:calc(100% - 28px);min-width:0;box-sizing:border-box;margin:16px 14px 26px}
+ .client-slim-workspace .client-workspace-sidebar{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"label tools" "tabs tabs";align-items:center;gap:5px 8px;padding:8px 10px 10px;background:#edf5fb}
+ .client-slim-workspace .client-workspace-label{display:block;grid-area:label;margin:0 4px;font-size:10px;line-height:1.4;letter-spacing:.09em}
+ .client-slim-workspace .client-workspace-sidebar-bottom{grid-area:tools;display:flex;flex-direction:row;align-items:center;justify-content:flex-end;gap:5px;margin:0;padding:0;min-width:0}
+ .client-slim-workspace .client-workspace-sidebar-bottom button,.client-slim-workspace .client-workspace-sidebar-bottom a{padding:7px 8px;min-height:36px;border:1px solid #c4d9e8;border-radius:6px;background:#f8fbfd;box-shadow:none;font-size:10px;font-weight:650;line-height:1.4}
+ .client-slim-workspace .client-workspace-sidebar-bottom button[aria-current=page]{border-color:#87b2d1;color:#174f79;background:#fff;box-shadow:0 1px 0 #d1e1ec}
+ .client-slim-workspace .client-workspace-sidebar nav{grid-area:tabs;order:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;margin:0;gap:3px;padding:3px;background:#dfeaf3;border-radius:9px;box-sizing:border-box}
+ .client-slim-workspace .client-workspace-sidebar nav button{display:flex;align-items:center;justify-content:center;min-width:0;min-height:42px;padding:8px 4px;border:1px solid transparent;border-radius:6px;box-shadow:none;background:transparent;font-size:11px;line-height:1.3;text-align:center}
+ .client-slim-workspace .client-workspace-sidebar nav button[aria-current=page]{background:#fff;border-color:#d0e0ec;border-bottom:2px solid #ff6b00;color:#183e59;box-shadow:0 1px 2px #214e6d12}
+ .client-slim-workspace .client-workspace-main{width:100%;min-width:0;box-sizing:border-box;padding:17px 12px 18px}
+ .client-slim-workspace .client-workspace-heading{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;margin-bottom:17px}
+ .client-slim-workspace .client-workspace-heading>div{min-width:0}
+ .client-slim-workspace .client-workspace-heading .client-workspace-welcome{font-size:11px;margin-bottom:5px;overflow-wrap:anywhere}
+ .client-slim-workspace .client-workspace-heading h1{font-size:22px;overflow-wrap:anywhere}
+ .client-slim-workspace .client-workspace-heading>.gold-button{font-size:10px;padding:8px 9px;min-height:36px;max-width:120px;text-align:center}
+ .client-slim-workspace .client-request-details,.client-slim-workspace .client-workspace-settings{min-width:0;max-width:100%;box-sizing:border-box}
+}
+
+/* Ranked preview cards share their dimensions; verification stays beside the name. */
+.shortlist-banner .shortlist-attorneys{align-items:stretch;grid-auto-rows:1fr}
+.shortlist-banner .shortlist-attorney-card{display:flex;flex-direction:column;height:100%;box-sizing:border-box;transform:none}
+.shortlist-banner .shortlist-attorney-main{flex:1;min-width:0;box-sizing:border-box}
+.shortlist-attorney-name{display:flex;align-items:center;gap:7px;width:100%;min-width:0}
+.shortlist-attorney-name strong{flex:1;min-width:0}
+.shortlist-attorney-name strong>a{color:inherit;text-decoration:none}
+.shortlist-attorney-name strong>a:hover{color:#1e6faf}
+.shortlist-attorney-name .ownership-seal{position:static;transform:none;flex:0 0 28px;align-self:center;width:28px;height:28px;display:grid;place-items:center;padding:1px;border:0;border-radius:5px;background:transparent;box-shadow:none;cursor:pointer}
+.shortlist-attorney-name .ownership-seal img{width:26px;height:23px;object-fit:contain}
+.shortlist-attorney-card>.card-client-rating{display:flex;flex-wrap:wrap;gap:5px 7px;padding:7px 13px;margin:0;border:0;font-size:10px;line-height:1.4}
+.shortlist-attorney-card>.card-client-rating .summary-rating-stars{font-size:12px;letter-spacing:0}
+.shortlist-attorney-card>.card-client-rating strong,.shortlist-attorney-card>.card-client-rating>span:last-child{font-size:10px}
+@media(max-width:700px){
+ .shortlist-banner .shortlist-attorneys{grid-auto-rows:1fr}
+ .shortlist-banner .shortlist-attorney-main{grid-template-columns:74px minmax(0,1fr);grid-template-rows:auto auto minmax(14px,auto) auto;align-content:start;min-height:116px}
+ .shortlist-attorney-name{grid-column:2;grid-row:2;align-self:start}
+ .shortlist-attorney-name strong{font-size:14px;margin:4px 0}
+ .shortlist-attorney-name .ownership-seal{flex-basis:26px;width:26px;height:26px}
+ .shortlist-attorney-name .ownership-seal img{width:24px;height:21px}
+ .shortlist-banner .shortlist-attorney-main>.shortlist-attorney-rank{grid-row:1}
+ .shortlist-banner .shortlist-attorney-main>small{grid-row:3}
+ .shortlist-banner .shortlist-attorney-main>.shortlist-attorney-link{grid-row:4}
+ .shortlist-attorney-card>.card-client-rating{padding:3px 12px 8px 100px}
+}
+
+/* Sign-in failures are clear red text on client and attorney forms. */
+.client-auth-panel .auth-error,.attorney-login-card .auth-error{color:#c62828;background:transparent;border:0;border-radius:0;padding:0;margin:12px 0;font-size:13px;font-weight:700;line-height:1.6;box-shadow:none}
+
+/* Firm search results share one banner or name slot, including missing logos. */
+.search-results .firm-result-card{height:208px;box-sizing:border-box;display:flex;flex-direction:column;gap:12px}
+.search-results .firm-result-card>.firm-link{display:block;flex:1;min-height:0;min-width:0;border:0;text-decoration:none}
+.search-results .firm-result-card .firm-logo-banner{height:100%;margin:0}
+.search-results .firm-result-card .firm-logo-surface{height:100%;min-height:0;max-height:none;aspect-ratio:auto;box-sizing:border-box;padding:12px 16px}
+.search-results .firm-result-card .firm-logo-surface img{width:100%;height:100%;max-height:100%;object-fit:contain}
+.search-results .firm-result-card .firm-logo-name{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;text-align:center;font-size:clamp(18px,2vw,24px);line-height:1.3;font-weight:700;color:#173e5b}
+.search-results .firm-result-card>p{flex:none;line-height:18px;margin:0}
+.search-results .firm-result-card>.firm-link:focus-visible{outline:2px solid #e66d12;outline-offset:4px;border-radius:8px}
+@media(max-width:600px){.search-results .firm-result-card{height:208px}.search-results .firm-result-card .firm-logo-surface{min-height:0;padding:10px}}
+
+.intake-page .intake-help-steps{margin:0;padding-left:24px;display:grid;gap:24px;color:#172A3A;font-size:18px;font-weight:700;line-height:1.5}
+
+/* Guided representation intake: compact fields with a clear next step. */
+.representation-intake.intake-page{max-width:1120px;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:44px;padding-top:32px;padding-bottom:48px}
+.representation-intake .intake-intro{padding:20px 0}
+.representation-intake .intake-intro h1{font-size:clamp(32px,3.2vw,44px);line-height:1.14;letter-spacing:-1.4px;max-width:430px;margin:16px 0 20px}
+.representation-intake .intake-deck{font-size:17px;line-height:1.7;max-width:430px}
+.representation-intake .intake-aside{border:0;padding:0;margin-top:32px}
+.representation-intake .intake-help-steps{list-style:none;padding:0;gap:14px;counter-reset:intake-step;font-size:15px;line-height:1.5}
+.representation-intake .intake-help-steps li{counter-increment:intake-step;display:flex;align-items:center;gap:14px;padding:16px;background:linear-gradient(120deg,#fff,#edf5fb);border:1px solid #d6e4ef;border-radius:13px;box-shadow:0 3px 0 #dce7ef80}
+.representation-intake .intake-help-steps li:before{content:counter(intake-step);display:grid;place-items:center;flex:0 0 32px;height:32px;border-radius:50%;background:#175b91;color:#fff;font-size:14px;font-weight:800}
+.representation-intake .intake-panel{padding:24px;border-top-width:4px;border-radius:18px}
+.representation-intake .intake-panel>.section-kicker{font-size:11px;letter-spacing:1.5px;margin:0 0 8px}
+.representation-intake .intake-panel h2{font-size:27px;font-weight:750;letter-spacing:-.7px;margin:0 0 6px;line-height:1.3}
+.representation-intake .intake-panel>p:not(.section-kicker){font-size:12px;margin:0;color:#5b6c7c}
+.representation-intake .intake-form{margin-top:18px;gap:14px}
+.representation-intake .intake-form label{font-size:12px;gap:6px;font-weight:600}
+.representation-intake .intake-row{gap:12px;align-items:start}
+.representation-intake .intake-form input:not([type=checkbox]),.representation-intake .intake-form select{min-height:44px;padding:10px 11px;font-size:14px;font-weight:400}
+.representation-intake .intake-form textarea{min-height:92px;padding:10px 11px;font-size:14px;font-weight:400;resize:vertical}
+.representation-intake .location-autocomplete>label{display:block;margin-bottom:6px}
+.representation-intake .location-autocomplete>small{font-size:11px;line-height:1.45;margin-top:5px;display:block}
+.representation-intake .intake-form .record-note{font-size:11px;line-height:1.5;color:#607080}
+.representation-intake .intake-form .lead-consent{font-size:11px;line-height:1.5;font-weight:400;gap:9px}
+.representation-intake .intake-form .lead-consent input{margin-top:2px}
+.representation-intake .directory-captcha{font-size:11px}
+.representation-intake .intake-form>button{padding:13px 18px;font-size:15px;background:#ff7900;color:#fff;border-bottom-color:#d75b00;box-shadow:0 5px 12px #ff790024}
+@media(max-width:760px){.representation-intake.intake-page{grid-template-columns:minmax(0,1fr);gap:16px;padding-top:12px}.representation-intake .intake-intro{padding:8px 0}.representation-intake .intake-intro h1{font-size:30px;max-width:100%;margin:10px 0 12px}.representation-intake .intake-deck{font-size:15px;line-height:1.6;max-width:100%}.representation-intake .intake-panel{padding:20px}.representation-intake .intake-panel h2{font-size:24px}}
+@media(min-width:561px){.representation-intake .intake-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+
+.representation-intake .intake-message-accent{width:68px;height:68px;display:grid;place-items:center;margin:0 0 18px;border-radius:18px;background:linear-gradient(145deg,#194e70,#12364f);border:1px solid #2d6384;color:#ff8200;box-shadow:0 4px 0 #d1dfe7,0 10px 20px #153c5912}.representation-intake .intake-message-accent svg{width:46px;height:46px}@media(max-width:760px){.representation-intake .intake-message-accent{width:52px;height:52px;border-radius:14px;margin-bottom:14px}.representation-intake .intake-message-accent svg{width:36px;height:36px}}

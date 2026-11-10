@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72" fill="none" role="img" aria-labelledby="title desc">
+ <title id="title">Litigation and disputes</title>
+ <desc id="desc">Two legal professionals reviewing a shared document, in LawVetter blue and orange.</desc>
+ <defs><linearGradient id="blue" x1="7" y1="29" x2="29" y2="56" gradientUnits="userSpaceOnUse"><stop stop-color="#297BB8"/><stop offset="1" stop-color="#155B96"/></linearGradient><linearGradient id="orange" x1="45" y1="29" x2="65" y2="56" gradientUnits="userSpaceOnUse"><stop stop-color="#FF9840"/><stop offset="1" stop-color="#FE6B05"/></linearGradient></defs>
+ <circle cx="18" cy="18" r="8" fill="#155B96"/>
+ <circle cx="54" cy="18" r="8" fill="#FE6B05"/>
+ <path d="M6 51V40c0-7 5-12 12-12s12 5 12 12v11Z" fill="url(#blue)"/>
+ <path d="M42 51V40c0-7 5-12 12-12s12 5 12 12v11Z" fill="url(#orange)"/>
+ <path d="m14 29 4 8 4-8" fill="#E8F3FB"/>
+ <path d="m50 29 4 8 4-8" fill="#FFF2E7"/>
+ <path d="M27 13h18M30 18h12" stroke="#B7CFE2" stroke-width="2.5" stroke-linecap="round"/>
+ <rect x="25" y="32" width="22" height="28" rx="4" fill="#FFF" stroke="#155B96" stroke-width="2.5"/>
+ <path d="M31 40h10M31 46h10M31 52h6" stroke="#155B96" stroke-width="2.5" stroke-linecap="round"/>
+ <path d="M13 44 24 49M59 44 48 49" stroke="#B9DCF3" stroke-width="6" stroke-linecap="round"/>
+ <path d="M59 44 48 49" stroke="#FFD4B3" stroke-width="6" stroke-linecap="round"/>
+ <rect x="4" y="60" width="64" height="5" rx="2.5" fill="#155B96"/>
+ <path d="M14 65v4M58 65v4" stroke="#A3C2D9" stroke-width="3" stroke-linecap="round"/>
+</svg>

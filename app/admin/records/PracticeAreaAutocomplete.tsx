@@ -1,0 +1,18 @@
+'use client';
+import {useEffect,useId,useRef,useState} from 'react';
+import {practiceAreaChoices,categoryList} from '../../practice-category';
+export default function PracticeAreaAutocomplete({value,onChange,name}:{value:string;onChange:(value:string)=>void;name?:string}){
+ const container=useRef<HTMLDivElement>(null),list=useRef<HTMLDivElement>(null);
+ const id=useId(),[areas,setAreas]=useState(()=>practiceAreaChoices().map(a=>a.name)),[open,setOpen]=useState(false),[active,setActive]=useState(-1);
+ useEffect(()=>{const controller=new AbortController();fetch('/api/attorneys?categories=1',{cache:'no-store',signal:controller.signal}).then(r=>r.ok?r.json() as Promise<{areas?:{name:string}[]}>:null).then((data:{areas?:{name:string}[]}|null)=>{if(!controller.signal.aborted&&data?.areas)setAreas(categoryList([...practiceAreaChoices().map(a=>a.name),...data.areas.map(a=>a.name)]).map(a=>a.name));}).catch(()=>{});return()=>controller.abort();},[]);
+ const parts=value.split(/[,;|\n]/),query=(parts.at(-1)||'').trim().toLowerCase(),selected=new Set(parts.slice(0,-1).map(p=>p.trim().toLowerCase()));
+ const matches=areas.filter(name=>!selected.has(name.toLowerCase())&&name.toLowerCase().includes(query)).sort((a,b)=>Number(b.toLowerCase().startsWith(query))-Number(a.toLowerCase().startsWith(query))||a.localeCompare(b)),visible=open&&matches.length>0;
+ useEffect(()=>{if(!open)return;const close=(event:PointerEvent)=>{if(!container.current?.contains(event.target as Node)){setOpen(false);setActive(-1);}};document.addEventListener('pointerdown',close);return()=>document.removeEventListener('pointerdown',close);},[open]);
+ useEffect(()=>{if(!visible||active<0)return;const menu=list.current,option=menu?.children[active] as HTMLElement|undefined;if(!menu||!option)return;const top=option.offsetTop,bottom=top+option.offsetHeight;if(top<menu.scrollTop)menu.scrollTop=top;else if(bottom>menu.scrollTop+menu.clientHeight)menu.scrollTop=bottom-menu.clientHeight;},[active,visible]);
+ function choose(name:string){const previous=parts.slice(0,-1).map(p=>p.trim()).filter(Boolean);onChange([...previous,name].join(', ')+', ');setActive(-1);setOpen(false);}
+ return <><div ref={container} className="admin-practice-autocomplete" onBlur={e=>{if(e.relatedTarget&&!e.currentTarget.contains(e.relatedTarget as Node)){setOpen(false);setActive(-1);}}}>
+ <input name={name} role="combobox" aria-label="Practice areas" aria-autocomplete="list" aria-expanded={visible} aria-controls={visible?id:undefined} aria-activedescendant={visible&&active>=0?id+'-'+active:undefined} autoComplete="off" value={value} maxLength={500} placeholder="Start typing a practice area" onFocus={()=>setOpen(true)} onChange={e=>{onChange(e.target.value);setActive(-1);setOpen(true);}} onKeyDown={e=>{if(e.key==='Escape'){e.preventDefault();e.stopPropagation();setOpen(false);setActive(-1);}else if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();setOpen(true);setActive(i=>e.key==='ArrowDown'?Math.min(i+1,matches.length-1):Math.max(i-1,0));}else if(e.key==='Enter'&&visible){e.preventDefault();choose(matches[active>=0?active:0]);}}}/>
+ {visible&&<div ref={list} id={id} role="listbox" aria-label="Suggested practice areas" className="admin-practice-options">{matches.map((name,index)=><button id={id+'-'+index} key={name} type="button" role="option" aria-selected={active===index} tabIndex={-1} onMouseDown={e=>e.preventDefault()} onClick={()=>choose(name)}>{name}</button>)}</div>}
+ </div><small className="admin-muted">Select a suggestion for the correct spelling. Separate multiple areas with commas.</small>
+ </>;
+}

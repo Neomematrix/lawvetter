@@ -1,0 +1,1 @@
+ALTER TABLE `attorney_profiles` ADD `languages` text DEFAULT '' NOT NULL;

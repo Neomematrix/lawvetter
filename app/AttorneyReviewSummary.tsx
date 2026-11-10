@@ -12,15 +12,26 @@ async function flush(){
  timer=undefined;const batch=[...pending.entries()].slice(0,50);for(const [bar] of batch)pending.delete(bar);if(pending.size)timer=setTimeout(flush,0);
  try{const r=await fetch('/api/client-reviews?bars='+encodeURIComponent(batch.map(([bar])=>bar).join(',')),{cache:'no-store'});if(!r.ok)throw new Error();const data=await r.json() as {summaries:Summary[]};for(const [bar,resolve] of batch)resolve(data.summaries.find(item=>item.bar_number===bar)||{bar_number:bar,total:0,average:null,excerpt:''});}catch{for(const [bar,resolve] of batch){cache.delete(bar);resolve(null);}}
 }
-export default function AttorneyReviewSummary({bar,featured=false,comparison=false}:{bar:string;featured?:boolean;comparison?:boolean}){
- const [summary,setSummary]=useState<Summary|null>(null),[loaded,setLoaded]=useState(false);
- useEffect(()=>{let active=true;setSummary(null);setLoaded(false);getSummary(bar).then(value=>{if(active){setSummary(value);setLoaded(true);}});return()=>{active=false;};},[bar]);
+export default function AttorneyReviewSummary({bar,card=false,featured=false,comparison=false,profile=false,initialSummary}:{bar:string;card?:boolean;featured?:boolean;comparison?:boolean;profile?:boolean;initialSummary?:{total:number;average:number|null}}){
+ const [summary,setSummary]=useState<Summary|null>(profile&&initialSummary?{bar_number:bar,excerpt:'',...initialSummary}:null),[loaded,setLoaded]=useState(false);
+ useEffect(()=>{let active=true;setSummary(profile&&initialSummary?{bar_number:bar,excerpt:'',...initialSummary}:null);setLoaded(false);getSummary(bar).then(value=>{if(active){setSummary(value);setLoaded(true);}});return()=>{active=false;};},[bar]);
+ if(profile){
+  if(!summary?.total)return null;
+  return <a className="profile-review-summary" href="#client-reviews" aria-label={'Read '+summary.total+' verified client '+(summary.total===1?'review':'reviews')}>
+   {summary.average!=null&&<><span className="summary-rating-stars" aria-label={summary.average.toFixed(1)+' out of 5 stars'}><span aria-hidden="true">★★★★★</span><i style={{width:summary.average/5*100+'%'}} aria-hidden="true">★★★★★</i></span><strong>{summary.average.toFixed(1)} / 5</strong></>}
+   <span>{summary.total} verified client {summary.total===1?'review':'reviews'}</span>
+  </a>;
+ }
  if(comparison){
   if(!loaded)return <span className="comparison-rating-empty" role="status">Loading client ratings…</span>;
   if(!summary)return <span className="comparison-rating-empty">Client ratings unavailable</span>;
   if(!summary.total||summary.average==null)return <span className="comparison-rating-empty">No client ratings yet</span>;
   return <a className="comparison-client-rating" href={'/attorney?bar='+bar+'#client-reviews'}><span className="summary-rating-stars" aria-label={summary.average.toFixed(1)+' out of 5 stars'}><span aria-hidden="true">★★★★★</span><i style={{width:summary.average/5*100+'%'}} aria-hidden="true">★★★★★</i></span><strong>{summary.average.toFixed(1)} <small>/ 5</small></strong><span>{summary.total} verified client {summary.total===1?'review':'reviews'}</span></a>;
  }
+ if(card){
+  if(!summary?.total||summary.average==null)return null;
+  return <a className="card-client-rating" href={'/attorney?bar='+encodeURIComponent(bar)+'#client-reviews'} aria-label={summary.average.toFixed(1)+' out of 5 stars, '+summary.total+' verified client '+(summary.total===1?'review':'reviews')}><span className="summary-rating-stars" aria-hidden="true"><span>★★★★★</span><i style={{width:summary.average/5*100+'%'}}>★★★★★</i></span><strong>{summary.average.toFixed(1)} / 5</strong><span>{summary.total} {summary.total===1?'review':'reviews'}</span></a>;
+ }
  if(!summary?.total||(!featured&&summary.average==null))return null;
- return <a className={'attorney-review-summary'+(featured?' featured-review-summary':'')} href={'/attorney?bar='+bar+'#client-reviews'} aria-label={'Read '+summary.total+' verified client '+(summary.total===1?'review':'reviews')}><div className="attorney-review-summary-score">{summary.average!=null&&<><span className="summary-rating-stars" aria-label={summary.average.toFixed(1)+' out of 5 stars'}><span aria-hidden="true">★★★★★</span><i style={{width:summary.average/5*100+'%'}} aria-hidden="true">★★★★★</i></span>{featured&&<strong>{summary.average.toFixed(1)}<small> / 5</small></strong>}</>}{featured&&<span>{summary.total} verified {summary.total===1?'review':'reviews'}</span>}</div>{featured&&summary.excerpt&&<blockquote>“{summary.excerpt}”</blockquote>}{featured&&<span className="summary-review-link">Read client reviews <span aria-hidden="true">→</span></span>}</a>;
+ return <a className={'attorney-review-summary'+(featured?' featured-review-summary':'')} href={'/attorney?bar='+bar+'#client-reviews'} aria-label={'Read '+summary.total+' verified client '+(summary.total===1?'review':'reviews')}><div className="attorney-review-summary-score">{summary.average!=null&&<><span className="summary-rating-stars" aria-label={summary.average.toFixed(1)+' out of 5 stars'}><span aria-hidden="true">★★★★★</span><i style={{width:summary.average/5*100+'%'}} aria-hidden="true">★★★★★</i></span>{featured&&<strong>{summary.average.toFixed(1)}<small> / 5</small></strong>}</>}{featured&&<span>{summary.total} verified {summary.total===1?'review':'reviews'}</span>}</div>{featured&&summary.excerpt&&<blockquote>“{summary.excerpt}”</blockquote>}{featured&&<span className="summary-review-link">Read client reviews</span>}</a>;
 }

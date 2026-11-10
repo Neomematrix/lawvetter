@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72" fill="none">
+ <defs><linearGradient id="mountain" x1="12" y1="20" x2="47" y2="64" gradientUnits="userSpaceOnUse"><stop stop-color="#2879B7"/><stop offset="1" stop-color="#123C60"/></linearGradient><linearGradient id="surge" x1="29" y1="33" x2="65" y2="62" gradientUnits="userSpaceOnUse"><stop stop-color="#FFAC4B"/><stop offset="1" stop-color="#FE6B05"/></linearGradient></defs>
+ <path d="M6 63 25 12 49 63Z" fill="url(#mountain)"/>
+ <path d="m25 12 9 19-7-4-5 6-5-1Z" fill="#EDF6FC"/>
+ <path d="m25 12 3 20 14 31h7Z" fill="#0C2C48" opacity=".32"/>
+ <path d="M28 33c7 4 8 12 14 16 5 4 13 1 16 5 3-2 7-1 9 2 3 5-1 10-7 10H37c2-7-6-13-8-20-2-5-3-10-1-13Z" fill="url(#surge)"/>
+ <path d="M31 38c5 5 6 10 11 14 5 4 13 2 16 6" stroke="#FFF0DB" stroke-width="3" stroke-linecap="round"/>
+ <path d="m42 24 14 8M48 16l12 7M52 40l14 5" stroke="#175B91" stroke-width="3.5" stroke-linecap="round"/>
+ <path d="m37 33 5 5-3 3-5-5Z" fill="#FFB456"/>
+ <path d="m51 32 5 3-3 4-5-3Z" fill="#FE6B05"/>
+ <path d="M7 67h22" stroke="#A8C6DD" stroke-width="3" stroke-linecap="round"/>
+</svg>
